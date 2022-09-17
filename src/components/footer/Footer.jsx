@@ -1,9 +1,15 @@
 import React from "react";
+import styled from "styled-components";
 
 export const Footer = () => {
   return (
-    <div>
+    <StyledFooter>
       <h1>Footer</h1>
-    </div>
+    </StyledFooter>
   );
 };
+
+const StyledFooter = styled.footer`
+  position: absolute;
+  bottom: 0;
+`;
