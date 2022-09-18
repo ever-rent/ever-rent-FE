@@ -22,7 +22,7 @@ export const Header = () => {
         <StyledAddProductButton>글쓰기</StyledAddProductButton>
         <StyledSideMenu alt="https://icons8.com/icon/36389/menu-rounded Menu Rounded https://icons8.com" />
       </StyledHeaderTop>
-      <CategoryBox />
+      {/* <CategoryBox /> */}
     </>
   );
 };
@@ -30,7 +30,7 @@ export const Header = () => {
 const StyledHeaderTop = styled.header`
   display: flex;
   align-items: center;
-  position: absolute;
+  position: relative;
   top: 0px;
   left: 0px;
 

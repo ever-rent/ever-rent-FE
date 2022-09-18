@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const CategoryBox = () => {
   return (
     <>
-      <h2>어떤 물건을 찾고 있나요?</h2>
+      <StyledCategoryH2>어떤 물건을 찾고 있나요?</StyledCategoryH2>
       <StyledCategoryBox>
         <StyledKeyWordButton>
           <StyledCategoryImg
@@ -66,8 +66,13 @@ export const CategoryBox = () => {
   );
 };
 
+const StyledCategoryH2 = styled.h2`
+    margin-top:100px;
+    text-align:center;
+`
+
 const StyledCategoryBox = styled.div`
-  margin-top: 150px;
+  margin-top: 50px;
 
   display: grid;
   justify-content: center;
