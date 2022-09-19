@@ -25,9 +25,24 @@ export const ProductsItem = (props) => {
 
 const StyledItemBox = styled.div`
   /* border: 1px solid red; */
-  width: 100%;
+  padding: 15px 15px;
+  border-radius: 15px;
+  background-color: #fefdfd1f;
+  /* box-shadow: 5px 5px 15px 10px gray; */
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  /* box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 20px; */
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  /* width: 100%; */
 `;
 const StyledImgBox = styled.div``;
+
+const StyledImg = styled.img`
+  box-sizing: border-box;
+  border-radius: 15px;
+  width: 100%;
+  cursor: pointer;
+`;
 
 const StyledContentBox = styled.div`
   margin: 12px 0;
@@ -42,11 +57,4 @@ const StyledAddress = styled.div`
 `;
 const StyledLikeAndChat = styled.div`
   font-size: small;
-`;
-
-const StyledImg = styled.img`
-  box-sizing: border-box;
-  border-radius: 15px;
-  width: 100%;
-  cursor: pointer;
 `;

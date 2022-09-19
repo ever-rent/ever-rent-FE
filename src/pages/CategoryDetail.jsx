@@ -1,9 +1,15 @@
 import React from "react";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
 import { Layout } from "../components/layout/Layout";
 import { Products } from "../components/main/products/Products";
-
+import { ProductsItem } from "../components/main/products/ProductsItem";
 export const CategoryDetail = () => {
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.products);
+  const productList = products?.products;
+  // console.log(productList);
+
   const categoryList = [
     { value: "", name: "카테고리를 선택하세요" },
     { value: "디지털기기", name: "디지털기기" },
@@ -47,17 +53,29 @@ export const CategoryDetail = () => {
     { value: "5", name: "50,000원 이상" },
   ];
 
+  const categoryHandler = (e) => {
+    console.log(e.target.value);
+  };
+
+  const addressHandler = (e) => {
+    console.log(e.target.value);
+  };
+
+  const priceHandler = (e) => {
+    console.log(e.target.value);
+  };
+
   return (
     <Layout>
       <StyledSelectBox>
-        <StyledSelect>
+        <StyledSelect onChange={categoryHandler}>
           {categoryList.map((option) => (
             <option key={option.value} value={option.value}>
               {option.name}
             </option>
           ))}
         </StyledSelect>
-        <StyledSelect>
+        <StyledSelect onChange={addressHandler}>
           {addressList.map((option) => (
             <option key={option.value} value={option.value}>
               {option.name}
@@ -65,7 +83,7 @@ export const CategoryDetail = () => {
           ))}
         </StyledSelect>
 
-        <StyledSelect>
+        <StyledSelect onChange={priceHandler}>
           {priceList.map((option) => (
             <option key={option.value} value={option.value}>
               {option.name}
@@ -73,7 +91,6 @@ export const CategoryDetail = () => {
           ))}
         </StyledSelect>
       </StyledSelectBox>
-
       <Products />
     </Layout>
   );
