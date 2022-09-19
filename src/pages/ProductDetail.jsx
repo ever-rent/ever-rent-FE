@@ -39,12 +39,34 @@ export const ProductDetail = () => {
   const defaultUserImg =
     "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNF5TD%2FbtrMyfbzuN7%2FJZiKO75eVNPNAGHIPtrAnK%2Fimg.png";
 
+  const [editabled, setEditabled] = useState(true);
+
   const [userImage, setUserImage] = useState(defaultUserImg);
+
+const editPost = ()=>{
+
+}
+
+const deletePost = ()=>{
+    if(window.confirm("진짜 삭제하실건가요..?")){
+        alert("삭제완료")
+    } else{
+        alert("휴")
+    }
+}
 
   return (
     <Layout>
       <StyledDetailProductContainer>
         <StyledDetailProductWrap>
+          <StyledEditableOption
+            style={
+              editabled === false ? { display: "none" } : { display: "flex" }
+            }
+          >
+            <StyledEditButton onClick={editPost}>글 수정</StyledEditButton>
+            <StyledDeleteButton onClick={deletePost}>글 삭제 X</StyledDeleteButton>
+          </StyledEditableOption>
           <StyledPostHeadWrap>
             <StyledProductImagetWrap>
               <SyltedProductMainImage src={defaultImg} alt="이미지 미리보기" />
@@ -112,6 +134,40 @@ const StyledDetailProductWrap = styled.div`
   padding: 40px;
   box-shadow: 1px 1px 5px 1px rgb(71, 181, 255);
   border-radius: 10px;
+`;
+
+const StyledEditableOption = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+const StyledEditButton = styled.button`
+  color: rgb(62, 160, 226);
+  border-color: rgb(71, 181, 255);
+  border-radius: 5px;
+  background-color: white;
+
+  margin-right: 10px;
+  font-weight: bold;
+  font-size: 12px;
+  cursor: pointer;
+  &:hover {
+    color: white;
+    background-color: rgb(71, 181, 255);
+  }
+`;
+const StyledDeleteButton = styled.button`
+  color: white;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(224, 11, 11);
+
+  margin-right: 10px;
+  font-weight: bold;
+  font-size: 12px;
+  cursor: pointer;
+  &:hover {
+    color: black;
+  }
 `;
 
 const StyledPostHeadWrap = styled.div`
@@ -216,28 +272,24 @@ const StyledPostMain = styled.div`
   padding: 5px;
 `;
 const StyledPostTitle = styled.h2`
-    margin:10px;
+  margin: 10px;
 `;
 const StyledPostEachWrap = styled.div`
   display: flex;
   font-size: 12px;
   color: gray;
-  padding:5px;
+  padding: 5px;
 `;
-const StyledPostCategory = styled.div`
-
-`;
-const StyledTimeForToday = styled.div`
-
-`;
+const StyledPostCategory = styled.div``;
+const StyledTimeForToday = styled.div``;
 const StyledProductPrice = styled.div`
-font-size:18px;
-font-weight:bold;
+  font-size: 18px;
+  font-weight: bold;
 
-padding:5px;
+  padding: 5px;
 `;
 
 const StyledPostDiscription = styled.div`
-    padding:5px;
-    margin-top: 30px;
+  padding: 5px;
+  margin-top: 30px;
 `;
