@@ -3,6 +3,8 @@ import { Main } from "../pages/Main";
 import { Login } from "../pages/Login";
 import { Join } from "../pages/Join";
 import { AddProduct } from "../pages/AddProduct";
+import { ProductDetail } from "../pages/ProductDetail";
+import { EditProduct } from "../pages/EditProduct";
 import { CategoryDetail } from "../pages/CategoryDetail";
 
 export const Router = () => {
@@ -12,6 +14,8 @@ export const Router = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/join" element={<Join />} />
       <Route path="/addProduct" element={<AddProduct />} />
+      <Route path="/editProduct/:id" element={<EditProduct />} />
+      <Route path="/productDetail/:id" element={<ProductDetail />} />
       <Route path="/categorydetail" element={<CategoryDetail />} />
     </Routes>
   );
