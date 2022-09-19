@@ -8,9 +8,13 @@ export const Layout = ({ children }) => {
     <StyledLayout>
       <Header />
       {children}
-      <Footer/>
+      <Footer />
     </StyledLayout>
   );
 };
 
-const StyledLayout = styled.div``;
+const StyledLayout = styled.div`
+  max-width: 1024px;
+  height: 100%;
+  margin: 0 auto;
+`;

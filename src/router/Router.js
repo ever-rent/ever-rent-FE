@@ -5,6 +5,7 @@ import { Join } from "../pages/Join";
 import { AddProduct } from "../pages/AddProduct";
 import { ProductDetail } from "../pages/ProductDetail";
 import { EditProduct } from "../pages/EditProduct";
+import { CategoryDetail } from "../pages/CategoryDetail";
 
 export const Router = () => {
   return (
@@ -15,6 +16,7 @@ export const Router = () => {
       <Route path="/addProduct" element={<AddProduct />} />
       <Route path="/editProduct/:id" element={<EditProduct />} />
       <Route path="/productDetail/:id" element={<ProductDetail />} />
+      <Route path="/categorydetail" element={<CategoryDetail />} />
     </Routes>
   );
 };
