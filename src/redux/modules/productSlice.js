@@ -16,13 +16,14 @@ export const getProducts = createAsyncThunk(
   }
 );
 
-
-
 export const addProducts = createAsyncThunk(
   "POST_PRODUCTS",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.post(`http://localhost:3001/products`, payload);
+      const { data } = await axios.post(
+        `http://localhost:3001/products`,
+        payload
+      );
       console.log("data", data);
       return thunkAPI.fulfillWithValue(data);
     } catch (errer) {
@@ -30,8 +31,6 @@ export const addProducts = createAsyncThunk(
     }
   }
 );
-
-
 
 export const updateProducts = createAsyncThunk(
   "UPDATAE_PRODUCTS",
@@ -50,7 +49,6 @@ export const updateProducts = createAsyncThunk(
   }
 );
 
-
 export const deleteProducts = createAsyncThunk(
   "DELETE_PRODUCTS",
   async (payload, thunkAPI) => {
@@ -63,9 +61,6 @@ export const deleteProducts = createAsyncThunk(
   }
 );
 
-
-
-
 export const productSlice = createSlice({
   name: "products",
   initialState: {
@@ -73,7 +68,6 @@ export const productSlice = createSlice({
   },
   reducers: {},
   extraReducers: {
-    
     /* Pending */
     [getProducts.pending]: (state, action) => {
       state.isLoading = true;
@@ -136,6 +130,5 @@ export const productSlice = createSlice({
     },
   },
 });
-
 
 export const products = productSlice.reducer;
