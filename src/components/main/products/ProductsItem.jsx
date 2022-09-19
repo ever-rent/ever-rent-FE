@@ -7,6 +7,7 @@ export const ProductsItem = (props) => {
   return (
     <StyledItemBox>
       <StyledImgBox>
+        {/* TODO: onClick event 만들기.(detail page로 이동.) */}
         <StyledImg src={img1} alt="이미지 없음" />
       </StyledImgBox>
       <StyledContentBox>
@@ -47,4 +48,5 @@ const StyledImg = styled.img`
   box-sizing: border-box;
   border-radius: 15px;
   width: 100%;
+  cursor: pointer;
 `;
