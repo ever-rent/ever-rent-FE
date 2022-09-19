@@ -7,7 +7,7 @@ export const EditProduct = () => {
   const defaultImg =
     "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png";
 
-  const [imgView, setImgView] = useState(defaultImg);
+  const [imgView, setImgView] = useState([defaultImg]);
 
   const fileChange = (fileBlob) => {
     const reader = new FileReader();
@@ -82,8 +82,14 @@ export const EditProduct = () => {
                   fileChange(e.target.files[0]);
                 }}
               />
-              <SyltedImageView src={imgView} alt="이미지 미리보기" />
-              <StyledDeleteImg onClick={initImage}>사진제거</StyledDeleteImg>
+              <StyledProductImagetWrap>
+                <SyltedImageView src={imgView} alt="이미지 미리보기" />
+                <StyledProductSubImageWrap>
+                  <StyledProductSubImage src={defaultImg} />
+                  <StyledProductSubImage src={defaultImg} />
+                  <StyledProductSubImage src={defaultImg} />
+                </StyledProductSubImageWrap>
+              </StyledProductImagetWrap>
             </StyledFormImageInputWrap>
             <StyledImageSource>
               imageSource: "https://icons8.com/icon/85123/expand-arrow Expand
@@ -225,12 +231,25 @@ const StyledImageInput = styled.input`
   display: none;
 `;
 
+const StyledProductImagetWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 200px;
+`;
+
 const SyltedImageView = styled.img`
   margin-top: 20px;
-  margin-right: 70px;
+  /* margin-right: 70px; */
 
   width: 250px;
   height: 250px;
+`;
+
+const StyledProductSubImageWrap = styled.div``;
+const StyledProductSubImage = styled.img`
+  width: 150px;
+  height: 150px;
 `;
 
 const StyledDeleteImg = styled.span`
@@ -314,7 +333,7 @@ const StyledDateInput = styled.input`
 `;
 
 const StyledPostTitle = styled.input`
-  margin-top: 130px;
+  margin-top: 170px;
   padding: 10px;
   width: 400px;
   height: 30px;

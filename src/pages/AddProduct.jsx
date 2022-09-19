@@ -7,11 +7,14 @@ export const AddProduct = () => {
   const defaultImg =
     "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png";
 
-  const [imgView, setImgView] = useState(defaultImg);
+    const [sendImage, setSendImage] = useState([]);
+  const [imgView, setImgView] = useState([]);
+  console.log(imgView);
+  // console.log(imgView[0]);
 
   const fileChange = (fileBlob) => {
     const reader = new FileReader();
-    reader.readAsDataURL(fileBlob);
+    reader.readAsDataURL(fileBlob[0]);
     console.log(fileBlob);
     return new Promise((resolve) => {
       reader.onload = () => {
@@ -25,8 +28,6 @@ export const AddProduct = () => {
   const initImage = () => {
     setImgView(defaultImg);
   };
-
-  const addProduct = () => {};
 
   const [categoryInput, setCategoryInput] = useState("");
   const [priceInput, setPriceInput] = useState(0);
@@ -66,6 +67,8 @@ export const AddProduct = () => {
     checkPost();
   });
 
+  const addProduct = () => {};
+
   return (
     <Layout>
       <StyledAddProductContainer>
@@ -78,12 +81,31 @@ export const AddProduct = () => {
               <StyledImageInput
                 id="inputFile"
                 type="file"
+                multiple
                 onChange={(e) => {
-                  fileChange(e.target.files[0]);
+                  fileChange(e.target.files);
                 }}
               />
-              <SyltedImageView src={imgView} alt="이미지 미리보기" />
-              <StyledDeleteImg onClick={initImage}>사진제거</StyledDeleteImg>
+              <StyledProductImagetWrap>
+                <SyltedImageView
+                  src={imgView===undefined?defaultImg:imgView}
+                  alt="이미지 미리보기"
+                />
+                <StyledProductSubImageWrap>
+                  <StyledProductSubImage
+                    // src={imgView[1] === undefined ? defaultImg : imgView[1]}
+                    src={defaultImg}
+                  />
+                  <StyledProductSubImage
+                    // src={imgView[2] === undefined ? defaultImg : imgView[2]}
+                    src={defaultImg}
+                  />
+                  <StyledProductSubImage
+                    // src={imgView[3] === undefined ? defaultImg : imgView[3]}
+                    src={defaultImg}
+                  />
+                </StyledProductSubImageWrap>
+              </StyledProductImagetWrap>
             </StyledFormImageInputWrap>
             <StyledImageSource>
               imageSource: "https://icons8.com/icon/85123/expand-arrow Expand
@@ -225,12 +247,24 @@ const StyledImageInput = styled.input`
   display: none;
 `;
 
+const StyledProductImagetWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 200px;
+`;
+
 const SyltedImageView = styled.img`
   margin-top: 20px;
-  margin-right: 70px;
 
   width: 250px;
   height: 250px;
+`;
+
+const StyledProductSubImageWrap = styled.div``;
+const StyledProductSubImage = styled.img`
+  width: 150px;
+  height: 150px;
 `;
 
 const StyledDeleteImg = styled.span`
@@ -314,7 +348,7 @@ const StyledDateInput = styled.input`
 `;
 
 const StyledPostTitle = styled.input`
-  margin-top: 130px;
+  margin-top: 170px;
   padding: 10px;
   width: 400px;
   height: 30px;
