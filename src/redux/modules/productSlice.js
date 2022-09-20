@@ -90,24 +90,36 @@ export const productSlice = createSlice({
     },
     [addProducts.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.comments.push(action.payload);
+      state.products[0].data = state.products[0].data
+        .concat(action.payload)
+        .map((item) => item);
+      return state;
     },
     [updateProducts.fulfilled]: (state, action) => {
       state.isLoading = false;
-      const newState = state.comments.map((item) =>
-        action.payload.id === item.id
-          ? { ...item, content: action.payload.content }
+      const newState = state.products[0].data.map((item) =>
+        action.meta.arg.id === item.id
+          ? {
+              ...item,
+              title: action.payload.title,
+              description: action.payload.description,
+              category: action.payload.category,
+              price: action.payload.price,
+              startDate: action.payload.startDate,
+              endDate: action.payload.endDate,
+              images: action.payload.images,
+            }
           : item
       );
-      state.comments = newState;
+      state.products[0].data = newState;
       return state;
     },
     [deleteProducts.fulfilled]: (state, action) => {
       state.isLoading = false;
-      const newState = state.comments.filter(
-        (item) => item.id !== action.meta.arg
+      const newState = state.products[0].data.filter(
+        (item) => item.id !== action.payload.id
       );
-      state.comments = newState;
+      state.products[0].data = newState;
       return state;
     },
 
