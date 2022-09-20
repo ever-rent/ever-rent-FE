@@ -4,11 +4,12 @@ import { useState, useEffect } from "react";
 import { Layout } from "../components/layout/Layout";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProducts } from "../redux/modules/productSlice";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 
 export const EditProduct = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const param = useParams();
   console.log(param);
@@ -127,6 +128,7 @@ export const EditProduct = () => {
         console.log(formData)
       dispatch(updateProducts([formData,{productId:param.id}]));
     };
+    navigate("/")
   };
 
   return (
@@ -261,7 +263,9 @@ export const EditProduct = () => {
             }}
           />
           <StyledButtonBox>
-            <StyledGoBackButton>뒤로가기</StyledGoBackButton>
+            <StyledGoBackButton onClick={() => {
+                navigate("/");
+              }}>홈으로</StyledGoBackButton>
             <StyledFormButton
               disabled={disabled}
               type="button"
@@ -348,7 +352,6 @@ const StyledDeleteImg = styled.span`
   line-height: 25px;
 
   color: rgb(71, 181, 255);
-  cursor: pointer;
   border-radius: 10px;
 
   text-align: center;
