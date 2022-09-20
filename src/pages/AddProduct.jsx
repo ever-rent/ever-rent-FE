@@ -122,7 +122,7 @@ export const AddProduct = () => {
       formData.append("multipartFile", sendImage);
       dispatch(addProducts(formData));
     }
-    navigate("/")
+    navigate("/");
   };
   // console.log(sendImage)
 
@@ -209,6 +209,7 @@ export const AddProduct = () => {
                 <StyledCategoryOptions value="8">기타</StyledCategoryOptions>
               </StyledCategorySelector>
               <StyledPriceWrap>
+                <StyledPriceData>일</StyledPriceData>
                 <StyledPriceInput
                   id="itemPrice"
                   type="text"
@@ -390,7 +391,11 @@ const StyledImageSource = styled.span`
 const StyledCategoryOptions = styled.option``;
 
 const StyledPriceWrap = styled.div``;
+const StyledPriceData = styled.span`
+  margin-right: 10px;
+`;
 const StyledPriceInput = styled.input`
+  width: 180px;
   border: 1px solid rgb(71, 181, 255);
   padding: 10px;
   border-radius: 10px;

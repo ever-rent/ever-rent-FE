@@ -2,11 +2,7 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 
 import { Layout } from "../components/layout/Layout";
-import {
-  deleteProducts,
-  getProducts,
-  getProductsDetail,
-} from "../redux/modules/productSlice";
+import { deleteProducts, getProducts } from "../redux/modules/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -65,18 +61,16 @@ export const ProductDetail = () => {
   const defaultUserImg =
     "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNF5TD%2FbtrMyfbzuN7%2FJZiKO75eVNPNAGHIPtrAnK%2Fimg.png";
 
+  const [writeAt, setWriteAt] = useState("");
   const [createdAt, setCreatedAt] = useState("");
+
   useEffect(() => {
-    setCreatedAt(detailData.writeAt);
-  }, []);
-  useEffect(() => {
-    if (createdAt !== ``) {
-      setCreatedAt(detailData.writeAt);
-    }
-  }, [createdAt]);
+    let timeStatus = detailData?.writeAt;
+    timeStatus !== undefined ? setWriteAt(timeStatus) : (timeStatus = "");
+    setCreatedAt(timeToToday(writeAt));
+  }, [writeAt, detailData]);
 
   const [editabled, setEditabled] = useState(true);
-
   const [userImage, setUserImage] = useState(defaultUserImg);
 
   const deletePost = () => {
@@ -157,10 +151,7 @@ export const ProductDetail = () => {
                 <StyledPostCategory>
                   {categoriNumber(detailData?.cateId)}
                 </StyledPostCategory>
-                <StyledTimeForToday>
-                  {" "}
-                  ㆍ{timeToToday(createdAt)}
-                </StyledTimeForToday>
+                <StyledTimeForToday> ㆍ{createdAt}</StyledTimeForToday>
               </StyledPostEachWrap>
               <StyledProductPrice>{detailData?.price}(원)</StyledProductPrice>
               <StyledPostDescription>
