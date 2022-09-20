@@ -2,14 +2,32 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { productAPI } from "../../server/api";
 import { current } from "@reduxjs/toolkit";
 
+//Main page 상품 GET
 export const getProducts = createAsyncThunk(
   "GET_PRODUCTS",
   async (_, thunkAPI) => {
-    // console.log("products get 시작");
+    console.log("products get 시작");
     try {
       // const res = await instance.get("api/products");
       const res = await productAPI.getProducts();
-      // console.log("producs get 성공", res.data);
+
+      console.log("producs get 성공", res.data);
+      return thunkAPI.fulfillWithValue(res.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+//Category 상품 GET
+export const getCategory = createAsyncThunk(
+  "GET_CATEGORY_DETAIL",
+  async (payload, thunkAPI) => {
+    // console.log("getCategory get 시작");
+    try {
+      // const res = await instance.get("api/products");
+      const res = await productAPI.getCategory(payload);
+      // console.log("getCategory get 성공", res.data);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -24,6 +42,7 @@ export const getProductsDetail = createAsyncThunk(
     try {
       // const res = await instance.get("api/products");
       const res = await productAPI.getProductDetail(payload.id);
+
       // console.log("producs get 성공", res.data);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (error) {
@@ -77,6 +96,7 @@ export const productSlice = createSlice({
   name: "products",
   initialState: {
     products: [],
+    category: [],
   },
   reducers: {},
   extraReducers: {
@@ -101,8 +121,8 @@ export const productSlice = createSlice({
     [getProducts.fulfilled]: (state, action) => {
       // console.log("reducer", action);
       state.products = action.payload;
-      // console.log(action);
     },
+
     [getProductsDetail.fulfilled]: (state, action) => {
       // console.log("reducer", action);
       state.products = action.payload;
@@ -144,6 +164,11 @@ export const productSlice = createSlice({
       );
       state.products[0].data = newState;
       return state;
+    },
+
+    [getCategory.fulfilled]: (state, action) => {
+      // console.log("getCategoryDetail>>", action);
+      state.category = action.payload;
     },
 
     /* Rejected */

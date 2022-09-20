@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { CategoryBox } from "../category/CategoryBox";
 
 export const Header = () => {
   const navigate = useNavigate()
@@ -31,7 +30,6 @@ export const Header = () => {
         </StyledSignMenu>
         <StyledSideMenu alt="https://icons8.com/icon/36389/menu-rounded Menu Rounded https://icons8.com" />
       </StyledHeaderTop>
-      <CategoryBox />
     </>
   );
 };
