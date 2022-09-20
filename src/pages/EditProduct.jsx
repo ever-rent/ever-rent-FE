@@ -2,12 +2,13 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 
 import { Layout } from "../components/layout/Layout";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateProducts } from "../redux/modules/productSlice";
 
 
 export const EditProduct = () => {
   const dispatch = useDispatch();
+
 
   const defaultImg =
     "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png";
@@ -175,22 +176,22 @@ export const EditProduct = () => {
                 <StyledCategoryOptions value="noneData" disabled>
                   상품 종류를 골라주세요!
                 </StyledCategoryOptions>
-                <StyledCategoryOptions value="디지털기기">
+                <StyledCategoryOptions value="1">
                   디지털기기
                 </StyledCategoryOptions>
-                <StyledCategoryOptions value="공구">공구</StyledCategoryOptions>
-                <StyledCategoryOptions value="생활가전">
+                <StyledCategoryOptions value="2">공구</StyledCategoryOptions>
+                <StyledCategoryOptions value="3">
                   생활가전
                 </StyledCategoryOptions>
-                <StyledCategoryOptions value="잡화">잡화</StyledCategoryOptions>
-                <StyledCategoryOptions value="스포츠/레저">
+                <StyledCategoryOptions value="4">잡화</StyledCategoryOptions>
+                <StyledCategoryOptions value="5">
                   스포츠/레저
                 </StyledCategoryOptions>
-                <StyledCategoryOptions value="취미/게임/음반">
+                <StyledCategoryOptions value="6">
                   취미/게임/음반
                 </StyledCategoryOptions>
-                <StyledCategoryOptions value="도서">도서</StyledCategoryOptions>
-                <StyledCategoryOptions value="기타">기타</StyledCategoryOptions>
+                <StyledCategoryOptions value="7">도서</StyledCategoryOptions>
+                <StyledCategoryOptions value="8">기타</StyledCategoryOptions>
               </StyledCategorySelector>
               <StyledPriceWrap>
                 <StyledPriceInput

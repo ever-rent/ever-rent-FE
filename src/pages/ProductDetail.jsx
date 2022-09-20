@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 
 import { Layout } from "../components/layout/Layout";
-import { deleteProducts } from "../redux/modules/productSlice";
-import { useDispatch } from "react-redux";
+import { deleteProducts, getProductsDetail } from "../redux/modules/productSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 const FavoritIconButton = () => {
@@ -44,6 +44,13 @@ export const ProductDetail = () => {
     "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png";
   const defaultUserImg =
     "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNF5TD%2FbtrMyfbzuN7%2FJZiKO75eVNPNAGHIPtrAnK%2Fimg.png";
+
+useEffect(() => {
+  dispatch(getProductsDetail(param))
+}, []);
+
+    const data = useSelector((state)=>state.product.products)
+    
 
   const [editabled, setEditabled] = useState(true);
 
