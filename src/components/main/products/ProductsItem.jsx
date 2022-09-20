@@ -1,14 +1,21 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 export const ProductsItem = ({ data }) => {
-  const { img1, title, price, address, Like, chat } = data;
+  const navigate = useNavigate();
+  const { id, img1, title, price, address, Like, chat } = data;
   // console.log(props.data);
   return (
     <StyledItemBox>
       <StyledImgBox>
-        {/* TODO: onClick event 만들기.(detail page로 이동.) */}
-        <StyledImg src={img1} alt="이미지 없음" />
+        <StyledImg
+          onClick={() => {
+            navigate(`/productDetail/${id}`);
+          }}
+          src={img1}
+          alt="이미지 없음"
+        />
       </StyledImgBox>
       <StyledContentBox>
         <StyledTitle>{title && title}</StyledTitle>
@@ -42,23 +49,25 @@ const StyledItemBox = styled.div`
   padding: 15px 15px 0 15px;
   position: relative;
   border-radius: 10px;
-  /* background-color: #fefdfd1f; */
   /* background: radial-gradient(#ebedee6e, #fefefe); */
   background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee6e 100%);
-  /* background-image: linear-gradient(to top, #fff1eb 0%, #ace1f965 100%); */
-  /* box-shadow: 5px 5px 15px 10px gray; */
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  /* box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 20px; */
-  /* box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
-    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px; */
-  /* width: 100%; */
+  @media only screen and (max-width: 480px) {
+    display: flex;
+    background-color: white;
+    padding: 0;
+    align-items: center;
+    /* width: 100%; */
+  }
 `;
 
 const StyledImgBox = styled.div`
   /* border: 1px solid red; */
-
   padding: 5px;
   margin-bottom: 5px;
+  @media only screen and (max-width: 480px) {
+    margin: 0 10px;
+  }
 `;
 
 const StyledImg = styled.img`
@@ -66,6 +75,10 @@ const StyledImg = styled.img`
   border-radius: 8px;
   width: 100%;
   cursor: pointer;
+  @media only screen and (max-width: 480px) {
+    width: 100px;
+    height: 100px;
+  }
 `;
 
 const StyledContentBox = styled.div`

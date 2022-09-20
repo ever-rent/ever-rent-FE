@@ -7,7 +7,7 @@ export const getProducts = createAsyncThunk(
   async (_, thunkAPI) => {
     // console.log("products get 시작");
     try {
-      // const res = await instance.get("api/products");
+      // const res = await instance.get('/products');
       const res = await axios.get("http://localhost:3001/products");
       // console.log("producs get 성공", res.data);
       return thunkAPI.fulfillWithValue(res.data);
@@ -20,11 +20,11 @@ export const getProducts = createAsyncThunk(
 //Category page 상품 GET
 export const getCategoryDetail = createAsyncThunk(
   "GET_CATEGORY_DETAIL",
-  async (payload, thunkAPI) => {
+  async (categoryId, thunkAPI) => {
     // console.log("getCategoryDetail 시작");
     try {
-      // const res = await instance.get("api/products");
-      const res = await axios.get("http://localhost:3001/category", payload);
+      // const res = await instance.get(`/categories/${categoryId}`);
+      const res = await axios.get("http://localhost:3001/category");
       // console.log("getCategoryDetail 성공>>", res.data);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (error) {
