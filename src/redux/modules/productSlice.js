@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+//Main page 상품 GET
 export const getProducts = createAsyncThunk(
   "GET_PRODUCTS",
   async (_, thunkAPI) => {
@@ -16,17 +17,37 @@ export const getProducts = createAsyncThunk(
   }
 );
 
+//Category page 상품 GET
+export const getCategoryDetail = createAsyncThunk(
+  "GET_CATEGORY_DETAIL",
+  async (payload, thunkAPI) => {
+    // console.log("getCategoryDetail 시작");
+    try {
+      // const res = await instance.get("api/products");
+      const res = await axios.get("http://localhost:3001/category", payload);
+      // console.log("getCategoryDetail 성공>>", res.data);
+      return thunkAPI.fulfillWithValue(res.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const productSlice = createSlice({
   name: "products",
   initialState: {
     products: [],
+    category: [],
   },
   reducers: {},
   extraReducers: {
     [getProducts.fulfilled]: (state, action) => {
       // console.log("reducer", action);
       state.products = action.payload;
-      // console.log(action);
+    },
+    [getCategoryDetail.fulfilled]: (state, action) => {
+      // console.log("getCategoryDetail>>", action);
+      state.category = action.payload;
     },
   },
 });

@@ -2,14 +2,16 @@ import React from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { Layout } from "../components/layout/Layout";
-import { Products } from "../components/main/products/Products";
-import { ProductsItem } from "../components/main/products/ProductsItem";
+import { getCategoryDetail } from "../redux/modules/productSlice";
+import { DetailItem } from "../components/detail/DetailItem";
+// import { Products } from "../components/main/products/Products";
+// import { ProductsItem } from "../components/main/products/ProductsItem";
 
 export const CategoryDetail = () => {
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.products);
-  const productList = products?.products;
-  // console.log(productList);
+  const category = useSelector((state) => state.category);
+  const categoryItems = category?.category;
+  // console.log(categoryItems);
 
   const categoryList = [
     { value: "", name: "카테고리를 선택하세요" },
@@ -55,15 +57,24 @@ export const CategoryDetail = () => {
   ];
 
   const categoryHandler = (e) => {
-    console.log(e.target.value);
+    e.preventDefault();
+    const categoryPayload = {};
+    dispatch(getCategoryDetail(categoryPayload));
+    // console.log(e.target.value);
   };
 
   const addressHandler = (e) => {
-    console.log(e.target.value);
+    e.preventDefault();
+    const addressPayload = {};
+    dispatch(getCategoryDetail(addressPayload));
+    // console.log(e.target.value);
   };
 
   const priceHandler = (e) => {
-    console.log(e.target.value);
+    e.preventDefault();
+    const pricePayload = {};
+    dispatch(getCategoryDetail(pricePayload));
+    // console.log(e.target.value);
   };
 
   return (
@@ -92,7 +103,9 @@ export const CategoryDetail = () => {
           ))}
         </StyledSelect>
       </StyledSelectBox>
-
+      {categoryItems.map((item) => {
+        return <DetailItem {...item} key={item.id} />;
+      })}
       {/* <Products /> */}
     </Layout>
   );

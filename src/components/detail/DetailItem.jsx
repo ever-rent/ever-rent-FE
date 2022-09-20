@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-export const ProductsItem = ({ data }) => {
+export const DetailItem = ({ data }) => {
   const { img1, title, price, address, Like, chat } = data;
-  // console.log(props.data);
   return (
     <StyledItemBox>
       <StyledImgBox>
