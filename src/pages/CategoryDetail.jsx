@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { Layout } from "../components/layout/Layout";
-import { getCategoryDetail } from "../redux/modules/productSlice";
+import { getCategory } from "../redux/modules/productSlice";
 import { DetailItem } from "../components/detail/DetailItem";
 // import { Products } from "../components/main/products/Products";
 // import { ProductsItem } from "../components/main/products/ProductsItem";
@@ -59,7 +59,7 @@ export const CategoryDetail = () => {
   const categoryHandler = (e) => {
     e.preventDefault();
     const categoryId = e.target.value;
-    dispatch(getCategoryDetail(categoryId));
+    dispatch(getCategory(categoryId));
     // console.log(e.target.value);
   };
 
