@@ -1,26 +1,25 @@
 import React from "react";
 import styled from "styled-components";
 
-export const DetailItem = ({ data }) => {
-  const { img1, title, price, address, Like, chat } = data;
+export const DetailItem = ({ imgUrl, productName, price }) => {
   return (
     <StyledItemBox>
       <StyledImgBox>
         {/* TODO: onClick event 만들기.(detail page로 이동.) */}
-        <StyledImg src={img1} alt="이미지 없음" />
+        <StyledImg src={imgUrl} alt="이미지 없음" />
       </StyledImgBox>
       <StyledContentBox>
-        <StyledTitle>{title && title}</StyledTitle>
+        <StyledTitle>{productName}</StyledTitle>
         <StyledPay>{price}</StyledPay>
         <StyledDay> / 일</StyledDay>
-        <StyledAddress>{address}</StyledAddress>
+        <StyledAddress>{}</StyledAddress>
         <StyledLikeAndChat>
           <StyledLikeWrap>
             <StyledLike
               src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
               alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
             />
-            <span>찜 {Like}</span>
+            <span>찜 {}</span>
           </StyledLikeWrap>
 
           <StyledChatWrap>
@@ -28,7 +27,7 @@ export const DetailItem = ({ data }) => {
               src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
               alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
             />
-            <span>채팅 {chat}</span>
+            <span>채팅 {}</span>
           </StyledChatWrap>
         </StyledLikeAndChat>
       </StyledContentBox>

@@ -3,7 +3,7 @@ import { auth } from "./core/instance";
 
 export const productAPI = {
   getProducts: () => base.get(`/products`),
-  getCategory: (categoryId) => base.get(`/category${categoryId}`),
+  getCategory: (categoryId) => base.get(`/categories/${categoryId}`),
   getProductDetail: (productId) => base.get(`/products/${productId}`),
 
   addProduct: (data) => auth.post(`/products`, data),

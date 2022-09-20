@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Layout } from "../components/layout/Layout";
 import { getCategory } from "../redux/modules/productSlice";
@@ -8,16 +9,21 @@ import { DetailItem } from "../components/detail/DetailItem";
 // import { ProductsItem } from "../components/main/products/ProductsItem";
 
 export const CategoryDetail = () => {
+  const { id } = useParams();
   const dispatch = useDispatch();
-  const category = useSelector((state) => state.category);
-  const categoryItems = category?.category.data;
-  console.log(category);
+  const category = useSelector((state) => state.products.category);
+  const categoryItems = category?.data;
+  console.log(categoryItems);
+
+  useEffect(() => {
+    dispatch(getCategory(id));
+  }, [dispatch, id]);
 
   const categoryList = [
     { value: "0", name: "카테고리를 선택하세요" },
     { value: "1", name: "디지털기기" },
     { value: "2", name: "공구" },
-    { value: "3", name: "디지털기기" },
+    { value: "3", name: "생활가전" },
     { value: "4", name: "잡화" },
     { value: "5", name: "스포츠/레저" },
     { value: "6", name: "취미/게임/음반" },
@@ -26,9 +32,9 @@ export const CategoryDetail = () => {
   ];
 
   const addressList = [
+    { value: "0", name: "지역을 선택하세요" },
     { value: "1", name: "서울특별시" },
     { value: "2", name: "부산광역시" },
-    { value: "0", name: "지역을 선택하세요" },
     { value: "3", name: "대구광역시" },
     { value: "4", name: "인천광역시" },
     { value: "5", name: "광주광역시" },
@@ -85,14 +91,14 @@ export const CategoryDetail = () => {
     <Layout>
       <StyledSelectBox>
         <StyledSelect onChange={categoryHandler}>
-          {categoryList.map((option) => (
+          {categoryList?.map((option) => (
             <option key={option.value} value={option.value}>
               {option.name}
             </option>
           ))}
         </StyledSelect>
         <StyledSelect onChange={addressHandler}>
-          {addressList.map((option) => (
+          {addressList?.map((option) => (
             <option key={option.value} value={option.value}>
               {option.name}
             </option>
@@ -100,14 +106,14 @@ export const CategoryDetail = () => {
         </StyledSelect>
 
         <StyledSelect onChange={priceHandler}>
-          {priceList.map((option) => (
+          {priceList?.map((option) => (
             <option key={option.value} value={option.value}>
               {option.name}
             </option>
           ))}
         </StyledSelect>
       </StyledSelectBox>
-      {categoryItems.map((item) => {
+      {categoryItems?.map((item) => {
         return <DetailItem {...item} key={item.id} />;
       })}
     </Layout>

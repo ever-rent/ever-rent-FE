@@ -5,7 +5,7 @@ import styled from "styled-components";
 export const ProductsItem = ({
   id,
   imgUrl,
-  title,
+  productName,
   price,
   address,
   Like,
@@ -26,7 +26,7 @@ export const ProductsItem = ({
         />
       </StyledImgBox>
       <StyledContentBox>
-        <StyledTitle>{title && title}</StyledTitle>
+        <StyledTitle>{productName}</StyledTitle>
         <StyledPay>{price}</StyledPay>
         <StyledDay> / 일</StyledDay>
         <StyledAddress>{address}</StyledAddress>
