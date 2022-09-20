@@ -2,12 +2,16 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 
 import { Layout } from "../components/layout/Layout";
-import { deleteProducts, getProducts,getProductsDetail } from "../redux/modules/productSlice";
+import {
+  deleteProducts,
+  getProducts,
+  getProductsDetail,
+} from "../redux/modules/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { categoriNumber } from "../util/categoryNumber";
-import {timeToToday} from "../util/timeToToday"
+import { timeToToday } from "../util/timeToToday";
 
 const FavoritIconButton = () => {
   const [liked, setLiked] = useState(false);
@@ -45,42 +49,45 @@ export const ProductDetail = () => {
   const param = useParams();
 
   useEffect(() => {
-    dispatch(getProducts())
+    dispatch(getProducts());
   }, []);
-  // useEffect(() => {
-  //   dispatch(getProductsDetail(param))
-  // }, []);
+
   const data = useSelector((state) => state.products.products);
-  const detailData = data?.filter((element)=>element.id===Number(param.id))[0]
-  console.log(data)
-  console.log(detailData)
-  console.log(param.id)
-  console.log(param)
+  const detailData = data?.filter(
+    (element) => element.id === Number(param.id)
+  )[0];
+  console.log(data);
+  console.log(detailData);
+  console.log(param.id);
+  console.log(param);
   const defaultImg =
     "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png";
   const defaultUserImg =
     "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNF5TD%2FbtrMyfbzuN7%2FJZiKO75eVNPNAGHIPtrAnK%2Fimg.png";
 
+  const [createdAt, setCreatedAt] = useState("");
+  useEffect(() => {
+    setCreatedAt(detailData.writeAt);
+  }, []);
+  useEffect(() => {
+    if (createdAt !== ``) {
+      setCreatedAt(detailData.writeAt);
+    }
+  }, [createdAt]);
 
   const [editabled, setEditabled] = useState(true);
 
   const [userImage, setUserImage] = useState(defaultUserImg);
 
-  
-
   const deletePost = () => {
     if (window.confirm("진짜 삭제하실건가요..?")) {
       dispatch(deleteProducts(param));
       alert("삭제완료");
-      navigate("/")
+      navigate("/");
     } else {
       alert("휴");
     }
   };
-
-  useEffect(() => {
-    dispatch(getProducts())
-  }, []);
 
   return (
     <Layout>
@@ -91,14 +98,23 @@ export const ProductDetail = () => {
               editabled === false ? { display: "none" } : { display: "flex" }
             }
           >
-            <StyledEditButton onClick={()=>{navigate(`/editProduct/${param.id}`)}}>글 수정</StyledEditButton>
+            <StyledEditButton
+              onClick={() => {
+                navigate(`/editProduct/${param.id}`);
+              }}
+            >
+              글 수정
+            </StyledEditButton>
             <StyledDeleteButton onClick={deletePost}>
               글 삭제 X
             </StyledDeleteButton>
           </StyledEditableOption>
           <StyledPostHeadWrap>
             <StyledProductImagetWrap>
-              <SyltedProductMainImage src={detailData&&detailData.imgUrl} alt="이미지 미리보기" />
+              <SyltedProductMainImage
+                src={detailData && detailData.imgUrl}
+                alt="이미지 미리보기"
+              />
               <StyledProductSubImageWrap>
                 <StyledProductSubImage src={defaultImg} />
                 <StyledProductSubImage src={defaultImg} />
@@ -128,22 +144,28 @@ export const ProductDetail = () => {
             <StyledUserInfo>
               <StyledUserimage src={userImage} />
               <StyledUserSubInfo>
-                <StyledUserNickname>{detailData&&detailData.memberName}</StyledUserNickname>
+                <StyledUserNickname>
+                  {detailData?.memberName}
+                </StyledUserNickname>
                 <StyledUserLocation>지역</StyledUserLocation>
               </StyledUserSubInfo>
             </StyledUserInfo>
             <StyledPostHr />
             <StyledPostMain>
-              <StyledPostTitle>{detailData&&detailData.productName}</StyledPostTitle>
+              <StyledPostTitle>{detailData?.productName}</StyledPostTitle>
               <StyledPostEachWrap>
-                <StyledPostCategory>{categoriNumber(detailData&&detailData.cateId)}</StyledPostCategory>
-                <StyledTimeForToday> ㆍ
-                  며칠 전
-                  {/* {timeToToday(data.writeAt)} */}
-                  </StyledTimeForToday>
+                <StyledPostCategory>
+                  {categoriNumber(detailData?.cateId)}
+                </StyledPostCategory>
+                <StyledTimeForToday>
+                  {" "}
+                  ㆍ{timeToToday(createdAt)}
+                </StyledTimeForToday>
               </StyledPostEachWrap>
-              <StyledProductPrice>{detailData&&detailData.price}(원)</StyledProductPrice>
-              <StyledPostDescription>{detailData&&detailData.content}</StyledPostDescription>
+              <StyledProductPrice>{detailData?.price}(원)</StyledProductPrice>
+              <StyledPostDescription>
+                {detailData?.content}
+              </StyledPostDescription>
             </StyledPostMain>
           </StyledPostBodyWrap>
         </StyledDetailProductWrap>

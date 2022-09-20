@@ -1,4 +1,5 @@
 export const categoriNumber = (cateId) => {
+  // 카테고리 넘버
   if (cateId === "1") {
     return "디지털기기";
   }

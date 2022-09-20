@@ -1,5 +1,10 @@
 export const timeToToday = (writeAt) => {
-    let  createdAt = new Date(`${writeAt[0]}-${writeAt[1]}-${writeAt[2]} ${writeAt[3]}:${writeAt[4]}:${writeAt[5]}`)
+    // 몇 분 전 로직
+    console.log(writeAt);
+  let createdAt = new Date(
+    `${writeAt[0]}-${writeAt[1]}-${writeAt[2]} ${writeAt[3]}:${writeAt[4]}:${writeAt[5]}`
+  );
+  console.log(createdAt);
 
   const milliSeconds = new Date() - createdAt;
   const seconds = milliSeconds / 1000;
