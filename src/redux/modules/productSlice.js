@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { productAPI } from "../../server/api";
 
 export const getProducts = createAsyncThunk(
   "GET_PRODUCTS",
@@ -7,7 +7,7 @@ export const getProducts = createAsyncThunk(
     // console.log("products get 시작");
     try {
       // const res = await instance.get("api/products");
-      const res = await axios.get("http://localhost:3001/products");
+      const res = await productAPI.getProductDetail()
       // console.log("producs get 성공", res.data);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (error) {
@@ -20,10 +20,7 @@ export const addProducts = createAsyncThunk(
   "POST_PRODUCTS",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.post(
-        `http://localhost:3001/products`,
-        payload
-      );
+      const { data } = await productAPI.addProduct(payload)
       console.log("data", data);
       return thunkAPI.fulfillWithValue(data);
     } catch (errer) {
@@ -37,10 +34,7 @@ export const updateProducts = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       console.log(payload);
-      const response = await axios.put(
-        `http://localhost:3001/products/${payload}`,
-        payload
-      );
+      const response = await productAPI.updateProduct(payload)
       console.log("response", response);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
@@ -53,7 +47,7 @@ export const deleteProducts = createAsyncThunk(
   "DELETE_PRODUCTS",
   async (payload, thunkAPI) => {
     try {
-      await axios.delete(`http://localhost:3001/products/${payload}`);
+      await productAPI.deleteProduct(payload)
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
