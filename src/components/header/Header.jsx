@@ -19,7 +19,13 @@ export const Header = () => {
             />
           </StyledSearchWrap>
         </StyledHeaderWrap>
-        <StyledAddProductButton>글쓰기</StyledAddProductButton>
+        <StyledSignMenu>
+          <StyledLoginTab>
+            <StyledLoginSpan>로그인</StyledLoginSpan>
+            <StyledLoginSpan>회원가입</StyledLoginSpan>
+          </StyledLoginTab>
+          <StyledAddProductButton>글쓰기</StyledAddProductButton>
+        </StyledSignMenu>
         <StyledSideMenu alt="https://icons8.com/icon/36389/menu-rounded Menu Rounded https://icons8.com" />
       </StyledHeaderTop>
       <CategoryBox />
@@ -29,6 +35,7 @@ export const Header = () => {
 
 const StyledHeaderTop = styled.header`
   display: flex;
+  justify-content: center;
   align-items: center;
   position: relative;
   top: 0px;
@@ -36,8 +43,7 @@ const StyledHeaderTop = styled.header`
 
   width: 100%;
   height: 78px;
-
-  box-shadow: 0px 0px 1px 0px #a09f9f;
+  border-bottom: 1px solid #ececec;
 `;
 
 const StyledLogoImageWrap = styled.div`
@@ -46,26 +52,24 @@ const StyledLogoImageWrap = styled.div`
 `;
 
 const StyledLogoImg = styled.img`
-  width: 300px;
-  height: 60px;
-
-  vertical-align: middle;
+  width: 200px;
+  height: 40px;
   cursor: pointer;
 `;
 
 const StyledHeaderWrap = styled.div`
-  width: 100%;
+  /* width: 1024px; */
 `;
 
-const StyledSearchWrap = styled.div`
+const StyledSearchWrap = styled.form`
   display: flex;
   align-items: center;
-  max-width: 480px;
+  max-width: 400px;
   min-width: 120px;
   margin-left: 30px;
   border-radius: 20px;
   border-color: rgb(71, 181, 255);
-  box-shadow: 1px 0 4px 1px rgb(71, 181, 255);
+  box-shadow: 1px 1px 4px 1px rgb(71, 181, 255);
   transition: box-shadow 0.2s ease-in-out 0s;
 `;
 
@@ -78,10 +82,6 @@ const StyledSearchButton = styled.button`
   background-image: url("https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FeAy66g%2FbtrMjWY3xqU%2Fm1EZ0SnIuAjUklSkeWYRqk%2Fimg.png");
   cursor: pointer;
   margin-left: 10px;
-
-  &:hover {
-    background-color: #f1f1f1;
-  }
 `;
 
 const StyledSearchInput = styled.input`
@@ -92,16 +92,33 @@ const StyledSearchInput = styled.input`
   border-radius: 15px;
 
   margin-left: 20px;
-
+  font-size: 16px;
   &:focus {
     outline: none;
   }
 `;
 
+const StyledSignMenu = styled.div`
+  display: flex;
+  align-items: center;
+
+  margin-left: 40px;
+`;
+
+const StyledLoginTab = styled.div`
+  display: flex;
+  margin-right: 10px;
+`;
+const StyledLoginSpan = styled.span`
+  margin-right: 10px;
+  font-size: 14px;
+  color: #2e2e2e;
+`;
+
 const StyledAddProductButton = styled.button`
-  width: 150px;
+  width: 100px;
   height: 40px;
-  margin-right: 50px;
+  margin-left: 10px;
 
   background-color: rgb(71, 181, 255);
   border: none;
@@ -119,9 +136,10 @@ const StyledAddProductButton = styled.button`
 `;
 
 const StyledSideMenu = styled.span`
-  margin-left: 60px;
+  margin-left: 50px;
   margin-right: 40px;
-  background-image: url("https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FXEErZ%2FbtrMjt32JCS%2FkCpkPLTB63X2PhhFE9Rin1%2Fimg.png");
+  background: url("https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FXEErZ%2FbtrMjt32JCS%2FkCpkPLTB63X2PhhFE9Rin1%2Fimg.png")
+    no-repeat 55% 50%;
   width: 75px;
   height: 50px;
   background-color: transparent;
@@ -129,6 +147,7 @@ const StyledSideMenu = styled.span`
   border-radius: 10px;
   cursor: pointer;
   margin-left: 10px;
+
   &:hover {
     background-color: #f1f1f1;
   }
