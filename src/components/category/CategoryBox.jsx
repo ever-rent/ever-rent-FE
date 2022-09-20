@@ -67,9 +67,9 @@ export const CategoryBox = () => {
 };
 
 const StyledCategoryH2 = styled.h2`
-    margin-top:100px;
-    text-align:center;
-`
+  margin-top: 100px;
+  text-align: center;
+`;
 
 const StyledCategoryBox = styled.div`
   margin-top: 50px;

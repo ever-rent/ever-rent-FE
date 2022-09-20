@@ -1,13 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { productAPI } from "../../server/api";
 
+//Main page 상품 GET
 export const getProducts = createAsyncThunk(
   "GET_PRODUCTS",
   async (_, thunkAPI) => {
     // console.log("products get 시작");
     try {
       // const res = await instance.get("api/products");
-      const res = await productAPI.getProducts()
+      const res = await productAPI.getProducts();
       // console.log("producs get 성공", res.data);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (error) {
@@ -22,7 +23,7 @@ export const getProductsDetail = createAsyncThunk(
     // console.log("products get 시작");
     try {
       // const res = await instance.get("api/products");
-      const res = await productAPI.getProductDetail(payload)
+      const res = await productAPI.getProductDetail(payload);
       // console.log("producs get 성공", res.data);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (error) {
@@ -35,7 +36,7 @@ export const addProducts = createAsyncThunk(
   "POST_PRODUCTS",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await productAPI.addProduct(payload)
+      const { data } = await productAPI.addProduct(payload);
       console.log("data", data);
       return thunkAPI.fulfillWithValue(data);
     } catch (errer) {
@@ -49,7 +50,7 @@ export const updateProducts = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       console.log(payload);
-      const response = await productAPI.updateProduct(payload)
+      const response = await productAPI.updateProduct(payload);
       console.log("response", response);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
@@ -62,7 +63,7 @@ export const deleteProducts = createAsyncThunk(
   "DELETE_PRODUCTS",
   async (payload, thunkAPI) => {
     try {
-      await productAPI.deleteProduct(payload)
+      await productAPI.deleteProduct(payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -74,6 +75,7 @@ export const productSlice = createSlice({
   name: "products",
   initialState: {
     products: [],
+    category: [],
   },
   reducers: {},
   extraReducers: {
@@ -98,7 +100,10 @@ export const productSlice = createSlice({
     [getProducts.fulfilled]: (state, action) => {
       // console.log("reducer", action);
       state.products = action.payload;
-      // console.log(action);
+    },
+    [getCategoryDetail.fulfilled]: (state, action) => {
+      // console.log("getCategoryDetail>>", action);
+      state.category = action.payload;
     },
     [getProductsDetail.fulfilled]: (state, action) => {
       // console.log("reducer", action);

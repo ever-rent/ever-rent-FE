@@ -30,4 +30,12 @@ const StyledProductsContainer = styled.div`
   /* justify-items: center; //가로방향 가운데 정렬 */
   margin-top: 30px;
   gap: 50px 40px;
+  @media only screen and (max-width: 480px) {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    /* margin: auto; */
+    /* grid-template-columns: repeat(1, 1fr); */
+    width: 100%;
+  }
 `;
