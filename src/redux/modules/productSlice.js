@@ -5,11 +5,11 @@ import { productAPI } from "../../server/api";
 export const getProducts = createAsyncThunk(
   "GET_PRODUCTS",
   async (_, thunkAPI) => {
-    // console.log("products get 시작");
+    console.log("products get 시작");
     try {
       // const res = await instance.get("api/products");
       const res = await productAPI.getProducts();
-      // console.log("producs get 성공", res.data);
+      console.log("producs get 성공", res.data);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

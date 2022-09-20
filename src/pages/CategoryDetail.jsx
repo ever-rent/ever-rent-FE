@@ -10,40 +10,40 @@ import { DetailItem } from "../components/detail/DetailItem";
 export const CategoryDetail = () => {
   const dispatch = useDispatch();
   const category = useSelector((state) => state.category);
-  const categoryItems = category?.category;
-  // console.log(categoryItems);
+  const categoryItems = category?.category.data;
+  console.log(category);
 
   const categoryList = [
-    { value: 0, name: "카테고리를 선택하세요" },
-    { value: 1, name: "디지털기기" },
-    { value: 2, name: "공구" },
-    { value: 3, name: "디지털기기" },
-    { value: 4, name: "잡화" },
-    { value: 5, name: "스포츠/레저" },
-    { value: 6, name: "취미/게임/음반" },
-    { value: 7, name: "도서" },
-    { value: 8, name: "기타" },
+    { value: "0", name: "카테고리를 선택하세요" },
+    { value: "1", name: "디지털기기" },
+    { value: "2", name: "공구" },
+    { value: "3", name: "디지털기기" },
+    { value: "4", name: "잡화" },
+    { value: "5", name: "스포츠/레저" },
+    { value: "6", name: "취미/게임/음반" },
+    { value: "7", name: "도서" },
+    { value: "8", name: "기타" },
   ];
 
   const addressList = [
-    { value: 0, name: "지역을 선택하세요" },
-    { value: 1, name: "서울특별시" },
-    { value: 2, name: "부산광역시" },
-    { value: 3, name: "대구광역시" },
-    { value: 4, name: "인천광역시" },
-    { value: 5, name: "광주광역시" },
-    { value: 6, name: "대전광역시" },
-    { value: 7, name: "울산광역시" },
-    { value: 8, name: "세종특별자치시" },
-    { value: 9, name: "경기도" },
-    { value: 10, name: "강원도" },
-    { value: 11, name: "충청북도" },
-    { value: 12, name: "충청남도" },
-    { value: 13, name: "전라북도" },
-    { value: 14, name: "전라남도" },
-    { value: 15, name: "경상북도" },
-    { value: 16, name: "경상남도" },
-    { value: 17, name: "제주특별자치도" },
+    { value: "1", name: "서울특별시" },
+    { value: "2", name: "부산광역시" },
+    { value: "0", name: "지역을 선택하세요" },
+    { value: "3", name: "대구광역시" },
+    { value: "4", name: "인천광역시" },
+    { value: "5", name: "광주광역시" },
+    { value: "6", name: "대전광역시" },
+    { value: "7", name: "울산광역시" },
+    { value: "8", name: "세종특별자치시" },
+    { value: "9", name: "경기도" },
+    { value: "10", name: "강원도" },
+    { value: "11", name: "충청북도" },
+    { value: "12", name: "충청남도" },
+    { value: "13", name: "전라북도" },
+    { value: "14", name: "전라남도" },
+    { value: "15", name: "경상북도" },
+    { value: "16", name: "경상남도" },
+    { value: "17", name: "제주특별자치도" },
   ];
 
   const priceList = [

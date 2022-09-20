@@ -2,9 +2,17 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-export const ProductsItem = ({ data }) => {
+export const ProductsItem = ({
+  id,
+  imgUrl,
+  title,
+  price,
+  address,
+  Like,
+  chat,
+}) => {
   const navigate = useNavigate();
-  const { id, img1, title, price, address, Like, chat } = data;
+  // const { id, img1, title, price, address, Like, chat } = data;
   // console.log(props.data);
   return (
     <StyledItemBox>
@@ -13,7 +21,7 @@ export const ProductsItem = ({ data }) => {
           onClick={() => {
             navigate(`/productDetail/${id}`);
           }}
-          src={img1}
+          src={imgUrl}
           alt="이미지 없음"
         />
       </StyledImgBox>
