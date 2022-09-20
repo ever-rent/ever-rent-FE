@@ -50,7 +50,7 @@ useEffect(() => {
 }, []);
 
     const data = useSelector((state)=>state.product.products)
-    
+  //  console.log(data) 
 
   const [editabled, setEditabled] = useState(true);
 
