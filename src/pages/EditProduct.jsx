@@ -2,38 +2,59 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 
 import { Layout } from "../components/layout/Layout";
+import { useDispatch, useSelector } from "react-redux";
+import { updateProducts } from "../redux/modules/productSlice";
+
 
 export const EditProduct = () => {
+  const dispatch = useDispatch();
+
+
   const defaultImg =
     "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png";
 
-  const [imgView, setImgView] = useState(defaultImg);
+  const [imgView, setImgView] = useState([]);
+  const [sendImage, setSendImage] = useState([]);
 
   const fileChange = (fileBlob) => {
+    setSendImage([...sendImage].concat(fileBlob));
+
     const reader = new FileReader();
-    reader.readAsDataURL(fileBlob);
-    console.log(fileBlob);
-    return new Promise((resolve) => {
-      reader.onload = () => {
-        setImgView(reader.result);
-        //   setImgUrl(fileBlob);
-        resolve();
+    for (let i = 0; i < fileBlob.length; i++) {
+      reader.readAsDataURL(fileBlob[i]);
+      reader.onloadend = () => {
+        let imageSubs = reader.result;
+        setImgView([...imgView].concat(imageSubs));
       };
-    });
+    }
   };
 
-  const initImage = () => {
-    setImgView(defaultImg);
+  const imageLengthCheck = (e) => {
+    if (imgView.length === 4) {
+      alert("이미 4장이네요ㅠ");
+      e.preventDefault();
+    }
   };
 
-  const editProduct = () => {};
+  const initImage = (item, indexNum) => {
+    setImgView(imgView.filter((element) => element !== item));
+    setSendImage(
+      [...sendImage]
+        .map((item, index) => {
+          if (index !== indexNum) {
+            return item;
+          }
+        })
+        .filter((element) => element)
+    );
+  };
 
   const [categoryInput, setCategoryInput] = useState("");
   const [priceInput, setPriceInput] = useState(0);
   const [startDateInput, setStartDateInput] = useState("");
   const [endDateInput, setEndDateInput] = useState("");
   const [title, setTitle] = useState("");
-  const [discrption, setDiscrption] = useState("");
+  const [description, setDescription] = useState("");
 
   const [disabled, setDisabled] = useState(true);
 
@@ -53,10 +74,10 @@ export const EditProduct = () => {
     setTitle(value);
   };
   const discriptionChange = (value) => {
-    setDiscrption(value);
+    setDescription(value);
   };
   const checkPost = () => {
-    if (title.length > 3 && discrption.length > 0) {
+    if (title.length > 3 && description.length > 0) {
       setDisabled(false);
     } else {
       setDisabled(true);
@@ -66,24 +87,80 @@ export const EditProduct = () => {
     checkPost();
   });
 
+  let sendData = {
+    title: title,
+    description: description,
+    category: categoryInput,
+    price: priceInput,
+    startDate: startDateInput,
+    endDate: endDateInput,
+  };
+
+  const editProduct = () => {
+    if (title === "" || description === "") {
+      alert("제목/내용을 적어주세요!");
+    } else {
+      let formData = new FormData();
+      formData.append(
+        "requestDto",
+        new Blob([JSON.stringify(sendData)], { type: "application/json" })
+      );
+      formData.append("multipartFile", sendImage);
+
+      dispatch(updateProducts(formData));
+    }
+  };
+
   return (
     <Layout>
       <StyledEditProductContainer>
         <StyledEditProductForm>
           <StyledPostingHeadWrap>
             <StyledFormImageInputWrap>
-              <StyledImageLabel htmlFor="inputFile">
+              <StyledImageLabel
+                htmlFor="inputFile"
+                onClick={(e) => imageLengthCheck(e)}
+              >
                 사진 업로드
               </StyledImageLabel>
               <StyledImageInput
                 id="inputFile"
                 type="file"
+                multiple="multiple"
+                maxSize={5242880}
                 onChange={(e) => {
-                  fileChange(e.target.files[0]);
+                  fileChange(e.target.files);
                 }}
               />
-              <SyltedImageView src={imgView} alt="이미지 미리보기" />
-              <StyledDeleteImg onClick={initImage}>사진제거</StyledDeleteImg>
+              <StyledProductImagetWrap>
+                <SyltedImageView
+                  src={imgView[0] === undefined ? defaultImg : imgView[0]}
+                  alt="이미지 미리보기"
+                  onClick={() => {
+                    initImage(imgView[0], 0);
+                  }}
+                />
+                <StyledProductSubImageWrap>
+                  {imgView.map((item, index) => {
+                    if (index !== 0) {
+                      return (
+                        <StyledProductSubImage
+                          key={index}
+                          src={item}
+                          onClick={() => {
+                            initImage(item, index);
+                          }}
+                        />
+                      );
+                    }
+                  })}
+                </StyledProductSubImageWrap>
+                <StyledDeleteImg>
+                  사진을 누르면 삭제돼요!
+                  <br />
+                  (사진 등록 최대 4장)
+                </StyledDeleteImg>
+              </StyledProductImagetWrap>
             </StyledFormImageInputWrap>
             <StyledImageSource>
               imageSource: "https://icons8.com/icon/85123/expand-arrow Expand
@@ -99,22 +176,22 @@ export const EditProduct = () => {
                 <StyledCategoryOptions value="noneData" disabled>
                   상품 종류를 골라주세요!
                 </StyledCategoryOptions>
-                <StyledCategoryOptions value="디지털기기">
+                <StyledCategoryOptions value="1">
                   디지털기기
                 </StyledCategoryOptions>
-                <StyledCategoryOptions value="공구">공구</StyledCategoryOptions>
-                <StyledCategoryOptions value="생활가전">
+                <StyledCategoryOptions value="2">공구</StyledCategoryOptions>
+                <StyledCategoryOptions value="3">
                   생활가전
                 </StyledCategoryOptions>
-                <StyledCategoryOptions value="잡화">잡화</StyledCategoryOptions>
-                <StyledCategoryOptions value="스포츠/레저">
+                <StyledCategoryOptions value="4">잡화</StyledCategoryOptions>
+                <StyledCategoryOptions value="5">
                   스포츠/레저
                 </StyledCategoryOptions>
-                <StyledCategoryOptions value="취미/게임/음반">
+                <StyledCategoryOptions value="6">
                   취미/게임/음반
                 </StyledCategoryOptions>
-                <StyledCategoryOptions value="도서">도서</StyledCategoryOptions>
-                <StyledCategoryOptions value="기타">기타</StyledCategoryOptions>
+                <StyledCategoryOptions value="7">도서</StyledCategoryOptions>
+                <StyledCategoryOptions value="8">기타</StyledCategoryOptions>
               </StyledCategorySelector>
               <StyledPriceWrap>
                 <StyledPriceInput
@@ -156,7 +233,7 @@ export const EditProduct = () => {
               titleChange(e.target.value);
             }}
           />
-          <StyledDiscription
+          <StyledDescription
             id=""
             cols="30"
             rows="10"
@@ -225,12 +302,25 @@ const StyledImageInput = styled.input`
   display: none;
 `;
 
+const StyledProductImagetWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 200px;
+`;
+
 const SyltedImageView = styled.img`
   margin-top: 20px;
-  margin-right: 70px;
+  /* margin-right: 70px; */
 
   width: 250px;
   height: 250px;
+`;
+
+const StyledProductSubImageWrap = styled.div``;
+const StyledProductSubImage = styled.img`
+  width: 150px;
+  height: 150px;
 `;
 
 const StyledDeleteImg = styled.span`
@@ -314,7 +404,7 @@ const StyledDateInput = styled.input`
 `;
 
 const StyledPostTitle = styled.input`
-  margin-top: 130px;
+  margin-top: 170px;
   padding: 10px;
   width: 400px;
   height: 30px;
@@ -325,7 +415,7 @@ const StyledPostTitle = styled.input`
     outline: 1px solid rgb(71, 181, 255);
   }
 `;
-const StyledDiscription = styled.textarea`
+const StyledDescription = styled.textarea`
   margin-top: 30px;
   padding: 15px;
   height: 300px;

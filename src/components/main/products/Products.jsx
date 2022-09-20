@@ -24,8 +24,10 @@ export const Products = () => {
 };
 
 const StyledProductsContainer = styled.div`
+  /* border: 1px solid red; */
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  justify-items: center; //가로방향 가운데 정렬
-  gap: 30px 45px;
+  grid-template-columns: repeat(4, 226px);
+  /* justify-items: center; //가로방향 가운데 정렬 */
+  margin-top: 30px;
+  gap: 50px 40px;
 `;

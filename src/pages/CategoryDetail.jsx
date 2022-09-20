@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Layout } from "../components/layout/Layout";
 import { Products } from "../components/main/products/Products";
 import { ProductsItem } from "../components/main/products/ProductsItem";
+
 export const CategoryDetail = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products);
@@ -91,7 +92,8 @@ export const CategoryDetail = () => {
           ))}
         </StyledSelect>
       </StyledSelectBox>
-      <Products />
+
+      {/* <Products /> */}
     </Layout>
   );
 };
