@@ -4,14 +4,14 @@ import { useState, useEffect } from "react";
 import { Layout } from "../components/layout/Layout";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProducts } from "../redux/modules/productSlice";
-import { useParams } from "react-router-dom";
-import axios from "axios";
-
+import { useNavigate, useParams } from "react-router-dom";
 
 export const EditProduct = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const param = useParams();
-  console.log(param);
+
+  // useSelector 처리 예정
 
   const defaultImg =
     "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png";
@@ -123,10 +123,11 @@ export const EditProduct = () => {
         new Blob([JSON.stringify(sendData)], { type: "application/json" })
       );
       formData.append("multipartFile", sendImage);
-        console.log(sendData)
-        console.log(formData)
-      dispatch(updateProducts([formData,{productId:param.id}]));
-    };
+      console.log(sendData);
+      console.log(formData);
+      dispatch(updateProducts([formData, { productId: param.id }]));
+    }
+    navigate("/");
   };
 
   return (
@@ -212,6 +213,7 @@ export const EditProduct = () => {
                 <StyledCategoryOptions value="8">기타</StyledCategoryOptions>
               </StyledCategorySelector>
               <StyledPriceWrap>
+                <StyledPriceData>일</StyledPriceData>
                 <StyledPriceInput
                   id="itemPrice"
                   type="number"
@@ -261,7 +263,13 @@ export const EditProduct = () => {
             }}
           />
           <StyledButtonBox>
-            <StyledGoBackButton>뒤로가기</StyledGoBackButton>
+            <StyledGoBackButton
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              홈으로
+            </StyledGoBackButton>
             <StyledFormButton
               disabled={disabled}
               type="button"
@@ -348,7 +356,6 @@ const StyledDeleteImg = styled.span`
   line-height: 25px;
 
   color: rgb(71, 181, 255);
-  cursor: pointer;
   border-radius: 10px;
 
   text-align: center;
@@ -384,6 +391,9 @@ const StyledImageSource = styled.span`
 const StyledCategoryOptions = styled.option``;
 
 const StyledPriceWrap = styled.div``;
+const StyledPriceData = styled.span`
+  margin-right: 10px;
+`;
 const StyledPriceInput = styled.input`
   border: 1px solid rgb(71, 181, 255);
   padding: 10px;
