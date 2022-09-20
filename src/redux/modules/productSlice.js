@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { productAPI } from "../../server/api";
+import { current } from "@reduxjs/toolkit";
 
 //Main page 상품 GET
 export const getProducts = createAsyncThunk(
@@ -9,6 +10,7 @@ export const getProducts = createAsyncThunk(
     try {
       // const res = await instance.get("api/products");
       const res = await productAPI.getProducts();
+
       console.log("producs get 성공", res.data);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (error) {
@@ -39,7 +41,8 @@ export const getProductsDetail = createAsyncThunk(
     // console.log("products get 시작");
     try {
       // const res = await instance.get("api/products");
-      const res = await productAPI.getProductDetail(payload);
+      const res = await productAPI.getProductDetail(payload.id);
+
       // console.log("producs get 성공", res.data);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (error) {
@@ -64,11 +67,13 @@ export const addProducts = createAsyncThunk(
 export const updateProducts = createAsyncThunk(
   "UPDATAE_PRODUCTS",
   async (payload, thunkAPI) => {
+    
     try {
       console.log(payload);
-      const response = await productAPI.updateProduct(payload);
-      console.log("response", response);
-      return thunkAPI.fulfillWithValue(response.data);
+      const { data } = await productAPI.updateProduct(
+        payload[0],payload[1].productId);
+      console.log("response", data);
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -79,7 +84,7 @@ export const deleteProducts = createAsyncThunk(
   "DELETE_PRODUCTS",
   async (payload, thunkAPI) => {
     try {
-      await productAPI.deleteProduct(payload);
+      await productAPI.deleteProduct(payload.id);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -125,13 +130,16 @@ export const productSlice = createSlice({
     },
     [addProducts.fulfilled]: (state, action) => {
       state.isLoading = false;
+      console.log(current(state));
+      console.log(action);
       state.products[0].data = state.products[0].data
-        .concat(action.payload)
+        .concat(action.payload.data)
         .map((item) => item);
       return state;
     },
     [updateProducts.fulfilled]: (state, action) => {
       state.isLoading = false;
+      console.log(current(state));
       const newState = state.products[0].data.map((item) =>
         action.meta.arg.id === item.id
           ? {
