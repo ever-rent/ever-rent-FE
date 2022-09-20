@@ -19,7 +19,6 @@ export const Login = () => {
 
   const { mutate } = useMutation(handleLogin, {
     onSuccess: (data) => {
-      console.log(data);
       if (data.status === 200) {
         localStorage.setItem("accessToken", data.headers["authorization"]);
         localStorage.setItem("refreshToken", data.headers["refresh-token"]);
