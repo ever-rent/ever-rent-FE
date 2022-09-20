@@ -49,7 +49,7 @@ useEffect(() => {
   dispatch(getProductsDetail(param))
 }, []);
 
-    const data = useSelector((state)=>state.product.products)
+    // const data = useSelector((state)=>state.product.products)
   //  console.log(data) 
 
   const [editabled, setEditabled] = useState(true);

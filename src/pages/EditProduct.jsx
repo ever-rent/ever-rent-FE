@@ -4,29 +4,45 @@ import { useState, useEffect } from "react";
 import { Layout } from "../components/layout/Layout";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProducts } from "../redux/modules/productSlice";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 
 export const EditProduct = () => {
   const dispatch = useDispatch();
-
+  const param = useParams();
+  console.log(param);
 
   const defaultImg =
     "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png";
 
-  const [imgView, setImgView] = useState([]);
-  const [sendImage, setSendImage] = useState([]);
+  const [imgView, setImgView] = useState();
+  const [sendImage, setSendImage] = useState();
+
+  // const fileChange = (fileBlob) => {
+  //   setSendImage([...sendImage].concat(fileBlob));
+
+  //   const reader = new FileReader();
+  //   for (let i = 0; i < fileBlob.length; i++) {
+  //     reader.readAsDataURL(fileBlob[i]);
+  //     reader.onloadend = () => {
+  //       let imageSubs = reader.result;
+  //       setImgView([...imgView].concat(imageSubs));
+  //     };
+  //   }
+  // };
 
   const fileChange = (fileBlob) => {
-    setSendImage([...sendImage].concat(fileBlob));
-
     const reader = new FileReader();
-    for (let i = 0; i < fileBlob.length; i++) {
-      reader.readAsDataURL(fileBlob[i]);
-      reader.onloadend = () => {
-        let imageSubs = reader.result;
-        setImgView([...imgView].concat(imageSubs));
+    reader.readAsDataURL(fileBlob);
+    console.log(fileBlob);
+    return new Promise((resolve) => {
+      reader.onload = () => {
+        setImgView(reader.result);
+        setSendImage(fileBlob);
+        resolve();
       };
-    }
+    });
   };
 
   const imageLengthCheck = (e) => {
@@ -88,15 +104,16 @@ export const EditProduct = () => {
   });
 
   let sendData = {
-    title: title,
-    description: description,
-    category: categoryInput,
+    productName: title,
+    content: description,
+    cateId: categoryInput,
     price: priceInput,
-    startDate: startDateInput,
-    endDate: endDateInput,
+    rentStart: startDateInput,
+    rentEnd: endDateInput,
   };
+  // productId: param.id,
 
-  const editProduct = () => {
+  const editProductData = () => {
     if (title === "" || description === "") {
       alert("제목/내용을 적어주세요!");
     } else {
@@ -106,15 +123,16 @@ export const EditProduct = () => {
         new Blob([JSON.stringify(sendData)], { type: "application/json" })
       );
       formData.append("multipartFile", sendImage);
-
-      dispatch(updateProducts(formData));
-    }
+        console.log(sendData)
+        console.log(formData)
+      dispatch(updateProducts([formData,{productId:param.id}]));
+    };
   };
 
   return (
     <Layout>
       <StyledEditProductContainer>
-        <StyledEditProductForm>
+        <StyledEditProductForm encType="multipart/form-data">
           <StyledPostingHeadWrap>
             <StyledFormImageInputWrap>
               <StyledImageLabel
@@ -129,18 +147,18 @@ export const EditProduct = () => {
                 multiple="multiple"
                 maxSize={5242880}
                 onChange={(e) => {
-                  fileChange(e.target.files);
+                  fileChange(e.target.files[0]);
                 }}
               />
               <StyledProductImagetWrap>
                 <SyltedImageView
-                  src={imgView[0] === undefined ? defaultImg : imgView[0]}
+                  src={imgView === undefined ? defaultImg : imgView}
                   alt="이미지 미리보기"
                   onClick={() => {
                     initImage(imgView[0], 0);
                   }}
                 />
-                <StyledProductSubImageWrap>
+                {/* <StyledProductSubImageWrap>
                   {imgView.map((item, index) => {
                     if (index !== 0) {
                       return (
@@ -154,7 +172,7 @@ export const EditProduct = () => {
                       );
                     }
                   })}
-                </StyledProductSubImageWrap>
+                </StyledProductSubImageWrap> */}
                 <StyledDeleteImg>
                   사진을 누르면 삭제돼요!
                   <br />
@@ -247,9 +265,9 @@ export const EditProduct = () => {
             <StyledFormButton
               disabled={disabled}
               type="button"
-              onClick={editProduct}
+              onClick={editProductData}
             >
-              작성하기
+              수정하기
             </StyledFormButton>
           </StyledButtonBox>
         </StyledEditProductForm>
