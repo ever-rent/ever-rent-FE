@@ -95,7 +95,7 @@ export const AddProduct = () => {
     endDate: endDateInput,
   };
 
-  const addProduct = () => {
+  const addProductPost = () => {
     if (title === "" || description === "") {
       alert("제목/내용을 적어주세요!");
     } else {
@@ -175,22 +175,22 @@ export const AddProduct = () => {
                 <StyledCategoryOptions value="noneData" disabled>
                   상품 종류를 골라주세요!
                 </StyledCategoryOptions>
-                <StyledCategoryOptions value="디지털기기">
+                <StyledCategoryOptions value="1">
                   디지털기기
                 </StyledCategoryOptions>
-                <StyledCategoryOptions value="공구">공구</StyledCategoryOptions>
-                <StyledCategoryOptions value="생활가전">
+                <StyledCategoryOptions value="2">공구</StyledCategoryOptions>
+                <StyledCategoryOptions value="3">
                   생활가전
                 </StyledCategoryOptions>
-                <StyledCategoryOptions value="잡화">잡화</StyledCategoryOptions>
-                <StyledCategoryOptions value="스포츠/레저">
+                <StyledCategoryOptions value="4">잡화</StyledCategoryOptions>
+                <StyledCategoryOptions value="5">
                   스포츠/레저
                 </StyledCategoryOptions>
-                <StyledCategoryOptions value="취미/게임/음반">
+                <StyledCategoryOptions value="6">
                   취미/게임/음반
                 </StyledCategoryOptions>
-                <StyledCategoryOptions value="도서">도서</StyledCategoryOptions>
-                <StyledCategoryOptions value="기타">기타</StyledCategoryOptions>
+                <StyledCategoryOptions value="7">도서</StyledCategoryOptions>
+                <StyledCategoryOptions value="8">기타</StyledCategoryOptions>
               </StyledCategorySelector>
               <StyledPriceWrap>
                 <StyledPriceInput
@@ -246,7 +246,7 @@ export const AddProduct = () => {
             <StyledFormButton
               disabled={disabled}
               type="button"
-              onClick={addProduct}
+              onClick={addProductPost}
             >
               작성하기
             </StyledFormButton>

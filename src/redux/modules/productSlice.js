@@ -7,7 +7,22 @@ export const getProducts = createAsyncThunk(
     // console.log("products get 시작");
     try {
       // const res = await instance.get("api/products");
-      const res = await productAPI.getProductDetail()
+      const res = await productAPI.getProducts()
+      // console.log("producs get 성공", res.data);
+      return thunkAPI.fulfillWithValue(res.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const getProductsDetail = createAsyncThunk(
+  "GET_PRODUCTS",
+  async (payload, thunkAPI) => {
+    // console.log("products get 시작");
+    try {
+      // const res = await instance.get("api/products");
+      const res = await productAPI.getProductDetail(payload)
       // console.log("producs get 성공", res.data);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (error) {
@@ -66,6 +81,9 @@ export const productSlice = createSlice({
     [getProducts.pending]: (state, action) => {
       state.isLoading = true;
     },
+    [getProductsDetail.pending]: (state, action) => {
+      state.isLoading = true;
+    },
     [addProducts.pending]: (state, action) => {
       state.isLoading = true;
     },
@@ -78,6 +96,11 @@ export const productSlice = createSlice({
 
     /* Fulfilled */
     [getProducts.fulfilled]: (state, action) => {
+      // console.log("reducer", action);
+      state.products = action.payload;
+      // console.log(action);
+    },
+    [getProductsDetail.fulfilled]: (state, action) => {
       // console.log("reducer", action);
       state.products = action.payload;
       // console.log(action);
@@ -119,6 +142,10 @@ export const productSlice = createSlice({
 
     /* Rejected */
     [getProducts.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [getProductsDetail.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
