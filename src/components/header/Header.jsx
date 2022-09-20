@@ -1,8 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { CategoryBox } from "../category/CategoryBox";
 
 export const Header = () => {
+  const navigate = useNavigate()
+
   return (
     <>
       <StyledHeaderTop>
@@ -11,7 +14,7 @@ export const Header = () => {
         </StyledLogoImageWrap>
         <StyledHeaderWrap>
           <StyledSearchWrap>
-            <StyledSearchButton alt="https://icons8.com/icon/59878/search https://icons8.com Icons8" />
+            <StyledSearchButton type="button" alt="https://icons8.com/icon/59878/search https://icons8.com Icons8" />
             <StyledSearchInput
               type="text"
               placeholder="지역, 물품명으로 찾아보세요"
@@ -21,8 +24,8 @@ export const Header = () => {
         </StyledHeaderWrap>
         <StyledSignMenu>
           <StyledLoginTab>
-            <StyledLoginSpan>로그인</StyledLoginSpan>
-            <StyledLoginSpan>회원가입</StyledLoginSpan>
+            <StyledLoginSpan onClick={()=>{navigate("/login")}}>로그인</StyledLoginSpan>
+            <StyledLoginSpan onClick={()=>{navigate("/join")}}>회원가입</StyledLoginSpan>
           </StyledLoginTab>
           <StyledAddProductButton>글쓰기</StyledAddProductButton>
         </StyledSignMenu>
@@ -113,6 +116,7 @@ const StyledLoginSpan = styled.span`
   margin-right: 10px;
   font-size: 14px;
   color: #2e2e2e;
+  cursor: pointer;
 `;
 
 const StyledAddProductButton = styled.button`
