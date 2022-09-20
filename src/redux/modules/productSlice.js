@@ -17,6 +17,22 @@ export const getProducts = createAsyncThunk(
   }
 );
 
+//Category 상품 GET
+export const getCategory = createAsyncThunk(
+  "GET_CATEGORY_DETAIL",
+  async (payload, thunkAPI) => {
+    // console.log("getCategory get 시작");
+    try {
+      // const res = await instance.get("api/products");
+      const res = await productAPI.getCategory(payload);
+      // console.log("getCategory get 성공", res.data);
+      return thunkAPI.fulfillWithValue(res.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const getProductsDetail = createAsyncThunk(
   "GET_PRODUCTS",
   async (payload, thunkAPI) => {
@@ -101,10 +117,7 @@ export const productSlice = createSlice({
       // console.log("reducer", action);
       state.products = action.payload;
     },
-    [getCategoryDetail.fulfilled]: (state, action) => {
-      // console.log("getCategoryDetail>>", action);
-      state.category = action.payload;
-    },
+
     [getProductsDetail.fulfilled]: (state, action) => {
       // console.log("reducer", action);
       state.products = action.payload;
@@ -143,6 +156,11 @@ export const productSlice = createSlice({
       );
       state.products[0].data = newState;
       return state;
+    },
+
+    [getCategory.fulfilled]: (state, action) => {
+      // console.log("getCategoryDetail>>", action);
+      state.category = action.payload;
     },
 
     /* Rejected */
