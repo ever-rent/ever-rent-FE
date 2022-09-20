@@ -1,7 +1,12 @@
 import axios from "axios";
 
-export const auth = axios.create({
+export const base = axios.create({
   baseURL: "http://52.79.235.129",
+  // withCredentials: true,
+});
+
+export const auth = axios.create({
+  baseURL: "http://52.79.235.129/auth",
   // withCredentials: true,
 });
 

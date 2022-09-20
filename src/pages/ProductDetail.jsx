@@ -2,6 +2,9 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 
 import { Layout } from "../components/layout/Layout";
+import { deleteProducts, getProductsDetail } from "../redux/modules/productSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 const FavoritIconButton = () => {
   const [liked, setLiked] = useState(false);
@@ -34,26 +37,35 @@ const FavoritIconButton = () => {
 };
 
 export const ProductDetail = () => {
+  const dispatch = useDispatch();
+  const param = useParams();
+
   const defaultImg =
     "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png";
   const defaultUserImg =
     "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNF5TD%2FbtrMyfbzuN7%2FJZiKO75eVNPNAGHIPtrAnK%2Fimg.png";
 
+useEffect(() => {
+  dispatch(getProductsDetail(param))
+}, []);
+
+    const data = useSelector((state)=>state.product.products)
+    
+
   const [editabled, setEditabled] = useState(true);
 
   const [userImage, setUserImage] = useState(defaultUserImg);
 
-const editPost = ()=>{
+  const editPost = () => {};
 
-}
-
-const deletePost = ()=>{
-    if(window.confirm("진짜 삭제하실건가요..?")){
-        alert("삭제완료")
-    } else{
-        alert("휴")
+  const deletePost = () => {
+    if (window.confirm("진짜 삭제하실건가요..?")) {
+      dispatch(deleteProducts(param));
+      alert("삭제완료");
+    } else {
+      alert("휴");
     }
-}
+  };
 
   return (
     <Layout>
@@ -65,7 +77,9 @@ const deletePost = ()=>{
             }
           >
             <StyledEditButton onClick={editPost}>글 수정</StyledEditButton>
-            <StyledDeleteButton onClick={deletePost}>글 삭제 X</StyledDeleteButton>
+            <StyledDeleteButton onClick={deletePost}>
+              글 삭제 X
+            </StyledDeleteButton>
           </StyledEditableOption>
           <StyledPostHeadWrap>
             <StyledProductImagetWrap>
@@ -111,7 +125,7 @@ const deletePost = ()=>{
                 <StyledTimeForToday> ㆍ며칠 전</StyledTimeForToday>
               </StyledPostEachWrap>
               <StyledProductPrice>가격(원)</StyledProductPrice>
-              <StyledPostDiscription>내용</StyledPostDiscription>
+              <StyledPostDescription>내용</StyledPostDescription>
             </StyledPostMain>
           </StyledPostBodyWrap>
         </StyledDetailProductWrap>
@@ -289,7 +303,7 @@ const StyledProductPrice = styled.div`
   padding: 5px;
 `;
 
-const StyledPostDiscription = styled.div`
+const StyledPostDescription = styled.div`
   padding: 5px;
   margin-top: 30px;
 `;

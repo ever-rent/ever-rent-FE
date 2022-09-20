@@ -81,6 +81,7 @@ const StyledCategoryBox = styled.div`
 
   grid-template-rows: 200px 200px;
   grid-template-columns: 200px 200px 200px 200px;
+  
 `;
 
 const StyledKeyWordButton = styled.button`
@@ -101,6 +102,8 @@ const StyledKeyWordButton = styled.button`
     box-shadow: 0 0 5px 0 rgb(71, 181, 255);
     transition: box-shadow 0.1s ease-in-out 0s;
   }
+
+
 `;
 
 const StyledCategoryImg = styled.img`
