@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { productAPI } from "../../server/api";
+import { current } from "@reduxjs/toolkit";
 
 //Main page 상품 GET
 export const getProducts = createAsyncThunk(
@@ -9,6 +10,7 @@ export const getProducts = createAsyncThunk(
     try {
       // const res = await instance.get("api/products");
       const res = await productAPI.getProducts();
+
       console.log("producs get 성공", res.data);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (error) {
@@ -36,10 +38,11 @@ export const getCategory = createAsyncThunk(
 export const getProductsDetail = createAsyncThunk(
   "GET_PRODUCTS",
   async (payload, thunkAPI) => {
-    // console.log("products get 시작");
+    console.log("products get 시작", payload);
     try {
       // const res = await instance.get("api/products");
-      const res = await productAPI.getProductDetail(payload);
+      const res = await productAPI.getProductDetail(payload.id);
+
       // console.log("producs get 성공", res.data);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (error) {
@@ -54,7 +57,7 @@ export const addProducts = createAsyncThunk(
     try {
       const { data } = await productAPI.addProduct(payload);
       console.log("data", data);
-      return thunkAPI.fulfillWithValue(data);
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (errer) {
       return thunkAPI.rejectWithValue(errer);
     }
@@ -66,9 +69,12 @@ export const updateProducts = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       console.log(payload);
-      const response = await productAPI.updateProduct(payload);
-      console.log("response", response);
-      return thunkAPI.fulfillWithValue(response.data);
+      const { data } = await productAPI.updateProduct(
+        payload[0],
+        payload[1].productId
+      );
+      console.log("response", data.data);
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -79,7 +85,7 @@ export const deleteProducts = createAsyncThunk(
   "DELETE_PRODUCTS",
   async (payload, thunkAPI) => {
     try {
-      await productAPI.deleteProduct(payload);
+      await productAPI.deleteProduct(payload.id);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -115,46 +121,51 @@ export const productSlice = createSlice({
     /* Fulfilled */
     [getProducts.fulfilled]: (state, action) => {
       // console.log("reducer", action);
-      state.products = action.payload;
+      state.products = action.payload.data;
     },
 
     [getProductsDetail.fulfilled]: (state, action) => {
-      // console.log("reducer", action);
-      state.products = action.payload;
+      console.log("reducer", action);
+      state.products = action.payload.data;
       // console.log(action);
     },
     [addProducts.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.products[0].data = state.products[0].data
-        .concat(action.payload)
-        .map((item) => item);
+      console.log(current(state));
+      console.log(action);
+      state.products = state.products.concat(action.payload);
       return state;
     },
     [updateProducts.fulfilled]: (state, action) => {
       state.isLoading = false;
-      const newState = state.products[0].data.map((item) =>
-        action.meta.arg.id === item.id
+      console.log(current(state));
+      console.log(action);
+      const newState = state.products.map((item) =>
+        action.payload.id === item.id
           ? {
               ...item,
-              title: action.payload.title,
-              description: action.payload.description,
-              category: action.payload.category,
+              productName: action.payload.productName,
+              content: action.payload.content,
+              cateId: action.payload.cateId,
               price: action.payload.price,
-              startDate: action.payload.startDate,
-              endDate: action.payload.endDate,
-              images: action.payload.images,
+              rentStart: action.payload.rentStart,
+              rentEnd: action.payload.rentEnd,
+              imgUrl: action.payload.imgUrl,
             }
           : item
       );
-      state.products[0].data = newState;
+      state.products = newState;
       return state;
     },
     [deleteProducts.fulfilled]: (state, action) => {
       state.isLoading = false;
-      const newState = state.products[0].data.filter(
-        (item) => item.id !== action.payload.id
+      console.log(current(state))
+      console.log(current(state.products[0]))
+      console.log(action)
+      const newState = state.products.filter(
+        (item) => item.id !== Number(action.payload.id)
       );
-      state.products[0].data = newState;
+      state.products = newState;
       return state;
     },
 
