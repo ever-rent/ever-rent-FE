@@ -1,20 +1,27 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { CategoryBox } from "../category/CategoryBox";
 
 export const Header = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <>
       <StyledHeaderTop>
         <StyledLogoImageWrap>
-          <StyledLogoImg src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcIaEmP%2FbtrMnmILkqF%2FTxtrB71zUMzMY9Z2iiHqcK%2Fimg.png" />
+          <StyledLogoImg
+            onClick={() => {
+              navigate("/");
+            }}
+            src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcIaEmP%2FbtrMnmILkqF%2FTxtrB71zUMzMY9Z2iiHqcK%2Fimg.png"
+          />
         </StyledLogoImageWrap>
         <StyledHeaderWrap>
           <StyledSearchWrap>
-            <StyledSearchButton type="button" alt="https://icons8.com/icon/59878/search https://icons8.com Icons8" />
+            <StyledSearchButton
+              type="button"
+              alt="https://icons8.com/icon/59878/search https://icons8.com Icons8"
+            />
             <StyledSearchInput
               type="text"
               placeholder="지역, 물품명으로 찾아보세요"
@@ -24,14 +31,31 @@ export const Header = () => {
         </StyledHeaderWrap>
         <StyledSignMenu>
           <StyledLoginTab>
-            <StyledLoginSpan onClick={()=>{navigate("/login")}}>로그인</StyledLoginSpan>
-            <StyledLoginSpan onClick={()=>{navigate("/join")}}>회원가입</StyledLoginSpan>
+            <StyledLoginSpan
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              로그인
+            </StyledLoginSpan>
+            <StyledLoginSpan
+              onClick={() => {
+                navigate("/join");
+              }}
+            >
+              회원가입
+            </StyledLoginSpan>
           </StyledLoginTab>
-          <StyledAddProductButton>글쓰기</StyledAddProductButton>
+          <StyledAddProductButton
+            onClick={() => {
+              navigate("/addProduct");
+            }}
+          >
+            글쓰기
+          </StyledAddProductButton>
         </StyledSignMenu>
         <StyledSideMenu alt="https://icons8.com/icon/36389/menu-rounded Menu Rounded https://icons8.com" />
       </StyledHeaderTop>
-      <CategoryBox />
     </>
   );
 };
