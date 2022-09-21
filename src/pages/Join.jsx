@@ -12,6 +12,7 @@ export const Join = () => {
   const nickname = useRef(null);
   const code = useRef(null);
   const [authCode, setAuthCode] = useState("");
+  const [mailAuth, setMailAuth] = useState(false);
 
   const handleEmailAuth = async (email) => {
     return await axios.post(
@@ -67,6 +68,7 @@ export const Join = () => {
             onClick={() => {
               if (authCode === code.current.value) {
                 alert("인증되었습니다.");
+                setMailAuth(true);
                 document.querySelector(".auth-box").style.display = "none";
               } else {
                 alert("인증코드가 일치하지 않습니다.");
@@ -87,6 +89,10 @@ export const Join = () => {
       <input type="text" ref={nickname} />
       <button
         onClick={() => {
+          if (!mailAuth) {
+            alert("이메일을 인증해주세요.");
+            return;
+          }
           if (password.current.value === passwordConfirm.current.value) {
             mutate({
               email: email.current.value,
@@ -94,7 +100,7 @@ export const Join = () => {
               nickname: nickname.current.value,
             });
           } else {
-            alert("비밀번호가 일치하지 않습니다.");
+            alert("비밀번호를 확인해주세요.");
             password.current.focus();
           }
         }}
