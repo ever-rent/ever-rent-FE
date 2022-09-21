@@ -16,7 +16,7 @@ export const Join = () => {
 
   const handleEmailAuth = async (email) => {
     return await axios.post(
-      `http://52.79.235.129/members/mailConfirms?email=${email}`
+      `http://52.79.235.129/mailConfirms?email=${email}`
     );
   };
 
@@ -33,7 +33,7 @@ export const Join = () => {
   });
 
   const handleJoin = async (data) => {
-    return await axios.post("http://52.79.235.129/members/signups", {
+    return await axios.post("http://52.79.235.129/signups", {
       email: data.email,
       password: data.password,
       memberName: data.nickname,

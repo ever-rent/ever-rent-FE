@@ -4,28 +4,42 @@ import { useState, useEffect } from "react";
 import { Layout } from "../components/layout/Layout";
 import { useDispatch } from "react-redux";
 import { addProducts } from "../redux/modules/productSlice";
-
+import { useNavigate } from "react-router-dom";
 
 export const AddProduct = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const defaultImg =
     "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png";
 
-  const [imgView, setImgView] = useState([]);
-  const [sendImage, setSendImage] = useState([]);
+  const [imgView, setImgView] = useState();
+  const [sendImage, setSendImage] = useState();
+
+  // const fileChange = (fileBlob) => {
+  //   setSendImage([...sendImage].concat(fileBlob));
+
+  //   const reader = new FileReader();
+  //   for (let i = 0; i < fileBlob.length; i++) {
+  //     reader.readAsDataURL(fileBlob[i]);
+  //     reader.onloadend = () => {
+  //       let imageSubs = reader.result;
+  //       setImgView([...imgView].concat(imageSubs));
+  //     };
+  //   }
+  // };
 
   const fileChange = (fileBlob) => {
-    setSendImage([...sendImage].concat(fileBlob));
-
     const reader = new FileReader();
-    for (let i = 0; i < fileBlob.length; i++) {
-      reader.readAsDataURL(fileBlob[i]);
-      reader.onloadend = () => {
-        let imageSubs = reader.result;
-        setImgView([...imgView].concat(imageSubs));
+    reader.readAsDataURL(fileBlob);
+    console.log(fileBlob);
+    return new Promise((resolve) => {
+      reader.onload = () => {
+        setImgView(reader.result);
+        setSendImage(fileBlob);
+        resolve();
       };
-    }
+    });
   };
 
   const imageLengthCheck = (e) => {
@@ -60,6 +74,7 @@ export const AddProduct = () => {
   const categoryChange = (value) => {
     setCategoryInput(value);
   };
+
   const priceChange = (value) => {
     setPriceInput(value);
   };
@@ -87,12 +102,12 @@ export const AddProduct = () => {
   });
 
   let sendData = {
-    title: title,
-    description: description,
-    category: categoryInput,
+    productName: title,
+    content: description,
+    cateId: categoryInput,
     price: priceInput,
-    startDate: startDateInput,
-    endDate: endDateInput,
+    rentStart: startDateInput,
+    rentEnd: endDateInput,
   };
 
   const addProductPost = () => {
@@ -105,10 +120,11 @@ export const AddProduct = () => {
         new Blob([JSON.stringify(sendData)], { type: "application/json" })
       );
       formData.append("multipartFile", sendImage);
-
       dispatch(addProducts(formData));
     }
+    navigate("/");
   };
+  // console.log(sendImage)
 
   return (
     <Layout>
@@ -128,18 +144,18 @@ export const AddProduct = () => {
                 multiple="multiple"
                 maxSize={5242880}
                 onChange={(e) => {
-                  fileChange(e.target.files);
+                  fileChange(e.target.files[0]);
                 }}
               />
               <StyledProductImagetWrap>
                 <SyltedImageView
-                  src={imgView[0] === undefined ? defaultImg : imgView[0]}
+                  src={imgView === undefined ? defaultImg : imgView}
                   alt="이미지 미리보기"
                   onClick={() => {
                     initImage(imgView[0], 0);
                   }}
                 />
-                <StyledProductSubImageWrap>
+                {/* <StyledProductSubImageWrap>
                   {imgView.map((item, index) => {
                     if (index !== 0) {
                       return (
@@ -153,7 +169,7 @@ export const AddProduct = () => {
                       );
                     }
                   })}
-                </StyledProductSubImageWrap>
+                </StyledProductSubImageWrap> */}
                 <StyledDeleteImg>
                   사진을 누르면 삭제돼요!
                   <br />
@@ -193,9 +209,10 @@ export const AddProduct = () => {
                 <StyledCategoryOptions value="8">기타</StyledCategoryOptions>
               </StyledCategorySelector>
               <StyledPriceWrap>
+                <StyledPriceData>일</StyledPriceData>
                 <StyledPriceInput
                   id="itemPrice"
-                  type="number"
+                  type="text"
                   placeholder="가격"
                   maxlength="8"
                   onChange={(e) => {
@@ -242,7 +259,13 @@ export const AddProduct = () => {
             }}
           />
           <StyledButtonBox>
-            <StyledGoBackButton>뒤로가기</StyledGoBackButton>
+            <StyledGoBackButton
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              홈으로
+            </StyledGoBackButton>
             <StyledFormButton
               disabled={disabled}
               type="button"
@@ -333,7 +356,6 @@ const StyledDeleteImg = styled.span`
   line-height: 25px;
 
   color: rgb(71, 181, 255);
-  cursor: pointer;
   border-radius: 10px;
 
   text-align: center;
@@ -369,7 +391,11 @@ const StyledImageSource = styled.span`
 const StyledCategoryOptions = styled.option``;
 
 const StyledPriceWrap = styled.div``;
+const StyledPriceData = styled.span`
+  margin-right: 10px;
+`;
 const StyledPriceInput = styled.input`
+  width: 180px;
   border: 1px solid rgb(71, 181, 255);
   padding: 10px;
   border-radius: 10px;
