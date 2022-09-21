@@ -138,6 +138,7 @@ const StyledLike = styled.img`
   height: 20px;
   margin: 5px 5px 5px 0;
 `;
+
 const StyledChatWrap = styled.span`
   /* border: 1px solid red; */
   display: flex;
