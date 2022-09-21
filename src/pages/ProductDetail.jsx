@@ -153,7 +153,7 @@ export const ProductDetail = () => {
                 </StyledPostCategory>
                 <StyledTimeForToday> ㆍ{createdAt}</StyledTimeForToday>
               </StyledPostEachWrap>
-              <StyledProductPrice>{detailData?.price}(원)</StyledProductPrice>
+              <StyledProductPrice>{detailData?.price}(원) / 일</StyledProductPrice>
               <StyledPostDescription>
                 {detailData?.content}
               </StyledPostDescription>

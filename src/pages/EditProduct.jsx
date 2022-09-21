@@ -213,7 +213,6 @@ export const EditProduct = () => {
                 <StyledCategoryOptions value="8">기타</StyledCategoryOptions>
               </StyledCategorySelector>
               <StyledPriceWrap>
-                <StyledPriceData>일</StyledPriceData>
                 <StyledPriceInput
                   id="itemPrice"
                   type="number"
@@ -222,8 +221,9 @@ export const EditProduct = () => {
                   onChange={(e) => {
                     priceChange(e.target.value);
                   }}
-                />
+                  />
                 <StyledPriceLabel htmlFor="itemPrice">원</StyledPriceLabel>
+                  <StyledPriceData> / 일</StyledPriceData>
               </StyledPriceWrap>
               <StyledDateWrap>
                 <StyledStartLabel htmlFor="">렌탈시작일 : </StyledStartLabel>
