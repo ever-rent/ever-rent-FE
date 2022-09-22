@@ -2,11 +2,13 @@ import { Layout } from "../components/layout/Layout";
 import { useState } from "react";
 import styled from "styled-components";
 
+import Swal from "sweetalert2";
+
 export const EditUserInfo = () => {
   const defaultImg =
     "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png";
 
-    const [disabled, setDisabled] = useState(true);
+  
 
   const [userNickName, setuserNickName] = useState("닉네임");
   const [categoryInput, setCategoryInput] = useState("");
@@ -17,6 +19,7 @@ export const EditUserInfo = () => {
   const categoryChange = (value) => {
     setCategoryInput(value);
   };
+
 
   const [imgView, setImgView] = useState();
   const [sendImage, setSendImage] = useState();
@@ -34,13 +37,47 @@ export const EditUserInfo = () => {
     });
   };
 
+
+  const deleteUser = ()=>{
+    Swal.fire({
+		  title: '정말 탈퇴하실건가요?',
+		  text: "탈퇴한 정보는 다시 복구시킬 수 없습니다.",
+		  icon: 'warning',
+		  showCancelButton: true,
+		  confirmButtonColor: 'rgb(71, 181, 255)',
+		  cancelButtonColor: '#d33',
+		  confirmButtonText: '탈퇴하기',
+		  cancelButtonText: '취소'
+		}).then((result) => {
+		  if (result.value) {
+              // 탈퇴처리 예정
+		  }
+		})
+  }
+
+  const editMyInfo =()=>{
+    Swal.fire({
+		  title: '변경 내용을 저장할까요?',
+		  icon: 'info',
+		  showCancelButton: true,
+		  confirmButtonColor: 'rgb(71, 181, 255)',
+		  cancelButtonColor: 'rgb(184, 221, 247)',
+		  confirmButtonText: '탈퇴하기',
+		  cancelButtonText: '취소'
+		}).then((result) => {
+		  if (result.value) {
+              // 탈퇴처리 예정
+		  }
+		})
+  }
+
   return (
     <Layout>
       <StyledEditInfoContainer>
         <StyledAddProductForm>
           <StyledInfoTop>
             <StyledInfoEdit>회원정보수정</StyledInfoEdit>
-            <StyledDeleteUser>탈퇴하기</StyledDeleteUser>
+            <StyledDeleteUser onClick={deleteUser}>탈퇴하기</StyledDeleteUser>
           </StyledInfoTop>
           <StyledInfoWrap>
             <StyledInfoName>이메일</StyledInfoName>
@@ -122,7 +159,9 @@ export const EditUserInfo = () => {
           </StyledInfoWrap>
           <StyledButtons>
             <StyledCancelButton>홈으로</StyledCancelButton>
-            <StyledSubmitButton disabled={disabled}>수정하기</StyledSubmitButton>
+            <StyledSubmitButton onClick={editMyInfo}>
+              수정하기
+            </StyledSubmitButton>
           </StyledButtons>
         </StyledAddProductForm>
       </StyledEditInfoContainer>
@@ -139,7 +178,7 @@ const StyledEditInfoContainer = styled.section`
 const StyledAddProductForm = styled.div`
   display: flex;
   flex-direction: column;
-  width: 900px;
+  width: 700px;
 
   padding: 40px;
   box-shadow: 1px 1px 5px 1px rgb(71, 181, 255);
@@ -184,6 +223,9 @@ const StyledEditInput = styled.input`
   border-radius: 10px;
 
   border: 1px solid rgb(71, 181, 255);
+  &:focus {
+    outline: 1px solid rgb(71, 181, 255);
+  }
 `;
 
 const StyledCategorySelector = styled.select`

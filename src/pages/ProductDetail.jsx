@@ -8,6 +8,9 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { categoriNumber } from "../util/categoryNumber";
 import { timeToToday } from "../util/timeToToday";
+import { LocationModal } from "../components/location/LocationModal";
+
+import Swal from "sweetalert2";
 
 const FavoritIconButton = () => {
   const [liked, setLiked] = useState(false);
@@ -52,10 +55,7 @@ export const ProductDetail = () => {
   const detailData = data?.filter(
     (element) => element.id === Number(param.id)
   )[0];
-  console.log(data);
-  console.log(detailData);
-  console.log(param.id);
-  console.log(param);
+
   const defaultImg =
     "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png";
   const defaultUserImg =
@@ -74,13 +74,30 @@ export const ProductDetail = () => {
   const [userImage, setUserImage] = useState(defaultUserImg);
 
   const deletePost = () => {
-    if (window.confirm("진짜 삭제하실건가요..?")) {
-      dispatch(deleteProducts(param));
-      alert("삭제완료");
-      navigate("/");
-    } else {
-      alert("휴");
-    }
+    Swal.fire({
+      title: "정말 삭제하실건가요?",
+      text: "삭제하시면 다시 복구시킬 수 없습니다.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "rgb(71, 181, 255)",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "삭제",
+      cancelButtonText: "취소",
+    }).then((result) => {
+      if (result.value) {
+        dispatch(deleteProducts(param));
+        alert("삭제완료");
+        navigate("/");
+      }
+    });
+  };
+
+  const [showModal, setShowModal] = useState(false);
+  const openModal = () => {
+    setShowModal(true);
+  };
+  const closeModal = () => {
+    setShowModal(false);
   };
 
   return (
@@ -126,12 +143,13 @@ export const ProductDetail = () => {
                 <StyledChatImgAlt>채팅하기</StyledChatImgAlt>
               </StyledImagesWrap>
               <FavoritIconButton />
-              <StyledImagesWrap>
+              <StyledImagesWrap className="openPopupButton" onClick={openModal}>
                 <StyledMapImage
                   src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FZoOUr%2FbtrMtG2s1YT%2FLwGap5AgYCUktPDgK0hCik%2Fimg.png"
                   alt="https://icons8.com/icon/WbyzmoN1bnxR/map-marker Map Marker icon by https://icons8.com Icons8"
                 />
                 <StyledMapImgAlt>위치</StyledMapImgAlt>
+                <LocationModal showModal={showModal} closeModal={closeModal} />
               </StyledImagesWrap>
             </StyledPostSubItems>
             <StyledPostHr />
@@ -153,7 +171,9 @@ export const ProductDetail = () => {
                 </StyledPostCategory>
                 <StyledTimeForToday> ㆍ{createdAt}</StyledTimeForToday>
               </StyledPostEachWrap>
-              <StyledProductPrice>{detailData?.price}(원) / 일</StyledProductPrice>
+              <StyledProductPrice>
+                {detailData?.price}(원) / 일
+              </StyledProductPrice>
               <StyledPostDescription>
                 {detailData?.content}
               </StyledPostDescription>
@@ -174,7 +194,7 @@ const StyledDetailProductContainer = styled.div`
 const StyledDetailProductWrap = styled.div`
   display: flex;
   flex-direction: column;
-  width: 900px;
+  width: 700px;
 
   padding: 40px;
   box-shadow: 1px 1px 5px 1px rgb(71, 181, 255);

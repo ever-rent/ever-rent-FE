@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateProducts } from "../redux/modules/productSlice";
 import { useNavigate, useParams } from "react-router-dom";
 
+import Swal from "sweetalert2";
+
 export const EditProduct = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -117,17 +119,27 @@ export const EditProduct = () => {
     if (title === "" || description === "") {
       alert("제목/내용을 적어주세요!");
     } else {
-      let formData = new FormData();
-      formData.append(
-        "requestDto",
-        new Blob([JSON.stringify(sendData)], { type: "application/json" })
-      );
-      formData.append("multipartFile", sendImage);
-      console.log(sendData);
-      console.log(formData);
-      dispatch(updateProducts([formData, { productId: param.id }]));
+      Swal.fire({
+        title: "변경 내용을 저장할까요?",
+        icon: "info",
+        showCancelButton: true,
+        confirmButtonColor: "rgb(71, 181, 255)",
+        cancelButtonColor: "rgb(184, 221, 247)",
+        confirmButtonText: "수정하기",
+        cancelButtonText: "취소",
+      }).then((result) => {
+        if (result.value) {
+          let formData = new FormData();
+          formData.append(
+            "requestDto",
+            new Blob([JSON.stringify(sendData)], { type: "application/json" })
+          );
+          formData.append("multipartFile", sendImage);
+          dispatch(updateProducts([formData, { productId: param.id }]));
+          navigate("/");
+        }
+      });
     }
-    navigate("/");
   };
 
   return (
@@ -221,9 +233,9 @@ export const EditProduct = () => {
                   onChange={(e) => {
                     priceChange(e.target.value);
                   }}
-                  />
+                />
                 <StyledPriceLabel htmlFor="itemPrice">원</StyledPriceLabel>
-                  <StyledPriceData> / 일</StyledPriceData>
+                <StyledPriceData> / 일</StyledPriceData>
               </StyledPriceWrap>
               <StyledDateWrap>
                 <StyledStartLabel htmlFor="">렌탈시작일 : </StyledStartLabel>
@@ -258,6 +270,7 @@ export const EditProduct = () => {
             cols="30"
             rows="10"
             placeholder="내용을 입력해주세요!"
+            maxLength={500}
             onChange={(e) => {
               discriptionChange(e.target.value);
             }}
@@ -293,7 +306,7 @@ const StyledEditProductContainer = styled.div`
 const StyledEditProductForm = styled.form`
   display: flex;
   flex-direction: column;
-  width: 900px;
+  width: 700px;
 
   padding: 40px;
   box-shadow: 1px 1px 5px 1px rgb(71, 181, 255);
@@ -446,7 +459,7 @@ const StyledPostTitle = styled.input`
 const StyledDescription = styled.textarea`
   margin-top: 30px;
   padding: 15px;
-  height: 300px;
+  height: 200px;
   overflow: hidden;
   resize: none;
   border: 1px solid rgb(71, 181, 255);
