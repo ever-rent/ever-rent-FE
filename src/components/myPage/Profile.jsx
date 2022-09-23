@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export const Profile = () => {
   return (
-    <div>
+    <StyledProfileBox>
       <StyledImgBox>
         <StyledImg
           src="https://image.ajunews.com/content/image/2019/12/25/20191225170826943516.jpg"
@@ -14,6 +14,13 @@ export const Profile = () => {
         <StyledNickname>gardenk</StyledNickname>
         <StyledProfileEdit>프로필 수정</StyledProfileEdit>
         <StyledLikeAndChatBox>
+          <StyledEachWrap>
+            <StyledLikeAndChat
+              src="https://img.icons8.com/ios/50/47b5ff/reservation-2.png"
+              alt="https://icons8.com/icon/24814/reserve reserve icon by https://icons8.com Icons8"
+            />
+            <span>예약 목록</span>
+          </StyledEachWrap>
           <StyledEachWrap>
             <StyledLikeAndChat
               src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
@@ -30,9 +37,23 @@ export const Profile = () => {
           </StyledEachWrap>
         </StyledLikeAndChatBox>
       </StyledNicknameAndIcon>
-    </div>
+    </StyledProfileBox>
   );
 };
+
+const StyledProfileBox = styled.div`
+  /* border: 1px solid red; */
+  /* background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee12 100%); */
+  display: flex;
+  /* justify-content: space-around; */
+  flex-direction: column;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 10px;
+  padding: 30px 0 0 0;
+  height: 400px;
+  grid-row: 1/3;
+`;
 
 const StyledImgBox = styled.div`
   /* border: 2px solid red; */
@@ -50,7 +71,7 @@ const StyledImg = styled.img`
 
 const StyledNicknameAndIcon = styled.div`
   /* border: 1px solid red; */
-  width: 150px;
+  width: 200px;
   height: 230px;
   display: flex;
   position: relative;
@@ -76,7 +97,7 @@ const StyledProfileEdit = styled.button`
 
 const StyledLikeAndChatBox = styled.div`
   /* border: 1px solid red; */
-  width: 140px;
+  width: 100%;
   justify-content: space-between;
   /* width: max-content; */
   height: max-content;
@@ -92,10 +113,14 @@ const StyledEachWrap = styled.span`
   /* margin: 5px 12px 0 0; */
   align-items: center;
   width: max-content;
+  span {
+    margin-top: 10px;
+  }
 `;
 
 const StyledLikeAndChat = styled.img`
   width: 40px;
   height: 40px;
+  cursor: pointer;
   /* margin: 5px 5px 5px 0; */
 `;

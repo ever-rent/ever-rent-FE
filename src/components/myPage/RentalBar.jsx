@@ -38,11 +38,7 @@ export const RentalBar = () => {
     <>
       <StyledLendAndBorrow>
         {tabArray.map((item) => {
-          return (
-            <StyledLendItemBefore key={item.key}>
-              {item.tab}
-            </StyledLendItemBefore>
-          );
+          return <StyledRentalBar key={item.key}>{item.tab}</StyledRentalBar>;
         })}
         {/* {tabArray[tabIndex].content} */}
       </StyledLendAndBorrow>
@@ -64,7 +60,7 @@ const StyledLendAndBorrow = styled.div`
   /* border-radius: 5px; */
 `;
 
-const StyledLendItemBefore = styled.a`
+const StyledRentalBar = styled.a`
   position: relative;
   width: 100px;
   height: 40px;
