@@ -1,9 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { openNav } from "../../redux/modules/navSlice";
 
 export const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -54,7 +57,10 @@ export const Header = () => {
             글쓰기
           </StyledAddProductButton>
         </StyledSignMenu>
-        <StyledSideMenu alt="https://icons8.com/icon/36389/menu-rounded Menu Rounded https://icons8.com" />
+        <StyledSideMenu
+          onClick={() => dispatch(openNav())}
+          alt="https://icons8.com/icon/36389/menu-rounded Menu Rounded https://icons8.com"
+        />
       </StyledHeaderTop>
     </>
   );

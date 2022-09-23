@@ -54,7 +54,7 @@ export const ProductsItem = ({
 
 const StyledItemBox = styled.div`
   /* border: 1px solid red; */
-  padding: 15px 15px 0 15px;
+  padding: 10px 10px 0 10px;
   position: relative;
   border-radius: 10px;
   /* background: radial-gradient(#ebedee6e, #fefefe); */
@@ -71,17 +71,21 @@ const StyledItemBox = styled.div`
 
 const StyledImgBox = styled.div`
   /* border: 1px solid red; */
-  padding: 5px;
-  margin-bottom: 5px;
+  padding: 2px;
+  width: 200px;
+  height: 140px;
+  margin-bottom: 3px;
   @media only screen and (max-width: 480px) {
     margin: 0 10px;
   }
 `;
 
 const StyledImg = styled.img`
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
   border-radius: 8px;
   width: 100%;
+  height: 100%;
+  /* object-fit: cover; */
   cursor: pointer;
   @media only screen and (max-width: 480px) {
     width: 100px;
@@ -134,6 +138,7 @@ const StyledLike = styled.img`
   height: 20px;
   margin: 5px 5px 5px 0;
 `;
+
 const StyledChatWrap = styled.span`
   /* border: 1px solid red; */
   display: flex;

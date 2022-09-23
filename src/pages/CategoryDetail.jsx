@@ -5,15 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { Layout } from "../components/layout/Layout";
 import { getCategory } from "../redux/modules/productSlice";
 import { DetailItem } from "../components/detail/DetailItem";
-// import { Products } from "../components/main/products/Products";
-// import { ProductsItem } from "../components/main/products/ProductsItem";
 
 export const CategoryDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const category = useSelector((state) => state.products.category);
   const categoryItems = category?.data;
-  console.log(categoryItems);
+  // console.log(categoryItems);
 
   useEffect(() => {
     dispatch(getCategory(id));
@@ -89,39 +87,61 @@ export const CategoryDetail = () => {
 
   return (
     <Layout>
-      <StyledSelectBox>
-        <StyledSelect onChange={categoryHandler}>
-          {categoryList?.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.name}
-            </option>
-          ))}
-        </StyledSelect>
-        <StyledSelect onChange={addressHandler}>
-          {addressList?.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.name}
-            </option>
-          ))}
-        </StyledSelect>
+      <StyledCategoryContainer>
+        <StyledSelectBox>
+          <StyledSelect onChange={categoryHandler}>
+            {categoryList?.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.name}
+              </option>
+            ))}
+          </StyledSelect>
 
-        <StyledSelect onChange={priceHandler}>
-          {priceList?.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.name}
-            </option>
-          ))}
-        </StyledSelect>
-      </StyledSelectBox>
-      {categoryItems?.map((item) => {
-        return <DetailItem {...item} key={item.id} />;
-      })}
+          <StyledSelect onChange={addressHandler}>
+            {addressList?.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.name}
+              </option>
+            ))}
+          </StyledSelect>
+
+          <StyledSelect onChange={priceHandler}>
+            {priceList?.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.name}
+              </option>
+            ))}
+          </StyledSelect>
+        </StyledSelectBox>
+
+        <StyledDetailContainer>
+          {categoryItems?.map((item) => {
+            return <DetailItem {...item} key={item.id} />;
+          })}
+        </StyledDetailContainer>
+      </StyledCategoryContainer>
     </Layout>
   );
 };
 
+const StyledCategoryContainer = styled.div`
+  max-width: 1024px;
+  margin: 40px auto;
+`;
+
+const StyledDetailContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 226px);
+  margin-top: 30px;
+  gap: 50px 40px;
+  @media only screen and (max-width: 480px) {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+  }
+`;
 const StyledSelectBox = styled.div`
-  /* border: 1px solid blue; */
   margin: 10px 0;
 `;
 const StyledSelect = styled.select`
