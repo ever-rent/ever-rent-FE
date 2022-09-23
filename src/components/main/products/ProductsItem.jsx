@@ -57,7 +57,6 @@ const StyledItemBox = styled.div`
   padding: 10px 10px 0 10px;
   position: relative;
   border-radius: 10px;
-  /* background: radial-gradient(#ebedee6e, #fefefe); */
   background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee6e 100%);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   @media only screen and (max-width: 480px) {
