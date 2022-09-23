@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { RentalStatus } from "./RentalStatus";
 import { BorrowStatus } from "./BorrowStatus";
-import { StatusBox } from "./StatusBox";
+// import { StatusBox } from "./StatusBox";
 
 export const RentalBar = () => {
   const [tabIndex, setTabIndex] = useState(0); //처음에 나오는 것이 빌려준 물건.
@@ -47,7 +47,7 @@ export const RentalBar = () => {
         {/* {tabArray[tabIndex].content} */}
       </StyledLendAndBorrow>
       <StyledRentStatusBox>
-        <StatusBox status={tabIndex} />
+        {tabIndex ? <BorrowStatus /> : <RentalStatus />}
       </StyledRentStatusBox>
     </>
   );

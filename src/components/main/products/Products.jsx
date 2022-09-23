@@ -8,6 +8,7 @@ export const Products = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
   const productList = products;
+  console.log(productList);
 
   useEffect(() => {
     dispatch(getProducts());

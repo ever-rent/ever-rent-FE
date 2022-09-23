@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { timeToToday } from "../../../util/timeToToday";
 
 export const ProductsItem = ({
   id,
@@ -10,10 +11,12 @@ export const ProductsItem = ({
   address,
   Like,
   chat,
+  wiriteAt,
+  rentEnd,
+  rentStart,
 }) => {
   const navigate = useNavigate();
-  // const { id, img1, title, price, address, Like, chat } = data;
-  // console.log(props.data);
+  // const days = rentEnd.split("-")[]
   return (
     <StyledItemBox>
       <StyledImgBox>
@@ -28,6 +31,7 @@ export const ProductsItem = ({
       <StyledContentBox>
         <StyledTitle>{productName}</StyledTitle>
         <StyledPay>{price}</StyledPay>
+        {/* <div>{timeToToday(wiriteAt)}</div> */}
         <StyledDay> / 일</StyledDay>
         <StyledAddress>{address}</StyledAddress>
         <StyledLikeAndChat>
