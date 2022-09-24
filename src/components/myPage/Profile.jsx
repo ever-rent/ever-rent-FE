@@ -1,7 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 export const Profile = () => {
+  const navigate = useNavigate();
+
   return (
     <StyledProfileBox>
       <StyledImgBox>
@@ -14,13 +17,13 @@ export const Profile = () => {
         <StyledNickname>gardenk</StyledNickname>
         <StyledProfileEdit>프로필 수정</StyledProfileEdit>
         <StyledLikeAndChatBox>
-          <StyledEachWrap>
+          {/* <StyledEachWrap>
             <StyledLikeAndChat
               src="https://img.icons8.com/ios/50/47b5ff/reservation-2.png"
               alt="https://icons8.com/icon/24814/reserve reserve icon by https://icons8.com Icons8"
             />
             <span>예약 목록</span>
-          </StyledEachWrap>
+          </StyledEachWrap> */}
           <StyledEachWrap>
             <StyledLikeAndChat
               src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
@@ -98,7 +101,7 @@ const StyledProfileEdit = styled.button`
 const StyledLikeAndChatBox = styled.div`
   /* border: 1px solid red; */
   width: 100%;
-  justify-content: space-between;
+  justify-content: space-evenly;
   /* width: max-content; */
   height: max-content;
   display: flex;

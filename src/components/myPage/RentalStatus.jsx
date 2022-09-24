@@ -1,21 +1,71 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { RentList } from "../nav/RentList";
 import { PendingList } from "./PendingList";
-import { NowRental } from "./NowRental";
+import { Confirm } from "./Confirm";
 import { OverDeadLine } from "./OverDeadLine";
+import { MypageCommonList } from "./MypageCommonList";
+import { useDispatch, useSelector } from "react-redux";
+import { myPageList } from "../../redux/modules/mypageSlice";
+import { myPagePending } from "../../redux/modules/mypageSlice";
+import { myPageConfirm } from "../../redux/modules/mypageSlice";
+import { myPageOverDeadline } from "../../redux/modules/mypageSlice";
 
 export const RentalStatus = () => {
+  const dispatch = useDispatch();
+
   const [tabIndex, setTabIndex] = useState(0);
+
+  // const list = useSelector((state) => state.mypage.list);
+  // const pending = useSelector((state) => state.mypage.pending);
+  // const confirm = useSelector((state) => state.mypage.confirm);
+  // const deadline = useSelector((state) => state.mypage.deadline);
+
+  // useEffect(() => {
+  //   dispatch(myPageList());
+  // }, []);
+
+  // const CommonList = (tabIndex) => {
+  //   switch (tabIndex) {
+  //     case 0:
+  //       return <MypageCommonList props={list} />;
+  //     case 1:
+  //       return <MypageCommonList props={pending} />;
+  //     case 2:
+  //       return <MypageCommonList props={confirm} />;
+  //     case 3:
+  //       return <MypageCommonList props={deadline} />;
+  //     default:
+  //       return;
+  //   }
+  // };
+
+  const listHandler = (e) => {
+    e.preventDefault();
+    setTabIndex(0);
+    // dispatch(myPageList())
+  };
+  const pendingHandler = (e) => {
+    e.preventDefault();
+    setTabIndex(1);
+    // dispatch(myPagePending())
+  };
+  const confirmRentalHandler = (e) => {
+    e.preventDefault();
+    setTabIndex(2);
+    // dispatch(myPageConfirm())
+  };
+  const overDeadlineHandler = (e) => {
+    e.preventDefault();
+    setTabIndex(3);
+    // dispatch(myPageOverDeadline())
+  };
 
   const tabArray = [
     {
       key: "list",
       tab: (
-        <div
-          className={tabIndex === 0 ? "select" : ""}
-          onClick={() => setTabIndex(0)}
-        >
+        <div className={tabIndex === 0 ? "select" : ""} onClick={listHandler}>
           목록
         </div>
       ),
@@ -26,7 +76,7 @@ export const RentalStatus = () => {
       tab: (
         <div
           className={tabIndex === 1 ? "select" : ""}
-          onClick={() => setTabIndex(1)}
+          onClick={pendingHandler}
         >
           대기중
         </div>
@@ -34,23 +84,23 @@ export const RentalStatus = () => {
       content: <PendingList />,
     },
     {
-      key: "nowRental",
+      key: "confirm",
       tab: (
         <div
           className={tabIndex === 2 ? "select" : ""}
-          onClick={() => setTabIndex(2)}
+          onClick={confirmRentalHandler}
         >
-          렌탈중
+          렌탈확정
         </div>
       ),
-      content: <NowRental />,
+      content: <Confirm />,
     },
     {
-      key: "overDeadLine",
+      key: "overDeadline",
       tab: (
         <div
           className={tabIndex === 3 ? "select" : ""}
-          onClick={() => setTabIndex(3)}
+          onClick={overDeadlineHandler}
         >
           기한마감
         </div>
@@ -66,6 +116,8 @@ export const RentalStatus = () => {
           return <div key={item.key}>{item.tab}</div>;
         })}
       </StyledisStatusDetail>
+      {/* <MypageCommonList /> */}
+      {/* <CommonList /> */}
       {tabArray[tabIndex].content}
     </div>
   );
