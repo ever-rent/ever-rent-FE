@@ -1,41 +1,68 @@
-/* global kakao */
-
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { Map , MapMarker} from "react-kakao-maps-sdk";
-
-// const { kakao } = window;
+import { Map, MapMarker } from "react-kakao-maps-sdk";
 
 export const LocationModal = ({ showModal, closeModal }) => {
-  const [mapData, setmapData] = useState(null);
-  
-  // useEffect(() => {
-  //   const container = document.querySelector("#myMap");
-  //   const options = {
-  //     center: new window.kakao.maps.LatLng(33.450701, 126.570667),
-  //     level: 5,
-  //   };
-  //   const map = new window.kakao.maps.Map(container, options);
-  //   setmapData(map);
-  //   return () => {};
-  // }, []);
+  // 거래장소 props 추가 예정
+  const { kakao } = window;
 
+  const [info, setInfo] = useState();
+  const [markers, setMarkers] = useState([]);
+  const [map, setMap] = useState();
+
+  useEffect(() => {
+    if (!map) return;
+    const places = new kakao.maps.services.Places();
+
+    places.keywordSearch("부일로 상동", (data, status, _pagination) => {
+      if (status === kakao.maps.services.Status.OK) {
+        const bounds = new kakao.maps.LatLngBounds();
+        let markers = [];
+
+        markers.push({
+          position: {
+            lat: data[0].y,
+            lng: data[0].x,
+          },
+          content: data[0].place_name,
+        });
+        bounds.extend(new kakao.maps.LatLng(data[0].y, data[0].x));
+        // }
+        setMarkers(markers);
+
+        map.setBounds(bounds);
+      }
+    });
+  }, [map]);
 
   return (
     <div onClick={(e) => e.stopPropagation()}>
       {showModal ? (
         <StyledBackground onClick={closeModal}>
           <StyledModalContainer onClick={(e) => e.stopPropagation()}>
-          <Map 
-            className="myMap"
-            style={{ width: "500px", height: "500px" }}
-            center={{ lat: 33.5563, lng: 126.79581 }}
-            level={4}
-          >
-            <MapMarker position={{ lat: 33.55635, lng: 126.795841 }}>
-                <div style={{ color: "#000"}}>월정리에옹</div>
-            </MapMarker>
-          </Map>
+            {
+              <Map
+                center={{
+                  lat: 37.566826,
+                  lng: 126.9786567,
+                }}
+                style={{ width: "500px", height: "500px" }}
+                level={3}
+                onCreate={setMap}
+              >
+                {markers.map((marker) => (
+                  <MapMarker
+                    key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
+                    position={marker.position}
+                    onClick={() => setInfo(marker)}
+                  >
+                    {info && info.content === marker.content && (
+                      <div style={{ color: "#000" }}>{marker.content}</div>
+                    )}
+                  </MapMarker>
+                ))}
+              </Map>
+            }
           </StyledModalContainer>
         </StyledBackground>
       ) : null}
@@ -68,9 +95,8 @@ const StyledModalContainer = styled.div`
   box-shadow: 1px 1px 5px 1px rgb(71, 181, 255);
   text-align: center; */
 
-  .myMap{
-    border-radius:20px;
+  .myMap {
+    border-radius: 20px;
     box-shadow: 1px 1px 10px 1px rgb(71, 181, 255);
   }
-
 `;
