@@ -21,31 +21,31 @@ export const EditProduct = () => {
   const [imgView, setImgView] = useState();
   const [sendImage, setSendImage] = useState();
 
-  // const fileChange = (fileBlob) => {
-  //   setSendImage([...sendImage].concat(fileBlob));
-
-  //   const reader = new FileReader();
-  //   for (let i = 0; i < fileBlob.length; i++) {
-  //     reader.readAsDataURL(fileBlob[i]);
-  //     reader.onloadend = () => {
-  //       let imageSubs = reader.result;
-  //       setImgView([...imgView].concat(imageSubs));
-  //     };
-  //   }
-  // };
-
   const fileChange = (fileBlob) => {
+    setSendImage([...sendImage].concat(fileBlob));
+
     const reader = new FileReader();
-    reader.readAsDataURL(fileBlob);
-    console.log(fileBlob);
-    return new Promise((resolve) => {
-      reader.onload = () => {
-        setImgView(reader.result);
-        setSendImage(fileBlob);
-        resolve();
+    for (let i = 0; i < fileBlob.length; i++) {
+      reader.readAsDataURL(fileBlob[i]);
+      reader.onloadend = () => {
+        let imageSubs = reader.result;
+        setImgView([...imgView].concat(imageSubs));
       };
-    });
+    }
   };
+
+  // const fileChange = (fileBlob) => {
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(fileBlob);
+  //   console.log(fileBlob);
+  //   return new Promise((resolve) => {
+  //     reader.onload = () => {
+  //       setImgView(reader.result);
+  //       setSendImage(fileBlob);
+  //       resolve();
+  //     };
+  //   });
+  // };
 
   const imageLengthCheck = (e) => {
     if (imgView.length === 4) {
@@ -158,20 +158,19 @@ export const EditProduct = () => {
                 id="inputFile"
                 type="file"
                 multiple="multiple"
-                maxSize={5242880}
                 onChange={(e) => {
-                  fileChange(e.target.files[0]);
+                  fileChange(e.target.files);
                 }}
               />
               <StyledProductImagetWrap>
                 <SyltedImageView
-                  src={imgView === undefined ? defaultImg : imgView}
+                  src={imgView[0] === undefined ? defaultImg : imgView[0]}
                   alt="이미지 미리보기"
                   onClick={() => {
                     initImage(imgView[0], 0);
                   }}
                 />
-                {/* <StyledProductSubImageWrap>
+                <StyledProductSubImageWrap>
                   {imgView.map((item, index) => {
                     if (index !== 0) {
                       return (
@@ -185,7 +184,7 @@ export const EditProduct = () => {
                       );
                     }
                   })}
-                </StyledProductSubImageWrap> */}
+                </StyledProductSubImageWrap>
                 <StyledDeleteImg>
                   사진을 누르면 삭제돼요!
                   <br />

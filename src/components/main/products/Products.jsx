@@ -1,8 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import styled from "styled-components";
 import { ProductsItem } from "./ProductsItem";
 import { getProducts } from "../../../redux/modules/productSlice";
 import { useDispatch, useSelector } from "react-redux";
+
+import {useInView} from "react-intersection-observer";
+import axios from "axios";
 
 export const Products = () => {
   const dispatch = useDispatch();
@@ -14,6 +17,39 @@ export const Products = () => {
     dispatch(getProducts());
   }, [dispatch]);
 
+
+  // infi scroll
+  // const [products, setProducts] = useState([]);
+  // const [hasNextPage, setHasNextPage] = useState(true);
+  // const page = useRef(1);
+  // const [ref, inView] = useInView(true);
+
+  // const fetch = useCallback(async () => {
+  //   try {
+  //     const { dataSet } = await axios.get(
+  //       `http://52.79.235.129/products?_limit=8&_page=${page.current}`
+  //     );
+  //     const {data} = [...dataSet].data
+  //     setProducts((prevPosts) => [...prevPosts, ...data]);
+  //     setHasNextPage(data.length === 8);
+  //     if (data.length) {
+  //       page.current += 1;
+  //     }
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   console.log(inView, hasNextPage);
+  //   if (inView && hasNextPage) {
+  //     fetch();
+  //   }
+  // }, [fetch, hasNextPage, inView]);
+
+  // console.log(products);
+
+
   return (
     <StyledProductsContainer>
       <StyledProductsGrid>
@@ -21,6 +57,8 @@ export const Products = () => {
           return <ProductsItem {...product} key={product.id} />;
         })}
       </StyledProductsGrid>
+      {/* <div ref={ref} style={{ position: "absolute" }} /> */}
+      <div style={{position: "absolute" }} />
     </StyledProductsContainer>
   );
 };
