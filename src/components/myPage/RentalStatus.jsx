@@ -6,59 +6,63 @@ import { Confirm } from "./Confirm";
 import { OverDeadLine } from "./OverDeadLine";
 import { MypageCommonList } from "./MypageCommonList";
 import { useDispatch, useSelector } from "react-redux";
-import { myPageList } from "../../redux/modules/mypageSlice";
-import { myPagePending } from "../../redux/modules/mypageSlice";
-import { myPageConfirm } from "../../redux/modules/mypageSlice";
-import { myPageOverDeadline } from "../../redux/modules/mypageSlice";
+import { getMyPageList } from "../../redux/modules/mypageSlice";
+import { getMyPagePending } from "../../redux/modules/mypageSlice";
+import { getMyPageConfirm } from "../../redux/modules/mypageSlice";
+import { getMyPageExpired } from "../../redux/modules/mypageSlice";
 
 export const RentalStatus = () => {
   const dispatch = useDispatch();
 
   const [tabIndex, setTabIndex] = useState(0);
 
-  // const list = useSelector((state) => state.mypage.list);
-  // const pending = useSelector((state) => state.mypage.pending);
-  // const confirm = useSelector((state) => state.mypage.confirm);
-  // const deadline = useSelector((state) => state.mypage.deadline);
+  const list = useSelector((state) => state.mypage.list);
+  // console.log(list);
+  const pending = useSelector((state) => state.mypage.pending);
+  // console.log(pending);
+  const confirm = useSelector((state) => state.mypage.confirm);
+  // console.log(confirm);
+  const deadline = useSelector((state) => state.mypage.deadline);
+  console.log(deadline);
 
-  // useEffect(() => {
-  //   dispatch(myPageList());
-  // }, []);
+  useEffect(() => {
+    dispatch(getMyPageList());
+  }, [dispatch]);
 
-  // const CommonList = (tabIndex) => {
-  //   switch (tabIndex) {
-  //     case 0:
-  //       return <MypageCommonList props={list} />;
-  //     case 1:
-  //       return <MypageCommonList props={pending} />;
-  //     case 2:
-  //       return <MypageCommonList props={confirm} />;
-  //     case 3:
-  //       return <MypageCommonList props={deadline} />;
-  //     default:
-  //       return;
-  //   }
-  // };
+  const CommonList = (tabIndex) => {
+    switch (tabIndex) {
+      case 0:
+        return <MypageCommonList props={list} index={tabIndex} />;
+      case 1:
+        return <MypageCommonList props={pending} index={tabIndex} />;
+      case 2:
+        return <MypageCommonList props={confirm} index={tabIndex} />;
+      case 3:
+        return <MypageCommonList props={deadline} index={tabIndex} />;
+      default:
+        return;
+    }
+  };
 
   const listHandler = (e) => {
     e.preventDefault();
     setTabIndex(0);
-    // dispatch(myPageList())
+    dispatch(getMyPageList());
   };
   const pendingHandler = (e) => {
     e.preventDefault();
     setTabIndex(1);
-    // dispatch(myPagePending())
+    dispatch(getMyPagePending());
   };
   const confirmRentalHandler = (e) => {
     e.preventDefault();
     setTabIndex(2);
-    // dispatch(myPageConfirm())
+    dispatch(getMyPageConfirm());
   };
   const overDeadlineHandler = (e) => {
     e.preventDefault();
     setTabIndex(3);
-    // dispatch(myPageOverDeadline())
+    dispatch(getMyPageExpired());
   };
 
   const tabArray = [
@@ -69,7 +73,7 @@ export const RentalStatus = () => {
           목록
         </div>
       ),
-      content: <RentList />,
+      // content: <RentList />,
     },
     {
       key: "pending",
@@ -81,7 +85,7 @@ export const RentalStatus = () => {
           대기중
         </div>
       ),
-      content: <PendingList />,
+      // content: <PendingList />,
     },
     {
       key: "confirm",
@@ -93,7 +97,7 @@ export const RentalStatus = () => {
           렌탈확정
         </div>
       ),
-      content: <Confirm />,
+      // content: <Confirm />,
     },
     {
       key: "overDeadline",
@@ -105,7 +109,7 @@ export const RentalStatus = () => {
           기한마감
         </div>
       ),
-      content: <OverDeadLine />,
+      // content: <OverDeadLine />,
     },
   ];
 
@@ -117,8 +121,8 @@ export const RentalStatus = () => {
         })}
       </StyledisStatusDetail>
       {/* <MypageCommonList /> */}
-      {/* <CommonList /> */}
-      {tabArray[tabIndex].content}
+      {CommonList(tabIndex)}
+      {/* {tabArray[tabIndex].content} */}
     </div>
   );
 };
