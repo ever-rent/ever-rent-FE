@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { RentList } from "../nav/RentList";
-import { PendingList } from "./PendingList";
-import { Confirm } from "./Confirm";
-import { OverDeadLine } from "./OverDeadLine";
-import { MypageCommonList } from "./MypageCommonList";
+import { RentalCommonList } from "./RentalCommonList";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyPageList } from "../../redux/modules/mypageSlice";
 import { getMyPagePending } from "../../redux/modules/mypageSlice";
@@ -32,13 +28,13 @@ export const RentalStatus = () => {
   const CommonList = (tabIndex) => {
     switch (tabIndex) {
       case 0:
-        return <MypageCommonList props={list} index={tabIndex} />;
+        return <RentalCommonList props={list} index={tabIndex} />;
       case 1:
-        return <MypageCommonList props={pending} index={tabIndex} />;
+        return <RentalCommonList props={pending} index={tabIndex} />;
       case 2:
-        return <MypageCommonList props={confirm} index={tabIndex} />;
+        return <RentalCommonList props={confirm} index={tabIndex} />;
       case 3:
-        return <MypageCommonList props={deadline} index={tabIndex} />;
+        return <RentalCommonList props={deadline} index={tabIndex} />;
       default:
         return;
     }
@@ -73,7 +69,6 @@ export const RentalStatus = () => {
           목록
         </div>
       ),
-      // content: <RentList />,
     },
     {
       key: "pending",
@@ -85,7 +80,6 @@ export const RentalStatus = () => {
           대기중
         </div>
       ),
-      // content: <PendingList />,
     },
     {
       key: "confirm",
@@ -97,7 +91,6 @@ export const RentalStatus = () => {
           렌탈확정
         </div>
       ),
-      // content: <Confirm />,
     },
     {
       key: "overDeadline",
@@ -109,7 +102,6 @@ export const RentalStatus = () => {
           기한마감
         </div>
       ),
-      // content: <OverDeadLine />,
     },
   ];
 
@@ -120,9 +112,7 @@ export const RentalStatus = () => {
           return <div key={item.key}>{item.tab}</div>;
         })}
       </StyledisStatusDetail>
-      {/* <MypageCommonList /> */}
       {CommonList(tabIndex)}
-      {/* {tabArray[tabIndex].content} */}
     </div>
   );
 };
@@ -142,26 +132,4 @@ const StyledisStatusDetail = styled.div`
     font-weight: bold;
     border-bottom: 3px solid #47b5ff;
   }
-`;
-
-const StyledPending = styled.span`
-  position: relative;
-  width: 100px;
-  height: 40px;
-  line-height: 40px;
-  /* background: #000; */
-  /* color: #fff; */
-  text-align: center;
-  font-weight: bold;
-  margin: 30px;
-  /* &::after {
-    content: "";
-    display: block;
-    position: absolute;
-    bottom: -20px;
-    left: 50%;
-    transform: translateX(-10px);
-    border: 10px solid transparent;
-    border-top-color: #000;
-  } */
 `;

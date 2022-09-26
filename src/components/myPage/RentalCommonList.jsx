@@ -1,7 +1,7 @@
 import React from "react";
-import { MypageCommonItem } from "./MypageCommonItem";
+import { RentalCommonItem } from "./RentalCommonItem";
 
-export const MypageCommonList = (props) => {
+export const RentalCommonList = (props) => {
   const list = props.props;
   const index = props.index;
   // const button = props.button;
@@ -15,7 +15,7 @@ export const MypageCommonList = (props) => {
   return (
     <div>
       {list?.map((item) => {
-        return <MypageCommonItem item={item} key={item.id} index={index} />;
+        return <RentalCommonItem item={item} key={item.id} index={index} />;
       })}
     </div>
   );

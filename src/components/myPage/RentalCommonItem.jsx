@@ -4,10 +4,10 @@ import styled from "styled-components";
 import { acceptOrder } from "../../redux/modules/mypageSlice";
 import Swal from "sweetalert2";
 
-export const MypageCommonItem = ({ item, index }) => {
+export const RentalCommonItem = ({ item, index }) => {
   const dispatch = useDispatch();
   const { id, imgUrl, productName, content, memberName } = item;
-  console.log("MypageCommonItem", item);
+  console.log("RentalCommonItem", item);
   console.log("button", index);
 
   const acceptHandler = () => {
