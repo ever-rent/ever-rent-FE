@@ -4,29 +4,47 @@ import { useState, useEffect } from "react";
 import { Layout } from "../components/layout/Layout";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProducts } from "../redux/modules/productSlice";
+import { useNavigate, useParams } from "react-router-dom";
 
+import Swal from "sweetalert2";
 
 export const EditProduct = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const param = useParams();
 
+  // useSelector 처리 예정
 
   const defaultImg =
     "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png";
 
-  const [imgView, setImgView] = useState([]);
-  const [sendImage, setSendImage] = useState([]);
+  const [imgView, setImgView] = useState();
+  const [sendImage, setSendImage] = useState();
+
+  // const fileChange = (fileBlob) => {
+  //   setSendImage([...sendImage].concat(fileBlob));
+
+  //   const reader = new FileReader();
+  //   for (let i = 0; i < fileBlob.length; i++) {
+  //     reader.readAsDataURL(fileBlob[i]);
+  //     reader.onloadend = () => {
+  //       let imageSubs = reader.result;
+  //       setImgView([...imgView].concat(imageSubs));
+  //     };
+  //   }
+  // };
 
   const fileChange = (fileBlob) => {
-    setSendImage([...sendImage].concat(fileBlob));
-
     const reader = new FileReader();
-    for (let i = 0; i < fileBlob.length; i++) {
-      reader.readAsDataURL(fileBlob[i]);
-      reader.onloadend = () => {
-        let imageSubs = reader.result;
-        setImgView([...imgView].concat(imageSubs));
+    reader.readAsDataURL(fileBlob);
+    console.log(fileBlob);
+    return new Promise((resolve) => {
+      reader.onload = () => {
+        setImgView(reader.result);
+        setSendImage(fileBlob);
+        resolve();
       };
-    }
+    });
   };
 
   const imageLengthCheck = (e) => {
@@ -88,33 +106,46 @@ export const EditProduct = () => {
   });
 
   let sendData = {
-    title: title,
-    description: description,
-    category: categoryInput,
+    productName: title,
+    content: description,
+    cateId: categoryInput,
     price: priceInput,
-    startDate: startDateInput,
-    endDate: endDateInput,
+    rentStart: startDateInput,
+    rentEnd: endDateInput,
   };
+  // productId: param.id,
 
-  const editProduct = () => {
+  const editProductData = () => {
     if (title === "" || description === "") {
       alert("제목/내용을 적어주세요!");
     } else {
-      let formData = new FormData();
-      formData.append(
-        "requestDto",
-        new Blob([JSON.stringify(sendData)], { type: "application/json" })
-      );
-      formData.append("multipartFile", sendImage);
-
-      dispatch(updateProducts(formData));
+      Swal.fire({
+        title: "변경 내용을 저장할까요?",
+        icon: "info",
+        showCancelButton: true,
+        confirmButtonColor: "rgb(71, 181, 255)",
+        cancelButtonColor: "rgb(184, 221, 247)",
+        confirmButtonText: "수정하기",
+        cancelButtonText: "취소",
+      }).then((result) => {
+        if (result.value) {
+          let formData = new FormData();
+          formData.append(
+            "requestDto",
+            new Blob([JSON.stringify(sendData)], { type: "application/json" })
+          );
+          formData.append("multipartFile", sendImage);
+          dispatch(updateProducts([formData, { productId: param.id }]));
+          navigate("/");
+        }
+      });
     }
   };
 
   return (
     <Layout>
       <StyledEditProductContainer>
-        <StyledEditProductForm>
+        <StyledEditProductForm encType="multipart/form-data">
           <StyledPostingHeadWrap>
             <StyledFormImageInputWrap>
               <StyledImageLabel
@@ -129,18 +160,18 @@ export const EditProduct = () => {
                 multiple="multiple"
                 maxSize={5242880}
                 onChange={(e) => {
-                  fileChange(e.target.files);
+                  fileChange(e.target.files[0]);
                 }}
               />
               <StyledProductImagetWrap>
                 <SyltedImageView
-                  src={imgView[0] === undefined ? defaultImg : imgView[0]}
+                  src={imgView === undefined ? defaultImg : imgView}
                   alt="이미지 미리보기"
                   onClick={() => {
                     initImage(imgView[0], 0);
                   }}
                 />
-                <StyledProductSubImageWrap>
+                {/* <StyledProductSubImageWrap>
                   {imgView.map((item, index) => {
                     if (index !== 0) {
                       return (
@@ -154,7 +185,7 @@ export const EditProduct = () => {
                       );
                     }
                   })}
-                </StyledProductSubImageWrap>
+                </StyledProductSubImageWrap> */}
                 <StyledDeleteImg>
                   사진을 누르면 삭제돼요!
                   <br />
@@ -204,6 +235,7 @@ export const EditProduct = () => {
                   }}
                 />
                 <StyledPriceLabel htmlFor="itemPrice">원</StyledPriceLabel>
+                <StyledPriceData> / 일</StyledPriceData>
               </StyledPriceWrap>
               <StyledDateWrap>
                 <StyledStartLabel htmlFor="">렌탈시작일 : </StyledStartLabel>
@@ -238,18 +270,25 @@ export const EditProduct = () => {
             cols="30"
             rows="10"
             placeholder="내용을 입력해주세요!"
+            maxLength={500}
             onChange={(e) => {
               discriptionChange(e.target.value);
             }}
           />
           <StyledButtonBox>
-            <StyledGoBackButton>뒤로가기</StyledGoBackButton>
+            <StyledGoBackButton
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              홈으로
+            </StyledGoBackButton>
             <StyledFormButton
               disabled={disabled}
               type="button"
-              onClick={editProduct}
+              onClick={editProductData}
             >
-              작성하기
+              수정하기
             </StyledFormButton>
           </StyledButtonBox>
         </StyledEditProductForm>
@@ -267,7 +306,7 @@ const StyledEditProductContainer = styled.div`
 const StyledEditProductForm = styled.form`
   display: flex;
   flex-direction: column;
-  width: 900px;
+  width: 700px;
 
   padding: 40px;
   box-shadow: 1px 1px 5px 1px rgb(71, 181, 255);
@@ -330,7 +369,6 @@ const StyledDeleteImg = styled.span`
   line-height: 25px;
 
   color: rgb(71, 181, 255);
-  cursor: pointer;
   border-radius: 10px;
 
   text-align: center;
@@ -366,6 +404,9 @@ const StyledImageSource = styled.span`
 const StyledCategoryOptions = styled.option``;
 
 const StyledPriceWrap = styled.div``;
+const StyledPriceData = styled.span`
+  margin-right: 10px;
+`;
 const StyledPriceInput = styled.input`
   border: 1px solid rgb(71, 181, 255);
   padding: 10px;
@@ -418,7 +459,7 @@ const StyledPostTitle = styled.input`
 const StyledDescription = styled.textarea`
   margin-top: 30px;
   padding: 15px;
-  height: 300px;
+  height: 200px;
   overflow: hidden;
   resize: none;
   border: 1px solid rgb(71, 181, 255);

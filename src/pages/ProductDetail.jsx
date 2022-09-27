@@ -2,9 +2,15 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 
 import { Layout } from "../components/layout/Layout";
-import { deleteProducts, getProductsDetail } from "../redux/modules/productSlice";
+import { deleteProducts, getProducts } from "../redux/modules/productSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+
+import { categoriNumber } from "../util/categoryNumber";
+import { timeToToday } from "../util/timeToToday";
+import { LocationModal } from "../components/location/LocationModal";
+
+import Swal from "sweetalert2";
 
 const FavoritIconButton = () => {
   const [liked, setLiked] = useState(false);
@@ -37,34 +43,61 @@ const FavoritIconButton = () => {
 };
 
 export const ProductDetail = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const param = useParams();
+
+  useEffect(() => {
+    dispatch(getProducts());
+  }, []);
+
+  const data = useSelector((state) => state.products.products);
+  const detailData = data?.filter(
+    (element) => element.id === Number(param.id)
+  )[0];
 
   const defaultImg =
     "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png";
   const defaultUserImg =
     "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNF5TD%2FbtrMyfbzuN7%2FJZiKO75eVNPNAGHIPtrAnK%2Fimg.png";
 
-useEffect(() => {
-  dispatch(getProductsDetail(param))
-}, []);
+  const [writeAt, setWriteAt] = useState("");
+  const [createdAt, setCreatedAt] = useState("");
 
-    const data = useSelector((state)=>state.product.products)
-    
+  useEffect(() => {
+    let timeStatus = detailData?.writeAt;
+    timeStatus !== undefined ? setWriteAt(timeStatus) : (timeStatus = "");
+    setCreatedAt(timeToToday(writeAt));
+  }, [writeAt, detailData]);
 
   const [editabled, setEditabled] = useState(true);
-
   const [userImage, setUserImage] = useState(defaultUserImg);
 
-  const editPost = () => {};
-
   const deletePost = () => {
-    if (window.confirm("진짜 삭제하실건가요..?")) {
-      dispatch(deleteProducts(param));
-      alert("삭제완료");
-    } else {
-      alert("휴");
-    }
+    Swal.fire({
+      title: "정말 삭제하실건가요?",
+      text: "삭제하시면 다시 복구시킬 수 없습니다.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "rgb(71, 181, 255)",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "삭제",
+      cancelButtonText: "취소",
+    }).then((result) => {
+      if (result.value) {
+        dispatch(deleteProducts(param));
+        alert("삭제완료");
+        navigate("/");
+      }
+    });
+  };
+
+  const [showModal, setShowModal] = useState(false);
+  const openModal = () => {
+    setShowModal(true);
+  };
+  const closeModal = () => {
+    setShowModal(false);
   };
 
   return (
@@ -76,14 +109,23 @@ useEffect(() => {
               editabled === false ? { display: "none" } : { display: "flex" }
             }
           >
-            <StyledEditButton onClick={editPost}>글 수정</StyledEditButton>
+            <StyledEditButton
+              onClick={() => {
+                navigate(`/editProduct/${param.id}`);
+              }}
+            >
+              글 수정
+            </StyledEditButton>
             <StyledDeleteButton onClick={deletePost}>
               글 삭제 X
             </StyledDeleteButton>
           </StyledEditableOption>
           <StyledPostHeadWrap>
             <StyledProductImagetWrap>
-              <SyltedProductMainImage src={defaultImg} alt="이미지 미리보기" />
+              <SyltedProductMainImage
+                src={detailData && detailData.imgUrl}
+                alt="이미지 미리보기"
+              />
               <StyledProductSubImageWrap>
                 <StyledProductSubImage src={defaultImg} />
                 <StyledProductSubImage src={defaultImg} />
@@ -101,31 +143,40 @@ useEffect(() => {
                 <StyledChatImgAlt>채팅하기</StyledChatImgAlt>
               </StyledImagesWrap>
               <FavoritIconButton />
-              <StyledImagesWrap>
+              <StyledImagesWrap className="openPopupButton" onClick={openModal}>
                 <StyledMapImage
                   src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FZoOUr%2FbtrMtG2s1YT%2FLwGap5AgYCUktPDgK0hCik%2Fimg.png"
                   alt="https://icons8.com/icon/WbyzmoN1bnxR/map-marker Map Marker icon by https://icons8.com Icons8"
                 />
                 <StyledMapImgAlt>위치</StyledMapImgAlt>
+                <LocationModal showModal={showModal} closeModal={closeModal} />
               </StyledImagesWrap>
             </StyledPostSubItems>
             <StyledPostHr />
             <StyledUserInfo>
               <StyledUserimage src={userImage} />
               <StyledUserSubInfo>
-                <StyledUserNickname>닉네임</StyledUserNickname>
+                <StyledUserNickname>
+                  {detailData?.memberName}
+                </StyledUserNickname>
                 <StyledUserLocation>지역</StyledUserLocation>
               </StyledUserSubInfo>
             </StyledUserInfo>
             <StyledPostHr />
             <StyledPostMain>
-              <StyledPostTitle>제목</StyledPostTitle>
+              <StyledPostTitle>{detailData?.productName}</StyledPostTitle>
               <StyledPostEachWrap>
-                <StyledPostCategory>카테고리</StyledPostCategory>
-                <StyledTimeForToday> ㆍ며칠 전</StyledTimeForToday>
+                <StyledPostCategory>
+                  {categoriNumber(detailData?.cateId)}
+                </StyledPostCategory>
+                <StyledTimeForToday> ㆍ{createdAt}</StyledTimeForToday>
               </StyledPostEachWrap>
-              <StyledProductPrice>가격(원)</StyledProductPrice>
-              <StyledPostDescription>내용</StyledPostDescription>
+              <StyledProductPrice>
+                {detailData?.price}(원) / 일
+              </StyledProductPrice>
+              <StyledPostDescription>
+                {detailData?.content}
+              </StyledPostDescription>
             </StyledPostMain>
           </StyledPostBodyWrap>
         </StyledDetailProductWrap>
@@ -143,7 +194,7 @@ const StyledDetailProductContainer = styled.div`
 const StyledDetailProductWrap = styled.div`
   display: flex;
   flex-direction: column;
-  width: 900px;
+  width: 700px;
 
   padding: 40px;
   box-shadow: 1px 1px 5px 1px rgb(71, 181, 255);

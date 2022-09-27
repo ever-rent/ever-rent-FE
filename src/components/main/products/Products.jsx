@@ -6,8 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 export const Products = () => {
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.products);
-  const productList = products?.products;
+  const products = useSelector((state) => state.products.products);
+  const productList = products;
   // console.log(productList);
 
   useEffect(() => {
@@ -16,18 +16,29 @@ export const Products = () => {
 
   return (
     <StyledProductsContainer>
-      {productList?.map((product) => {
-        return <ProductsItem {...product} key={product.id} />;
-      })}
+      <StyledProductsGrid>
+        {productList?.map((product) => {
+          return <ProductsItem {...product} key={product.id} />;
+        })}
+      </StyledProductsGrid>
     </StyledProductsContainer>
   );
 };
 
 const StyledProductsContainer = styled.div`
-  /* border: 1px solid red; */
+  max-width: 1024px;
+  margin: 40px auto;
+`;
+
+const StyledProductsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 226px);
-  /* justify-items: center; //가로방향 가운데 정렬 */
   margin-top: 30px;
   gap: 50px 40px;
+  @media only screen and (max-width: 480px) {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+  }
 `;

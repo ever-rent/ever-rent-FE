@@ -1,46 +1,34 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { timeToToday } from "../../../util/timeToToday";
 
-export const ProductsItem = ({
-  id,
-  imgUrl,
-  productName,
-  price,
-  address,
-  Like,
-  chat,
-  wiriteAt,
-  rentEnd,
-  rentStart,
-}) => {
+export const DetailItem = ({ id, imgUrl, productName, price }) => {
   const navigate = useNavigate();
-  // const days = rentEnd.split("-")[]
+
   return (
     <StyledItemBox>
       <StyledImgBox>
+        {/* TODO: onClick event 만들기.(detail page로 이동.) */}
         <StyledImg
+          src={imgUrl}
+          alt="이미지 없음"
           onClick={() => {
             navigate(`/productDetail/${id}`);
           }}
-          src={imgUrl}
-          alt="이미지 없음"
         />
       </StyledImgBox>
       <StyledContentBox>
         <StyledTitle>{productName}</StyledTitle>
         <StyledPay>{price}</StyledPay>
-        {/* <div>{timeToToday(wiriteAt)}</div> */}
         <StyledDay> / 일</StyledDay>
-        <StyledAddress>{address}</StyledAddress>
+        <StyledAddress>{}</StyledAddress>
         <StyledLikeAndChat>
           <StyledLikeWrap>
             <StyledLike
               src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
               alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
             />
-            <span>찜 {Like}</span>
+            <span>찜 {}</span>
           </StyledLikeWrap>
 
           <StyledChatWrap>
@@ -48,7 +36,7 @@ export const ProductsItem = ({
               src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
               alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
             />
-            <span>채팅 {chat}</span>
+            <span>채팅 {}</span>
           </StyledChatWrap>
         </StyledLikeAndChat>
       </StyledContentBox>
@@ -141,7 +129,6 @@ const StyledLike = styled.img`
   height: 20px;
   margin: 5px 5px 5px 0;
 `;
-
 const StyledChatWrap = styled.span`
   /* border: 1px solid red; */
   display: flex;

@@ -1,105 +1,147 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Layout } from "../components/layout/Layout";
-import { Products } from "../components/main/products/Products";
-import { ProductsItem } from "../components/main/products/ProductsItem";
+import { getCategory } from "../redux/modules/productSlice";
+import { DetailItem } from "../components/detail/DetailItem";
 
 export const CategoryDetail = () => {
+  const { id } = useParams();
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.products);
-  const productList = products?.products;
-  // console.log(productList);
+  const category = useSelector((state) => state.products.category);
+  const categoryItems = category?.data;
+  // console.log(categoryItems);
+
+  useEffect(() => {
+    dispatch(getCategory(id));
+  }, [dispatch, id]);
 
   const categoryList = [
-    { value: "", name: "카테고리를 선택하세요" },
-    { value: "디지털기기", name: "디지털기기" },
-    { value: "공구", name: "공구" },
-    { value: "생활가전", name: "디지털기기" },
-    { value: "잡화", name: "잡화" },
-    { value: "스포츠/레저", name: "스포츠/레저" },
-    { value: "취미/게임/음반", name: "취미/게임/음반" },
-    { value: "도서", name: "도서" },
-    { value: "기타", name: "기타" },
+    { value: "0", name: "카테고리를 선택하세요" },
+    { value: "1", name: "디지털기기" },
+    { value: "2", name: "공구" },
+    { value: "3", name: "생활가전" },
+    { value: "4", name: "잡화" },
+    { value: "5", name: "스포츠/레저" },
+    { value: "6", name: "취미/게임/음반" },
+    { value: "7", name: "도서" },
+    { value: "8", name: "기타" },
   ];
 
   const addressList = [
-    { value: "", name: "지역을 선택하세요" },
-    { value: "서울특별시", name: "서울특별시" },
-    { value: "부산광역시", name: "부산광역시" },
-    { value: "대구광역시", name: "대구광역시" },
-    { value: "인천광역시", name: "인천광역시" },
-    { value: "광주광역시", name: "광주광역시" },
-    { value: "대전광역시", name: "대전광역시" },
-    { value: "울산광역시", name: "울산광역시" },
-    { value: "세종특별자치시", name: "세종특별자치시" },
-    { value: "경기도", name: "경기도" },
-    { value: "강원도", name: "강원도" },
-    { value: "충청북도", name: "충청북도" },
-    { value: "충청남도", name: "충청남도" },
-    { value: "전라북도", name: "전라북도" },
-    { value: "전라남도", name: "전라남도" },
-    { value: "경상북도", name: "경상북도" },
-    { value: "경상남도", name: "경상남도" },
-    { value: "제주특별자치도", name: "제주특별자치도" },
+    { value: "0", name: "지역을 선택하세요" },
+    { value: "1", name: "서울특별시" },
+    { value: "2", name: "부산광역시" },
+    { value: "3", name: "대구광역시" },
+    { value: "4", name: "인천광역시" },
+    { value: "5", name: "광주광역시" },
+    { value: "6", name: "대전광역시" },
+    { value: "7", name: "울산광역시" },
+    { value: "8", name: "세종특별자치시" },
+    { value: "9", name: "경기도" },
+    { value: "10", name: "강원도" },
+    { value: "11", name: "충청북도" },
+    { value: "12", name: "충청남도" },
+    { value: "13", name: "전라북도" },
+    { value: "14", name: "전라남도" },
+    { value: "15", name: "경상북도" },
+    { value: "16", name: "경상남도" },
+    { value: "17", name: "제주특별자치도" },
   ];
 
   const priceList = [
-    { value: "", name: "가격을 선택하세요" },
-    { value: "0", name: "~ 10,000원 미만" },
-    { value: "1", name: "10,000원 ~ 20,000원 미만" },
-    { value: "2", name: "20,000원 ~ 30,000원 미만" },
-    { value: "3", name: "30,000원 ~ 40,000원 미만" },
-    { value: "4", name: "40,000원 ~ 50,000원 미만" },
-    { value: "5", name: "50,000원 이상" },
+    { value: 0, name: "가격을 선택하세요" },
+    { value: 1, name: "~ 10,000원 미만" },
+    { value: 2, name: "10,000원 ~ 20,000원 미만" },
+    { value: 3, name: "20,000원 ~ 30,000원 미만" },
+    { value: 4, name: "30,000원 ~ 40,000원 미만" },
+    { value: 5, name: "40,000원 ~ 50,000원 미만" },
+    { value: 6, name: "50,000원 이상" },
   ];
 
   const categoryHandler = (e) => {
-    console.log(e.target.value);
+    e.preventDefault();
+    const categoryId = e.target.value;
+    dispatch(getCategory(categoryId));
+    // console.log(e.target.value);
   };
 
   const addressHandler = (e) => {
-    console.log(e.target.value);
+    e.preventDefault();
+    // const addressPayload = e.target.value;
+    // dispatch(getCategoryDetail(addressPayload));
+    // console.log(e.target.value);
   };
 
   const priceHandler = (e) => {
-    console.log(e.target.value);
+    e.preventDefault();
+    // const pricePayload = e.target.value;
+    // dispatch(getCategoryDetail(pricePayload));
+    // console.log(e.target.value);
   };
+
+  // useEffect(() => {
+  //   dispatch();
+  // });
 
   return (
     <Layout>
-      <StyledSelectBox>
-        <StyledSelect onChange={categoryHandler}>
-          {categoryList.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.name}
-            </option>
-          ))}
-        </StyledSelect>
-        <StyledSelect onChange={addressHandler}>
-          {addressList.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.name}
-            </option>
-          ))}
-        </StyledSelect>
+      <StyledCategoryContainer>
+        <StyledSelectBox>
+          <StyledSelect onChange={categoryHandler}>
+            {categoryList?.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.name}
+              </option>
+            ))}
+          </StyledSelect>
 
-        <StyledSelect onChange={priceHandler}>
-          {priceList.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.name}
-            </option>
-          ))}
-        </StyledSelect>
-      </StyledSelectBox>
+          <StyledSelect onChange={addressHandler}>
+            {addressList?.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.name}
+              </option>
+            ))}
+          </StyledSelect>
 
-      {/* <Products /> */}
+          <StyledSelect onChange={priceHandler}>
+            {priceList?.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.name}
+              </option>
+            ))}
+          </StyledSelect>
+        </StyledSelectBox>
+
+        <StyledDetailContainer>
+          {categoryItems?.map((item) => {
+            return <DetailItem {...item} key={item.id} />;
+          })}
+        </StyledDetailContainer>
+      </StyledCategoryContainer>
     </Layout>
   );
 };
 
+const StyledCategoryContainer = styled.div`
+  max-width: 1024px;
+  margin: 40px auto;
+`;
+
+const StyledDetailContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 226px);
+  margin-top: 30px;
+  gap: 50px 40px;
+  @media only screen and (max-width: 480px) {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+  }
+`;
 const StyledSelectBox = styled.div`
-  /* border: 1px solid blue; */
   margin: 10px 0;
 `;
 const StyledSelect = styled.select`
