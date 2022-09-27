@@ -16,7 +16,7 @@ export const Join = () => {
 
   const handleEmailAuth = async (email) => {
     return await axios.post(
-      `http://52.79.235.129/mailConfirms?email=${email}`
+      `https://davidpai.shop/mailConfirms?email=${email}`
     );
   };
 
