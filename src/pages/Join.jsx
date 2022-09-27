@@ -33,7 +33,7 @@ export const Join = () => {
   });
 
   const handleJoin = async (data) => {
-    return await axios.post("http://52.79.235.129/signups", {
+    return await axios.post("https://davidpai.shop/signups", {
       email: data.email,
       password: data.password,
       memberName: data.nickname,
