@@ -29,6 +29,7 @@ export const Profile = () => {
               src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
               alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
             />
+            {/* TODO: 어떤식으로 구현할지 아직 미정. */}
             <span>찜목록</span>
           </StyledEachWrap>
           <StyledEachWrap>
@@ -118,6 +119,7 @@ const StyledEachWrap = styled.span`
   width: max-content;
   span {
     margin-top: 10px;
+    cursor: pointer;
   }
 `;
 
@@ -126,4 +128,5 @@ const StyledLikeAndChat = styled.img`
   height: 40px;
   cursor: pointer;
   /* margin: 5px 5px 5px 0; */
+
 `;

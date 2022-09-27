@@ -19,7 +19,7 @@ export const RentalStatus = () => {
   const confirm = useSelector((state) => state.mypage.confirm);
   // console.log(confirm);
   const deadline = useSelector((state) => state.mypage.deadline);
-  console.log(deadline);
+  // console.log(deadline);
 
   useEffect(() => {
     dispatch(getMyPageList());

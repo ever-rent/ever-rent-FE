@@ -1,36 +1,68 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { BorrowList } from "./BorrowList";
-import { PastBorrow } from "./PastBorrow";
+import { getBorrowList } from "../../redux/modules/mypageSlice";
+import { getPastList } from "../../redux/modules/mypageSlice";
+import { BorrowCommonList } from "./BorrowCommonList";
 
 export const BorrowStatus = () => {
+  const dispatch = useDispatch();
   const [tabIndex, setTabIndex] = useState(0);
+
+  const borrow = useSelector((state) => state.mypage.borrow);
+  // console.log(borrow);
+  const past = useSelector((state) => state.mypage.past);
+  // console.log(past);
+
+  useEffect(() => {
+    dispatch(getBorrowList());
+  }, [dispatch]);
+
+  const CommonList = (tabIndex) => {
+    switch (tabIndex) {
+      case 0:
+        return <BorrowCommonList props={borrow} index={tabIndex} />;
+      case 1:
+        return <BorrowCommonList props={past} index={tabIndex} />;
+      default:
+        return;
+    }
+  };
+
+  const borrowHandler = (e) => {
+    e.preventDefault();
+    setTabIndex(0);
+    dispatch(getBorrowList());
+  };
+  const pastHandler = (e) => {
+    e.preventDefault();
+    setTabIndex(1);
+    dispatch(getPastList());
+  };
 
   const tabArray = [
     {
-      key: "list",
+      key: "borrow",
       tab: (
         <div
           className={tabIndex === 0 ? "select" : ""}
-          onClick={() => setTabIndex(0)}
+          onClick={borrowHandler}
         >
           목록
         </div>
       ),
-      content: <BorrowList />,
     },
 
     {
-      key: "overDeadLine",
+      key: "past",
       tab: (
         <div
           className={tabIndex === 1 ? "select" : ""}
-          onClick={() => setTabIndex(1)}
+          onClick={pastHandler}
         >
           과거 렌트 내역
         </div>
       ),
-      content: <PastBorrow />, //임시데이터
     },
   ];
 
@@ -41,7 +73,7 @@ export const BorrowStatus = () => {
           return <div key={item.key}>{item.tab}</div>;
         })}
       </StyledisStatusDetail>
-      {tabArray[tabIndex].content}
+      {CommonList(tabIndex)}
     </div>
   );
 };

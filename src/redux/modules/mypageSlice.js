@@ -37,10 +37,10 @@ export const getMyPagePending = createAsyncThunk(
 export const acceptOrder = createAsyncThunk(
   "ACCEPT_ORDER",
   async (orderId, thunkAPI) => {
-    // console.log(orderId);
+    console.log(orderId);
     try {
       const res = await mypageAPI.acceptOrder(orderId);
-      // console.log("response", res.data);
+      console.log("response", res.data);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -78,6 +78,40 @@ export const getMyPageExpired = createAsyncThunk(
   }
 );
 
+// 빌린 물건
+//TODO: 아직 api 구현은 안됨.
+// 물건 목록 get
+export const getBorrowList = createAsyncThunk(
+  "GET_BORROW_LIST",
+  async (_, thunkAPI) => {
+    // console.log("getBorrowList 시작");
+    try {
+      const { data } = await mypageAPI.getBorrowList();
+      // console.log("getBorrowList 성공", data.data);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+// 물건 목록 get
+export const getPastList = createAsyncThunk(
+  "GET_PAST_LIST",
+  async (_, thunkAPI) => {
+    // console.log("getPastList 시작");
+    try {
+      const { data } = await mypageAPI.getPastList();
+      // console.log("getPastList 성공", data.data);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+
+
 export const mypageSlice = createSlice({
   name: "mypage",
   initialState: {
@@ -85,6 +119,8 @@ export const mypageSlice = createSlice({
     pending: [],
     confirm: [],
     deadline: [],
+    borrow:[],
+    past:[],
   },
   reducers: {},
   extraReducers: {
@@ -106,6 +142,7 @@ export const mypageSlice = createSlice({
     // },
 
     /* Fulfilled */
+    //빌려준 물건
     [getMyPageList.fulfilled]: (state, action) => {
       // console.log(action);
       state.list = action.payload;
@@ -120,13 +157,23 @@ export const mypageSlice = createSlice({
         action.payload.id === item.id ? { ...action.payload } : item
       );
     },
-
     [getMyPageConfirm.fulfilled]: (state, action) => {
       state.confirm = action.payload.data;
     },
     [getMyPageExpired.fulfilled]: (state, action) => {
       state.deadline = action.payload.data;
     },
+
+    //TODO: 빌린 물건.
+    [getBorrowList.fulfilled]: (state, action) => {
+      state.list = action.payload;
+    },
+    [getPastList.fulfilled]: (state, action) => {
+      state.list = action.payload;
+    },
+
+
+
 
     // /* Rejected */
     // [getMyPageList.rejected]: (state, action) => {
