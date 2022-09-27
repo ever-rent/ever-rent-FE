@@ -31,6 +31,9 @@ export const AddProduct = () => {
     }
   };
 
+
+  // const [imgView, setImgView] = useState();
+  // const [sendImage, setSendImage] = useState();
   // const fileChange = (fileBlob) => {
   //   const reader = new FileReader();
   //   reader.readAsDataURL(fileBlob);
@@ -45,8 +48,8 @@ export const AddProduct = () => {
   // };
 
   const imageLengthCheck = (e) => {
-    if (imgView.length === 4) {
-      alert("이미 4장이네요ㅠ");
+    if (imgView.length === 10) {
+      alert("이미 10장이네요ㅠ");
       e.preventDefault();
     }
   };
