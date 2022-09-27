@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { timeToToday } from "../../../util/timeToToday";
 
 export const ProductsItem = ({
   id,
@@ -10,10 +11,12 @@ export const ProductsItem = ({
   address,
   Like,
   chat,
+  wiriteAt,
+  rentEnd,
+  rentStart,
 }) => {
   const navigate = useNavigate();
-  // const { id, img1, title, price, address, Like, chat } = data;
-  // console.log(props.data);
+  // const days = rentEnd.split("-")[]
   return (
     <StyledItemBox>
       <StyledImgBox>
@@ -28,6 +31,7 @@ export const ProductsItem = ({
       <StyledContentBox>
         <StyledTitle>{productName}</StyledTitle>
         <StyledPay>{price}</StyledPay>
+        {/* <div>{timeToToday(wiriteAt)}</div> */}
         <StyledDay> / 일</StyledDay>
         <StyledAddress>{address}</StyledAddress>
         <StyledLikeAndChat>
@@ -57,7 +61,6 @@ const StyledItemBox = styled.div`
   padding: 10px 10px 0 10px;
   position: relative;
   border-radius: 10px;
-  /* background: radial-gradient(#ebedee6e, #fefefe); */
   background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee6e 100%);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   @media only screen and (max-width: 480px) {
