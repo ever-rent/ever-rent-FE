@@ -46,10 +46,7 @@ export const Profile = () => {
 };
 
 const StyledProfileBox = styled.div`
-  /* border: 1px solid red; */
-  /* background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee12 100%); */
   display: flex;
-  /* justify-content: space-around; */
   flex-direction: column;
   align-items: center;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;

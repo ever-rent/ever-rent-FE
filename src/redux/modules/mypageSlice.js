@@ -79,6 +79,7 @@ export const getMyPageExpired = createAsyncThunk(
 );
 
 // 빌린 물건
+
 //TODO: 아직 api 구현은 안됨.
 // 물건 목록 get
 export const getBorrowList = createAsyncThunk(
@@ -166,10 +167,10 @@ export const mypageSlice = createSlice({
 
     //TODO: 빌린 물건.
     [getBorrowList.fulfilled]: (state, action) => {
-      state.list = action.payload;
+      state.borrow = action.payload;
     },
     [getPastList.fulfilled]: (state, action) => {
-      state.list = action.payload;
+      state.past = action.payload;
     },
 
 

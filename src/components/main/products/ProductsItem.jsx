@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { timeToToday } from "../../../util/timeToToday";
@@ -16,6 +16,16 @@ export const ProductsItem = ({
   rentStart,
 }) => {
   const navigate = useNavigate();
+  const [like, setlike] = useState(true); 
+
+  const likeHandler = (e) => {
+    e.preventDefault();
+    setlike(!like)
+    // console.log(like)
+    //TODO: 찜목록 보내기 api필요.
+  }
+
+
   // const days = rentEnd.split("-")[]
   return (
     <StyledItemBox>
@@ -24,7 +34,7 @@ export const ProductsItem = ({
           onClick={() => {
             navigate(`/productDetail/${id}`);
           }}
-          src={imgUrl}
+          src={imgUrl}ß
           alt="이미지 없음"
         />
       </StyledImgBox>
@@ -36,10 +46,13 @@ export const ProductsItem = ({
         <StyledAddress>{address}</StyledAddress>
         <StyledLikeAndChat>
           <StyledLikeWrap>
-            <StyledLike
+          {like ? <StyledLike onClick={likeHandler}
               src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
               alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
-            />
+            />: <StyledLike onClick={likeHandler}
+            src="https://img.icons8.com/ios-filled/50/47b5ff/like--v1.png"
+            alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
+          />}
             <span>찜 {Like}</span>
           </StyledLikeWrap>
 
@@ -140,6 +153,7 @@ const StyledLike = styled.img`
   width: 20px;
   height: 20px;
   margin: 5px 5px 5px 0;
+  cursor: pointer;
 `;
 
 const StyledChatWrap = styled.span`
