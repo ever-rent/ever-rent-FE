@@ -141,7 +141,7 @@ export const AddProduct = () => {
       });
     }
   };
-console.log(imgView)
+// console.log(imgView)
   return (
     <Layout>
       <StyledAddProductContainer>
