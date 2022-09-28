@@ -7,6 +7,7 @@ import { addProducts } from "../redux/modules/productSlice";
 import { useNavigate } from "react-router-dom";
 
 import Swal from "sweetalert2";
+import imageCompression from "browser-image-compression";
 
 export const AddProduct = () => {
   const dispatch = useDispatch();
@@ -19,8 +20,8 @@ export const AddProduct = () => {
   const [sendImage, setSendImage] = useState([]);
 
   const fileChange = (fileBlob) => {
-    setSendImage([...sendImage].concat(fileBlob));
-
+    console.log(fileBlob);
+    actionImgCompress(fileBlob[fileBlob.length - 1]);
     const reader = new FileReader();
     for (let i = 0; i < fileBlob.length; i++) {
       reader.readAsDataURL(fileBlob[i]);
@@ -31,7 +32,70 @@ export const AddProduct = () => {
     }
   };
 
+  const actionImgCompress = async (fileSrc) => {
+    console.log("압축 시작");
+    console.log("압축전", fileSrc);
 
+    const options = {
+      maxSizeMB: 0.05,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
+    };
+    try {
+      const compressedFile = await imageCompression(fileSrc, options);
+      console.log("압축후", compressedFile);
+      // FileReader 는 File 혹은 Blob 객체를 이용하여, 파일의 내용을 읽을 수 있게 해주는 Web API
+      const reader = new FileReader();
+      reader.readAsDataURL(compressedFile);
+      reader.onloadend = () => {
+        // 변환 완료!
+        const base64data = reader.result;
+
+        // formData 만드는 함수
+        sendfileCompression(base64data);
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const sendfileCompression = (listItem) => {
+    console.log(listItem);
+    const byteString = atob(listItem.split(",")[1]);
+
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([int8Array], {
+      type: "image/jpeg",
+    });
+    const file = new File([blob], "image.jpg");
+    console.log(file);
+    setSendImage([...sendImage].concat(file));
+  };
+
+  console.log(imgView);
+  console.log(sendImage);
+
+  // 다중이미지처리
+  // const fileChange = (fileBlob) => {
+  //   setSendImage([...sendImage].concat(fileBlob));
+
+  //   const reader = new FileReader();
+  //   for (let i = 0; i < fileBlob.length; i++) {
+  //     reader.readAsDataURL(fileBlob[i]);
+  //     reader.onloadend = () => {
+  //       let imageSubs = reader.result;
+  //       setImgView([...imgView].concat(imageSubs));
+  //     };
+  //   }
+  // };
+  // console.log(imgView)
+  // console.log(sendImage)
+
+  // 단일이미지 처리
   // const [imgView, setImgView] = useState();
   // const [sendImage, setSendImage] = useState();
   // const fileChange = (fileBlob) => {
@@ -136,12 +200,12 @@ export const AddProduct = () => {
           );
           formData.append("multipartFile", sendImage);
           dispatch(addProducts(formData));
-          navigate("/");
+          // navigate("/");
         }
       });
     }
   };
-// console.log(imgView)
+
   return (
     <Layout>
       <StyledAddProductContainer>
