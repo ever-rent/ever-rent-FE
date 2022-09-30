@@ -1,4 +1,4 @@
-# Ever Rent - FE
+# EverRent
 ![우리로고](https://user-images.githubusercontent.com/73919235/190658584-a3ae40e3-c248-439a-975a-51d02b913acb.png)
 
 ## 📢 프로젝트 소개
