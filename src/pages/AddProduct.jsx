@@ -44,14 +44,11 @@ export const AddProduct = () => {
     try {
       const compressedFile = await imageCompression(fileSrc, options);
       console.log("압축후", compressedFile);
-      // FileReader 는 File 혹은 Blob 객체를 이용하여, 파일의 내용을 읽을 수 있게 해주는 Web API
       const reader = new FileReader();
       reader.readAsDataURL(compressedFile);
       reader.onloadend = () => {
-        // 변환 완료!
         const base64data = reader.result;
 
-        // formData 만드는 함수
         sendfileCompression(base64data);
       };
     } catch (error) {
