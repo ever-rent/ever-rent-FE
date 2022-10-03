@@ -1,12 +1,14 @@
 import axios from "axios";
 
 export const base = axios.create({
-  baseURL: "http://52.79.235.129",
+  baseURL: "http://3.35.19.62:8080", // 혜진님 DB
+  // baseURL: "http://52.79.235.129", // 상훈님 DB
   // withCredentials: true,
 });
 
 export const auth = axios.create({
-  baseURL: "http://52.79.235.129/auth",
+  baseURL: "http://3.35.19.62:8080/auth", // 혜진님 유
+  // baseURL: "http://52.79.235.129/auth", // 상훈님 DB
   // withCredentials: true,
 });
 

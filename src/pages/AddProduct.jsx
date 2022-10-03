@@ -6,8 +6,10 @@ import { useDispatch } from "react-redux";
 import { addProducts } from "../redux/modules/productSlice";
 import { useNavigate } from "react-router-dom";
 
-import Swal from "sweetalert2";
+import { LocationModal } from "../components/location/LocationModal";
+
 import imageCompression from "browser-image-compression";
+import Swal from "sweetalert2";
 
 export const AddProduct = () => {
   const dispatch = useDispatch();
@@ -18,6 +20,29 @@ export const AddProduct = () => {
 
   const [imgView, setImgView] = useState([]);
   const [sendImage, setSendImage] = useState([]);
+
+  // const fileChange = (fileBlob) => {
+  //   setSendImage([...sendImage].concat(fileBlob));
+
+  //   const reader = new FileReader();
+  //   for (let i = 0; i < fileBlob.length; i++) {
+  //     reader.readAsDataURL(fileBlob[i]);
+  //     reader.onloadend = () => {
+  //       let imageSubs = reader.result;
+  //       setImgView([...imgView].concat(imageSubs));
+  //     };
+  //   }
+  // };
+
+  const imageLengthCheck = (e) => {
+    if (imgView.length === 10) {
+      e.preventDefault();
+      Swal.fire({
+        text: "이미 10장이네요ㅠ",
+        icon: "warning",
+      });
+    }
+  };
 
   const fileChange = (fileBlob) => {
     console.log(fileBlob);
@@ -37,7 +62,7 @@ export const AddProduct = () => {
     console.log("압축전", fileSrc);
 
     const options = {
-      maxSizeMB: 0.05,
+      maxSizeMB: 0.2,
       maxWidthOrHeight: 1920,
       useWebWorker: true,
     };
@@ -47,8 +72,10 @@ export const AddProduct = () => {
       const reader = new FileReader();
       reader.readAsDataURL(compressedFile);
       reader.onloadend = () => {
+        // 변환 완료!
         const base64data = reader.result;
 
+        // formData 만드는 함수
         sendfileCompression(base64data);
       };
     } catch (error) {
@@ -73,48 +100,6 @@ export const AddProduct = () => {
     setSendImage([...sendImage].concat(file));
   };
 
-  console.log(imgView);
-  console.log(sendImage);
-
-  // 다중이미지처리
-  // const fileChange = (fileBlob) => {
-  //   setSendImage([...sendImage].concat(fileBlob));
-
-  //   const reader = new FileReader();
-  //   for (let i = 0; i < fileBlob.length; i++) {
-  //     reader.readAsDataURL(fileBlob[i]);
-  //     reader.onloadend = () => {
-  //       let imageSubs = reader.result;
-  //       setImgView([...imgView].concat(imageSubs));
-  //     };
-  //   }
-  // };
-  // console.log(imgView)
-  // console.log(sendImage)
-
-  // 단일이미지 처리
-  // const [imgView, setImgView] = useState();
-  // const [sendImage, setSendImage] = useState();
-  // const fileChange = (fileBlob) => {
-  //   const reader = new FileReader();
-  //   reader.readAsDataURL(fileBlob);
-  //   console.log(fileBlob);
-  //   return new Promise((resolve) => {
-  //     reader.onload = () => {
-  //       setImgView(reader.result);
-  //       setSendImage(fileBlob);
-  //       resolve();
-  //     };
-  //   });
-  // };
-
-  const imageLengthCheck = (e) => {
-    if (imgView.length === 10) {
-      alert("이미 10장이네요ㅠ");
-      e.preventDefault();
-    }
-  };
-
   const initImage = (item, indexNum) => {
     setImgView(imgView.filter((element) => element !== item));
     setSendImage(
@@ -132,30 +117,12 @@ export const AddProduct = () => {
   const [priceInput, setPriceInput] = useState(0);
   const [startDateInput, setStartDateInput] = useState("");
   const [endDateInput, setEndDateInput] = useState("");
+  const [tradeLocation, setTradeLocation] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
   const [disabled, setDisabled] = useState(true);
 
-  const categoryChange = (value) => {
-    setCategoryInput(value);
-  };
-
-  const priceChange = (value) => {
-    setPriceInput(value);
-  };
-  const startDateChange = (value) => {
-    setStartDateInput(value);
-  };
-  const endDateChange = (value) => {
-    setEndDateInput(value);
-  };
-  const titleChange = (value) => {
-    setTitle(value);
-  };
-  const descriptionChange = (value) => {
-    setDescription(value);
-  };
   const checkPost = () => {
     if (title.length > 3 && description.length > 0) {
       setDisabled(false);
@@ -172,6 +139,7 @@ export const AddProduct = () => {
     content: description,
     cateId: categoryInput,
     price: priceInput,
+    // tradeLocation : tradeLocation,
     rentStart: startDateInput,
     rentEnd: endDateInput,
   };
@@ -197,10 +165,15 @@ export const AddProduct = () => {
           );
           formData.append("multipartFile", sendImage);
           dispatch(addProducts(formData));
-          // navigate("/");
+          navigate("/");
         }
       });
     }
+  };
+
+  const [showModal, setShowModal] = useState(false);
+  const closeModal = () => {
+    setShowModal(false);
   };
 
   return (
@@ -219,6 +192,7 @@ export const AddProduct = () => {
                 id="inputFile"
                 type="file"
                 multiple="multiple"
+                maxSize={5242880}
                 onChange={(e) => {
                   fileChange(e.target.files);
                 }}
@@ -226,30 +200,30 @@ export const AddProduct = () => {
               <StyledProductImagetWrap>
                 <SyltedImageView
                   src={imgView[0] === undefined ? defaultImg : imgView[0]}
-                  alt="이미지 미리보기"
+                  alt="메인이미지 미리보기"
                   onClick={() => {
                     initImage(imgView[0], 0);
                   }}
                 />
                 <StyledProductSubImageWrap>
-                  {imgView.map((item, index) => {
-                    if (index !== 0) {
-                      return (
-                        <StyledProductSubImage
-                          key={index}
-                          src={item}
-                          onClick={() => {
-                            initImage(item, index);
-                          }}
-                        />
-                      );
-                    }
-                  })}
+                  {imgView[1] !== undefined
+                    ? imgView
+                        .filter((v, index) => index !== 0)
+                        .map((item, index) => (
+                          <StyledProductSubImage
+                            key={index}
+                            src={item}
+                            onClick={() => {
+                              initImage(item, index);
+                            }}
+                          />
+                        ))
+                    : null}
                 </StyledProductSubImageWrap>
                 <StyledDeleteImg>
                   사진을 누르면 삭제돼요!
                   <br />
-                  (사진 등록 최대 4장)
+                  (사진 등록 최대 10장)
                 </StyledDeleteImg>
               </StyledProductImagetWrap>
             </StyledFormImageInputWrap>
@@ -261,7 +235,7 @@ export const AddProduct = () => {
               <StyledCategorySelector
                 defaultValue="noneData"
                 onChange={(e) => {
-                  categoryChange(e.target.value);
+                  setCategoryInput(e.target.value);
                 }}
               >
                 <StyledCategoryOptions value="noneData" disabled>
@@ -291,7 +265,7 @@ export const AddProduct = () => {
                   placeholder="가격"
                   maxlength="8"
                   onChange={(e) => {
-                    priceChange(e.target.value);
+                    setPriceInput(e.target.value);
                   }}
                 />
                 <StyledPriceLabel htmlFor="itemPrice">원</StyledPriceLabel>
@@ -302,7 +276,7 @@ export const AddProduct = () => {
                 <StyledDateInput
                   type="date"
                   onChange={(e) => {
-                    startDateChange(e.target.value);
+                    setStartDateInput(e.target.value);
                   }}
                 />
               </StyledDateWrap>
@@ -311,18 +285,42 @@ export const AddProduct = () => {
                 <StyledDateInput
                   type="date"
                   onChange={(e) => {
-                    endDateChange(e.target.value);
+                    setEndDateInput(e.target.value);
                   }}
                 />
               </StyledDateWrap>
             </StyledOptionInputs>
           </StyledPostingHeadWrap>
 
+          <StyledPostLocation
+            type="text"
+            placeholder="거래 장소를 적어주세요!"
+            onChange={(e) => {
+              setTradeLocation(e.target.value);
+            }}
+          />
+          <StyledLocationBtn
+            type="button"
+            onClick={() => {
+              setShowModal(true);
+            }}
+          >
+            위치확인
+          </StyledLocationBtn>
+          <p style={{ fontSize: "12px" }}>
+            지도에 나온 장소가 원하는 곳이 아닌 경우, 도로명 주소로
+            입력해보세요!
+          </p>
+          <LocationModal
+            showModal={showModal}
+            closeModal={closeModal}
+            location={tradeLocation}
+          />
           <StyledPostTitle
             type="text"
             placeholder="제목은 4글자 이상 적어주세요!"
             onChange={(e) => {
-              titleChange(e.target.value);
+              setTitle(e.target.value);
             }}
           />
           <StyledDescription
@@ -332,7 +330,7 @@ export const AddProduct = () => {
             placeholder="내용을 입력해주세요!"
             maxLength={500}
             onChange={(e) => {
-              descriptionChange(e.target.value);
+              setDescription(e.target.value);
             }}
           />
           <StyledButtonBox>
@@ -406,24 +404,25 @@ const StyledProductImagetWrap = styled.div`
   flex-direction: column;
   align-items: center;
   width: 400px;
-  height: 200px;
+  height: 450px;
 `;
 
 const SyltedImageView = styled.img`
   margin-top: 20px;
   margin-bottom: 20px;
-  width: 250px;
-  height: 250px;
+  width: 300px;
+  height: 300px;
 `;
 
 const StyledProductSubImageWrap = styled.div`
   display: grid;
-  grid-template-columns: 120px 120px 120px;
+  grid-template-columns: 50px 50px 50px 50px 50px;
+  grid-gap: 10px;
   justify-items: center;
 `;
 const StyledProductSubImage = styled.img`
-  width: 100px;
-  height: 100px;
+  width: 50px;
+  height: 50px;
 `;
 
 const StyledDeleteImg = styled.span`
@@ -509,8 +508,34 @@ const StyledDateInput = styled.input`
   }
 `;
 
-const StyledPostTitle = styled.input`
+const StyledPostLocation = styled.input`
   margin-top: 250px;
+  padding: 10px;
+  width: 250px;
+  height: 30px;
+  border: 1px solid rgb(71, 181, 255);
+  border-radius: 10px;
+
+  &:focus {
+    outline: 1px solid rgb(71, 181, 255);
+  }
+`;
+const StyledLocationBtn = styled.button`
+  margin-top: 10px;
+  width: 150px;
+  height: 40px;
+  margin-right: 50px;
+  background-color: rgb(71, 181, 255);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+`;
+
+const StyledPostTitle = styled.input`
+  margin-top: 30px;
   padding: 10px;
   width: 400px;
   height: 30px;
@@ -521,6 +546,7 @@ const StyledPostTitle = styled.input`
     outline: 1px solid rgb(71, 181, 255);
   }
 `;
+
 const StyledDescription = styled.textarea`
   margin-top: 30px;
   padding: 15px;

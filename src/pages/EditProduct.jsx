@@ -6,6 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateProducts } from "../redux/modules/productSlice";
 import { useNavigate, useParams } from "react-router-dom";
 
+import { LocationModal } from "../components/location/LocationModal";
+
+import imageCompression from "browser-image-compression";
 import Swal from "sweetalert2";
 
 export const EditProduct = () => {
@@ -18,12 +21,32 @@ export const EditProduct = () => {
   const defaultImg =
     "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png";
 
-  const [imgView, setImgView] = useState();
-  const [sendImage, setSendImage] = useState();
+  const [imgView, setImgView] = useState([]);
+  const [sendImage, setSendImage] = useState([]);
+
+  // const fileChange = (fileBlob) => {
+  //   setSendImage([...sendImage].concat(fileBlob));
+
+  //   const reader = new FileReader();
+  //   for (let i = 0; i < fileBlob.length; i++) {
+  //     reader.readAsDataURL(fileBlob[i]);
+  //     reader.onloadend = () => {
+  //       let imageSubs = reader.result;
+  //       setImgView([...imgView].concat(imageSubs));
+  //     };
+  //   }
+  // };
+
+  const imageLengthCheck = (e) => {
+    if (imgView.length === 4) {
+      alert("이미 4장이네요ㅠ");
+      e.preventDefault();
+    }
+  };
 
   const fileChange = (fileBlob) => {
-    setSendImage([...sendImage].concat(fileBlob));
-
+    console.log(fileBlob);
+    actionImgCompress(fileBlob[fileBlob.length - 1]);
     const reader = new FileReader();
     for (let i = 0; i < fileBlob.length; i++) {
       reader.readAsDataURL(fileBlob[i]);
@@ -34,24 +57,47 @@ export const EditProduct = () => {
     }
   };
 
-  // const fileChange = (fileBlob) => {
-  //   const reader = new FileReader();
-  //   reader.readAsDataURL(fileBlob);
-  //   console.log(fileBlob);
-  //   return new Promise((resolve) => {
-  //     reader.onload = () => {
-  //       setImgView(reader.result);
-  //       setSendImage(fileBlob);
-  //       resolve();
-  //     };
-  //   });
-  // };
+  const actionImgCompress = async (fileSrc) => {
+    console.log("압축 시작");
+    console.log("압축전", fileSrc);
 
-  const imageLengthCheck = (e) => {
-    if (imgView.length === 4) {
-      alert("이미 4장이네요ㅠ");
-      e.preventDefault();
+    const options = {
+      maxSizeMB: 0.2,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
+    };
+    try {
+      const compressedFile = await imageCompression(fileSrc, options);
+      console.log("압축후", compressedFile);
+      const reader = new FileReader();
+      reader.readAsDataURL(compressedFile);
+      reader.onloadend = () => {
+        // 변환 완료!
+        const base64data = reader.result;
+
+        // formData 만드는 함수
+        sendfileCompression(base64data);
+      };
+    } catch (error) {
+      console.log(error);
     }
+  };
+
+  const sendfileCompression = (listItem) => {
+    console.log(listItem);
+    const byteString = atob(listItem.split(",")[1]);
+
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([int8Array], {
+      type: "image/jpeg",
+    });
+    const file = new File([blob], "image.jpg");
+    console.log(file);
+    setSendImage([...sendImage].concat(file));
   };
 
   const initImage = (item, indexNum) => {
@@ -71,29 +117,12 @@ export const EditProduct = () => {
   const [priceInput, setPriceInput] = useState(0);
   const [startDateInput, setStartDateInput] = useState("");
   const [endDateInput, setEndDateInput] = useState("");
+  const [tradeLocation, setTradeLocation] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
   const [disabled, setDisabled] = useState(true);
 
-  const categoryChange = (value) => {
-    setCategoryInput(value);
-  };
-  const priceChange = (value) => {
-    setPriceInput(value);
-  };
-  const startDateChange = (value) => {
-    setStartDateInput(value);
-  };
-  const endDateChange = (value) => {
-    setEndDateInput(value);
-  };
-  const titleChange = (value) => {
-    setTitle(value);
-  };
-  const discriptionChange = (value) => {
-    setDescription(value);
-  };
   const checkPost = () => {
     if (title.length > 3 && description.length > 0) {
       setDisabled(false);
@@ -111,6 +140,7 @@ export const EditProduct = () => {
     cateId: categoryInput,
     price: priceInput,
     rentStart: startDateInput,
+    // tradeLocation : tradeLocation,
     rentEnd: endDateInput,
   };
   // productId: param.id,
@@ -142,6 +172,11 @@ export const EditProduct = () => {
     }
   };
 
+  const [showModal, setShowModal] = useState(false);
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
   return (
     <Layout>
       <StyledEditProductContainer>
@@ -158,6 +193,7 @@ export const EditProduct = () => {
                 id="inputFile"
                 type="file"
                 multiple="multiple"
+                maxSize={5242880}
                 onChange={(e) => {
                   fileChange(e.target.files);
                 }}
@@ -171,6 +207,21 @@ export const EditProduct = () => {
                   }}
                 />
                 <StyledProductSubImageWrap>
+                  {imgView[1] !== undefined
+                    ? imgView
+                        .filter((v, index) => index !== 0)
+                        .map((item, index) => (
+                          <StyledProductSubImage
+                            key={index}
+                            src={item}
+                            onClick={() => {
+                              initImage(item, index);
+                            }}
+                          />
+                        ))
+                    : null}
+                </StyledProductSubImageWrap>
+                {/* <StyledProductSubImageWrap>
                   {imgView.map((item, index) => {
                     if (index !== 0) {
                       return (
@@ -184,11 +235,11 @@ export const EditProduct = () => {
                       );
                     }
                   })}
-                </StyledProductSubImageWrap>
+                </StyledProductSubImageWrap> */}
                 <StyledDeleteImg>
                   사진을 누르면 삭제돼요!
                   <br />
-                  (사진 등록 최대 4장)
+                  (사진 등록 최대 10장)
                 </StyledDeleteImg>
               </StyledProductImagetWrap>
             </StyledFormImageInputWrap>
@@ -200,7 +251,7 @@ export const EditProduct = () => {
               <StyledCategorySelector
                 defaultValue="noneData"
                 onChange={(e) => {
-                  categoryChange(e.target.value);
+                  setCategoryInput(e.target.value);
                 }}
               >
                 <StyledCategoryOptions value="noneData" disabled>
@@ -230,7 +281,7 @@ export const EditProduct = () => {
                   placeholder="가격"
                   maxlength="8"
                   onChange={(e) => {
-                    priceChange(e.target.value);
+                    setPriceInput(e.target.value);
                   }}
                 />
                 <StyledPriceLabel htmlFor="itemPrice">원</StyledPriceLabel>
@@ -241,7 +292,7 @@ export const EditProduct = () => {
                 <StyledDateInput
                   type="date"
                   onChange={(e) => {
-                    startDateChange(e.target.value);
+                    setStartDateInput(e.target.value);
                   }}
                 />
               </StyledDateWrap>
@@ -250,18 +301,42 @@ export const EditProduct = () => {
                 <StyledDateInput
                   type="date"
                   onChange={(e) => {
-                    endDateChange(e.target.value);
+                    setEndDateInput(e.target.value);
                   }}
                 />
               </StyledDateWrap>
             </StyledOptionInputs>
           </StyledPostingHeadWrap>
 
+          <StyledPostLocation
+            type="text"
+            placeholder="거래 장소를 적어주세요!"
+            onChange={(e) => {
+              setTradeLocation(e.target.value);
+            }}
+          />
+          <StyledLocationBtn
+            type="button"
+            onClick={() => {
+              setShowModal(true);
+            }}
+          >
+            위치확인
+          </StyledLocationBtn>
+          <p style={{ fontSize: "12px" }}>
+            지도에 나온 장소가 원하는 곳이 아닌 경우, 도로명 주소로
+            입력해보세요!
+          </p>
+          <LocationModal
+            showModal={showModal}
+            closeModal={closeModal}
+            location={tradeLocation}
+          />
           <StyledPostTitle
             type="text"
             placeholder="제목은 4글자 이상 적어주세요!"
             onChange={(e) => {
-              titleChange(e.target.value);
+              setTitle(e.target.value);
             }}
           />
           <StyledDescription
@@ -271,7 +346,7 @@ export const EditProduct = () => {
             placeholder="내용을 입력해주세요!"
             maxLength={500}
             onChange={(e) => {
-              discriptionChange(e.target.value);
+              setDescription(e.target.value);
             }}
           />
           <StyledButtonBox>
@@ -344,26 +419,31 @@ const StyledProductImagetWrap = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 200px;
+  width: 400px;
+  height: 450px;
 `;
 
 const SyltedImageView = styled.img`
   margin-top: 20px;
-  /* margin-right: 70px; */
-
-  width: 250px;
-  height: 250px;
+  margin-bottom: 20px;
+  width: 300px;
+  height: 300px;
 `;
 
-const StyledProductSubImageWrap = styled.div``;
+const StyledProductSubImageWrap = styled.div`
+  display: grid;
+  grid-template-columns: 50px 50px 50px 50px 50px;
+  grid-gap: 10px;
+  justify-items: center;
+`;
 const StyledProductSubImage = styled.img`
-  width: 150px;
-  height: 150px;
+  width: 50px;
+  height: 50px;
 `;
 
 const StyledDeleteImg = styled.span`
   margin-top: 20px;
-  width: 80px;
+  width: 200px;
   height: 25px;
   line-height: 25px;
 
@@ -407,6 +487,7 @@ const StyledPriceData = styled.span`
   margin-right: 10px;
 `;
 const StyledPriceInput = styled.input`
+  width: 180px;
   border: 1px solid rgb(71, 181, 255);
   padding: 10px;
   border-radius: 10px;
@@ -443,8 +524,34 @@ const StyledDateInput = styled.input`
   }
 `;
 
+const StyledPostLocation = styled.input`
+  margin-top: 250px;
+  padding: 10px;
+  width: 250px;
+  height: 30px;
+  border: 1px solid rgb(71, 181, 255);
+  border-radius: 10px;
+
+  &:focus {
+    outline: 1px solid rgb(71, 181, 255);
+  }
+`;
+const StyledLocationBtn = styled.button`
+  margin-top: 10px;
+  width: 150px;
+  height: 40px;
+  margin-right: 50px;
+  background-color: rgb(71, 181, 255);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+`;
+
 const StyledPostTitle = styled.input`
-  margin-top: 170px;
+  margin-top: 30px;
   padding: 10px;
   width: 400px;
   height: 30px;
