@@ -38,8 +38,8 @@ export const EditProduct = () => {
   // };
 
   const imageLengthCheck = (e) => {
-    if (imgView.length === 4) {
-      alert("이미 4장이네요ㅠ");
+    if (imgView.length === 10) {
+      alert("이미 10장이네요ㅠ");
       e.preventDefault();
     }
   };
