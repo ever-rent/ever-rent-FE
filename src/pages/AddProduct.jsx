@@ -335,6 +335,7 @@ export const AddProduct = () => {
           />
           <StyledButtonBox>
             <StyledGoBackButton
+              type="button"
               onClick={() => {
                 navigate("/");
               }}
@@ -359,6 +360,14 @@ const StyledAddProductContainer = styled.div`
   margin-top: 100px;
   display: flex;
   justify-content: center;
+
+  & {
+    @media all and (max-width: 767px) {
+      margin-top: 80px;
+    }
+    @media all and (max-width: 480px) {
+    }
+  }
 `;
 
 const StyledAddProductForm = styled.form`
@@ -369,6 +378,21 @@ const StyledAddProductForm = styled.form`
   padding: 40px;
   box-shadow: 1px 1px 5px 1px rgb(71, 181, 255);
   border-radius: 10px;
+
+  & {
+    @media all and (max-width: 767px) {
+      display: flex;
+      flex-direction: column;
+      width: 60vw;
+
+      padding: 40px;
+      box-shadow: 1px 1px 5px 1px rgb(71, 181, 255);
+      border-radius: 10px;
+    }
+    @media all and (max-width: 480px) {
+      width: 100vw;
+    }
+  }
 `;
 
 const StyledPostingHeadWrap = styled.div`
@@ -376,12 +400,30 @@ const StyledPostingHeadWrap = styled.div`
   justify-content: space-around;
 
   height: 250px;
+
+  & {
+    @media all and (max-width: 767px) {
+      flex-direction: column;
+      align-items: center;
+      height: 70vh;
+    }
+    @media all and (max-width: 480px) {
+    }
+  }
 `;
 
 const StyledFormImageInputWrap = styled.div`
   display: flex;
   flex-direction: column;
   height: 200px;
+
+  & {
+    @media all and (max-width: 767px) {
+      height: 50vh;
+    }
+    @media all and (max-width: 480px) {
+    }
+  }
 `;
 
 const StyledImageLabel = styled.label`
@@ -441,6 +483,14 @@ const StyledOptionInputs = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+
+  & {
+    @media all and (max-width: 767px) {
+      margin-top: 30px;
+    }
+    @media all and (max-width: 480px) {
+    }
+  }
 `;
 
 const StyledCategorySelector = styled.select`
@@ -491,7 +541,15 @@ const StyledPriceLabel = styled.label`
   font-weight: bold;
 `;
 
-const StyledDateWrap = styled.div``;
+const StyledDateWrap = styled.div`
+  & {
+    @media all and (max-width: 767px) {
+      margin-top: 10px;
+    }
+    @media all and (max-width: 480px) {
+    }
+  }
+`;
 const StyledStartLabel = styled.label``;
 const StyledEndLabel = styled.label``;
 const StyledDateInput = styled.input`
@@ -518,6 +576,14 @@ const StyledPostLocation = styled.input`
 
   &:focus {
     outline: 1px solid rgb(71, 181, 255);
+  }
+
+  & {
+    @media all and (max-width: 767px) {
+      margin-top: 50px;
+    }
+    @media all and (max-width: 480px) {
+    }
   }
 `;
 const StyledLocationBtn = styled.button`
