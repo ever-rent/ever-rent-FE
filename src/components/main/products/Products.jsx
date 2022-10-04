@@ -26,13 +26,13 @@ export const Products = () => {
 
   const fetch = useCallback(async () => {
     try {
-      const { dataSet } = await axios.get(
-        `https://13.209.8.18/products?_limit=12&_page=${page.current}`
+      const { data } = await axios.get(
+        `http://13.209.8.18/products?page=${page.current}`
       );
-      const {data} = [...dataSet].data
-      setProducts((prevPosts) => [...prevPosts, ...data]);
-      setHasNextPage(data.length === 12);
-      if (data.length) {
+      setProducts((prevPosts) => [...prevPosts, ...data.data]);
+      
+      setHasNextPage(data.data.length === 12);
+      if (data.data.length) {
         page.current += 1;
       }
     } catch (err) {

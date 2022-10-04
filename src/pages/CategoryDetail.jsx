@@ -106,13 +106,12 @@ export const CategoryDetail = () => {
 
   const fetch = useCallback(async () => {
     try {
-      const { dataSet } = await axios.get(
-        `https://13.209.8.18/categories/${categoryId}?_limit=12&_page=${page.current}`
+      const { data } = await axios.get(
+        `http://13.209.8.18/categories/${categoryId}?page=${page.current}`
       );
-      const {data} = [...dataSet].data
-      setCategoryItems((prevPosts) => [...prevPosts, ...data]);
-      setHasNextPage(data.length === 12);
-      if (data.length) {
+      setCategoryItems((prevPosts) => [...prevPosts, ...data.data]);
+      setHasNextPage(data.data.length === 12);
+      if (data.data.length) {
         page.current += 1;
       }
     } catch (err) {
