@@ -6,6 +6,9 @@ import { Layout } from "../components/layout/Layout";
 import { getCategory } from "../redux/modules/productSlice";
 import { DetailItem } from "../components/detail/DetailItem";
 
+import {useInView} from "react-intersection-observer";
+import axios from "axios";
+
 export const CategoryDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -84,6 +87,38 @@ export const CategoryDetail = () => {
   // useEffect(() => {
   //   dispatch();
   // });
+  
+
+// infi scroll
+  // const [categoryItems, setCategoryItems] = useState([]);
+  // const [hasNextPage, setHasNextPage] = useState(true);
+  // const page = useRef(1);
+  // const [ref, inView] = useInView(true);
+
+  // const fetch = useCallback(async () => {
+  //   try {
+  //     const { dataSet } = await axios.get(
+  //       `http://http://3.35.19.62:8080/categories/${id}?_limit=8&_page=${page.current}`
+  //     );
+  //     const {data} = [...dataSet].data
+  //     setCategoryItems((prevPosts) => [...prevPosts, ...data]);
+  //     setHasNextPage(data.length === 8);
+  //     if (data.length) {
+  //       page.current += 1;
+  //     }
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   console.log(inView, hasNextPage);
+  //   if (inView && hasNextPage) {
+  //     fetch();
+  //   }
+  // }, [fetch, hasNextPage, inView]);
+
+  // console.log(categoryItems);
 
   return (
     <Layout>
