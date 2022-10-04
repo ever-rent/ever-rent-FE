@@ -107,7 +107,7 @@ export const CategoryDetail = () => {
   const fetch = useCallback(async () => {
     try {
       const { dataSet } = await axios.get(
-        `https://davidpai.shop/categories/${categoryId}?_limit=12&_page=${page.current}`
+        `https://13.209.8.18/categories/${categoryId}?_limit=12&_page=${page.current}`
       );
       const {data} = [...dataSet].data
       setCategoryItems((prevPosts) => [...prevPosts, ...data]);
