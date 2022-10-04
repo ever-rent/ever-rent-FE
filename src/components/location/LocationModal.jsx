@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 
-export const LocationModal = ({ showModal, closeModal }) => {
+export const LocationModal = ({ showModal, closeModal ,location}) => {
   // 거래장소 props 추가 예정
   const { kakao } = window;
 
@@ -14,7 +14,7 @@ export const LocationModal = ({ showModal, closeModal }) => {
     if (!map) return;
     const places = new kakao.maps.services.Places();
 
-    places.keywordSearch("부일로 상동", (data, status, _pagination) => {
+    places.keywordSearch(location, (data, status, _pagination) => {
       if (status === kakao.maps.services.Status.OK) {
         const bounds = new kakao.maps.LatLngBounds();
         let markers = [];
@@ -66,7 +66,6 @@ export const LocationModal = ({ showModal, closeModal }) => {
           </StyledModalContainer>
         </StyledBackground>
       ) : null}
-      ;
     </div>
   );
 };
