@@ -5,11 +5,11 @@ import { productAPI } from "../../server/api";
 export const getProducts = createAsyncThunk(
   "GET_PRODUCTS",
   async (_, thunkAPI) => {
-    console.log("products get 시작");
+    // console.log("products get 시작");
     try {
       const res = await productAPI.getProducts();
 
-      console.log("producs get 성공", res.data);
+      // console.log("producs get 성공", res.data);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -33,7 +33,7 @@ export const getCategory = createAsyncThunk(
 export const getProductsDetail = createAsyncThunk(
   "GET_PRODUCTS",
   async (payload, thunkAPI) => {
-    console.log("products get 시작", payload);
+    // console.log("products get 시작", payload);
     try {
       const res = await productAPI.getProductDetail(payload.id);
       return thunkAPI.fulfillWithValue(res.data);
@@ -46,7 +46,7 @@ export const getProductsDetail = createAsyncThunk(
 export const addProducts = createAsyncThunk(
   "POST_PRODUCTS",
   async (payload, thunkAPI) => {
-    console.log(payload)
+    // console.log(payload)
     try {
       const { data } = await productAPI.addProduct(payload);
       console.log("data", data);

@@ -40,6 +40,7 @@ export const Products = () => {
     }
   }, []);
 
+
   useEffect(() => {
     console.log(inView, hasNextPage);
     if (inView && hasNextPage) {

@@ -1,61 +1,107 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { RentList } from "../nav/RentList";
-import { PendingList } from "./PendingList";
-import { NowRental } from "./NowRental";
-import { OverDeadLine } from "./OverDeadLine";
+import { RentalCommonList } from "./RentalCommonList";
+import { useDispatch, useSelector } from "react-redux";
+import { getMyPageList } from "../../redux/modules/mypageSlice";
+import { getMyPagePending } from "../../redux/modules/mypageSlice";
+import { getMyPageConfirm } from "../../redux/modules/mypageSlice";
+import { getMyPageExpired } from "../../redux/modules/mypageSlice";
 
 export const RentalStatus = () => {
+  const dispatch = useDispatch();
+
   const [tabIndex, setTabIndex] = useState(0);
+
+  const list = useSelector((state) => state.mypage.list);
+  // console.log(list);
+  const pending = useSelector((state) => state.mypage.pending);
+  // console.log(pending);
+  const confirm = useSelector((state) => state.mypage.confirm);
+  // console.log(confirm);
+  const deadline = useSelector((state) => state.mypage.deadline);
+  console.log(deadline);
+
+  useEffect(() => {
+    dispatch(getMyPageList());
+  }, [dispatch]);
+
+  const CommonList = (tabIndex) => {
+    switch (tabIndex) {
+      case 0:
+        return <RentalCommonList props={list} index={tabIndex} />;
+      case 1:
+        return <RentalCommonList props={pending} index={tabIndex} />;
+      case 2:
+        return <RentalCommonList props={confirm} index={tabIndex} />;
+      case 3:
+        return <RentalCommonList props={deadline} index={tabIndex} />;
+      default:
+        return;
+    }
+  };
+
+  const listHandler = (e) => {
+    e.preventDefault();
+    setTabIndex(0);
+    dispatch(getMyPageList());
+  };
+  const pendingHandler = (e) => {
+    e.preventDefault();
+    setTabIndex(1);
+    dispatch(getMyPagePending());
+  };
+  const confirmRentalHandler = (e) => {
+    e.preventDefault();
+    setTabIndex(2);
+    dispatch(getMyPageConfirm());
+  };
+  const overDeadlineHandler = (e) => {
+    e.preventDefault();
+    setTabIndex(3);
+    dispatch(getMyPageExpired());
+  };
 
   const tabArray = [
     {
       key: "list",
       tab: (
-        <div
-          className={tabIndex === 0 ? "select" : ""}
-          onClick={() => setTabIndex(0)}
-        >
+        <div className={tabIndex === 0 ? "select" : ""} onClick={listHandler}>
           목록
         </div>
       ),
-      content: <RentList />,
     },
     {
       key: "pending",
       tab: (
         <div
           className={tabIndex === 1 ? "select" : ""}
-          onClick={() => setTabIndex(1)}
+          onClick={pendingHandler}
         >
           대기중
         </div>
       ),
-      content: <PendingList />,
     },
     {
-      key: "nowRental",
+      key: "confirm",
       tab: (
         <div
           className={tabIndex === 2 ? "select" : ""}
-          onClick={() => setTabIndex(2)}
+          onClick={confirmRentalHandler}
         >
-          렌탈중
+          렌탈확정
         </div>
       ),
-      content: <NowRental />,
     },
     {
-      key: "overDeadLine",
+      key: "overDeadline",
       tab: (
         <div
           className={tabIndex === 3 ? "select" : ""}
-          onClick={() => setTabIndex(3)}
+          onClick={overDeadlineHandler}
         >
           기한마감
         </div>
       ),
-      content: <OverDeadLine />,
     },
   ];
 
@@ -66,7 +112,7 @@ export const RentalStatus = () => {
           return <div key={item.key}>{item.tab}</div>;
         })}
       </StyledisStatusDetail>
-      {tabArray[tabIndex].content}
+      {CommonList(tabIndex)}
     </div>
   );
 };
@@ -86,26 +132,4 @@ const StyledisStatusDetail = styled.div`
     font-weight: bold;
     border-bottom: 3px solid #47b5ff;
   }
-`;
-
-const StyledPending = styled.span`
-  position: relative;
-  width: 100px;
-  height: 40px;
-  line-height: 40px;
-  /* background: #000; */
-  /* color: #fff; */
-  text-align: center;
-  font-weight: bold;
-  margin: 30px;
-  /* &::after {
-    content: "";
-    display: block;
-    position: absolute;
-    bottom: -20px;
-    left: 50%;
-    transform: translateX(-10px);
-    border: 10px solid transparent;
-    border-top-color: #000;
-  } */
 `;
