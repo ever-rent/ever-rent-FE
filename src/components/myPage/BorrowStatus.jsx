@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { getBorrowList } from "../../redux/modules/mypageSlice";
@@ -44,24 +44,24 @@ export const BorrowStatus = () => {
     {
       key: "borrow",
       tab: (
-        <div
+        <StyledTab
           className={tabIndex === 0 ? "select" : ""}
           onClick={borrowHandler}
         >
           목록
-        </div>
+        </StyledTab>
       ),
     },
 
     {
       key: "past",
       tab: (
-        <div
+        <StyledTab
           className={tabIndex === 1 ? "select" : ""}
           onClick={pastHandler}
         >
           과거 렌트 내역
-        </div>
+        </StyledTab>
       ),
     },
   ];
@@ -78,6 +78,10 @@ export const BorrowStatus = () => {
   );
 };
 
+const StyledTab = styled.div`
+  min-width: max-content;
+  margin: 0 5vw;
+`;
 const StyledisStatusDetail = styled.div`
   /* border: 1px solid red; */
   display: flex;
@@ -92,5 +96,16 @@ const StyledisStatusDetail = styled.div`
   .select {
     font-weight: bold;
     border-bottom: 3px solid #47b5ff;
+  }
+
+  @media only screen and (max-width: 767px) {
+    display: flex;
+    /* flex-direction: column; */
+    gap: 0;
+    width: auto;
+    .select {
+      font-weight: bold;
+      border-bottom: 3px solid #47b5ff;
+    }
   }
 `;

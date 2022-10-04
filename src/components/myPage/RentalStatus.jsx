@@ -65,42 +65,45 @@ export const RentalStatus = () => {
     {
       key: "list",
       tab: (
-        <div className={tabIndex === 0 ? "select" : ""} onClick={listHandler}>
+        <StyledTab
+          className={tabIndex === 0 ? "select" : ""}
+          onClick={listHandler}
+        >
           목록
-        </div>
+        </StyledTab>
       ),
     },
     {
       key: "pending",
       tab: (
-        <div
+        <StyledTab
           className={tabIndex === 1 ? "select" : ""}
           onClick={pendingHandler}
         >
           대기중
-        </div>
+        </StyledTab>
       ),
     },
     {
       key: "confirm",
       tab: (
-        <div
+        <StyledTab
           className={tabIndex === 2 ? "select" : ""}
           onClick={confirmRentalHandler}
         >
           렌탈확정
-        </div>
+        </StyledTab>
       ),
     },
     {
       key: "overDeadline",
       tab: (
-        <div
+        <StyledTab
           className={tabIndex === 3 ? "select" : ""}
           onClick={overDeadlineHandler}
         >
           기한마감
-        </div>
+        </StyledTab>
       ),
     },
   ];
@@ -109,13 +112,19 @@ export const RentalStatus = () => {
     <div>
       <StyledisStatusDetail>
         {tabArray.map((item) => {
-          return <div key={item.key}>{item.tab}</div>;
+          return <StyledBar key={item.key}>{item.tab}</StyledBar>;
         })}
+        {CommonList(tabIndex)}
       </StyledisStatusDetail>
-      {CommonList(tabIndex)}
     </div>
   );
 };
+
+const StyledTab = styled.div`
+  min-width: max-content;
+  margin: 0 5vw;
+  /* padding: 0 1rem; */
+`;
 
 const StyledisStatusDetail = styled.div`
   /* border: 1px solid red; */
@@ -126,10 +135,23 @@ const StyledisStatusDetail = styled.div`
   align-items: center;
   justify-content: space-around;
   margin: 10px 0;
+  padding: 0 15px;
   border-radius: 5px;
   cursor: pointer;
   .select {
     font-weight: bold;
     border-bottom: 3px solid #47b5ff;
   }
+  @media only screen and (max-width: 767px) {
+    display: flex;
+    /* flex-direction: column; */
+    gap: 0;
+    width: auto;
+    .select {
+      font-weight: bold;
+      border-bottom: 3px solid #47b5ff;
+    }
+  }
 `;
+
+const StyledBar = styled.div``;

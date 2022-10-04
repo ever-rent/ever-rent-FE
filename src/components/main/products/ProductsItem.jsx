@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { timeToToday } from "../../../util/timeToToday";
+import { categoriNumber } from "../../../util/categoryNumber";
+import { useDispatch, useSelector } from "react-redux";
+import { postRent } from "../../../redux/modules/mypageSlice";
+import { getProducts } from "../../../redux/modules/productSlice";
 
 export const ProductsItem = ({
   id,
@@ -11,22 +15,46 @@ export const ProductsItem = ({
   address,
   Like,
   chat,
-  wiriteAt,
+  writeAt,
+  cateId,
   rentEnd,
   rentStart,
 }) => {
+  // console.log("id", typeof String(id));
+  // console.log("id", String(id));
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [like, setlike] = useState(true); 
+  const [like, setlike] = useState(true);
 
   const likeHandler = (e) => {
     e.preventDefault();
-    setlike(!like)
+    setlike(!like);
     // console.log(like)
     //TODO: 찜목록 보내기 api필요.
-  }
+  };
 
+  //글쓴 시간 표시.
 
-  // const days = rentEnd.split("-")[]
+  const [write, setWrite] = useState("");
+  console.log("writeAt", writeAt);
+  const [createdAt, setCreatedAt] = useState("");
+
+  useEffect(() => {
+    let timeStatus = writeAt;
+    timeStatus !== undefined ? setWrite(timeStatus) : (timeStatus = "");
+    setCreatedAt(timeToToday(writeAt));
+  }, [writeAt]);
+
+  const reservationHandler = (e) => {
+    e.preventDefault();
+    const productData = {
+      productId: id,
+      buyStart: rentStart,
+      buyEnd: rentEnd,
+    };
+    dispatch(postRent(productData));
+  };
+
   return (
     <StyledItemBox>
       <StyledImgBox>
@@ -34,25 +62,35 @@ export const ProductsItem = ({
           onClick={() => {
             navigate(`/productDetail/${id}`);
           }}
-          src={imgUrl}ß
+          src={imgUrl}
           alt="이미지 없음"
         />
       </StyledImgBox>
       <StyledContentBox>
         <StyledTitle>{productName}</StyledTitle>
-        <StyledPay>{price}</StyledPay>
-        {/* <div>{timeToToday(wiriteAt)}</div> */}
-        <StyledDay> / 일</StyledDay>
+        <StyledCateId>{categoriNumber(cateId)}</StyledCateId>
+        <StyledTimeForToday> ∙ {createdAt}</StyledTimeForToday>
+        <StyledPayBox>
+          <StyledPay>{price}</StyledPay>
+          <StyledDay> / 일</StyledDay>
+        </StyledPayBox>
+
         <StyledAddress>{address}</StyledAddress>
         <StyledLikeAndChat>
           <StyledLikeWrap>
-          {like ? <StyledLike onClick={likeHandler}
-              src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
-              alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
-            />: <StyledLike onClick={likeHandler}
-            src="https://img.icons8.com/ios-filled/50/47b5ff/like--v1.png"
-            alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
-          />}
+            {like ? (
+              <StyledLike
+                onClick={likeHandler}
+                src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
+                alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
+              />
+            ) : (
+              <StyledLike
+                onClick={likeHandler}
+                src="https://img.icons8.com/ios-filled/50/47b5ff/like--v1.png"
+                alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
+              />
+            )}
             <span>찜 {Like}</span>
           </StyledLikeWrap>
 
@@ -62,6 +100,9 @@ export const ProductsItem = ({
               alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
             />
             <span>채팅 {chat}</span>
+          </StyledChatWrap>
+          <StyledChatWrap>
+            <button onClick={reservationHandler}>예약 신청</button>
           </StyledChatWrap>
         </StyledLikeAndChat>
       </StyledContentBox>
@@ -118,7 +159,18 @@ const StyledTitle = styled.div`
   font-weight: 600;
 `;
 
+const StyledCateId = styled.span`
+  font-size: 13px;
+`;
+const StyledTimeForToday = styled.span`
+  font-size: 13px;
+`;
+
+const StyledPayBox = styled.div`
+  margin-top: 5px;
+`;
 const StyledPay = styled.span`
+  /* border: 1px solid red; */
   font-weight: 600;
 `;
 
@@ -129,7 +181,7 @@ const StyledDay = styled.span`
 const StyledAddress = styled.div`
   font-size: small;
   font-weight: 500;
-  padding-top: 10px;
+  /* padding-top: 10px; */
 `;
 
 const StyledLikeAndChat = styled.div`

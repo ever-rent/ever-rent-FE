@@ -15,9 +15,7 @@ export const Join = () => {
   const [mailAuth, setMailAuth] = useState(false);
 
   const handleEmailAuth = async (email) => {
-    return await axios.post(
-      `http://52.79.235.129/mailConfirms?email=${email}`
-    );
+    return await axios.post(`http://13.209.8.18/mailConfirms?email=${email}`);
   };
 
   const emailAuth = useMutation(handleEmailAuth, {
@@ -33,10 +31,12 @@ export const Join = () => {
   });
 
   const handleJoin = async (data) => {
-    return await axios.post("http://52.79.235.129/signups", {
+    return await axios.post("http://13.209.8.18/signups", {
       email: data.email,
       password: data.password,
       memberName: data.nickname,
+      mainAddress: "성남시",
+      subAddress: "수원시",
     });
   };
 

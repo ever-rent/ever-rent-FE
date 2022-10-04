@@ -5202,6 +5202,11 @@ ignore@^5.2.0:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.2.0.tgz#6d3bac8fa7fe0d45d9f9be7bac2fc279577e345a"
   integrity sha512-CmxgYGiEPCLhfLnpPp1MoRmifwEIOgjcHXxOBjv7mY96c+eWScsOP9c112ZyLdWHi0FxHjI+4uVhKYp/gcdRmQ==
 
+image-compression@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/image-compression/-/image-compression-0.0.6.tgz#4aac3d7d08c49c20eae1ba31acb9f81ac6eaf13f"
+  integrity sha512-QLPBdGiLs7f4Lbp2tc/kn2TvPqHM0ubfWfVTaj3h6ShiGnFp8FYe8h+Iw9aCXN9XVeN+CONIwqGR4T9tRfxvsA==
+
 immer@^9.0.7:
   version "9.0.15"
   resolved "https://registry.yarnpkg.com/immer/-/immer-9.0.15.tgz#0b9169e5b1d22137aba7d43f8a81a495dd1b62dc"

@@ -17,7 +17,8 @@ export const mypageAPI = {
   getMyPagePending: () => profile.get(`/mypages/waitlists`),
   getMyPageConfirm: () => profile.get(`/mypages/confirms`),
   getMyPageExpired: () => profile.get(`/mypages/expired`),
-  getBorrowList: () => profile.get(`/mypages/myrent`)
+  getBorrowList: () => profile.get(`/mypages/myrent`),
+  postRent: (data, productId) => auth.post(`/orders/${productId}`, data),
 };
 
 export const userAPI = {};

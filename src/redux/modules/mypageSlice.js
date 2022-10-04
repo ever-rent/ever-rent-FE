@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { mypageAPI } from "../../server/api";
+import { current } from "@reduxjs/toolkit";
 
 // 빌려준 물건
 
@@ -80,7 +81,6 @@ export const getMyPageExpired = createAsyncThunk(
 
 // 빌린 물건
 
-//TODO: 아직 api 구현은 안됨.
 // 물건 목록 get
 export const getBorrowList = createAsyncThunk(
   "GET_BORROW_LIST",
@@ -96,6 +96,7 @@ export const getBorrowList = createAsyncThunk(
   }
 );
 
+//TODO: 아직 api 구현은 안됨.
 // 물건 목록 get
 export const getPastList = createAsyncThunk(
   "GET_PAST_LIST",
@@ -111,7 +112,26 @@ export const getPastList = createAsyncThunk(
   }
 );
 
-
+//TODO: 테스트용 렌트 신청!!
+export const postRent = createAsyncThunk(
+  "POST_RENT",
+  async (payload, thunkAPI) => {
+    console.log("postRent 시작>>", typeof productId);
+    try {
+      const { data } = await mypageAPI.postRent(
+        {
+          buyStart: payload.buyStart,
+          buyEnd: payload.buyEnd,
+        },
+        payload.productId
+      );
+      console.log("postRent 성공>>", data);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (errer) {
+      return thunkAPI.rejectWithValue(errer);
+    }
+  }
+);
 
 export const mypageSlice = createSlice({
   name: "mypage",
@@ -120,8 +140,9 @@ export const mypageSlice = createSlice({
     pending: [],
     confirm: [],
     deadline: [],
-    borrow:[],
-    past:[],
+    borrow: [],
+    past: [],
+    reservation: [],
   },
   reducers: {},
   extraReducers: {
@@ -173,8 +194,13 @@ export const mypageSlice = createSlice({
       state.past = action.payload;
     },
 
-
-
+    //TODO: 테스트용 렌트 신청!!
+    [postRent.fulfilled]: (state, action) => {
+      console.log("action", action);
+      console.log("state", current(state));
+      state.reservation.push(action.payload);
+      // state.reservation = state.reservation.concat(action.payload);
+    },
 
     // /* Rejected */
     // [getMyPageList.rejected]: (state, action) => {

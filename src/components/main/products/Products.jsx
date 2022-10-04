@@ -8,7 +8,7 @@ export const Products = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
   const productList = products;
-  // console.log(productList);
+  console.log(productList);
 
   useEffect(() => {
     dispatch(getProducts());
@@ -35,7 +35,7 @@ const StyledProductsGrid = styled.div`
   grid-template-columns: repeat(4, 226px);
   margin-top: 30px;
   gap: 50px 40px;
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 767px) {
     display: flex;
     flex-direction: column;
     gap: 0;
