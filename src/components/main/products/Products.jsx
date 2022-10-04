@@ -8,57 +8,57 @@ import {useInView} from "react-intersection-observer";
 import axios from "axios";
 
 export const Products = () => {
-  const dispatch = useDispatch();
-  const products = useSelector((state) => state.products.products);
-  const productList = products;
-  console.log(productList);
+  // const dispatch = useDispatch();
+  // const products = useSelector((state) => state.products.products);
+  // const productList = products;
+  // console.log(productList);
 
-  useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getProducts());
+  // }, [dispatch]);
 
 
   // infi scroll
-  // const [products, setProducts] = useState([]);
-  // const [hasNextPage, setHasNextPage] = useState(true);
-  // const page = useRef(1);
-  // const [ref, inView] = useInView(true);
+  const [products, setProducts] = useState([]);
+  const [hasNextPage, setHasNextPage] = useState(true);
+  const page = useRef(1);
+  const [ref, inView] = useInView(true);
 
-  // const fetch = useCallback(async () => {
-  //   try {
-  //     const { dataSet } = await axios.get(
-  //       `http://52.79.235.129/products?_limit=8&_page=${page.current}`
-  //     );
-  //     const {data} = [...dataSet].data
-  //     setProducts((prevPosts) => [...prevPosts, ...data]);
-  //     setHasNextPage(data.length === 8);
-  //     if (data.length) {
-  //       page.current += 1;
-  //     }
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // }, []);
+  const fetch = useCallback(async () => {
+    try {
+      const { dataSet } = await axios.get(
+        `https://davidpai.shop/products?_limit=12&_page=${page.current}`
+      );
+      const {data} = [...dataSet].data
+      setProducts((prevPosts) => [...prevPosts, ...data]);
+      setHasNextPage(data.length === 12);
+      if (data.length) {
+        page.current += 1;
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
 
-  // useEffect(() => {
-  //   console.log(inView, hasNextPage);
-  //   if (inView && hasNextPage) {
-  //     fetch();
-  //   }
-  // }, [fetch, hasNextPage, inView]);
+  useEffect(() => {
+    console.log(inView, hasNextPage);
+    if (inView && hasNextPage) {
+      fetch();
+    }
+  }, [fetch, hasNextPage, inView]);
 
-  // console.log(products);
+  console.log(products);
 
 
   return (
     <StyledProductsContainer>
       <StyledProductsGrid>
-        {productList?.map((product) => {
+        {products?.map((product) => {
           return <ProductsItem {...product} key={product.id} />;
         })}
       </StyledProductsGrid>
-      {/* <div ref={ref} style={{ position: "absolute" }} /> */}
-      <div style={{position: "absolute" }} />
+      <div ref={ref} style={{ position: "absolute" }} />
+      {/* <div style={{position: "absolute" }} /> */}
     </StyledProductsContainer>
   );
 };

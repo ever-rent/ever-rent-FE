@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,14 +11,16 @@ import axios from "axios";
 
 export const CategoryDetail = () => {
   const { id } = useParams();
-  const dispatch = useDispatch();
-  const category = useSelector((state) => state.products.category);
-  const categoryItems = category?.data;
+  // const dispatch = useDispatch();
+  // const category = useSelector((state) => state.products.category);
+  // const categoryItems = category?.data;
   // console.log(categoryItems);
 
-  useEffect(() => {
-    dispatch(getCategory(id));
-  }, [dispatch, id]);
+  // useEffect(() => {
+  //   dispatch(getCategory(id));
+  // }, [dispatch, id]);
+
+
 
   const categoryList = [
     { value: "0", name: "카테고리를 선택하세요" },
@@ -65,9 +67,12 @@ export const CategoryDetail = () => {
 
   const categoryHandler = (e) => {
     e.preventDefault();
-    const categoryId = e.target.value;
-    dispatch(getCategory(categoryId));
+    // const categoryId = e.target.value;
+    // dispatch(getCategory(categoryId));
     // console.log(e.target.value);
+
+    // infi
+    setCategoryId(e.target.value)
   };
 
   const addressHandler = (e) => {
@@ -89,36 +94,40 @@ export const CategoryDetail = () => {
   // });
   
 
+
 // infi scroll
-  // const [categoryItems, setCategoryItems] = useState([]);
-  // const [hasNextPage, setHasNextPage] = useState(true);
-  // const page = useRef(1);
-  // const [ref, inView] = useInView(true);
 
-  // const fetch = useCallback(async () => {
-  //   try {
-  //     const { dataSet } = await axios.get(
-  //       `http://http://3.35.19.62:8080/categories/${id}?_limit=8&_page=${page.current}`
-  //     );
-  //     const {data} = [...dataSet].data
-  //     setCategoryItems((prevPosts) => [...prevPosts, ...data]);
-  //     setHasNextPage(data.length === 8);
-  //     if (data.length) {
-  //       page.current += 1;
-  //     }
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // }, []);
+  const [categoryId, setCategoryId] = useState(id);
 
-  // useEffect(() => {
-  //   console.log(inView, hasNextPage);
-  //   if (inView && hasNextPage) {
-  //     fetch();
-  //   }
-  // }, [fetch, hasNextPage, inView]);
+  const [categoryItems, setCategoryItems] = useState([]);
+  const [hasNextPage, setHasNextPage] = useState(true);
+  const page = useRef(1);
+  const [ref, inView] = useInView(true);
 
-  // console.log(categoryItems);
+  const fetch = useCallback(async () => {
+    try {
+      const { dataSet } = await axios.get(
+        `https://davidpai.shop/categories/${categoryId}?_limit=12&_page=${page.current}`
+      );
+      const {data} = [...dataSet].data
+      setCategoryItems((prevPosts) => [...prevPosts, ...data]);
+      setHasNextPage(data.length === 12);
+      if (data.length) {
+        page.current += 1;
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log(inView, hasNextPage);
+    if (inView && hasNextPage) {
+      fetch();
+    }
+  }, [fetch, hasNextPage, inView]);
+
+  console.log(categoryItems);
 
   return (
     <Layout>
@@ -155,6 +164,8 @@ export const CategoryDetail = () => {
           })}
         </StyledDetailContainer>
       </StyledCategoryContainer>
+      <div ref={ref} style={{ position: "absolute" }} />
+      {/* <div style={{position: "absolute" }} /> */}
     </Layout>
   );
 };
