@@ -1,14 +1,16 @@
 import axios from "axios";
 
 export const base = axios.create({
-  baseURL: "https://davidpai.shop", // 혜진님 DB
-  // baseURL: "http://52.79.235.129", // 상훈님 DB
+  baseURL: "http://13.209.8.18", 
+  // baseURL: "http://davidpai.shop", 
+  // baseURL: "http://52.79.235.129", 
   // withCredentials: true,
 });
 
 export const auth = axios.create({
-  baseURL: "https://davidpai.shop/auth", // 혜진님 유
-  // baseURL: "http://52.79.235.129/auth", // 상훈님 DB
+  baseURL: "http://13.209.8.18/auth",
+  // baseURL: "http://davidpai.shop/auth",
+  // baseURL: "http://52.79.235.129/auth",
   // withCredentials: true,
 });
 

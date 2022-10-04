@@ -117,7 +117,7 @@ export const AddProduct = () => {
   const [priceInput, setPriceInput] = useState(0);
   const [startDateInput, setStartDateInput] = useState("");
   const [endDateInput, setEndDateInput] = useState("");
-  const [tradeLocation, setTradeLocation] = useState("");
+  const [tradeLocation, setTradeLocation] = useState("송내역");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
@@ -139,7 +139,7 @@ export const AddProduct = () => {
     content: description,
     cateId: categoryInput,
     price: priceInput,
-    // tradeLocation : tradeLocation,
+    Location : tradeLocation,
     rentStart: startDateInput,
     rentEnd: endDateInput,
   };
@@ -165,7 +165,7 @@ export const AddProduct = () => {
           );
           formData.append("multipartFile", sendImage);
           dispatch(addProducts(formData));
-          navigate("/");
+          // navigate("/");
         }
       });
     }
