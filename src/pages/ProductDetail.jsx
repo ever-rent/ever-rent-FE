@@ -123,7 +123,11 @@ export const ProductDetail = () => {
           <StyledPostHeadWrap>
             <StyledProductImagetWrap>
               <SyltedProductMainImage
-                src={detailData && detailData.imgUrl}
+                src={
+                  detailData?.imgUrl !== null
+                    ? detailData?.imgUrl
+                    : "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png"
+                }
                 alt="이미지 미리보기"
               />
               <StyledProductSubImageWrap>
@@ -189,6 +193,14 @@ const StyledDetailProductContainer = styled.div`
   margin-top: 100px;
   display: flex;
   justify-content: center;
+
+  & {
+    @media all and (max-width: 767px) {
+      margin-top: 80px;
+    }
+    @media all and (max-width: 480px) {
+    }
+  }
 `;
 
 const StyledDetailProductWrap = styled.div`
@@ -199,6 +211,21 @@ const StyledDetailProductWrap = styled.div`
   padding: 40px;
   box-shadow: 1px 1px 5px 1px rgb(71, 181, 255);
   border-radius: 10px;
+
+  & {
+    @media all and (max-width: 767px) {
+      display: flex;
+      flex-direction: column;
+      width: 60vw;
+
+      padding: 40px;
+      box-shadow: 1px 1px 5px 1px rgb(71, 181, 255);
+      border-radius: 10px;
+    }
+    @media all and (max-width: 480px) {
+      width: 100vw;
+    }
+  }
 `;
 
 const StyledEditableOption = styled.div`
@@ -254,12 +281,27 @@ const SyltedProductMainImage = styled.img`
 
   width: 450px;
   height: 450px;
+
+  & {
+    @media all and (max-width: 767px) {
+    }
+    @media all and (max-width: 480px) {
+      width: 80vw;
+    }
+  }
 `;
 
 const StyledProductSubImageWrap = styled.div``;
 const StyledProductSubImage = styled.img`
   width: 150px;
   height: 150px;
+  & {
+    @media all and (max-width: 767px) {
+    }
+    @media all and (max-width: 480px) {
+      width: 25vw;
+    }
+  }
 `;
 
 const StyledPostBodyWrap = styled.section`

@@ -1,13 +1,17 @@
 import axios from "axios";
 
 export const base = axios.create({
-  baseURL: "https://davidpai.shop",
-  // baseURL: "http://52.79.235.129",
+
+  baseURL: "http://13.209.8.18", 
+  // baseURL: "http://davidpai.shop", 
+  // baseURL: "http://52.79.235.129", 
   // withCredentials: true,
 });
 
 export const auth = axios.create({
-  baseURL: "https://davidpai.shop/auth",
+
+  baseURL: "http://13.209.8.18/auth",
+  // baseURL: "http://davidpai.shop/auth",
   // baseURL: "http://52.79.235.129/auth",
   // withCredentials: true,
 });
@@ -15,6 +19,7 @@ export const auth = axios.create({
 export const profile = axios.create({
   baseURL: "https://davidpai.shop",
   // baseURL: "http://52.79.235.129",
+
   // withCredentials: true,
 });
 
