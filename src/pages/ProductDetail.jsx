@@ -13,6 +13,7 @@ import { LocationModal } from "../components/location/LocationModal";
 import Swal from "sweetalert2";
 
 import { UserReport } from "../components/report/UserReport";
+import { PostReport } from "../components/report/PostReport";
 import axios from "axios";
 
 const FavoritIconButton = () => {
@@ -103,9 +104,10 @@ export const ProductDetail = () => {
     setShowModal(false);
   };
 
-
   return (
     <Layout>
+      <UserReport />
+      <PostReport />
       <StyledDetailProductContainer>
         <StyledDetailProductWrap>
           <StyledEditableOption
