@@ -7,17 +7,13 @@ export const MyLikeItem = ({ item }) => {
     <StyledItem>
       <img src={imgUrlArray[0]} alt="img" />
       {/* <img src={imgUrlArray[1]} alt="img" /> */}
-      {/* {insertImg(index)} */}
       <div className="span-div">
-        {/* <span className="title">{productName}</span> */}
-        <span> 상품명 : {productName}</span>
+        <span className="title"> 상품명 : {productName}</span>
         <span> 가격 : {price}</span>
         {/* <span>
           남은 기간 : <span className="date">3일</span>
         </span> */}
-        {/* {reservation(index)} */}
       </div>
-      {/* <div>{acceptAndReject(index)}</div> */}
     </StyledItem>
   );
 };

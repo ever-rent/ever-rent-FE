@@ -13,6 +13,7 @@ export const MyLikeList = () => {
 
   return (
     <div>
+      <div>나의 찜목록</div>
       <div>
         {likeList?.map((item) => {
           return <MyLikeItem item={item} key={item.id} />;

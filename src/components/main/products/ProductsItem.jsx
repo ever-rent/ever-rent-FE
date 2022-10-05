@@ -9,12 +9,10 @@ import { postLike } from "../../../redux/modules/mypageSlice";
 
 export const ProductsItem = ({
   id,
-  imgUrl,
+  imgUrlArray,
   productName,
   price,
   address,
-  Like,
-  chat,
   writeAt,
   cateId,
   rentEnd,
@@ -24,25 +22,36 @@ export const ProductsItem = ({
   // console.log("id", String(id));
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const [like, setlike] = useState(false);
-  const [isLike, setIsLike] = useState("");
-  const [isrent, setIsrent] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
 
-  const data = useSelector((state) => state.mypage.like);
-  console.log("data", data);
+  // const [isrent, setIsrent] = useState(false);
 
-  const likeHandler = async (e) => {
+  const data = useSelector((state) => state.mypage?.like);
+  // console.log("data", id, data);
+  // console.log(id, like);
+
+  const likeHandler = (e) => {
     e.preventDefault();
-    dispatch(postLike(id));
     setlike(!like);
+    if (!like) {
+      setLikeCount(likeCount + 1);
+      dispatch(postLike(id));
+    } else if (like) {
+      setLikeCount(likeCount - 1);
+      dispatch(postLike(id));
+    }
   };
 
-  console.log(like);
+  // useEffect(() => {
+  //   data === "찜 등록이 완료되었습니다." ? setlike(false) : setlike(true);
+  // }, []);
 
   //글쓴 시간 표시.
 
   const [write, setWrite] = useState("");
-  console.log("writeAt", writeAt);
+  // console.log("writeAt", writeAt);
   const [createdAt, setCreatedAt] = useState("");
 
   useEffect(() => {
@@ -62,13 +71,66 @@ export const ProductsItem = ({
   // };
 
   return (
+    // <StyledItemBox>
+    //   <StyledImgBox>
+    //     <StyledImg
+    //       onClick={() => {
+    //         navigate(`/productDetail/${id}`);
+    //       }}
+    //       src={imgUrlArray[0]}
+    //       alt="이미지 없음"
+    //     />
+    //   </StyledImgBox>
+    //   <StyledContentBox>
+    //     <StyledTitle>{productName}</StyledTitle>
+    //     <StyledCateId>{categoriNumber(cateId)}</StyledCateId>
+    //     <StyledTimeForToday> ∙ {createdAt}</StyledTimeForToday>
+    //     <StyledPayBox>
+    //       <StyledPay>{price}</StyledPay>
+    //       <StyledDay> / 일</StyledDay>
+    //     </StyledPayBox>
+
+    //     <StyledAddress>{address}</StyledAddress>
+    //     <StyledLikeAndChat>
+    //       <StyledLikeWrap>
+    //         {like ? (
+    //           <StyledLike
+    //             onClick={likeHandler}
+    //             src="https://img.icons8.com/ios-filled/50/47b5ff/like--v1.png"
+    //             alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
+    //           />
+    //         ) : (
+    //           <StyledLike
+    //             onClick={likeHandler}
+    //             src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
+    //             alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
+    //           />
+    //         )}
+    //         <span>찜 {likeCount}</span>
+    //       </StyledLikeWrap>
+
+    //       <StyledChatWrap>
+    //         <StyledChat
+    //           src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
+    //           alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
+    //         />
+    //         <span>채팅 </span>
+    //       </StyledChatWrap>
+    //       {/* <StyledChatWrap> */}
+    //       {/* <button onClick={reservationHandler}>예약 신청</button> */}
+    //       {/* </StyledChatWrap> */}
+    //     </StyledLikeAndChat>
+    //   </StyledContentBox>
+    // </StyledItemBox>
+
+    // 모바일버전
     <StyledItemBox>
       <StyledImgBox>
         <StyledImg
           onClick={() => {
             navigate(`/productDetail/${id}`);
           }}
-          src={imgUrl}
+          src={imgUrlArray[0]}
           alt="이미지 없음"
         />
       </StyledImgBox>
@@ -97,7 +159,7 @@ export const ProductsItem = ({
                 alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
               />
             )}
-            <span>찜 {Like}</span>
+            <span>찜 {likeCount}</span>
           </StyledLikeWrap>
 
           <StyledChatWrap>
@@ -105,11 +167,11 @@ export const ProductsItem = ({
               src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
               alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
             />
-            <span>채팅 {chat}</span>
+            <span>채팅 </span>
           </StyledChatWrap>
-          {/* <StyledChatWrap>
-            <button onClick={reservationHandler}>예약 신청</button>
-          </StyledChatWrap> */}
+          {/* <StyledChatWrap> */}
+          {/* <button onClick={reservationHandler}>예약 신청</button> */}
+          {/* </StyledChatWrap> */}
         </StyledLikeAndChat>
       </StyledContentBox>
     </StyledItemBox>
