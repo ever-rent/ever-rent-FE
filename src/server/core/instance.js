@@ -8,7 +8,8 @@ export const base = axios.create({
 });
 
 export const auth = axios.create({
-  baseURL: "http://13.209.8.18/auth",
+  // baseURL: "http://13.209.8.18/auth",
+  baseURL: "http://13.209.8.18",
   // baseURL: "http://davidpai.shop/auth",
   // baseURL: "http://52.79.235.129/auth",
   // withCredentials: true,

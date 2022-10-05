@@ -95,6 +95,7 @@ export const AddProduct = () => {
     const blob = new Blob([int8Array], {
       type: "image/jpeg",
     });
+    console.log(blob)
     const file = new File([blob], "image.jpg");
     console.log(file);
     setSendImage([...sendImage].concat(file));
@@ -163,7 +164,17 @@ export const AddProduct = () => {
             "requestDto",
             new Blob([JSON.stringify(sendData)], { type: "application/json" })
           );
-          formData.append("multipartFile", sendImage);
+
+
+          console.log(sendData)
+          console.log(sendImage)
+
+          formData.append("multipartFiles", sendImage);
+
+          // for(let i = 0;i<sendImage.length;i++){
+          //   formData.append("multipartFiles", sendImage[i]);
+          //   // formData.append(["multipartFiles", sendImage[i]],{type:"multipart/form-data"});
+          // }
           dispatch(addProducts(formData));
           // navigate("/");
         }
@@ -171,10 +182,13 @@ export const AddProduct = () => {
     }
   };
 
+  // console.log(sendImage)
+
   const [showModal, setShowModal] = useState(false);
   const closeModal = () => {
     setShowModal(false);
   };
+
 
   return (
     <Layout>
