@@ -5,7 +5,7 @@ import { timeToToday } from "../../../util/timeToToday";
 import { categoriNumber } from "../../../util/categoryNumber";
 import { useDispatch, useSelector } from "react-redux";
 import { postRent } from "../../../redux/modules/mypageSlice";
-import { getProducts } from "../../../redux/modules/productSlice";
+import { postLike } from "../../../redux/modules/mypageSlice";
 
 export const ProductsItem = ({
   id,
@@ -24,14 +24,20 @@ export const ProductsItem = ({
   // console.log("id", String(id));
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [like, setlike] = useState(true);
+  const [like, setlike] = useState(false);
+  const [isLike, setIsLike] = useState("");
+  const [isrent, setIsrent] = useState(false);
 
-  const likeHandler = (e) => {
+  const data = useSelector((state) => state.mypage.like);
+  console.log("data", data);
+
+  const likeHandler = async (e) => {
     e.preventDefault();
+    dispatch(postLike(id));
     setlike(!like);
-    // console.log(like)
-    //TODO: 찜목록 보내기 api필요.
   };
+
+  console.log(like);
 
   //글쓴 시간 표시.
 
@@ -45,15 +51,15 @@ export const ProductsItem = ({
     setCreatedAt(timeToToday(writeAt));
   }, [writeAt]);
 
-  const reservationHandler = (e) => {
-    e.preventDefault();
-    const productData = {
-      productId: id,
-      buyStart: rentStart,
-      buyEnd: rentEnd,
-    };
-    dispatch(postRent(productData));
-  };
+  // const reservationHandler = (e) => {
+  //   e.preventDefault();
+  //   const productData = {
+  //     productId: id,
+  //     buyStart: rentStart,
+  //     buyEnd: rentEnd,
+  //   };
+  //   dispatch(postRent(productData));
+  // };
 
   return (
     <StyledItemBox>
@@ -81,13 +87,13 @@ export const ProductsItem = ({
             {like ? (
               <StyledLike
                 onClick={likeHandler}
-                src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
+                src="https://img.icons8.com/ios-filled/50/47b5ff/like--v1.png"
                 alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
               />
             ) : (
               <StyledLike
                 onClick={likeHandler}
-                src="https://img.icons8.com/ios-filled/50/47b5ff/like--v1.png"
+                src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
                 alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
               />
             )}
@@ -101,9 +107,9 @@ export const ProductsItem = ({
             />
             <span>채팅 {chat}</span>
           </StyledChatWrap>
-          <StyledChatWrap>
+          {/* <StyledChatWrap>
             <button onClick={reservationHandler}>예약 신청</button>
-          </StyledChatWrap>
+          </StyledChatWrap> */}
         </StyledLikeAndChat>
       </StyledContentBox>
     </StyledItemBox>

@@ -1,49 +1,86 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { MyPage } from "../../pages/MyPage";
+import { getMyInfo } from "../../redux/modules/mypageSlice";
 
-export const Profile = () => {
+export const Profile = ({ like, setLike }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const info = useSelector((state) => state.mypage.myinfo);
+  console.log("Profile >> info", info);
+
+  const [likeModal, setlikeModal] = useState(like);
+
+  useEffect(() => {
+    dispatch(getMyInfo());
+  }, [dispatch]);
+
+  const likeListhandler = () => {
+    setLike(!like);
+  };
+  console.log("likeListhandler >> like", like);
 
   return (
-    <StyledProfileBox>
-      <StyledImgFlexBox>
-        <StyledImgBox>
-          <StyledImg
-            src="https://image.ajunews.com/content/image/2019/12/25/20191225170826943516.jpg"
-            alt="이미지 없음"
-          />
-        </StyledImgBox>
-        <StyledNickname>gardenk</StyledNickname>
-        <StyledProfileEdit>프로필 수정</StyledProfileEdit>
-      </StyledImgFlexBox>
-      <StyledIcon>
-        <StyledLikeAndChatBox>
-          {/* <StyledEachWrap>
+    <>
+      <StyledProfileBox>
+        <StyledImgFlexBox>
+          <StyledImgBox>
+            <StyledImg
+              src="https://image.ajunews.com/content/image/2019/12/25/20191225170826943516.jpg"
+              alt="이미지 없음"
+            />
+          </StyledImgBox>
+          <StyledNickname>{info?.memberName}</StyledNickname>
+          <StyledProfileEdit
+            onClick={() => navigate(`/editUserInfo/${info?.memberName}`)}
+          >
+            프로필 수정
+          </StyledProfileEdit>
+        </StyledImgFlexBox>
+        <StyledIcon>
+          <StyledLikeAndChatBox>
+            {/* <StyledEachWrap>
             <StyledLikeAndChat
               src="https://img.icons8.com/ios/50/47b5ff/reservation-2.png"
               alt="https://icons8.com/icon/24814/reserve reserve icon by https://icons8.com Icons8"
             />
             <span>예약 목록</span>
           </StyledEachWrap> */}
-          <StyledEachWrap>
-            <StyledLikeAndChat
-              src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
-              alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
-            />
-            {/* TODO: 찜목록 어떤식으로 구현할지 아직 미정. */}
-            <span>찜목록</span>
-          </StyledEachWrap>
-          <StyledEachWrap>
-            <StyledLikeAndChat
-              src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
-              alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
-            />
-            <span>채팅목록</span>
-          </StyledEachWrap>
-        </StyledLikeAndChatBox>
-      </StyledIcon>
-    </StyledProfileBox>
+            <StyledEachWrap>
+              {like ? (
+                <>
+                  <StyledLikeAndChat
+                    onClick={likeListhandler}
+                    src="https://img.icons8.com/ios/50/47b5ff/reservation-2.png"
+                    alt="https://icons8.com/icon/24814/reserve reserve icon by https://icons8.com Icons8"
+                  />
+                  <span>렌탈 목록</span>
+                </>
+              ) : (
+                <>
+                  <StyledLikeAndChat
+                    onClick={likeListhandler}
+                    src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
+                    alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
+                  />
+                  <span>찜목록</span>
+                </>
+              )}
+              {/* TODO: 찜목록 어떤식으로 구현할지 아직 미정. */}
+            </StyledEachWrap>
+            <StyledEachWrap>
+              <StyledLikeAndChat
+                src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
+                alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
+              />
+              <span>채팅목록</span>
+            </StyledEachWrap>
+          </StyledLikeAndChatBox>
+        </StyledIcon>
+      </StyledProfileBox>
+    </>
   );
 };
 
@@ -123,7 +160,7 @@ const StyledNickname = styled.div`
   margin: 10px 0;
   font-size: 25px;
   font-weight: 600;
-  margin-right: 15px;
+  /* margin-right: 15px; */
   @media only screen and (max-width: 767px) {
     font-size: 5vw;
   }
@@ -136,6 +173,7 @@ const StyledProfileEdit = styled.button`
   border: transparent;
   border-radius: 3px;
   padding: 4px 5px;
+  cursor: pointer;
   min-width: max-content;
   @media only screen and (max-width: 767px) {
     /* border: 1px solid red; */

@@ -15,7 +15,9 @@ export const auth = axios.create({
 });
 
 export const profile = axios.create({
-  baseURL: "https://davidpai.shop",
+  baseURL: "http://13.209.8.18",
+
+  // baseURL: "https://davidpai.shop",
   // baseURL: "http://52.79.235.129",
 
   // withCredentials: true,
