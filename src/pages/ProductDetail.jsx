@@ -9,10 +9,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { categoriNumber } from "../util/categoryNumber";
 import { timeToToday } from "../util/timeToToday";
 import { LocationModal } from "../components/location/LocationModal";
-import { UserReport } from "../components/report/UserReport";
 
 import Swal from "sweetalert2";
 
+import { UserReport } from "../components/report/UserReport";
+import axios from "axios";
 
 const FavoritIconButton = () => {
   const [liked, setLiked] = useState(false);
@@ -102,9 +103,9 @@ export const ProductDetail = () => {
     setShowModal(false);
   };
 
+
   return (
     <Layout>
-      <UserReport />
       <StyledDetailProductContainer>
         <StyledDetailProductWrap>
           <StyledEditableOption

@@ -21,19 +21,6 @@ export const AddProduct = () => {
   const [imgView, setImgView] = useState([]);
   const [sendImage, setSendImage] = useState([]);
 
-  // const fileChange = (fileBlob) => {
-  //   setSendImage([...sendImage].concat(fileBlob));
-
-  //   const reader = new FileReader();
-  //   for (let i = 0; i < fileBlob.length; i++) {
-  //     reader.readAsDataURL(fileBlob[i]);
-  //     reader.onloadend = () => {
-  //       let imageSubs = reader.result;
-  //       setImgView([...imgView].concat(imageSubs));
-  //     };
-  //   }
-  // };
-
   const imageLengthCheck = (e) => {
     if (imgView.length === 10) {
       e.preventDefault();
@@ -95,7 +82,7 @@ export const AddProduct = () => {
     const blob = new Blob([int8Array], {
       type: "image/jpeg",
     });
-    console.log(blob)
+    console.log(blob);
     const file = new File([blob], "image.jpg");
     console.log(file);
     setSendImage([...sendImage].concat(file));
@@ -140,12 +127,12 @@ export const AddProduct = () => {
     content: description,
     cateId: categoryInput,
     price: priceInput,
-    Location : tradeLocation,
+    location: tradeLocation,
     rentStart: startDateInput,
     rentEnd: endDateInput,
   };
 
-  const addProductPost = () => {
+  const addProductPost =  () => {
     if (title === "" || description === "") {
       alert("제목/내용을 적어주세요!");
     } else {
@@ -157,38 +144,29 @@ export const AddProduct = () => {
         cancelButtonColor: "rgb(184, 221, 247)",
         confirmButtonText: "저장하기",
         cancelButtonText: "취소",
-      }).then((result) => {
+      }).then(async (result) => {
         if (result.value) {
           let formData = new FormData();
-          formData.append(
-            "requestDto",
-            new Blob([JSON.stringify(sendData)], { type: "application/json" })
+            formData.append(
+              "requestDto",
+              new Blob([JSON.stringify(sendData)], { type: "application/json" })
           );
 
+          for (let i = 0; i < sendImage.length; i++) {
+            console.log(sendImage[i])
+            formData.append("multipartFiles", sendImage[i]);
+          }
 
-          console.log(sendData)
-          console.log(sendImage)
-
-          formData.append("multipartFiles", sendImage);
-
-          // for(let i = 0;i<sendImage.length;i++){
-          //   formData.append("multipartFiles", sendImage[i]);
-          //   // formData.append(["multipartFiles", sendImage[i]],{type:"multipart/form-data"});
-          // }
-          dispatch(addProducts(formData));
-          // navigate("/");
+          dispatch(addProducts(formData))
         }
       });
     }
   };
 
-  // console.log(sendImage)
-
   const [showModal, setShowModal] = useState(false);
   const closeModal = () => {
     setShowModal(false);
   };
-
 
   return (
     <Layout>
@@ -206,7 +184,6 @@ export const AddProduct = () => {
                 id="inputFile"
                 type="file"
                 multiple="multiple"
-                maxSize={5242880}
                 onChange={(e) => {
                   fileChange(e.target.files);
                 }}
