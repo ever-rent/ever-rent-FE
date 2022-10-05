@@ -24,19 +24,6 @@ export const EditProduct = () => {
   const [imgView, setImgView] = useState([]);
   const [sendImage, setSendImage] = useState([]);
 
-  // const fileChange = (fileBlob) => {
-  //   setSendImage([...sendImage].concat(fileBlob));
-
-  //   const reader = new FileReader();
-  //   for (let i = 0; i < fileBlob.length; i++) {
-  //     reader.readAsDataURL(fileBlob[i]);
-  //     reader.onloadend = () => {
-  //       let imageSubs = reader.result;
-  //       setImgView([...imgView].concat(imageSubs));
-  //     };
-  //   }
-  // };
-
   const imageLengthCheck = (e) => {
     if (imgView.length === 10) {
       e.preventDefault();
@@ -143,7 +130,7 @@ export const EditProduct = () => {
     cateId: categoryInput,
     price: priceInput,
     rentStart: startDateInput,
-    // tradeLocation : tradeLocation,
+    location : tradeLocation,
     rentEnd: endDateInput,
   };
   // productId: param.id,
@@ -167,9 +154,13 @@ export const EditProduct = () => {
             "requestDto",
             new Blob([JSON.stringify(sendData)], { type: "application/json" })
           );
-          formData.append("multipartFile", sendImage);
+
+          for (let i = 0; i < sendImage.length; i++) {
+            console.log(sendImage[i])
+            formData.append("multipartFiles", sendImage[i]);
+          }
+          
           dispatch(updateProducts([formData, { productId: param.id }]));
-          navigate("/");
         }
       });
     }
