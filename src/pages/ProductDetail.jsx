@@ -12,6 +12,9 @@ import { LocationModal } from "../components/location/LocationModal";
 
 import Swal from "sweetalert2";
 
+import { UserReport } from "../components/report/UserReport";
+import axios from "axios";
+
 const FavoritIconButton = () => {
   const [liked, setLiked] = useState(false);
 
@@ -99,6 +102,7 @@ export const ProductDetail = () => {
   const closeModal = () => {
     setShowModal(false);
   };
+
 
   return (
     <Layout>
