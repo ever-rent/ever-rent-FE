@@ -115,6 +115,7 @@ export const AddProduct = () => {
   const [startDateInput, setStartDateInput] = useState("");
   const [endDateInput, setEndDateInput] = useState("");
   const [tradeLocation, setTradeLocation] = useState("송내역");
+  const [mapLocation, setMapLocation] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
@@ -132,6 +133,12 @@ export const AddProduct = () => {
   useEffect(() => {
     checkPost();
   });
+
+
+  const mapLocationCheck = (value)=>{
+    setMapLocation(value)
+  }
+  console.log(mapLocation)
 
   // formData
   let sendData = {
@@ -323,6 +330,7 @@ export const AddProduct = () => {
             showModal={showModal}
             closeModal={closeModal}
             location={tradeLocation}
+            mapLocationCheck={mapLocationCheck}
           />
           <StyledPostTitle
             type="text"
