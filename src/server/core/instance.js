@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export const base = axios.create({
-
   baseURL: "http://3.35.19.62:8080", // ㅎㅈ님
   // baseURL: "http://13.209.8.18",
   // baseURL: "http://davidpai.shop",
@@ -11,6 +10,7 @@ export const base = axios.create({
 
 export const auth = axios.create({
   baseURL: "http://3.35.19.62:8080", // ㅎㅈ님
+  // baseURL: "http://3.35.19.62:8080/auth",
   // baseURL: "http://13.209.8.18/auth",
   // baseURL: "http://13.209.8.18",
   // baseURL: "http://davidpai.shop/auth",
@@ -20,6 +20,7 @@ export const auth = axios.create({
 
 export const profile = axios.create({
   baseURL: "http://3.35.19.62:8080", // ㅎㅈ님
+  // baseURL: "http://13.209.8.18",
   // baseURL: "https://davidpai.shop",
   // baseURL: "http://52.79.235.129",
 

@@ -51,6 +51,17 @@ export const Products = () => {
       </StyledProductsGrid>
       <div ref={ref} style={{ position: "absolute" }} />
     </StyledProductsContainer>
+
+    // //mobile
+    // <StyledMobileContainer>
+    //   <StyledMobileProducts>
+    //     {products?.map((product) => {
+    //       return <ProductsItem {...product} key={product.id} />;
+    //     })}
+    //   </StyledMobileProducts>
+    //   <div ref={ref} style={{ position: "absolute" }} />
+    //   {/* <div style={{position: "absolute" }} /> */}
+    // </StyledMobileContainer>
   );
 };
 
@@ -70,4 +81,14 @@ const StyledProductsGrid = styled.div`
     gap: 0;
     width: 100%;
   }
+`;
+
+const StyledMobileContainer = styled.div`
+  max-width: 480px;
+`;
+
+const StyledMobileProducts = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
 `;
