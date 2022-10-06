@@ -11,10 +11,7 @@ export const Login = () => {
   const password = useRef(null);
 
   const handleLogin = async (data) => {
-    return await axios.post("http://3.35.19.62:8080/logins", {
-      // return await axios.post("http://13.209.8.18/logins", {
-      // return await axios.post("https://davidpai.shop/logins", {
-
+    return await axios.post("http://13.209.8.18/logins", {
       email: data.email,
       password: data.password,
     });
