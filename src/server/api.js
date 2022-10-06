@@ -18,7 +18,18 @@ export const mypageAPI = {
   getMyPageConfirm: () => profile.get(`/mypages/confirms`),
   getMyPageExpired: () => profile.get(`/mypages/expired`),
   getBorrowList: () => profile.get(`/mypages/myrent`),
-  postRent: (data, productId) => auth.post(`/orders/${productId}`, data),
+  postRent: (data, productId) => profile.post(`/orders/${productId}`, data),
+  postLike: (productId) => profile.post(`/products/wishlists/${productId}`),
+  getMyInfo: () => profile.get(`/mypages/myinfos`),
+  getLikeList: () => profile.get(`/mypages/myWishs`),
 };
 
 export const userAPI = {};
+
+
+
+
+
+// imgUrlArray firstString
+// env 설정 예정
+export const imgFirstString = "https://davidsone.s3.ap-northeast-2.amazonaws.com/";

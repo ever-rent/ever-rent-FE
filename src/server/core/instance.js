@@ -2,18 +2,19 @@ import axios from "axios";
 
 export const base = axios.create({
   baseURL: "http://13.209.8.18",
+  // baseURL: "http://3.35.19.62:8080", // ㅎㅈ님
+  // baseURL: "http://davidpai.shop",
 });
 
 export const auth = axios.create({
-  // baseURL: "http://13.209.8.18/auth",
-
-  baseURL: "http://13.209.8.18",
-
+  baseURL: "http://13.209.8.18/auth",
   // baseURL: "http://davidpai.shop/auth",
 });
 
 export const profile = axios.create({
   baseURL: "http://13.209.8.18",
+  // baseURL: "http://3.35.19.62:8080", // ㅎㅈ님
+  // baseURL: "https://davidpai.shop",
 });
 
 auth.interceptors.request.use((config) => {

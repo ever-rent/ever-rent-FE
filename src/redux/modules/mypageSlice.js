@@ -133,6 +133,49 @@ export const postRent = createAsyncThunk(
   }
 );
 
+export const postLike = createAsyncThunk(
+  "POST_LIKE",
+  async (payload, thunkAPI) => {
+    // console.log("postLike 시작");
+    // const likeData = {};
+    try {
+      const { data } = await mypageAPI.postLike(payload);
+      // console.log("data", data);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (errer) {
+      return thunkAPI.rejectWithValue(errer);
+    }
+  }
+);
+
+export const getMyInfo = createAsyncThunk(
+  "GET_MY_INFO",
+  async (_, thunkAPI) => {
+    console.log("getMyInfo 시작");
+    try {
+      const { data } = await mypageAPI.getMyInfo();
+      console.log("getMyInfo 성공", data.data);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const getLikeList = createAsyncThunk(
+  "GET_LIKE_LIST",
+  async (_, thunkAPI) => {
+    console.log("getLikeList 시작");
+    try {
+      const { data } = await mypageAPI.getLikeList();
+      console.log("getLikeList 성공", data.data);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const mypageSlice = createSlice({
   name: "mypage",
   initialState: {
@@ -143,6 +186,9 @@ export const mypageSlice = createSlice({
     borrow: [],
     past: [],
     reservation: [],
+    myinfo: [],
+    like: [],
+    myLike: [],
   },
   reducers: {},
   extraReducers: {
@@ -164,6 +210,7 @@ export const mypageSlice = createSlice({
     // },
 
     /* Fulfilled */
+
     //빌려준 물건
     [getMyPageList.fulfilled]: (state, action) => {
       // console.log(action);
@@ -200,6 +247,17 @@ export const mypageSlice = createSlice({
       console.log("state", current(state));
       state.reservation.push(action.payload);
       // state.reservation = state.reservation.concat(action.payload);
+    },
+    [postLike.fulfilled]: (state, action) => {
+      // console.log("action", action);
+      // console.log("state", state);
+      state.like = action.payload;
+    },
+    [getMyInfo.fulfilled]: (state, action) => {
+      state.myinfo = action.payload;
+    },
+    [getLikeList.fulfilled]: (state, action) => {
+      state.myLike = action.payload;
     },
 
     // /* Rejected */
