@@ -10,8 +10,21 @@ export const MyPage = () => {
   console.log(like);
 
   return (
+    // <Layout>
+    //   <StyledGridBox>
+    //     <Profile like={like} setLike={setLike} />
+    //     {like ? (
+    //       <StyledLikeList>
+    //         <MyLikeList />
+    //       </StyledLikeList>
+    //     ) : (
+    //       <RentalBar />
+    //     )}
+    //   </StyledGridBox>
+    // </Layout>
+    //mobile
     <Layout>
-      <StyledGridBox>
+      <StyledFlexBox>
         <Profile like={like} setLike={setLike} />
         {like ? (
           <StyledLikeList>
@@ -20,24 +33,10 @@ export const MyPage = () => {
         ) : (
           <RentalBar />
         )}
-      </StyledGridBox>
+      </StyledFlexBox>
     </Layout>
   );
 };
-
-const StyledLikeList = styled.div`
-  grid-row: 1/4;
-  box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
-  animation: fadein 0.8s;
-  @keyframes fadein {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-`;
 
 const StyledGridBox = styled.div`
   /* border: 1px solid blue; */
@@ -54,5 +53,28 @@ const StyledGridBox = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
+  }
+`;
+
+const StyledFlexBox = styled.div`
+  border: 1px solid red;
+  display: flex;
+  margin: auto;
+  width: 480px;
+  height: 100%;
+  justify-content: space-between;
+  flex-direction: column;
+`;
+const StyledLikeList = styled.div`
+  grid-row: 1/4;
+  box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+  animation: fadein 0.8s;
+  @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 `;

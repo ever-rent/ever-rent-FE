@@ -26,7 +26,7 @@ export const Products = () => {
   const fetch = useCallback(async () => {
     try {
       const { data } = await axios.get(
-        `http://13.209.8.18/products?page=${page.current}`
+        `http://3.35.19.62:8080/products?page=${page.current}`
       );
       setProducts((prevPosts) => [...prevPosts, ...data.data]);
 
@@ -49,26 +49,24 @@ export const Products = () => {
   console.log(products);
 
   return (
-    <StyledProductsContainer>
-      <StyledProductsGrid>
-        {products?.map((product) => {
-          return <ProductsItem {...product} key={product.id} />;
-        })}
-      </StyledProductsGrid>
-      <div ref={ref} style={{ position: "absolute" }} />
-      {/* <div style={{position: "absolute" }} /> */}
-    </StyledProductsContainer>
-
-    // //mobile
-    // <StyledMobileContainer>
-    //   <StyledMobileProducts>
+    // <StyledProductsContainer>
+    //   <StyledProductsGrid>
     //     {products?.map((product) => {
     //       return <ProductsItem {...product} key={product.id} />;
     //     })}
-    //   </StyledMobileProducts>
+    //   </StyledProductsGrid>
     //   <div ref={ref} style={{ position: "absolute" }} />
     //   {/* <div style={{position: "absolute" }} /> */}
-    // </StyledMobileContainer>
+    // </StyledProductsContainer>
+
+    // //mobile
+    <StyledMobileContainer>
+      <StyledMobileProducts>
+        {products?.map((product) => {
+          return <ProductsItem {...product} key={product.id} />;
+        })}
+      </StyledMobileProducts>
+    </StyledMobileContainer>
   );
 };
 
@@ -91,10 +89,13 @@ const StyledProductsGrid = styled.div`
 `;
 
 const StyledMobileContainer = styled.div`
+  border: 1px solid red;
   max-width: 480px;
+  margin: auto;
 `;
 
 const StyledMobileProducts = styled.div`
+  border: 1px solid red;
   display: flex;
   flex-direction: column;
   margin-top: 30px;

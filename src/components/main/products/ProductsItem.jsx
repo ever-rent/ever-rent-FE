@@ -71,61 +71,8 @@ export const ProductsItem = ({
   // };
 
   return (
-    <StyledItemBox>
-      <StyledImgBox>
-        <StyledImg
-          onClick={() => {
-            navigate(`/productDetail/${id}`);
-          }}
-          src={imgUrlArray[0]}
-          alt="이미지 없음"
-        />
-      </StyledImgBox>
-      <StyledContentBox>
-        <StyledTitle>{productName}</StyledTitle>
-        <StyledCateId>{categoriNumber(cateId)}</StyledCateId>
-        <StyledTimeForToday> ∙ {createdAt}</StyledTimeForToday>
-        <StyledPayBox>
-          <StyledPay>{price}</StyledPay>
-          <StyledDay> / 일</StyledDay>
-        </StyledPayBox>
-
-        <StyledAddress>{address}</StyledAddress>
-        <StyledLikeAndChat>
-          <StyledLikeWrap>
-            {like ? (
-              <StyledLike
-                onClick={likeHandler}
-                src="https://img.icons8.com/ios-filled/50/47b5ff/like--v1.png"
-                alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
-              />
-            ) : (
-              <StyledLike
-                onClick={likeHandler}
-                src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
-                alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
-              />
-            )}
-            <span>찜 {likeCount}</span>
-          </StyledLikeWrap>
-
-          <StyledChatWrap>
-            <StyledChat
-              src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
-              alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
-            />
-            <span>채팅 </span>
-          </StyledChatWrap>
-          {/* <StyledChatWrap> */}
-          {/* <button onClick={reservationHandler}>예약 신청</button> */}
-          {/* </StyledChatWrap> */}
-        </StyledLikeAndChat>
-      </StyledContentBox>
-    </StyledItemBox>
-
-    // 모바일버전
-    // <StyledMobileItemBox>
-    //   <StyledMobileImgBox>
+    // <StyledItemBox>
+    //   <StyledImgBox>
     //     <StyledImg
     //       onClick={() => {
     //         navigate(`/productDetail/${id}`);
@@ -133,7 +80,7 @@ export const ProductsItem = ({
     //       src={imgUrlArray[0]}
     //       alt="이미지 없음"
     //     />
-    //   </StyledMobileImgBox>
+    //   </StyledImgBox>
     //   <StyledContentBox>
     //     <StyledTitle>{productName}</StyledTitle>
     //     <StyledCateId>{categoriNumber(cateId)}</StyledCateId>
@@ -169,12 +116,65 @@ export const ProductsItem = ({
     //         />
     //         <span>채팅 </span>
     //       </StyledChatWrap>
-    // {/* <StyledChatWrap> */}
-    // {/* <button onClick={reservationHandler}>예약 신청</button> */}
-    // {/* </StyledChatWrap> */}
+    //       {/* <StyledChatWrap> */}
+    //       {/* <button onClick={reservationHandler}>예약 신청</button> */}
+    //       {/* </StyledChatWrap> */}
     //     </StyledLikeAndChat>
     //   </StyledContentBox>
-    // </StyledMobileItemBox>
+    // </StyledItemBox>
+
+    // 모바일버전
+    <StyledMobileItemBox>
+      <StyledMobileImgBox>
+        <StyledImg
+          onClick={() => {
+            navigate(`/productDetail/${id}`);
+          }}
+          src={imgUrlArray[0]}
+          alt="이미지 없음"
+        />
+      </StyledMobileImgBox>
+      <StyledContentBox>
+        <StyledTitle>{productName}</StyledTitle>
+        <StyledCateId>{categoriNumber(cateId)}</StyledCateId>
+        <StyledTimeForToday> ∙ {createdAt}</StyledTimeForToday>
+        <StyledPayBox>
+          <StyledPay>{price}</StyledPay>
+          <StyledDay> / 일</StyledDay>
+        </StyledPayBox>
+
+        <StyledAddress>{address}</StyledAddress>
+        <StyledLikeAndChat>
+          <StyledLikeWrap>
+            {like ? (
+              <StyledLike
+                onClick={likeHandler}
+                src="https://img.icons8.com/ios-filled/50/47b5ff/like--v1.png"
+                alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
+              />
+            ) : (
+              <StyledLike
+                onClick={likeHandler}
+                src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
+                alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
+              />
+            )}
+            <span>찜 {likeCount}</span>
+          </StyledLikeWrap>
+
+          <StyledChatWrap>
+            <StyledChat
+              src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
+              alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
+            />
+            <span>채팅 </span>
+          </StyledChatWrap>
+          {/* <StyledChatWrap>
+            <button onClick={reservationHandler}>예약 신청</button>
+          </StyledChatWrap> */}
+        </StyledLikeAndChat>
+      </StyledContentBox>
+    </StyledMobileItemBox>
   );
 };
 
@@ -195,14 +195,14 @@ const StyledItemBox = styled.div`
 `;
 
 const StyledMobileItemBox = styled.div`
-  /* border: 1px solid red; */
-  max-width: 480px;
+  border-bottom: 1px solid #c7c6c6bc;
+  /* max-width: 480px; */
   padding: 10px 10px 0 10px;
   position: relative;
-  border-radius: 10px;
-  background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee6e 100%);
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  margin: auto;
+  /* border-radius: 5px; */
+  background-image: linear-gradient(120deg, #ffffff 0%, #ebedee6e 100%);
+  /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+  /* margin: auto; */
   display: flex;
   background-color: white;
   padding: 0;
@@ -225,10 +225,7 @@ const StyledMobileImgBox = styled.div`
   padding: 2px;
   width: 200px;
   height: 140px;
-  margin-bottom: 3px;
-  @media only screen and (max-width: 480px) {
-    margin: 0 10px;
-  }
+  margin: 0 3px 3px 0;
 `;
 
 const StyledImg = styled.img`
