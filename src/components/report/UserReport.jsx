@@ -8,22 +8,20 @@ export const UserReport = ({ targetNicename }) => {
   const [showModal, setShowModal] = useState(false);
 
   const [sendReason, setSendReason] = useState("");
-  const [etcDisabled, setEtcDisabled] = useState(true);
+  const [etcDisabled, setEtcDisabled] = useState(false);
 
-  const etcCheck = ()=>{
-    etcDisabled===true?setEtcDisabled(false):setEtcDisabled(true)
-    
-  }
+  const etcCheck = () => {
+    etcDisabled === true ? setEtcDisabled(false) : setEtcDisabled(true);
+  };
 
   const sendReport = (e) => {
     e.preventDefault();
     console.log(sendReason);
     Swal.fire({
-        title: '해당 유저의 신고 접수가 완료되었습니다.',
-        icon: 'success',
-      })
+      title: "해당 유저의 신고 접수가 완료되었습니다.",
+      icon: "success",
+    });
   };
-
 
   return (
     <>
@@ -46,7 +44,7 @@ export const UserReport = ({ targetNicename }) => {
               <StyledRadioLabel htmlFor="report1">
                 <div>
                   <input
-                  onClick={etcCheck}
+                    onClick={etcCheck}
                     onChange={(e) => {
                       console.log(setSendReason(e.target.value));
                     }}
@@ -61,7 +59,7 @@ export const UserReport = ({ targetNicename }) => {
               <StyledRadioLabel htmlFor="report2">
                 <div>
                   <input
-                  onClick={etcCheck}
+                    onClick={etcCheck}
                     onChange={(e) => {
                       console.log(setSendReason(e.target.value));
                     }}
@@ -76,7 +74,7 @@ export const UserReport = ({ targetNicename }) => {
               <StyledRadioLabel htmlFor="report3">
                 <div>
                   <input
-                  onClick={etcCheck}
+                    onClick={etcCheck}
                     onChange={(e) => {
                       console.log(setSendReason(e.target.value));
                     }}
@@ -91,7 +89,7 @@ export const UserReport = ({ targetNicename }) => {
               <StyledRadioLabel htmlFor="report4">
                 <div>
                   <input
-                  onClick={etcCheck}
+                    onClick={etcCheck}
                     onChange={(e) => {
                       console.log(setSendReason(e.target.value));
                     }}
@@ -103,7 +101,7 @@ export const UserReport = ({ targetNicename }) => {
                 </div>
                 <span>부적절한 프로필 사진</span>
               </StyledRadioLabel>
-              <StyledRadioLabel htmlFor="report5" >
+              <StyledRadioLabel htmlFor="report5">
                 <div>
                   <input
                     onChange={etcCheck}
@@ -114,7 +112,7 @@ export const UserReport = ({ targetNicename }) => {
                   />
                 </div>
                 <span>기타</span>
-                <input type="text" disabled={etcDisabled}/>
+                <input type="text" disabled={etcDisabled} />
               </StyledRadioLabel>
             </StyledReportForm>
             <StyledButtonWrap>
@@ -125,7 +123,13 @@ export const UserReport = ({ targetNicename }) => {
               >
                 신고하기
               </StyledReportButton>
-              <StyledCancelButton onClick={()=>{setShowModal(false)}}>취소</StyledCancelButton>
+              <StyledCancelButton
+                onClick={() => {
+                  setShowModal(false);
+                }}
+              >
+                취소
+              </StyledCancelButton>
             </StyledButtonWrap>
           </StyledModalContainer>
         </StyledReportModal>
@@ -135,13 +139,13 @@ export const UserReport = ({ targetNicename }) => {
 };
 
 const StyledReportAlert = styled.span`
-    cursor: pointer;
+  cursor: pointer;
 `;
 
 const StyledReportTitle = styled.div`
   margin-top: 30px;
-  font-size:20px;
-  font-weight:bold;
+  font-size: 20px;
+  font-weight: bold;
 `;
 
 const StyledReportModal = styled.div`
@@ -177,7 +181,6 @@ const StyledReportForm = styled.form`
   margin-top: 50px;
 
   & {
-
   }
 `;
 
@@ -187,14 +190,11 @@ const StyledRadioLabel = styled.label`
   margin-top: 15px;
 `;
 
-
-
-
 const StyledButtonWrap = styled.div`
-    display: flex;
-    justify-content: space-around;
-    margin-top:40px;
-`
+  display: flex;
+  justify-content: space-around;
+  margin-top: 40px;
+`;
 
 const StyledReportButton = styled.button`
   width: 100px;
@@ -208,7 +208,7 @@ const StyledReportButton = styled.button`
   cursor: pointer;
   transition: 0.4s;
 
-  &:hover{
+  &:hover {
     background-color: rgb(255, 0, 0);
   }
 `;

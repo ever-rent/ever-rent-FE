@@ -2,13 +2,18 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 
 import { Layout } from "../components/layout/Layout";
-import { deleteProducts, getProducts } from "../redux/modules/productSlice";
+import {
+  deleteProducts,
+  getProductsDetail,
+} from "../redux/modules/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { useLocation } from "react-router";
 
 import { categoriNumber } from "../util/categoryNumber";
 import { timeToToday } from "../util/timeToToday";
 import { LocationModal } from "../components/location/LocationModal";
+import { imgFirstString } from "../server/api";
 
 import Swal from "sweetalert2";
 
@@ -50,15 +55,15 @@ export const ProductDetail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const param = useParams();
+  const {state} = useLocation();
+  console.log(param);
+  console.log(state)
+  
+  // const detailData = useSelector((state) => state.products.products);
+  const detailData = state
+  console.log(detailData);
 
-  useEffect(() => {
-    dispatch(getProducts());
-  }, []);
-
-  const data = useSelector((state) => state.products.products);
-  const detailData = data?.filter(
-    (element) => element.id === Number(param.id)
-  )[0];
+  const firstUrl = imgFirstString;
 
   const defaultImg =
     "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png";
@@ -117,7 +122,7 @@ export const ProductDetail = () => {
           >
             <StyledEditButton
               onClick={() => {
-                navigate(`/editProduct/${param.id}`);
+                navigate(`/editProduct/${param.id}`,{state:state});
               }}
             >
               글 수정
@@ -130,16 +135,18 @@ export const ProductDetail = () => {
             <StyledProductImagetWrap>
               <SyltedProductMainImage
                 src={
-                  detailData?.imgUrl !== null
-                    ? detailData?.imgUrl
+                  detailData?.imgUrlArray[0] !== null
+                    ? `${firstUrl}${detailData?.imgUrlArray[0]}`
                     : "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png"
                 }
                 alt="이미지 미리보기"
               />
               <StyledProductSubImageWrap>
-                <StyledProductSubImage src={defaultImg} />
-                <StyledProductSubImage src={defaultImg} />
-                <StyledProductSubImage src={defaultImg} />
+                {detailData?.imgUrlArray.map((item, index) => {
+                  if (index !== 0) {
+                    return <StyledProductSubImage src={`${firstUrl}${item}`} />;
+                  }
+                })}
               </StyledProductSubImageWrap>
             </StyledProductImagetWrap>
           </StyledPostHeadWrap>
@@ -159,7 +166,7 @@ export const ProductDetail = () => {
                   alt="https://icons8.com/icon/WbyzmoN1bnxR/map-marker Map Marker icon by https://icons8.com Icons8"
                 />
                 <StyledMapImgAlt>위치</StyledMapImgAlt>
-                <LocationModal showModal={showModal} closeModal={closeModal} />
+                <LocationModal showModal={showModal} closeModal={closeModal} location={detailData?.location} />
               </StyledImagesWrap>
             </StyledPostSubItems>
             <StyledPostHr />
@@ -169,7 +176,7 @@ export const ProductDetail = () => {
                 <StyledUserNickname>
                   {detailData?.memberName}
                 </StyledUserNickname>
-                <StyledUserLocation>지역</StyledUserLocation>
+                <StyledUserLocation>{detailData?.location}</StyledUserLocation>
               </StyledUserSubInfo>
             </StyledUserInfo>
             <StyledPostHr />
@@ -199,14 +206,6 @@ const StyledDetailProductContainer = styled.div`
   margin-top: 100px;
   display: flex;
   justify-content: center;
-
-  & {
-    @media all and (max-width: 767px) {
-      margin-top: 80px;
-    }
-    @media all and (max-width: 480px) {
-    }
-  }
 `;
 
 const StyledDetailProductWrap = styled.div`
@@ -217,21 +216,6 @@ const StyledDetailProductWrap = styled.div`
   padding: 40px;
   box-shadow: 1px 1px 5px 1px rgb(71, 181, 255);
   border-radius: 10px;
-
-  & {
-    @media all and (max-width: 767px) {
-      display: flex;
-      flex-direction: column;
-      width: 60vw;
-
-      padding: 40px;
-      box-shadow: 1px 1px 5px 1px rgb(71, 181, 255);
-      border-radius: 10px;
-    }
-    @media all and (max-width: 480px) {
-      width: 100vw;
-    }
-  }
 `;
 
 const StyledEditableOption = styled.div`
@@ -276,6 +260,7 @@ const StyledPostHeadWrap = styled.div`
 `;
 
 const StyledProductImagetWrap = styled.div`
+  margin-top:40px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -285,29 +270,21 @@ const StyledProductImagetWrap = styled.div`
 const SyltedProductMainImage = styled.img`
   margin-top: 20px;
 
-  width: 450px;
-  height: 450px;
-
-  & {
-    @media all and (max-width: 767px) {
-    }
-    @media all and (max-width: 480px) {
-      width: 80vw;
-    }
-  }
+  width: 400px;
+  height: 400px;
+  cursor: pointer;
 `;
 
-const StyledProductSubImageWrap = styled.div``;
+const StyledProductSubImageWrap = styled.div`
+margin-top:30px;
+  display: grid;
+  grid-template-columns: 80px 80px 80px 80px 80px;
+  grid-gap:20px;
+`;
 const StyledProductSubImage = styled.img`
-  width: 150px;
-  height: 150px;
-  & {
-    @media all and (max-width: 767px) {
-    }
-    @media all and (max-width: 480px) {
-      width: 25vw;
-    }
-  }
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
 `;
 
 const StyledPostBodyWrap = styled.section`

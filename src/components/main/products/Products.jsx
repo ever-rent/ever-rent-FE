@@ -26,7 +26,7 @@ export const Products = () => {
   const fetch = useCallback(async () => {
     try {
       const { data } = await axios.get(
-        `http://13.209.8.18/products?page=${page.current}`
+        `http://3.35.19.62:8080/products?page=${page.current}`
       );
       setProducts((prevPosts) => [...prevPosts, ...data.data]);
 

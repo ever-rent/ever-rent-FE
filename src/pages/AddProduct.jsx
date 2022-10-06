@@ -128,11 +128,12 @@ export const AddProduct = () => {
     cateId: categoryInput,
     price: priceInput,
     location: tradeLocation,
+    // mapLocation:mapLocation,
     rentStart: startDateInput,
     rentEnd: endDateInput,
   };
 
-  const addProductPost =  () => {
+  const addProductPost = () => {
     if (title === "" || description === "") {
       alert("제목/내용을 적어주세요!");
     } else {
@@ -147,17 +148,17 @@ export const AddProduct = () => {
       }).then(async (result) => {
         if (result.value) {
           let formData = new FormData();
-            formData.append(
-              "requestDto",
-              new Blob([JSON.stringify(sendData)], { type: "application/json" })
+          formData.append(
+            "requestDto",
+            new Blob([JSON.stringify(sendData)], { type: "application/json" })
           );
 
           for (let i = 0; i < sendImage.length; i++) {
-            console.log(sendImage[i])
+            console.log(sendImage[i]);
             formData.append("multipartFiles", sendImage[i]);
           }
 
-          dispatch(addProducts(formData))
+          dispatch(addProducts(formData));
         }
       });
     }
@@ -351,14 +352,6 @@ const StyledAddProductContainer = styled.div`
   margin-top: 100px;
   display: flex;
   justify-content: center;
-
-  & {
-    @media all and (max-width: 767px) {
-      margin-top: 80px;
-    }
-    @media all and (max-width: 480px) {
-    }
-  }
 `;
 
 const StyledAddProductForm = styled.form`
@@ -369,21 +362,6 @@ const StyledAddProductForm = styled.form`
   padding: 40px;
   box-shadow: 1px 1px 5px 1px rgb(71, 181, 255);
   border-radius: 10px;
-
-  & {
-    @media all and (max-width: 767px) {
-      display: flex;
-      flex-direction: column;
-      width: 60vw;
-
-      padding: 40px;
-      box-shadow: 1px 1px 5px 1px rgb(71, 181, 255);
-      border-radius: 10px;
-    }
-    @media all and (max-width: 480px) {
-      width: 100vw;
-    }
-  }
 `;
 
 const StyledPostingHeadWrap = styled.div`
@@ -391,30 +369,12 @@ const StyledPostingHeadWrap = styled.div`
   justify-content: space-around;
 
   height: 250px;
-
-  & {
-    @media all and (max-width: 767px) {
-      flex-direction: column;
-      align-items: center;
-      height: 70vh;
-    }
-    @media all and (max-width: 480px) {
-    }
-  }
 `;
 
 const StyledFormImageInputWrap = styled.div`
   display: flex;
   flex-direction: column;
   height: 200px;
-
-  & {
-    @media all and (max-width: 767px) {
-      height: 50vh;
-    }
-    @media all and (max-width: 480px) {
-    }
-  }
 `;
 
 const StyledImageLabel = styled.label`
@@ -474,14 +434,6 @@ const StyledOptionInputs = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-
-  & {
-    @media all and (max-width: 767px) {
-      margin-top: 30px;
-    }
-    @media all and (max-width: 480px) {
-    }
-  }
 `;
 
 const StyledCategorySelector = styled.select`
@@ -567,14 +519,6 @@ const StyledPostLocation = styled.input`
 
   &:focus {
     outline: 1px solid rgb(71, 181, 255);
-  }
-
-  & {
-    @media all and (max-width: 767px) {
-      margin-top: 50px;
-    }
-    @media all and (max-width: 480px) {
-    }
   }
 `;
 const StyledLocationBtn = styled.button`

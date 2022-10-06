@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import { timeToToday } from "../../../util/timeToToday";
 import { categoriNumber } from "../../../util/categoryNumber";
@@ -10,13 +10,17 @@ import { getProducts } from "../../../redux/modules/productSlice";
 export const ProductsItem = ({
   id,
   imgUrl,
+  imgUrlArray,
   productName,
+  memberName,
   price,
   address,
   Like,
   chat,
+  content,
   writeAt,
   cateId,
+  location,
   rentEnd,
   rentStart,
 }) => {
@@ -55,12 +59,30 @@ export const ProductsItem = ({
     dispatch(postRent(productData));
   };
 
+  const sendData = {
+    id: id,
+    imgUrl: imgUrl,
+    imgUrlArray: imgUrlArray,
+    productName: productName,
+    memberName:memberName,
+    price: price,
+    address: address,
+    Like: Like,
+    chat: chat,
+    content:content,
+    writeAt: writeAt,
+    cateId: cateId,
+    location: location,
+    rentEnd: rentEnd,
+    rentStart: rentStart,
+  };
+
   return (
     <StyledItemBox>
       <StyledImgBox>
         <StyledImg
           onClick={() => {
-            navigate(`/productDetail/${id}`);
+            navigate(`/productDetail/${id}`, { state: sendData });
           }}
           src={imgUrl}
           alt="이미지 없음"
@@ -117,13 +139,6 @@ const StyledItemBox = styled.div`
   border-radius: 10px;
   background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee6e 100%);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  @media only screen and (max-width: 480px) {
-    display: flex;
-    background-color: white;
-    padding: 0;
-    align-items: center;
-    /* width: 100%; */
-  }
 `;
 
 const StyledImgBox = styled.div`
@@ -132,9 +147,6 @@ const StyledImgBox = styled.div`
   width: 200px;
   height: 140px;
   margin-bottom: 3px;
-  @media only screen and (max-width: 480px) {
-    margin: 0 10px;
-  }
 `;
 
 const StyledImg = styled.img`
@@ -144,10 +156,6 @@ const StyledImg = styled.img`
   height: 100%;
   /* object-fit: cover; */
   cursor: pointer;
-  @media only screen and (max-width: 480px) {
-    width: 100px;
-    height: 100px;
-  }
 `;
 
 const StyledContentBox = styled.div`
