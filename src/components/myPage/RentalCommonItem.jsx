@@ -7,8 +7,10 @@ import Swal from "sweetalert2";
 export const RentalCommonItem = ({ item, index }) => {
   const dispatch = useDispatch();
   const { id, imgUrl, productName, content, memberName } = item;
-  console.log("RentalCommonItem", item);
-  console.log("button", index);
+  //TODO: 현재 데이터 id가 null 뿐이어서 확인 불가. 
+  // console.log("RentalCommonItem >> id", String(id))
+  // console.log(typeof String(id))
+  // console.log("RentalCommonItem", item);
 
   const acceptHandler = () => {
     Swal.fire({
@@ -19,7 +21,7 @@ export const RentalCommonItem = ({ item, index }) => {
       cancelButtonColor: "rgb(184, 221, 247)",
       confirmButtonText: "수락",
       cancelButtonText: "취소",
-    }).then(dispatch(acceptOrder(id)));
+    }).then(dispatch(acceptOrder(String(id))));
   };
 
   const acceptAndReject = (index) => {

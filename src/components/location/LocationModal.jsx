@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 
-export const LocationModal = ({ showModal, closeModal }) => {
+export const LocationModal = ({ showModal, closeModal ,location}) => {
   // 거래장소 props 추가 예정
   const { kakao } = window;
 
@@ -10,11 +10,15 @@ export const LocationModal = ({ showModal, closeModal }) => {
   const [markers, setMarkers] = useState([]);
   const [map, setMap] = useState();
 
+  const [locationID, setLocationID] = useState("");
+
   useEffect(() => {
     if (!map) return;
     const places = new kakao.maps.services.Places();
 
-    places.keywordSearch("부일로 상동", (data, status, _pagination) => {
+
+    // 검색결과 데이터의 첫 번째 위치 정보 호출
+    places.keywordSearch(location, (data, status, _pagination) => {
       if (status === kakao.maps.services.Status.OK) {
         const bounds = new kakao.maps.LatLngBounds();
         let markers = [];
@@ -32,8 +36,25 @@ export const LocationModal = ({ showModal, closeModal }) => {
 
         map.setBounds(bounds);
       }
+
+      // 법정주소 필터
+      getAddr(data[0].y,data[0].x)
     });
   }, [map]);
+
+  function getAddr(lat,lng){
+    let geocoder = new kakao.maps.services.Geocoder();
+
+    let coord = new kakao.maps.LatLng(lat, lng);
+    let callback = function(result, status) {
+        if (status === kakao.maps.services.Status.OK) {
+            console.log(result);
+            setLocationID(result)
+        }
+    };
+
+    geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+}
 
   return (
     <div onClick={(e) => e.stopPropagation()}>
@@ -66,7 +87,6 @@ export const LocationModal = ({ showModal, closeModal }) => {
           </StyledModalContainer>
         </StyledBackground>
       ) : null}
-      ;
     </div>
   );
 };

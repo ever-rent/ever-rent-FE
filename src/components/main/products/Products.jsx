@@ -1,27 +1,67 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import styled from "styled-components";
 import { ProductsItem } from "./ProductsItem";
-import { getProducts } from "../../../redux/modules/productSlice";
-import { useDispatch, useSelector } from "react-redux";
+
+import { useInView } from "react-intersection-observer";
+import { base } from "../../../server/core/instance";
 
 export const Products = () => {
-  const dispatch = useDispatch();
-  const products = useSelector((state) => state.products.products);
-  const productList = products;
-  // console.log(productList);
 
+  // infi scroll
+  // 현재 state 데이터 , 다음페이지 이동 여부,
+  // 현재페이지, observer 뷰 교차 여부
+  const [products, setProducts] = useState([]);
+  const [hasNextPage, setHasNextPage] = useState(true);
+  const page = useRef(1);
+  const [ref, inView] = useInView(true);
+
+  // ref로 지정한 포스트카드 최하단으로 스크롤 교차 시
+  // 다음 구간 데이터 패치
+  const fetch = useCallback(async () => {
+    try {
+      const { data } = await base.get(`/products?page=${page.current}`);
+      setProducts((prevPosts) => [...prevPosts, ...data.data]);
+
+      setHasNextPage(data.data.length === 12);
+      if (data.data.length) {
+        page.current += 1;
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
+
+  // 뷰포트 교차 시 데이터 패치
   useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch]);
+    console.log(inView, hasNextPage);
+    if (inView && hasNextPage) {
+      fetch();
+    }
+  }, [fetch, hasNextPage, inView]);
+
+  console.log(products);
 
   return (
     <StyledProductsContainer>
       <StyledProductsGrid>
-        {productList?.map((product) => {
+        {products?.map((product) => {
           return <ProductsItem {...product} key={product.id} />;
         })}
       </StyledProductsGrid>
+      <div ref={ref} style={{ position: "absolute" }} />
     </StyledProductsContainer>
+
+    // //mobile
+    // <StyledMobileContainer>
+    //   <StyledMobileProducts>
+    //     {products?.map((product) => {
+    //       return <ProductsItem {...product} key={product.id} />;
+    //     })}
+    //   </StyledMobileProducts>
+    //   <div ref={ref} style={{ position: "absolute" }} />
+    //   {/* <div style={{position: "absolute" }} /> */}
+    // </StyledMobileContainer>
   );
 };
 
@@ -35,10 +75,20 @@ const StyledProductsGrid = styled.div`
   grid-template-columns: repeat(4, 226px);
   margin-top: 30px;
   gap: 50px 40px;
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 767px) {
     display: flex;
     flex-direction: column;
     gap: 0;
     width: 100%;
   }
+`;
+
+const StyledMobileContainer = styled.div`
+  max-width: 480px;
+`;
+
+const StyledMobileProducts = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
 `;

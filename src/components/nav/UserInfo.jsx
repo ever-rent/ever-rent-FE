@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "react-query";
+import { mypageAPI } from "../../server/api";
 
 export const UserInfo = () => {
   const navigate = useNavigate();
+
+  const {data} = useQuery("getUserInfo", ()=> mypageAPI.getMyPageList
+  )
 
   return (
     <StyledContainer>

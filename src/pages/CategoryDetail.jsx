@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,16 +6,22 @@ import { Layout } from "../components/layout/Layout";
 import { getCategory } from "../redux/modules/productSlice";
 import { DetailItem } from "../components/detail/DetailItem";
 
+import {useInView} from "react-intersection-observer";
+import { base } from "../server/core/instance"; // 리팩토링 예정
+import axios from "axios";
+
 export const CategoryDetail = () => {
   const { id } = useParams();
-  const dispatch = useDispatch();
-  const category = useSelector((state) => state.products.category);
-  const categoryItems = category?.data;
+  // const dispatch = useDispatch();
+  // const category = useSelector((state) => state.products.category);
+  // const categoryItems = category?.data;
   // console.log(categoryItems);
 
-  useEffect(() => {
-    dispatch(getCategory(id));
-  }, [dispatch, id]);
+  // useEffect(() => {
+  //   dispatch(getCategory(id));
+  // }, [dispatch, id]);
+
+
 
   const categoryList = [
     { value: "0", name: "카테고리를 선택하세요" },
@@ -62,9 +68,12 @@ export const CategoryDetail = () => {
 
   const categoryHandler = (e) => {
     e.preventDefault();
-    const categoryId = e.target.value;
-    dispatch(getCategory(categoryId));
+    // const categoryId = e.target.value;
+    // dispatch(getCategory(categoryId));
     // console.log(e.target.value);
+
+    // infi
+    setCategoryId(e.target.value)
   };
 
   const addressHandler = (e) => {
@@ -84,6 +93,47 @@ export const CategoryDetail = () => {
   // useEffect(() => {
   //   dispatch();
   // });
+  
+
+
+// infi scroll
+
+  // 카테고리 id 파라미터
+  const [categoryId, setCategoryId] = useState(id);
+
+  // 현재 state 데이터 , 다음페이지 이동 여부,
+  // 현재페이지, observer 뷰 교차 여부
+  const [categoryItems, setCategoryItems] = useState([]);
+  const [hasNextPage, setHasNextPage] = useState(true);
+  const page = useRef(1);
+  const [ref, inView] = useInView(true);
+
+  // 다음 구간 데이터 패치 함수
+  const fetch = useCallback(async () => {
+    try {
+      const { data } = await base.get(
+        `http://13.209.8.18/categories/${categoryId}?page=${page.current}`
+      );
+      setCategoryItems((prevPosts) => [...prevPosts, ...data.data]);
+      setHasNextPage(data.data.length === 12);
+      if (data.data.length) {
+        page.current += 1;
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
+
+  // 데이터 패치 처리
+  useEffect(() => {
+    console.log(inView, hasNextPage);
+    if (inView && hasNextPage) {
+      fetch();
+    }
+  }, [fetch, hasNextPage, inView]);
+
+  console.log(categoryItems);
 
   return (
     <Layout>
@@ -120,6 +170,8 @@ export const CategoryDetail = () => {
           })}
         </StyledDetailContainer>
       </StyledCategoryContainer>
+      <div ref={ref} style={{ position: "absolute" }} />
+      {/* <div style={{position: "absolute" }} /> */}
     </Layout>
   );
 };
