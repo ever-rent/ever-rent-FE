@@ -34,6 +34,7 @@ export const Join = () => {
 
   const handleJoin = async (data) => {
     return await axios.post("http://3.35.19.62:8080/signups", {
+    // return await axios.post("http://13.209.8.18/signups", {
       email: data.email,
       password: data.password,
       memberName: data.nickname,

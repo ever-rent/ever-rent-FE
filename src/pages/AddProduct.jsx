@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 
-import { Layout } from "../components/layout/Layout";
 import { useDispatch } from "react-redux";
-import { addProducts } from "../redux/modules/productSlice";
 import { useNavigate } from "react-router-dom";
 
+import { addProducts } from "../redux/modules/productSlice";
+import { Layout } from "../components/layout/Layout";
 import { LocationModal } from "../components/location/LocationModal";
 
 import imageCompression from "browser-image-compression";
@@ -15,12 +15,15 @@ export const AddProduct = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // 임시 기본이미지
   const defaultImg =
     "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png";
 
+  // 미리보기 , 보낼 데이터 구분
   const [imgView, setImgView] = useState([]);
   const [sendImage, setSendImage] = useState([]);
 
+  // 이미지 개수 유효성 검사
   const imageLengthCheck = (e) => {
     if (imgView.length === 10) {
       e.preventDefault();
@@ -31,6 +34,8 @@ export const AddProduct = () => {
     }
   };
 
+
+  // 업로드 압축 & state 데이터로 저장
   const fileChange = (fileBlob) => {
     console.log(fileBlob);
     actionImgCompress(fileBlob[fileBlob.length - 1]);
@@ -44,6 +49,7 @@ export const AddProduct = () => {
     }
   };
 
+  // 이미지 압축
   const actionImgCompress = async (fileSrc) => {
     console.log("압축 시작");
     console.log("압축전", fileSrc);
@@ -59,10 +65,10 @@ export const AddProduct = () => {
       const reader = new FileReader();
       reader.readAsDataURL(compressedFile);
       reader.onloadend = () => {
-        // 변환 완료!
+        // 변환 완료
         const base64data = reader.result;
 
-        // formData 만드는 함수
+        // formData 생성
         sendfileCompression(base64data);
       };
     } catch (error) {
@@ -70,6 +76,7 @@ export const AddProduct = () => {
     }
   };
 
+  // formData 생성함수 (Blob으로 보낼 이미지 state에 추가)
   const sendfileCompression = (listItem) => {
     console.log(listItem);
     const byteString = atob(listItem.split(",")[1]);
@@ -88,6 +95,8 @@ export const AddProduct = () => {
     setSendImage([...sendImage].concat(file));
   };
 
+
+  // 사진 클릭 시 미리보기/보낼 이미지에서 제거
   const initImage = (item, indexNum) => {
     setImgView(imgView.filter((element) => element !== item));
     setSendImage(
@@ -111,6 +120,8 @@ export const AddProduct = () => {
 
   const [disabled, setDisabled] = useState(true);
 
+
+  // 게시글 작성 유효성 검사 추가 예정(이미지/주소 등)
   const checkPost = () => {
     if (title.length > 3 && description.length > 0) {
       setDisabled(false);
@@ -122,17 +133,21 @@ export const AddProduct = () => {
     checkPost();
   });
 
+  // formData
   let sendData = {
     productName: title,
     content: description,
     cateId: categoryInput,
     price: priceInput,
     location: tradeLocation,
+    // mapLocation:mapLocation,
     rentStart: startDateInput,
     rentEnd: endDateInput,
   };
 
-  const addProductPost =  () => {
+
+  // 유효성 검사 추가 예정(이미지/주소 등) 
+  const addProductPost = () => {
     if (title === "" || description === "") {
       alert("제목/내용을 적어주세요!");
     } else {
@@ -147,22 +162,23 @@ export const AddProduct = () => {
       }).then(async (result) => {
         if (result.value) {
           let formData = new FormData();
-            formData.append(
-              "requestDto",
-              new Blob([JSON.stringify(sendData)], { type: "application/json" })
+          formData.append(
+            "requestDto",
+            new Blob([JSON.stringify(sendData)], { type: "application/json" })
           );
 
           for (let i = 0; i < sendImage.length; i++) {
-            console.log(sendImage[i])
+            console.log(sendImage[i]);
             formData.append("multipartFiles", sendImage[i]);
           }
 
-          dispatch(addProducts(formData))
+          dispatch(addProducts(formData));
         }
       });
     }
   };
 
+  // 위치정보 카카오 맵 모달창
   const [showModal, setShowModal] = useState(false);
   const closeModal = () => {
     setShowModal(false);
@@ -351,14 +367,6 @@ const StyledAddProductContainer = styled.div`
   margin-top: 100px;
   display: flex;
   justify-content: center;
-
-  & {
-    @media all and (max-width: 767px) {
-      margin-top: 80px;
-    }
-    @media all and (max-width: 480px) {
-    }
-  }
 `;
 
 const StyledAddProductForm = styled.form`
@@ -369,21 +377,6 @@ const StyledAddProductForm = styled.form`
   padding: 40px;
   box-shadow: 1px 1px 5px 1px rgb(71, 181, 255);
   border-radius: 10px;
-
-  & {
-    @media all and (max-width: 767px) {
-      display: flex;
-      flex-direction: column;
-      width: 60vw;
-
-      padding: 40px;
-      box-shadow: 1px 1px 5px 1px rgb(71, 181, 255);
-      border-radius: 10px;
-    }
-    @media all and (max-width: 480px) {
-      width: 100vw;
-    }
-  }
 `;
 
 const StyledPostingHeadWrap = styled.div`
@@ -391,30 +384,12 @@ const StyledPostingHeadWrap = styled.div`
   justify-content: space-around;
 
   height: 250px;
-
-  & {
-    @media all and (max-width: 767px) {
-      flex-direction: column;
-      align-items: center;
-      height: 70vh;
-    }
-    @media all and (max-width: 480px) {
-    }
-  }
 `;
 
 const StyledFormImageInputWrap = styled.div`
   display: flex;
   flex-direction: column;
   height: 200px;
-
-  & {
-    @media all and (max-width: 767px) {
-      height: 50vh;
-    }
-    @media all and (max-width: 480px) {
-    }
-  }
 `;
 
 const StyledImageLabel = styled.label`
@@ -474,14 +449,6 @@ const StyledOptionInputs = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-
-  & {
-    @media all and (max-width: 767px) {
-      margin-top: 30px;
-    }
-    @media all and (max-width: 480px) {
-    }
-  }
 `;
 
 const StyledCategorySelector = styled.select`
@@ -567,14 +534,6 @@ const StyledPostLocation = styled.input`
 
   &:focus {
     outline: 1px solid rgb(71, 181, 255);
-  }
-
-  & {
-    @media all and (max-width: 767px) {
-      margin-top: 50px;
-    }
-    @media all and (max-width: 480px) {
-    }
   }
 `;
 const StyledLocationBtn = styled.button`

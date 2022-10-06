@@ -9,17 +9,22 @@ import { postLike } from "../../../redux/modules/mypageSlice";
 
 export const ProductsItem = ({
   id,
+  imgUrl,
   imgUrlArray,
   productName,
+  memberName,
   price,
   address,
+  Like,
+  chat,
+  content,
   writeAt,
   cateId,
+  location,
   rentEnd,
   rentStart,
 }) => {
-  // console.log("id", typeof String(id));
-  // console.log("id", String(id));
+  // 찜목록용 dispatch
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -70,70 +75,36 @@ export const ProductsItem = ({
   //   dispatch(postRent(productData));
   // };
 
+  // navigate state 전달 데이터
+  const sendData = {
+    id: id,
+    imgUrl: imgUrl,
+    imgUrlArray: imgUrlArray,
+    productName: productName,
+    memberName: memberName,
+    price: price,
+    address: address,
+    Like: Like,
+    chat: chat,
+    content: content,
+    writeAt: writeAt,
+    cateId: cateId,
+    location: location,
+    rentEnd: rentEnd,
+    rentStart: rentStart,
+  };
+
   return (
-    // <StyledItemBox>
-    //   <StyledImgBox>
-    //     <StyledImg
-    //       onClick={() => {
-    //         navigate(`/productDetail/${id}`);
-    //       }}
-    //       src={imgUrlArray[0]}
-    //       alt="이미지 없음"
-    //     />
-    //   </StyledImgBox>
-    //   <StyledContentBox>
-    //     <StyledTitle>{productName}</StyledTitle>
-    //     <StyledCateId>{categoriNumber(cateId)}</StyledCateId>
-    //     <StyledTimeForToday> ∙ {createdAt}</StyledTimeForToday>
-    //     <StyledPayBox>
-    //       <StyledPay>{price}</StyledPay>
-    //       <StyledDay> / 일</StyledDay>
-    //     </StyledPayBox>
-
-    //     <StyledAddress>{address}</StyledAddress>
-    //     <StyledLikeAndChat>
-    //       <StyledLikeWrap>
-    //         {like ? (
-    //           <StyledLike
-    //             onClick={likeHandler}
-    //             src="https://img.icons8.com/ios-filled/50/47b5ff/like--v1.png"
-    //             alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
-    //           />
-    //         ) : (
-    //           <StyledLike
-    //             onClick={likeHandler}
-    //             src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
-    //             alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
-    //           />
-    //         )}
-    //         <span>찜 {likeCount}</span>
-    //       </StyledLikeWrap>
-
-    //       <StyledChatWrap>
-    //         <StyledChat
-    //           src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
-    //           alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
-    //         />
-    //         <span>채팅 </span>
-    //       </StyledChatWrap>
-    //       {/* <StyledChatWrap> */}
-    //       {/* <button onClick={reservationHandler}>예약 신청</button> */}
-    //       {/* </StyledChatWrap> */}
-    //     </StyledLikeAndChat>
-    //   </StyledContentBox>
-    // </StyledItemBox>
-
-    // 모바일버전
-    <StyledMobileItemBox>
-      <StyledMobileImgBox>
+    <StyledItemBox>
+      <StyledImgBox>
         <StyledImg
           onClick={() => {
-            navigate(`/productDetail/${id}`);
+            navigate(`/productDetail/${id}`, { state: sendData });
           }}
           src={imgUrlArray[0]}
           alt="이미지 없음"
         />
-      </StyledMobileImgBox>
+      </StyledImgBox>
       <StyledContentBox>
         <StyledTitle>{productName}</StyledTitle>
         <StyledCateId>{categoriNumber(cateId)}</StyledCateId>
@@ -169,12 +140,65 @@ export const ProductsItem = ({
             />
             <span>채팅 </span>
           </StyledChatWrap>
-          {/* <StyledChatWrap>
-            <button onClick={reservationHandler}>예약 신청</button>
-          </StyledChatWrap> */}
+          {/* <StyledChatWrap> */}
+          {/* <button onClick={reservationHandler}>예약 신청</button> */}
+          {/* </StyledChatWrap> */}
         </StyledLikeAndChat>
       </StyledContentBox>
-    </StyledMobileItemBox>
+    </StyledItemBox>
+
+    // 모바일버전
+    // <StyledMobileItemBox>
+    //   <StyledMobileImgBox>
+    //     <StyledImg
+    //       onClick={() => {
+    //         navigate(`/productDetail/${id}`);
+    //       }}
+    //       src={imgUrlArray[0]}
+    //       alt="이미지 없음"
+    //     />
+    //   </StyledMobileImgBox>
+    //   <StyledContentBox>
+    //     <StyledTitle>{productName}</StyledTitle>
+    //     <StyledCateId>{categoriNumber(cateId)}</StyledCateId>
+    //     <StyledTimeForToday> ∙ {createdAt}</StyledTimeForToday>
+    //     <StyledPayBox>
+    //       <StyledPay>{price}</StyledPay>
+    //       <StyledDay> / 일</StyledDay>
+    //     </StyledPayBox>
+
+    //     <StyledAddress>{address}</StyledAddress>
+    //     <StyledLikeAndChat>
+    //       <StyledLikeWrap>
+    //         {like ? (
+    //           <StyledLike
+    //             onClick={likeHandler}
+    //             src="https://img.icons8.com/ios-filled/50/47b5ff/like--v1.png"
+    //             alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
+    //           />
+    //         ) : (
+    //           <StyledLike
+    //             onClick={likeHandler}
+    //             src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
+    //             alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
+    //           />
+    //         )}
+    //         <span>찜 {likeCount}</span>
+    //       </StyledLikeWrap>
+
+    //       <StyledChatWrap>
+    //         <StyledChat
+    //           src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
+    //           alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
+    //         />
+    //         <span>채팅 </span>
+    //       </StyledChatWrap>
+    //       {/* <StyledChatWrap>
+    //         <button onClick={reservationHandler}>예약 신청</button>
+    //       </StyledChatWrap> */}
+    //     </StyledLikeAndChat>
+    //   </StyledContentBox>
+    // </StyledMobileItemBox>
   );
 };
 
@@ -185,13 +209,6 @@ const StyledItemBox = styled.div`
   border-radius: 10px;
   background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee6e 100%);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  @media only screen and (max-width: 480px) {
-    display: flex;
-    background-color: white;
-    padding: 0;
-    align-items: center;
-    /* width: 100%; */
-  }
 `;
 
 const StyledMobileItemBox = styled.div`
@@ -215,9 +232,6 @@ const StyledImgBox = styled.div`
   width: 200px;
   height: 140px;
   margin-bottom: 3px;
-  @media only screen and (max-width: 480px) {
-    margin: 0 10px;
-  }
 `;
 
 const StyledMobileImgBox = styled.div`
@@ -235,10 +249,6 @@ const StyledImg = styled.img`
   height: 100%;
   /* object-fit: cover; */
   cursor: pointer;
-  @media only screen and (max-width: 480px) {
-    width: 100px;
-    height: 100px;
-  }
 `;
 
 const StyledContentBox = styled.div`

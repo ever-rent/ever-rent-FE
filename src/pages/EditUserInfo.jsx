@@ -8,16 +8,13 @@ export const EditUserInfo = () => {
   const defaultImg =
     "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png";
 
-  const [userNickName, setuserNickName] = useState("닉네임");
+  // 회원정보 state
+  const [userNickName, setUserNickName] = useState("닉네임");
+  const [userLocation, setUserLocation] = useState("주소1");
+  const [userSubLocation, setUserSubLocation] = useState("주소2");
   const [categoryInput, setCategoryInput] = useState("");
 
-  const userNickChange = (value) => {
-    setuserNickName(value);
-  };
-  const categoryChange = (value) => {
-    setCategoryInput(value);
-  };
-
+  // 이미지 처리
   const [imgView, setImgView] = useState();
   const [sendImage, setSendImage] = useState();
 
@@ -34,6 +31,8 @@ export const EditUserInfo = () => {
     });
   };
 
+
+  // 회원탈퇴
   const deleteUser = () => {
     Swal.fire({
       title: "정말 탈퇴하실건가요?",
@@ -51,6 +50,14 @@ export const EditUserInfo = () => {
     });
   };
 
+
+  // formData
+  let sendData = {
+
+  }
+
+
+  // 회원정보 수정
   const editMyInfo = () => {
     Swal.fire({
       title: "변경 내용을 저장할까요?",
@@ -62,7 +69,7 @@ export const EditUserInfo = () => {
       cancelButtonText: "취소",
     }).then((result) => {
       if (result.value) {
-        // 탈퇴처리 예정
+        // 회원정보 수정 예정
       }
     });
   };
@@ -93,7 +100,7 @@ export const EditUserInfo = () => {
             <StyledInfoName
               defaultValue={userNickName}
               onClick={(e) => {
-                userNickChange(e.target.value);
+                setUserNickName(e.target.value);
               }}
             >
               닉네임
@@ -106,11 +113,43 @@ export const EditUserInfo = () => {
             </StyledInfoSubWrap>
           </StyledInfoWrap>
           <StyledInfoWrap>
+            <StyledInfoName
+              defaultValue={userLocation}
+              onClick={(e) => {
+                setUserLocation(e.target.value);
+              }}
+            >
+              주소1
+            </StyledInfoName>
+            <StyledInfoSubWrap>
+              <StyledEditInput type="text" />
+              <StyledEditSubName>
+                * 주 거래지역을 입력해주세요!
+              </StyledEditSubName>
+            </StyledInfoSubWrap>
+          </StyledInfoWrap>
+          <StyledInfoWrap>
+            <StyledInfoName
+              defaultValue={userSubLocation}
+              onClick={(e) => {
+                setUserSubLocation(e.target.value);
+              }}
+            >
+              주소2
+            </StyledInfoName>
+            <StyledInfoSubWrap>
+              <StyledEditInput type="text" />
+              <StyledEditSubName>
+                * 주 거래지역을 입력해주세요!
+              </StyledEditSubName>
+            </StyledInfoSubWrap>
+          </StyledInfoWrap>
+          <StyledInfoWrap>
             <StyledInfoName>관심카테고리</StyledInfoName>
             <StyledCategorySelector
               defaultValue="noneData"
               onChange={(e) => {
-                categoryChange(e.target.value);
+                setCategoryInput(e.target.value);
               }}
             >
               <StyledCategoryOptions value="noneData" disabled>
