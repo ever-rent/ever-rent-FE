@@ -15,9 +15,7 @@ export const Join = () => {
   const [mailAuth, setMailAuth] = useState(false);
 
   const handleEmailAuth = async (email) => {
-    return await axios.post(
-      `http://13.209.8.18/mailConfirms?email=${email}`
-    );
+    return await axios.post(`http://13.209.8.18/mailConfirms?email=${email}`);
   };
 
   const emailAuth = useMutation(handleEmailAuth, {

@@ -25,4 +25,10 @@ const StyledGridBox = styled.div`
   grid-template-columns: 250px 700px;
   justify-content: space-between;
   /* align-items: center; */
+  @media only screen and (max-width: 767px) {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
 `;

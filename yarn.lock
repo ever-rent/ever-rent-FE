@@ -3012,6 +3012,13 @@ broadcast-channel@^3.4.1:
     rimraf "3.0.2"
     unload "2.2.0"
 
+browser-image-compression@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/browser-image-compression/-/browser-image-compression-2.0.0.tgz#f421381a76d474d4da7dcd82810daf595b09bef6"
+  integrity sha512-kBlkZo13yOOfcmrPW0M0K/UdZPogIQj2gRvXIM3FktAnfW6VRq9aY2RI+F6O0x6DMj1Xm+WLGgWcFK8Fu/ddnw==
+  dependencies:
+    uzip "0.20201231.0"
+
 browser-process-hrtime@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/browser-process-hrtime/-/browser-process-hrtime-1.0.0.tgz#3c9b4b7d782c8121e56f10106d84c0d0ffc94626"
@@ -5259,6 +5266,11 @@ ignore@^5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.2.0.tgz#6d3bac8fa7fe0d45d9f9be7bac2fc279577e345a"
   integrity sha512-CmxgYGiEPCLhfLnpPp1MoRmifwEIOgjcHXxOBjv7mY96c+eWScsOP9c112ZyLdWHi0FxHjI+4uVhKYp/gcdRmQ==
+
+image-compression@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/image-compression/-/image-compression-0.0.6.tgz#4aac3d7d08c49c20eae1ba31acb9f81ac6eaf13f"
+  integrity sha512-QLPBdGiLs7f4Lbp2tc/kn2TvPqHM0ubfWfVTaj3h6ShiGnFp8FYe8h+Iw9aCXN9XVeN+CONIwqGR4T9tRfxvsA==
 
 immer@^9.0.7:
   version "9.0.15"
@@ -8026,6 +8038,11 @@ react-icons@^4.4.0:
   resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.4.0.tgz#a13a8a20c254854e1ec9aecef28a95cdf24ef703"
   integrity sha512-fSbvHeVYo/B5/L4VhB7sBA1i2tS8MkT0Hb9t2H1AVPkwGfVHLJCqyr2Py9dKMxsyM63Eng1GkdZfbWj+Fmv8Rg==
 
+react-intersection-observer@^9.4.0:
+  version "9.4.0"
+  resolved "https://registry.yarnpkg.com/react-intersection-observer/-/react-intersection-observer-9.4.0.tgz#f6b6e616e625f9bf255857c5cba9dbf7b1825ec7"
+  integrity sha512-v0403CmomOVlzhqFXlzOxg0ziLcVq8mfbP0AwAcEQWgZmR2OulOT79Ikznw4UlB3N+jlUYqLMe4SDHUOyp0t2A==
+
 react-is@^16.13.1, react-is@^16.7.0:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
@@ -9507,6 +9524,11 @@ uuid@^8.3.2:
   version "8.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
+
+uzip@0.20201231.0:
+  version "0.20201231.0"
+  resolved "https://registry.yarnpkg.com/uzip/-/uzip-0.20201231.0.tgz#9e64b065b9a8ebf26eb7583fe8e77e1d9a15ed14"
+  integrity sha512-OZeJfZP+R0z9D6TmBgLq2LHzSSptGMGDGigGiEe0pr8UBe/7fdflgHlHBNDASTXB5jnFuxHpNaJywSg8YFeGng==
 
 v8-to-istanbul@^8.1.0:
   version "8.1.1"
