@@ -173,6 +173,7 @@ export const AddProduct = () => {
           }
 
           dispatch(addProducts(formData));
+          navigate("/")
         }
       });
     }
