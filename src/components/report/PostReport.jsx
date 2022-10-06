@@ -4,32 +4,45 @@ import Swal from "sweetalert2";
 import { useState } from "react";
 
 export const PostReport = ({ prodictId }) => {
-  // 닉네임으로 props 전달 예정
-  const [showModal, setShowModal] = useState(true);
+  // userId (PK) 로 props 전달 예정
+  const [showModal, setShowModal] = useState(false);
 
-  const [sendReason, setSendReason] = useState("");
+  const [sendReason, setSendReason] = useState("도배/광고성 게시글");
   const [etcDisabled, setEtcDisabled] = useState(true);
 
-  const etcCheck = ()=>{
-    etcDisabled===true?setEtcDisabled(false):setEtcDisabled(true)
-    
+
+  const [isLogedIn, setIsLogedIn] = useState(false);
+
+  const loginCheck = () => {
+    isLogedIn !== true
+      ? Swal.fire({
+          title: "로그인 먼저 해주세요!",
+          icon: "warning",
+        })
+      : setShowModal(true);
+  };
+  const etcCheck = () => {
+    setEtcDisabled(true);
+  };
+  const etcOn = ()=>{
+    setEtcDisabled(false);
   }
+  
 
   const sendReport = (e) => {
     e.preventDefault();
     console.log(sendReason);
     Swal.fire({
-        title: '해당 게시글의 신고 접수가 완료되었습니다.',
-        icon: 'success',
-      })
+      title: "해당 유저의 신고 접수가 완료되었습니다.",
+      icon: "success",
+    });
   };
-
 
   return (
     <>
       <StyledReportAlert
         onClick={() => {
-          setShowModal(true);
+          loginCheck();
         }}
       >
         신고하기
@@ -46,37 +59,38 @@ export const PostReport = ({ prodictId }) => {
               <StyledRadioLabel htmlFor="report1">
                 <div>
                   <input
-                  onClick={etcCheck}
+                    onClick={etcCheck}
                     onChange={(e) => {
                       console.log(setSendReason(e.target.value));
                     }}
                     id="report1"
                     type="radio"
                     name="report"
-                    value="선정적/폭력적인 게시글"
+                    value="도배/광고성 게시글"
+                    defaultChecked={true}
                   />
                 </div>
-                <span>선정적/폭력적인 게시글</span>
+                <span>도배/광고성 게시글</span>
               </StyledRadioLabel>
               <StyledRadioLabel htmlFor="report2">
                 <div>
                   <input
-                  onClick={etcCheck}
+                    onClick={etcCheck}
                     onChange={(e) => {
                       console.log(setSendReason(e.target.value));
                     }}
                     id="report2"
                     type="radio"
                     name="report"
-                    value="부적절한 사진"
+                    value="폭력적, 선정적 게시글"
                   />
                 </div>
-                <span>부적절한 사진</span>
+                <span>폭력적, 선정적 게시글</span>
               </StyledRadioLabel>
               <StyledRadioLabel htmlFor="report3">
                 <div>
                   <input
-                  onClick={etcCheck}
+                    onClick={etcCheck}
                     onChange={(e) => {
                       console.log(setSendReason(e.target.value));
                     }}
@@ -91,41 +105,51 @@ export const PostReport = ({ prodictId }) => {
               <StyledRadioLabel htmlFor="report4">
                 <div>
                   <input
-                  onClick={etcCheck}
+                    onClick={etcCheck}
                     onChange={(e) => {
                       console.log(setSendReason(e.target.value));
                     }}
                     id="report4"
                     type="radio"
                     name="report"
-                    value="부적절한 프로필 사진"
+                    value="렌탈거래와 무관한 게시글"
                   />
                 </div>
-                <span>반인륜적인 게시글</span>
+                <span>렌탈거래와 무관한 게시글</span>
               </StyledRadioLabel>
-              <StyledRadioLabel htmlFor="report5" >
+              <StyledRadioLabel htmlFor="report5">
                 <div>
                   <input
-                    onChange={etcCheck}
+                    onClick={etcOn}
                     id="report5"
                     type="radio"
                     name="report"
-                    value="기타"
+                    // value="기타"
                   />
                 </div>
                 <span>기타</span>
-                <input type="text" disabled={etcDisabled}/>
+                <input onChange={(e)=>{
+                      setSendReason(e.target.value)
+                    }} type="text" disabled={etcDisabled} />
               </StyledRadioLabel>
             </StyledReportForm>
             <StyledButtonWrap>
               <StyledReportButton
+              type="button"
                 onClick={(e) => {
                   sendReport(e);
                 }}
               >
                 신고하기
               </StyledReportButton>
-              <StyledCancelButton onClick={()=>{setShowModal(false)}}>취소</StyledCancelButton>
+              <StyledCancelButton
+                type="button"
+                onClick={() => {
+                  setShowModal(false);
+                }}
+              >
+                취소
+              </StyledCancelButton>
             </StyledButtonWrap>
           </StyledModalContainer>
         </StyledReportModal>
@@ -135,13 +159,13 @@ export const PostReport = ({ prodictId }) => {
 };
 
 const StyledReportAlert = styled.span`
-    cursor: pointer;
+  cursor: pointer;
 `;
 
 const StyledReportTitle = styled.div`
   margin-top: 30px;
-  font-size:20px;
-  font-weight:bold;
+  font-size: 20px;
+  font-weight: bold;
 `;
 
 const StyledReportModal = styled.div`
@@ -177,7 +201,6 @@ const StyledReportForm = styled.form`
   margin-top: 50px;
 
   & {
-
   }
 `;
 
@@ -187,14 +210,11 @@ const StyledRadioLabel = styled.label`
   margin-top: 15px;
 `;
 
-
-
-
 const StyledButtonWrap = styled.div`
-    display: flex;
-    justify-content: space-around;
-    margin-top:40px;
-`
+  display: flex;
+  justify-content: space-around;
+  margin-top: 40px;
+`;
 
 const StyledReportButton = styled.button`
   width: 100px;
@@ -208,7 +228,7 @@ const StyledReportButton = styled.button`
   cursor: pointer;
   transition: 0.4s;
 
-  &:hover{
+  &:hover {
     background-color: rgb(255, 0, 0);
   }
 `;

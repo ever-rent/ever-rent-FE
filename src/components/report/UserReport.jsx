@@ -1,17 +1,35 @@
 import styled from "styled-components";
 import Swal from "sweetalert2";
 
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 export const UserReport = ({ targetNicename }) => {
-  // 닉네임으로 props 전달 예정
+  // userId (PK) 로 props 전달 예정
   const [showModal, setShowModal] = useState(false);
 
-  const [sendReason, setSendReason] = useState("");
-  const [etcDisabled, setEtcDisabled] = useState(false);
+  const [sendReason, setSendReason] = useState("타인에게 불쾌감을 주는 닉네임");
+  const [etcDisabled, setEtcDisabled] = useState(true);
 
+  const [isLogedIn, setIsLogedIn] = useState(false);
+
+  // 로그인 처리 예정
+  // useEffect(() => {
+    
+  // }, []);
+
+  const loginCheck = () => {
+    isLogedIn !== true
+      ? Swal.fire({
+          title: "로그인 먼저 해주세요!",
+          icon: "warning",
+        })
+      : setShowModal(true);
+  };
   const etcCheck = () => {
-    etcDisabled === true ? setEtcDisabled(false) : setEtcDisabled(true);
+    setEtcDisabled(true);
+  };
+  const etcOn = () => {
+    setEtcDisabled(false);
   };
 
   const sendReport = (e) => {
@@ -27,7 +45,7 @@ export const UserReport = ({ targetNicename }) => {
     <>
       <StyledReportAlert
         onClick={() => {
-          setShowModal(true);
+          loginCheck();
         }}
       >
         신고하기
@@ -52,6 +70,7 @@ export const UserReport = ({ targetNicename }) => {
                     type="radio"
                     name="report"
                     value="타인에게 불쾌감을 주는 닉네임"
+                    defaultChecked={true}
                   />
                 </div>
                 <span>타인에게 불쾌감을 주는 닉네임</span>
@@ -104,19 +123,26 @@ export const UserReport = ({ targetNicename }) => {
               <StyledRadioLabel htmlFor="report5">
                 <div>
                   <input
-                    onChange={etcCheck}
+                    onClick={etcOn}
                     id="report5"
                     type="radio"
                     name="report"
-                    value="기타"
+                    // value="기타"
                   />
                 </div>
                 <span>기타</span>
-                <input type="text" disabled={etcDisabled} />
+                <input
+                  onChange={(e) => {
+                    setSendReason(e.target.value);
+                  }}
+                  type="text"
+                  disabled={etcDisabled}
+                />
               </StyledRadioLabel>
             </StyledReportForm>
             <StyledButtonWrap>
               <StyledReportButton
+                type="button"
                 onClick={(e) => {
                   sendReport(e);
                 }}
@@ -124,6 +150,7 @@ export const UserReport = ({ targetNicename }) => {
                 신고하기
               </StyledReportButton>
               <StyledCancelButton
+                type="button"
                 onClick={() => {
                   setShowModal(false);
                 }}

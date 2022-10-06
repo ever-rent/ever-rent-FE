@@ -2,11 +2,8 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 
 import { Layout } from "../components/layout/Layout";
-import {
-  deleteProducts,
-  getProductsDetail,
-} from "../redux/modules/productSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { deleteProducts } from "../redux/modules/productSlice";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useLocation } from "react-router";
 
@@ -55,12 +52,12 @@ export const ProductDetail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const param = useParams();
-  const {state} = useLocation();
+  const { state } = useLocation();
   console.log(param);
-  console.log(state)
-  
+  console.log(state);
+
   // const detailData = useSelector((state) => state.products.products);
-  const detailData = state
+  const detailData = state;
   console.log(detailData);
 
   const firstUrl = imgFirstString;
@@ -111,10 +108,11 @@ export const ProductDetail = () => {
 
   return (
     <Layout>
-      <UserReport />
-      <PostReport />
+      
       <StyledDetailProductContainer>
         <StyledDetailProductWrap>
+
+          <PostReport />
           <StyledEditableOption
             style={
               editabled === false ? { display: "none" } : { display: "flex" }
@@ -122,7 +120,7 @@ export const ProductDetail = () => {
           >
             <StyledEditButton
               onClick={() => {
-                navigate(`/editProduct/${param.id}`,{state:state});
+                navigate(`/editProduct/${param.id}`, { state: state });
               }}
             >
               글 수정
@@ -166,11 +164,17 @@ export const ProductDetail = () => {
                   alt="https://icons8.com/icon/WbyzmoN1bnxR/map-marker Map Marker icon by https://icons8.com Icons8"
                 />
                 <StyledMapImgAlt>위치</StyledMapImgAlt>
-                <LocationModal showModal={showModal} closeModal={closeModal} location={detailData?.location} />
+                <LocationModal
+                  showModal={showModal}
+                  closeModal={closeModal}
+                  location={detailData?.location}
+                />
               </StyledImagesWrap>
             </StyledPostSubItems>
             <StyledPostHr />
             <StyledUserInfo>
+              <StyledInfoWrap>
+
               <StyledUserimage src={userImage} />
               <StyledUserSubInfo>
                 <StyledUserNickname>
@@ -178,6 +182,11 @@ export const ProductDetail = () => {
                 </StyledUserNickname>
                 <StyledUserLocation>{detailData?.location}</StyledUserLocation>
               </StyledUserSubInfo>
+              </StyledInfoWrap>
+              <div>
+
+              <UserReport />
+              </div>
             </StyledUserInfo>
             <StyledPostHr />
             <StyledPostMain>
@@ -260,7 +269,7 @@ const StyledPostHeadWrap = styled.div`
 `;
 
 const StyledProductImagetWrap = styled.div`
-  margin-top:40px;
+  margin-top: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -276,10 +285,10 @@ const SyltedProductMainImage = styled.img`
 `;
 
 const StyledProductSubImageWrap = styled.div`
-margin-top:30px;
+  margin-top: 30px;
   display: grid;
   grid-template-columns: 80px 80px 80px 80px 80px;
-  grid-gap:20px;
+  grid-gap: 20px;
 `;
 const StyledProductSubImage = styled.img`
   width: 80px;
@@ -343,11 +352,18 @@ const StyledPostHr = styled.hr`
 const StyledUserInfo = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
 `;
+
+const StyledInfoWrap = styled.div`
+  display: flex;
+  
+`
 
 const StyledUserimage = styled.img`
   width: 50px;
   height: 50px;
+  cursor: pointer;
 `;
 
 const StyledUserSubInfo = styled.div``;
