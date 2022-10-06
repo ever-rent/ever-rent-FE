@@ -7,6 +7,7 @@ import { getCategory } from "../redux/modules/productSlice";
 import { DetailItem } from "../components/detail/DetailItem";
 
 import {useInView} from "react-intersection-observer";
+import { base } from "../server/core/instance"; // 리팩토링 예정
 import axios from "axios";
 
 export const CategoryDetail = () => {
@@ -97,16 +98,20 @@ export const CategoryDetail = () => {
 
 // infi scroll
 
+  // 카테고리 id 파라미터
   const [categoryId, setCategoryId] = useState(id);
 
+  // 현재 state 데이터 , 다음페이지 이동 여부,
+  // 현재페이지, observer 뷰 교차 여부
   const [categoryItems, setCategoryItems] = useState([]);
   const [hasNextPage, setHasNextPage] = useState(true);
   const page = useRef(1);
   const [ref, inView] = useInView(true);
 
+  // 다음 구간 데이터 패치 함수
   const fetch = useCallback(async () => {
     try {
-      const { data } = await axios.get(
+      const { data } = await base.get(
         `http://13.209.8.18/categories/${categoryId}?page=${page.current}`
       );
       setCategoryItems((prevPosts) => [...prevPosts, ...data.data]);
@@ -119,6 +124,8 @@ export const CategoryDetail = () => {
     }
   }, []);
 
+
+  // 데이터 패치 처리
   useEffect(() => {
     console.log(inView, hasNextPage);
     if (inView && hasNextPage) {

@@ -112,7 +112,7 @@ export const RentalStatus = () => {
     <div>
       <StyledisStatusDetail>
         {tabArray.map((item) => {
-          return <StyledBar key={item.key}>{item.tab}</StyledBar>;
+          return <div key={item.key}>{item.tab}</div>;
         })}
         {CommonList(tabIndex)}
       </StyledisStatusDetail>
@@ -121,22 +121,23 @@ export const RentalStatus = () => {
 };
 
 const StyledTab = styled.div`
-  min-width: max-content;
-  margin: 0 5vw;
-  /* padding: 0 1rem; */
+  /* min-width: max-content; */
+  /* margin: 0 5vw; */
+  /* padding: 0 15px; */
 `;
 
 const StyledisStatusDetail = styled.div`
   /* border: 1px solid red; */
   display: flex;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  width: 630px;
+  max-width: max-content;
   height: 45px;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   margin: 10px 0;
-  padding: 0 15px;
+  padding: 0 20px 0 80px;
   border-radius: 5px;
+  gap: 60px;
   cursor: pointer;
   .select {
     font-weight: bold;
