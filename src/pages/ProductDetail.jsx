@@ -2,19 +2,22 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 
 import { Layout } from "../components/layout/Layout";
-import { deleteProducts, getProducts } from "../redux/modules/productSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { deleteProducts } from "../redux/modules/productSlice";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { useLocation } from "react-router";
 
 import { categoriNumber } from "../util/categoryNumber";
 import { timeToToday } from "../util/timeToToday";
 import { LocationModal } from "../components/location/LocationModal";
+import { imgFirstString } from "../server/api";
 
 import Swal from "sweetalert2";
 
 import { UserReport } from "../components/report/UserReport";
-import axios from "axios";
+import { PostReport } from "../components/report/PostReport";
 
+// liked 컴포넌트
 const FavoritIconButton = () => {
   const [liked, setLiked] = useState(false);
 
@@ -45,28 +48,30 @@ const FavoritIconButton = () => {
   }
 };
 
+// 게시글 상세 페이지 컴포넌트
 export const ProductDetail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const param = useParams();
+  const { state } = useLocation();
 
-  useEffect(() => {
-    dispatch(getProducts());
-  }, []);
+  const detailData = state;
+  console.log(detailData);
 
-  const data = useSelector((state) => state.products.products);
-  const detailData = data?.filter(
-    (element) => element.id === Number(param.id)
-  )[0];
+  const firstUrl = imgFirstString;
 
-  const defaultImg =
-    "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png";
+  // const defaultImg =
+  //   "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png";
+
+  // 유저 프로필 없을 시 기본이미지
   const defaultUserImg =
     "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNF5TD%2FbtrMyfbzuN7%2FJZiKO75eVNPNAGHIPtrAnK%2Fimg.png";
 
   const [writeAt, setWriteAt] = useState("");
   const [createdAt, setCreatedAt] = useState("");
 
+  // 타임스탬프용 useEffect
+  // (timeToToday.js 사용 시 처리 시간 맞춤)
   useEffect(() => {
     let timeStatus = detailData?.writeAt;
     timeStatus !== undefined ? setWriteAt(timeStatus) : (timeStatus = "");
@@ -76,6 +81,7 @@ export const ProductDetail = () => {
   const [editabled, setEditabled] = useState(true);
   const [userImage, setUserImage] = useState(defaultUserImg);
 
+  // 게시글 삭제
   const deletePost = () => {
     Swal.fire({
       title: "정말 삭제하실건가요?",
@@ -95,6 +101,7 @@ export const ProductDetail = () => {
     });
   };
 
+  // 카카오 맵 모달
   const [showModal, setShowModal] = useState(false);
   const openModal = () => {
     setShowModal(true);
@@ -103,11 +110,11 @@ export const ProductDetail = () => {
     setShowModal(false);
   };
 
-
   return (
     <Layout>
       <StyledDetailProductContainer>
         <StyledDetailProductWrap>
+          <PostReport />
           <StyledEditableOption
             style={
               editabled === false ? { display: "none" } : { display: "flex" }
@@ -115,7 +122,7 @@ export const ProductDetail = () => {
           >
             <StyledEditButton
               onClick={() => {
-                navigate(`/editProduct/${param.id}`);
+                navigate(`/editProduct/${param.id}`, { state: state });
               }}
             >
               글 수정
@@ -128,16 +135,18 @@ export const ProductDetail = () => {
             <StyledProductImagetWrap>
               <SyltedProductMainImage
                 src={
-                  detailData?.imgUrl !== null
-                    ? detailData?.imgUrl
+                  detailData?.imgUrlArray[0] !== null
+                    ? `${firstUrl}${detailData?.imgUrlArray[0]}`
                     : "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png"
                 }
                 alt="이미지 미리보기"
               />
               <StyledProductSubImageWrap>
-                <StyledProductSubImage src={defaultImg} />
-                <StyledProductSubImage src={defaultImg} />
-                <StyledProductSubImage src={defaultImg} />
+                {detailData?.imgUrlArray.map((item, index) => {
+                  if (index !== 0) {
+                    return <StyledProductSubImage src={`${firstUrl}${item}`} />;
+                  }
+                })}
               </StyledProductSubImageWrap>
             </StyledProductImagetWrap>
           </StyledPostHeadWrap>
@@ -157,18 +166,27 @@ export const ProductDetail = () => {
                   alt="https://icons8.com/icon/WbyzmoN1bnxR/map-marker Map Marker icon by https://icons8.com Icons8"
                 />
                 <StyledMapImgAlt>위치</StyledMapImgAlt>
-                <LocationModal showModal={showModal} closeModal={closeModal} />
+                <LocationModal
+                  showModal={showModal}
+                  closeModal={closeModal}
+                  location={detailData?.location}
+                />
               </StyledImagesWrap>
             </StyledPostSubItems>
             <StyledPostHr />
             <StyledUserInfo>
-              <StyledUserimage src={userImage} />
-              <StyledUserSubInfo>
-                <StyledUserNickname>
-                  {detailData?.memberName}
-                </StyledUserNickname>
-                <StyledUserLocation>지역</StyledUserLocation>
-              </StyledUserSubInfo>
+              <StyledInfoWrap>
+                <StyledUserimage src={userImage} />
+                <StyledUserSubInfo>
+                  <StyledUserNickname>
+                    {detailData?.memberName}
+                  </StyledUserNickname>
+                  <StyledUserLocation>
+                    {detailData?.location}
+                  </StyledUserLocation>
+                </StyledUserSubInfo>
+              </StyledInfoWrap>
+              <UserReport />
             </StyledUserInfo>
             <StyledPostHr />
             <StyledPostMain>
@@ -197,14 +215,6 @@ const StyledDetailProductContainer = styled.div`
   margin-top: 100px;
   display: flex;
   justify-content: center;
-
-  & {
-    @media all and (max-width: 767px) {
-      margin-top: 80px;
-    }
-    @media all and (max-width: 480px) {
-    }
-  }
 `;
 
 const StyledDetailProductWrap = styled.div`
@@ -215,21 +225,6 @@ const StyledDetailProductWrap = styled.div`
   padding: 40px;
   box-shadow: 1px 1px 5px 1px rgb(71, 181, 255);
   border-radius: 10px;
-
-  & {
-    @media all and (max-width: 767px) {
-      display: flex;
-      flex-direction: column;
-      width: 60vw;
-
-      padding: 40px;
-      box-shadow: 1px 1px 5px 1px rgb(71, 181, 255);
-      border-radius: 10px;
-    }
-    @media all and (max-width: 480px) {
-      width: 100vw;
-    }
-  }
 `;
 
 const StyledEditableOption = styled.div`
@@ -274,6 +269,7 @@ const StyledPostHeadWrap = styled.div`
 `;
 
 const StyledProductImagetWrap = styled.div`
+  margin-top: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -283,29 +279,21 @@ const StyledProductImagetWrap = styled.div`
 const SyltedProductMainImage = styled.img`
   margin-top: 20px;
 
-  width: 450px;
-  height: 450px;
-
-  & {
-    @media all and (max-width: 767px) {
-    }
-    @media all and (max-width: 480px) {
-      width: 80vw;
-    }
-  }
+  width: 400px;
+  height: 400px;
+  cursor: pointer;
 `;
 
-const StyledProductSubImageWrap = styled.div``;
+const StyledProductSubImageWrap = styled.div`
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: 80px 80px 80px 80px 80px;
+  grid-gap: 20px;
+`;
 const StyledProductSubImage = styled.img`
-  width: 150px;
-  height: 150px;
-  & {
-    @media all and (max-width: 767px) {
-    }
-    @media all and (max-width: 480px) {
-      width: 25vw;
-    }
-  }
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
 `;
 
 const StyledPostBodyWrap = styled.section`
@@ -364,11 +352,17 @@ const StyledPostHr = styled.hr`
 const StyledUserInfo = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
+`;
+
+const StyledInfoWrap = styled.div`
+  display: flex;
 `;
 
 const StyledUserimage = styled.img`
   width: 50px;
   height: 50px;
+  cursor: pointer;
 `;
 
 const StyledUserSubInfo = styled.div``;

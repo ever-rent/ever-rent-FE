@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
 import { productAPI } from "../../server/api";
 
 //Main page 상품 GET
@@ -117,6 +117,8 @@ export const productSlice = createSlice({
     },
 
     [getProductsDetail.fulfilled]: (state, action) => {
+      console.log(current(state))
+      console.log(action)
       state.products = action.payload.data;
     },
     [addProducts.fulfilled]: (state, action) => {

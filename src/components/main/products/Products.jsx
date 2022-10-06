@@ -1,33 +1,25 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import styled from "styled-components";
 import { ProductsItem } from "./ProductsItem";
-import { getProducts } from "../../../redux/modules/productSlice";
-import { useDispatch, useSelector } from "react-redux";
 
 import { useInView } from "react-intersection-observer";
-import axios from "axios";
+import { base } from "../../../server/core/instance";
 
 export const Products = () => {
-  // const dispatch = useDispatch();
-  // const products = useSelector((state) => state.products.products);
-  // const productList = products;
-  // console.log(productList);
-
-  // useEffect(() => {
-  //   dispatch(getProducts());
-  // }, [dispatch]);
 
   // infi scroll
+  // 현재 state 데이터 , 다음페이지 이동 여부,
+  // 현재페이지, observer 뷰 교차 여부
   const [products, setProducts] = useState([]);
   const [hasNextPage, setHasNextPage] = useState(true);
   const page = useRef(1);
   const [ref, inView] = useInView(true);
 
+  // ref로 지정한 포스트카드 최하단으로 스크롤 교차 시
+  // 다음 구간 데이터 패치
   const fetch = useCallback(async () => {
     try {
-      const { data } = await axios.get(
-        `http://13.209.8.18/products?page=${page.current}`
-      );
+      const { data } = await base.get(`/products?page=${page.current}`);
       setProducts((prevPosts) => [...prevPosts, ...data.data]);
 
       setHasNextPage(data.data.length === 12);
@@ -39,6 +31,8 @@ export const Products = () => {
     }
   }, []);
 
+
+  // 뷰포트 교차 시 데이터 패치
   useEffect(() => {
     console.log(inView, hasNextPage);
     if (inView && hasNextPage) {
@@ -56,7 +50,6 @@ export const Products = () => {
         })}
       </StyledProductsGrid>
       <div ref={ref} style={{ position: "absolute" }} />
-      {/* <div style={{position: "absolute" }} /> */}
     </StyledProductsContainer>
 
     // //mobile

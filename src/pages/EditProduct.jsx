@@ -5,8 +5,10 @@ import { Layout } from "../components/layout/Layout";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProducts } from "../redux/modules/productSlice";
 import { useNavigate, useParams } from "react-router-dom";
+import { useLocation } from "react-router";
 
 import { LocationModal } from "../components/location/LocationModal";
+import { imgFirstString } from "../server/api";
 
 import imageCompression from "browser-image-compression";
 import Swal from "sweetalert2";
@@ -15,14 +17,39 @@ export const EditProduct = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const param = useParams();
+  const { state } = useLocation();
+  const firstUrl = imgFirstString;
 
   // useSelector 처리 예정
-
+  // const editData = useSelector((state)=>state.products.products)
+  // console.log(editData)
+  const editData = state;
   const defaultImg =
     "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png";
 
   const [imgView, setImgView] = useState([]);
   const [sendImage, setSendImage] = useState([]);
+
+  console.log(editData);
+
+  // imgUrl to Blob err 처리 예정
+  // const convertURLtoFile = (url) => {
+  //   const response = fetch(url);
+  //   const data = response.blob();
+  //   const ext = url.split(".")[1]; // url 구조에 맞게 수정할 것
+  //   const filename = url.split("/")[4];
+  //   const metadata = { type: `image/${ext}` };
+  //   let imgBlob = new File([data], !filename, metadata);
+  //   console.log(imgBlob)
+  //   setImgView([...setImgView].concat(imgBlob))
+  //   setSendImage([...sendImage].concat(imgBlob))
+  // };
+
+  // useEffect(() => {
+  //   for(let i = 0;i<editData.imgUrlArray.length;i++){
+  //     convertURLtoFile(`${firstUrl}${editData.imgUrlArray[i]}`)
+  //   }
+  // }, []);
 
   const imageLengthCheck = (e) => {
     if (imgView.length === 10) {
@@ -130,7 +157,7 @@ export const EditProduct = () => {
     cateId: categoryInput,
     price: priceInput,
     rentStart: startDateInput,
-    location : tradeLocation,
+    location: tradeLocation,
     rentEnd: endDateInput,
   };
   // productId: param.id,
@@ -156,10 +183,10 @@ export const EditProduct = () => {
           );
 
           for (let i = 0; i < sendImage.length; i++) {
-            console.log(sendImage[i])
+            console.log(sendImage[i]);
             formData.append("multipartFiles", sendImage[i]);
           }
-          
+
           dispatch(updateProducts([formData, { productId: param.id }]));
         }
       });
@@ -243,7 +270,7 @@ export const EditProduct = () => {
             </StyledImageSource>
             <StyledOptionInputs>
               <StyledCategorySelector
-                defaultValue="noneData"
+                defaultValue={editData.cateId}
                 onChange={(e) => {
                   setCategoryInput(e.target.value);
                 }}
@@ -273,6 +300,7 @@ export const EditProduct = () => {
                   id="itemPrice"
                   type="number"
                   placeholder="가격"
+                  defaultValue={editData.price}
                   maxlength="8"
                   onChange={(e) => {
                     setPriceInput(e.target.value);
@@ -285,6 +313,7 @@ export const EditProduct = () => {
                 <StyledStartLabel htmlFor="">렌탈시작일 : </StyledStartLabel>
                 <StyledDateInput
                   type="date"
+                  defaultValue={editData.rentStart}
                   onChange={(e) => {
                     setStartDateInput(e.target.value);
                   }}
@@ -294,6 +323,7 @@ export const EditProduct = () => {
                 <StyledEndLabel htmlFor="">렌탈마감일 : </StyledEndLabel>
                 <StyledDateInput
                   type="date"
+                  defaultValue={editData.rentEnd}
                   onChange={(e) => {
                     setEndDateInput(e.target.value);
                   }}
@@ -305,6 +335,7 @@ export const EditProduct = () => {
           <StyledPostLocation
             type="text"
             placeholder="거래 장소를 적어주세요!"
+            defaultValue={editData.location}
             onChange={(e) => {
               setTradeLocation(e.target.value);
             }}
@@ -329,6 +360,7 @@ export const EditProduct = () => {
           <StyledPostTitle
             type="text"
             placeholder="제목은 4글자 이상 적어주세요!"
+            defaultValue={editData.productName}
             onChange={(e) => {
               setTitle(e.target.value);
             }}
@@ -338,6 +370,7 @@ export const EditProduct = () => {
             cols="30"
             rows="10"
             placeholder="내용을 입력해주세요!"
+            defaultValue={editData.content}
             maxLength={500}
             onChange={(e) => {
               setDescription(e.target.value);
@@ -370,14 +403,6 @@ const StyledEditProductContainer = styled.div`
   margin-top: 100px;
   display: flex;
   justify-content: center;
-
-  & {
-    @media all and (max-width: 767px) {
-      margin-top: 80px;
-    }
-    @media all and (max-width: 480px) {
-    }
-  }
 `;
 
 const StyledEditProductForm = styled.form`
@@ -388,21 +413,6 @@ const StyledEditProductForm = styled.form`
   padding: 40px;
   box-shadow: 1px 1px 5px 1px rgb(71, 181, 255);
   border-radius: 10px;
-
-  & {
-    @media all and (max-width: 767px) {
-      display: flex;
-      flex-direction: column;
-      width: 60vw;
-
-      padding: 40px;
-      box-shadow: 1px 1px 5px 1px rgb(71, 181, 255);
-      border-radius: 10px;
-    }
-    @media all and (max-width: 480px) {
-      width: 100vw;
-    }
-  }
 `;
 
 const StyledPostingHeadWrap = styled.div`
@@ -410,30 +420,12 @@ const StyledPostingHeadWrap = styled.div`
   justify-content: space-around;
 
   height: 250px;
-
-  & {
-    @media all and (max-width: 767px) {
-      flex-direction: column;
-      align-items: center;
-      height: 70vh;
-    }
-    @media all and (max-width: 480px) {
-    }
-  }
 `;
 
 const StyledFormImageInputWrap = styled.div`
   display: flex;
   flex-direction: column;
   height: 200px;
-
-  & {
-    @media all and (max-width: 767px) {
-      height: 50vh;
-    }
-    @media all and (max-width: 480px) {
-    }
-  }
 `;
 
 const StyledImageLabel = styled.label`
@@ -493,14 +485,6 @@ const StyledOptionInputs = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-
-  & {
-    @media all and (max-width: 767px) {
-      margin-top: 30px;
-    }
-    @media all and (max-width: 480px) {
-    }
-  }
 `;
 
 const StyledCategorySelector = styled.select`
@@ -586,14 +570,6 @@ const StyledPostLocation = styled.input`
 
   &:focus {
     outline: 1px solid rgb(71, 181, 255);
-  }
-
-  & {
-    @media all and (max-width: 767px) {
-      margin-top: 50px;
-    }
-    @media all and (max-width: 480px) {
-    }
   }
 `;
 const StyledLocationBtn = styled.button`
