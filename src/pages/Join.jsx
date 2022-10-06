@@ -16,7 +16,7 @@ export const Join = () => {
 
   const handleEmailAuth = async (email) => {
     return await axios.post(
-      `https://davidpai.shop/mailConfirms?email=${email}`
+      `http://13.209.8.18/mailConfirms?email=${email}`
     );
   };
 
@@ -33,10 +33,12 @@ export const Join = () => {
   });
 
   const handleJoin = async (data) => {
-    return await axios.post("https://davidpai.shop/signups", {
+    return await axios.post("http://13.209.8.18/signups", {
       email: data.email,
       password: data.password,
       memberName: data.nickname,
+      mainAddress: "성남시",
+      subAddress: "수원시",
     });
   };
 
