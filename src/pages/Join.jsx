@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
 import axios from "axios";
+import { SelectAddress } from "../components/selectAddress/SelectAddress";
 
 export const Join = () => {
   const navigate = useNavigate();
@@ -13,6 +14,8 @@ export const Join = () => {
   const code = useRef(null);
   const [authCode, setAuthCode] = useState("");
   const [mailAuth, setMailAuth] = useState(false);
+  const [mainAddress, setMainAddress] = useState("");
+  const [subAddress, setSubAddress] = useState("");
 
   const handleEmailAuth = async (email) => {
     return await axios.post(`http://13.209.8.18/mailConfirms?email=${email}`);
@@ -35,8 +38,8 @@ export const Join = () => {
       email: data.email,
       password: data.password,
       memberName: data.nickname,
-      mainAddress: "성남시",
-      subAddress: "수원시",
+      mainAddress: data.mainAddress,
+      subAddress: data.subAddress,
     });
   };
 
@@ -63,7 +66,7 @@ export const Join = () => {
       <div className="auth-box">
         <span>이메일로 전송된 인증코드를 입력해주세요.</span>
         <div>
-          <input type="text" placeholder="인증코드 6자리 입력" ref={code} />
+          <input type="text" placeholder="인증코드 8자리 입력" ref={code} />
           <button
             onClick={() => {
               if (authCode === code.current.value) {
@@ -87,10 +90,20 @@ export const Join = () => {
       <label>닉네임</label>
       {/* 2자 이상 14자 이하 */}
       <input type="text" ref={nickname} />
+      <label>
+        지역 선택 <span style={{ color: "red" }}>(필수)</span>
+      </label>
+      <SelectAddress setAddress={setMainAddress} />
+      <label>지역 선택 (선택)</label>
+      <SelectAddress setAddress={setSubAddress} />
       <button
         onClick={() => {
           if (!mailAuth) {
             alert("이메일을 인증해주세요.");
+            return;
+          }
+          if (mainAddress === "지역 선택" || subAddress === "지역 선택") {
+            alert("주소를 선택해주세요.");
             return;
           }
           if (password.current.value === passwordConfirm.current.value) {
@@ -98,6 +111,8 @@ export const Join = () => {
               email: email.current.value,
               password: password.current.value,
               nickname: nickname.current.value,
+              mainAddress: mainAddress,
+              subAddress: subAddress,
             });
           } else {
             alert("비밀번호를 확인해주세요.");
