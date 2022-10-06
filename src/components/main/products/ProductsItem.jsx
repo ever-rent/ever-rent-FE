@@ -6,7 +6,7 @@ import { categoriNumber } from "../../../util/categoryNumber";
 import { useDispatch,useSelector } from "react-redux";
 import { postRent } from "../../../redux/modules/mypageSlice";
 import { postLike } from "../../../redux/modules/mypageSlice";
-
+import { imgFirstString } from "../../../server/api";
 
 export const ProductsItem = ({
   id,
@@ -104,7 +104,7 @@ export const ProductsItem = ({
           onClick={() => {
             navigate(`/productDetail/${id}`, { state: sendData });
           }}
-          src={imgUrlArray[0]}
+          src={`${imgFirstString}${imgUrlArray[0]}`}
           alt="이미지 없음"
         />
       </StyledImgBox>
