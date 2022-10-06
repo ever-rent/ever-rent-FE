@@ -4,8 +4,10 @@
 ## 📢 프로젝트 소개
 개인 간 렌탈 거래 플랫폼으로 모바일과 데스크톱 환경에 따른 반응형 웹을 지원하는 프로젝트입니다.
 - [프로젝트 노션](https://www.notion.so/EVERRENT-4cfbf7de283d418da269c95af4cd2cd7)
+- [백엔드 Repo](https://github.com/ever-rent/ever-rent-BE)
 <br>
 
 ## 🗓 프로젝트 기간
 - 2022.09.16 - 2022.10.28
+- [프로젝트 중간 점검](https://www.miricanvas.com/v/11g8kn7)
 <br>
