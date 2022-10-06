@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { timeToToday } from "../../../util/timeToToday";
 import { categoriNumber } from "../../../util/categoryNumber";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { postRent } from "../../../redux/modules/mypageSlice";
-import { getProducts } from "../../../redux/modules/productSlice";
 
 export const ProductsItem = ({
   id,
@@ -24,8 +23,8 @@ export const ProductsItem = ({
   rentEnd,
   rentStart,
 }) => {
-  // console.log("id", typeof String(id));
-  // console.log("id", String(id));
+  
+  // 찜목록용 dispatch
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [like, setlike] = useState(true);
@@ -59,17 +58,19 @@ export const ProductsItem = ({
     dispatch(postRent(productData));
   };
 
+
+  // navigate state 전달 데이터
   const sendData = {
     id: id,
     imgUrl: imgUrl,
     imgUrlArray: imgUrlArray,
     productName: productName,
-    memberName:memberName,
+    memberName: memberName,
     price: price,
     address: address,
     Like: Like,
     chat: chat,
-    content:content,
+    content: content,
     writeAt: writeAt,
     cateId: cateId,
     location: location,

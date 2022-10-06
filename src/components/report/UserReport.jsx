@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import Swal from "sweetalert2";
 
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 
 export const UserReport = ({ targetNicename }) => {
   // userId (PK) 로 props 전달 예정
+
+  // 신고창 모달 오픈 여부
   const [showModal, setShowModal] = useState(false);
 
   const [sendReason, setSendReason] = useState("타인에게 불쾌감을 주는 닉네임");
@@ -14,9 +16,11 @@ export const UserReport = ({ targetNicename }) => {
 
   // 로그인 처리 예정
   // useEffect(() => {
-    
+
   // }, []);
 
+
+  // 로그인 여부 확인
   const loginCheck = () => {
     isLogedIn !== true
       ? Swal.fire({
@@ -32,6 +36,8 @@ export const UserReport = ({ targetNicename }) => {
     setEtcDisabled(false);
   };
 
+
+  // 신고접수
   const sendReport = (e) => {
     e.preventDefault();
     console.log(sendReason);

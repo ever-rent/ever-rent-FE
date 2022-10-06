@@ -1,17 +1,21 @@
 import styled from "styled-components";
 import Swal from "sweetalert2";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export const PostReport = ({ prodictId }) => {
-  // userId (PK) 로 props 전달 예정
+  // props 전달 예정
   const [showModal, setShowModal] = useState(false);
 
   const [sendReason, setSendReason] = useState("도배/광고성 게시글");
   const [etcDisabled, setEtcDisabled] = useState(true);
 
-
   const [isLogedIn, setIsLogedIn] = useState(false);
+
+  // 로그인 처리 예정
+  // useEffect(() => {
+
+  // }, []);
 
   const loginCheck = () => {
     isLogedIn !== true
@@ -24,10 +28,9 @@ export const PostReport = ({ prodictId }) => {
   const etcCheck = () => {
     setEtcDisabled(true);
   };
-  const etcOn = ()=>{
+  const etcOn = () => {
     setEtcDisabled(false);
-  }
-  
+  };
 
   const sendReport = (e) => {
     e.preventDefault();
@@ -128,14 +131,18 @@ export const PostReport = ({ prodictId }) => {
                   />
                 </div>
                 <span>기타</span>
-                <input onChange={(e)=>{
-                      setSendReason(e.target.value)
-                    }} type="text" disabled={etcDisabled} />
+                <input
+                  onChange={(e) => {
+                    setSendReason(e.target.value);
+                  }}
+                  type="text"
+                  disabled={etcDisabled}
+                />
               </StyledRadioLabel>
             </StyledReportForm>
             <StyledButtonWrap>
               <StyledReportButton
-              type="button"
+                type="button"
                 onClick={(e) => {
                   sendReport(e);
                 }}
