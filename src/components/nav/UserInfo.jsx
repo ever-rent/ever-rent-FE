@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
@@ -7,16 +7,23 @@ import { mypageAPI } from "../../server/api";
 export const UserInfo = () => {
   const navigate = useNavigate();
 
-  const {data} = useQuery("getUserInfo", ()=> mypageAPI.getMyPageList
-  )
+  const { data: userData } = useQuery("getUserInfo", mypageAPI.getMyInfo);
+  const userInfo = userData?.data.data;
 
   return (
     <StyledContainer>
-      <img
-        src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-        alt="profile"
-      />
-      <h3>닉네임</h3>
+      {userInfo?.imgUrl ? (
+        <img src={userInfo?.imgUrl} alt={userInfo?.memberName} />
+      ) : (
+        <img
+          src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+          alt={userInfo?.memberName}
+        />
+      )}
+      <h3>{userInfo?.memberName}</h3>
+      <p>
+        {userInfo?.mainAddress} | {userInfo?.subAddress}
+      </p>
       <button
         className="logout"
         onClick={() => {
@@ -48,6 +55,10 @@ const StyledContainer = styled.div`
   h3 {
     margin: 0 0 10px 0;
     text-align: center;
+  }
+  p {
+    margin: 0 0 20px 0;
+    color: #999;
   }
   button {
     width: 100px;

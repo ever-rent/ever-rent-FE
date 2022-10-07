@@ -9,6 +9,8 @@ export const productAPI = {
   getProductDetail: (productId) => base.get(`/products/${productId}`),
   updateProduct: (data, productId) => auth.put(`/products/${productId}`, data),
   deleteProduct: (productId) => auth.delete(`/products/${productId}`),
+  toggleWishProduct: (productId) =>
+    profile.post(`/products/wishlists/${productId}`),
 };
 
 export const mypageAPI = {
@@ -23,8 +25,6 @@ export const mypageAPI = {
   getMyInfo: () => profile.get(`/mypages/myinfos`),
   getWishList: () => profile.get(`/mypages/myWishs`),
 };
-
-export const userAPI = {};
 
 // imgUrlArray firstString
 // env 설정 예정
