@@ -114,7 +114,7 @@ export const ProductDetail = () => {
     <Layout>
       <StyledDetailProductContainer>
         <StyledDetailProductWrap>
-          <PostReport />
+          {/* <PostReport /> */}
           <StyledEditableOption
             style={
               editabled === false ? { display: "none" } : { display: "flex" }
@@ -186,7 +186,7 @@ export const ProductDetail = () => {
                   </StyledUserLocation>
                 </StyledUserSubInfo>
               </StyledInfoWrap>
-              <UserReport />
+              {/* <UserReport /> */}
             </StyledUserInfo>
             <StyledPostHr />
             <StyledPostMain>
