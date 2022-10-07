@@ -10,7 +10,7 @@ export const PostReport = ({ prodictId }) => {
   const [sendReason, setSendReason] = useState("도배/광고성 게시글");
   const [etcDisabled, setEtcDisabled] = useState(true);
 
-  const [isLogedIn, setIsLogedIn] = useState(false);
+  const [isLogedIn, setIsLogedIn] = useState(true);
 
   // 로그인 처리 예정
   // useEffect(() => {
@@ -30,15 +30,24 @@ export const PostReport = ({ prodictId }) => {
   };
   const etcOn = () => {
     setEtcDisabled(false);
+    setSendReason("");
   };
 
   const sendReport = (e) => {
     e.preventDefault();
     console.log(sendReason);
-    Swal.fire({
-      title: "해당 유저의 신고 접수가 완료되었습니다.",
-      icon: "success",
-    });
+    if (sendReason === "") {
+      Swal.fire({
+        title: "신고 사유를 입력해주세요",
+        icon: "warning",
+      });
+    } else {
+      Swal.fire({
+        title: "해당 유저의 신고 접수가 완료되었습니다.",
+        icon: "success",
+      });
+      setShowModal(false);
+    }
   };
 
   return (
@@ -46,6 +55,7 @@ export const PostReport = ({ prodictId }) => {
       <StyledReportAlert
         onClick={() => {
           loginCheck();
+          setSendReason("도배/광고성 게시글");
         }}
       >
         신고하기
@@ -166,6 +176,8 @@ export const PostReport = ({ prodictId }) => {
 };
 
 const StyledReportAlert = styled.span`
+  font-size: 14px;
+  color: gray;
   cursor: pointer;
 `;
 
@@ -214,7 +226,24 @@ const StyledReportForm = styled.form`
 const StyledRadioLabel = styled.label`
   display: flex;
   justify-content: center;
+  justify-content: flex-start;
   margin-top: 15px;
+  margin-left: 70px;
+
+  & input[type="radio"],
+  input[type="radio"]:checked {
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 100%;
+    margin-right: 10px;
+  }
+  & input[type="radio"] {
+    border: 2px solid rgb(71, 181, 255);
+  }
+  & input[type="radio"]:checked {
+    background-color: rgb(71, 181, 255);
+  }
 `;
 
 const StyledButtonWrap = styled.div`
