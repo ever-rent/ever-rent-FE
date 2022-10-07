@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { openNav } from "../../redux/modules/navSlice";
+import { Desktop, Mobile } from "../../Hooks/MideaQuery";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -11,96 +12,101 @@ export const Header = () => {
   const [isLogin, setIsLogin] = useState(false);
 
   return (
-    // <StyledHeaderTop>
-    //   <StyledLogoImageWrap>
-    //     <StyledLogoImg
-    //       onClick={() => {
-    //         navigate("/");
-    //       }}
-    //       src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcIaEmP%2FbtrMnmILkqF%2FTxtrB71zUMzMY9Z2iiHqcK%2Fimg.png"
-    //     />
-    //   </StyledLogoImageWrap>
-    //   <StyledHeaderWrap>
-    //     <StyledSearchWrap>
-    //       <StyledSearchButton
-    //         type="button"
-    //         alt="https://icons8.com/icon/59878/search https://icons8.com Icons8"
-    //       />
-    //       <StyledSearchInput
-    //         type="text"
-    //         placeholder="지역, 물품명으로 찾아보세요"
-    //         maxLength={35}
-    //       />
-    //     </StyledSearchWrap>
-    //   </StyledHeaderWrap>
-    //   <StyledSignMenu>
-    //     <StyledLoginTab>
-    //       <StyledLoginSpan
-    //         onClick={() => {
-    //           navigate("/login");
-    //         }}
-    //       >
-    //         로그인
-    //       </StyledLoginSpan>
-    //       <StyledLoginSpan
-    //         onClick={() => {
-    //           navigate("/join");
-    //         }}
-    //       >
-    //         회원가입
-    //       </StyledLoginSpan>
-    //     </StyledLoginTab>
-    //     <StyledAddProductButton
-    //       onClick={() => {
-    //         navigate("/addProduct");
-    //       }}
-    //     >
-    //       글쓰기
-    //     </StyledAddProductButton>
-    //   </StyledSignMenu>
-    //   <StyledSideMenu
-    //     onClick={() => dispatch(openNav())}
-    //     alt="https://icons8.com/icon/36389/menu-rounded Menu Rounded https://icons8.com"
-    //   />
-    // </StyledHeaderTop>
-
-    // for Mobile
-    <StyledMobileHeader>
-      <StyledMobileHeaderWrap>
-        <StyledMobileSearchWrap>
-          <StyledSearchButton
-            type="button"
-            alt="https://icons8.com/icon/59878/search https://icons8.com Icons8"
+    <>
+      <Desktop>
+        <StyledHeaderTop>
+          <StyledLogoImageWrap>
+            <StyledLogoImg
+              onClick={() => {
+                navigate("/");
+              }}
+              src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcIaEmP%2FbtrMnmILkqF%2FTxtrB71zUMzMY9Z2iiHqcK%2Fimg.png"
+            />
+          </StyledLogoImageWrap>
+          <StyledHeaderWrap>
+            <StyledSearchWrap>
+              <StyledSearchButton
+                type="button"
+                alt="https://icons8.com/icon/59878/search https://icons8.com Icons8"
+              />
+              <StyledSearchInput
+                type="text"
+                placeholder="지역, 물품명으로 찾아보세요"
+                maxLength={35}
+              />
+            </StyledSearchWrap>
+          </StyledHeaderWrap>
+          <StyledSignMenu>
+            <StyledLoginTab>
+              <StyledLoginSpan
+                onClick={() => {
+                  navigate("/login");
+                }}
+              >
+                로그인
+              </StyledLoginSpan>
+              <StyledLoginSpan
+                onClick={() => {
+                  navigate("/join");
+                }}
+              >
+                회원가입
+              </StyledLoginSpan>
+            </StyledLoginTab>
+            <StyledAddProductButton
+              onClick={() => {
+                navigate("/addProduct");
+              }}
+            >
+              글쓰기
+            </StyledAddProductButton>
+          </StyledSignMenu>
+          <StyledSideMenu
+            onClick={() => dispatch(openNav())}
+            alt="https://icons8.com/icon/36389/menu-rounded Menu Rounded https://icons8.com"
           />
-          <StyledMobileSearchInput
-            type="text"
-            placeholder="지역, 물품명으로 찾아보세요"
-            maxLength={35}
-          />
-        </StyledMobileSearchWrap>
-        {isLogin === true ? (
-          <StyledMobileAddProductButton
-            onClick={() => {
-              navigate("/addProduct");
-            }}
-          >
-            글쓰기
-          </StyledMobileAddProductButton>
-        ) : (
-          <StyledMobileAddProductButton
-            onClick={() => {
-              navigate("/login");
-            }}
-          >
-            로그인
-          </StyledMobileAddProductButton>
-        )}
-        <StyledSideMenu
-          onClick={() => dispatch(openNav())}
-          alt="https://icons8.com/icon/36389/menu-rounded Menu Rounded https://icons8.com"
-        />
-      </StyledMobileHeaderWrap>
-    </StyledMobileHeader>
+        </StyledHeaderTop>
+      </Desktop>
+      {/* ################ 모바일 ################ */}
+      <Mobile>
+        <StyledMobileHeader>
+          <StyledMobileHeaderWrap>
+            <StyledMobileSearchWrap>
+              <StyledSearchButton
+                type="button"
+                alt="https://icons8.com/icon/59878/search https://icons8.com Icons8"
+              />
+              <StyledMobileSearchInput
+                type="text"
+                placeholder="지역, 물품명으로 찾아보세요"
+                maxLength={35}
+              />
+            </StyledMobileSearchWrap>
+            {isLogin === true ? (
+              <StyledMobileAddProductButton
+                onClick={() => {
+                  navigate("/addProduct");
+                }}
+              >
+                글쓰기
+              </StyledMobileAddProductButton>
+            ) : (
+              <StyledMobileAddProductButton
+                onClick={() => {
+                  navigate("/login");
+                }}
+              >
+                로그인
+              </StyledMobileAddProductButton>
+            )}
+            <StyledSideMenu
+              onClick={() => dispatch(openNav())}
+              alt="https://icons8.com/icon/36389/menu-rounded Menu Rounded https://icons8.com"
+            />
+          </StyledMobileHeaderWrap>
+        </StyledMobileHeader>
+      </Mobile>
+    </>
   );
 };
 
@@ -234,7 +240,7 @@ const StyledMobileHeader = styled.div`
   background-color: white;
   position: fixed;
   top: 0;
-  z-index:999;
+  z-index: 999;
 `;
 
 const StyledMobileHeaderWrap = styled.div`
