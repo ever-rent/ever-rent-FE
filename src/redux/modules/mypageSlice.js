@@ -186,7 +186,7 @@ export const mypageSlice = createSlice({
     reservation: [],
     myinfo: [],
     like: [],
-    myLike: [],
+    MyWish: [],
   },
   reducers: {},
   extraReducers: {
@@ -255,7 +255,7 @@ export const mypageSlice = createSlice({
       state.myinfo = action.payload;
     },
     [getWishList.fulfilled]: (state, action) => {
-      state.myLike = action.payload;
+      state.MyWish = action.payload;
     },
 
     // /* Rejected */
