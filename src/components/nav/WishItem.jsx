@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { FcLike } from "react-icons/fc";
 import { FcLikePlaceholder } from "react-icons/fc";
 import { useMutation } from "react-query";
-import { productAPI } from "../../server/api";
+import { imgFirstString, productAPI } from "../../server/api";
 import { timeToToday } from "../../util/timeToToday";
 
 export const WishItem = ({ item }) => {
@@ -46,11 +46,11 @@ export const WishItem = ({ item }) => {
           }}
         />
       )}
-      <img src={item.imgUrlArray[0]} alt="물건 사진" />
+      <img src={`${imgFirstString}${item.imgUrlArray[0]}`} alt="물건 사진" />
       <div className="span-div">
         <span className="title">{item.productName}</span>
         <span className="date">
-          {item?.location} · {createdAt}
+          {item.mapLocation} · {createdAt}
         </span>
         <span className="price">
           {Number(item.price).toLocaleString("ko-KR")}원 / 일
