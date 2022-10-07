@@ -114,8 +114,9 @@ export const ProductDetail = () => {
     <Layout>
       <StyledDetailProductContainer>
         <StyledDetailProductWrap>
-          {/* <PostReport /> */}
-          <StyledEditableOption
+          <PostReport />
+          {/* 게시글 리포트자리 */}
+          {/* <StyledEditableOption
             style={
               editabled === false ? { display: "none" } : { display: "flex" }
             }
@@ -130,7 +131,7 @@ export const ProductDetail = () => {
             <StyledDeleteButton onClick={deletePost}>
               글 삭제 X
             </StyledDeleteButton>
-          </StyledEditableOption>
+          </StyledEditableOption> */}
           <StyledPostHeadWrap>
             <StyledProductImagetWrap>
               <SyltedProductMainImage
@@ -186,7 +187,16 @@ export const ProductDetail = () => {
                   </StyledUserLocation>
                 </StyledUserSubInfo>
               </StyledInfoWrap>
-              {/* <UserReport /> */}
+              <StyledPostOptionWrap>
+                <StyledMyPostOption>
+                  <span>글 수정</span>
+                  <StyledNoPointer>·</StyledNoPointer>
+                  <span>글 삭제</span>
+                  <StyledNoPointer>·</StyledNoPointer>
+                </StyledMyPostOption>
+                <UserReport />
+                {/* 유저 리포트 자리 */}
+              </StyledPostOptionWrap>
             </StyledUserInfo>
             <StyledPostHr />
             <StyledPostMain>
@@ -372,6 +382,24 @@ const StyledUserNickname = styled.div`
 const StyledUserLocation = styled.div`
   padding: 5px;
 `;
+
+const StyledPostOptionWrap = styled.div`
+  display: flex;
+`;
+const StyledMyPostOption = styled.div`
+  display: flex;
+
+  & span {
+    margin-right: 10px;
+    font-size: 14px;
+    color: gray;
+    cursor: pointer;
+  }
+`;
+const StyledNoPointer = styled.span`
+  cursor: text;
+`
+
 
 const StyledPostMain = styled.div`
   padding: 5px;

@@ -31,7 +31,6 @@ export const EditUserInfo = () => {
     });
   };
 
-
   // 회원탈퇴
   const deleteUser = () => {
     Swal.fire({
@@ -50,12 +49,10 @@ export const EditUserInfo = () => {
     });
   };
 
-
   // formData
   let sendData = {
-    testcode:"testcode"
-  }
-
+    testcode: "testcode",
+  };
 
   // 회원정보 수정
   const editMyInfo = () => {

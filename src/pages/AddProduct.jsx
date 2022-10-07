@@ -34,7 +34,6 @@ export const AddProduct = () => {
     }
   };
 
-
   // 업로드 압축 & state 데이터로 저장
   const fileChange = (fileBlob) => {
     console.log(fileBlob);
@@ -95,7 +94,6 @@ export const AddProduct = () => {
     setSendImage([...sendImage].concat(file));
   };
 
-
   // 사진 클릭 시 미리보기/보낼 이미지에서 제거
   const initImage = (item, indexNum) => {
     setImgView(imgView.filter((element) => element !== item));
@@ -115,11 +113,11 @@ export const AddProduct = () => {
   const [startDateInput, setStartDateInput] = useState("");
   const [endDateInput, setEndDateInput] = useState("");
   const [tradeLocation, setTradeLocation] = useState("송내역");
+  const [mapLocation, setMapLocation] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
   const [disabled, setDisabled] = useState(true);
-
 
   // 게시글 작성 유효성 검사 추가 예정(이미지/주소 등)
   const checkPost = () => {
@@ -133,6 +131,11 @@ export const AddProduct = () => {
     checkPost();
   });
 
+  const mapLocationCheck = (value) => {
+    setMapLocation(value);
+  };
+  // console.log(mapLocation);
+
   // formData
   let sendData = {
     productName: title,
@@ -145,8 +148,7 @@ export const AddProduct = () => {
     rentEnd: endDateInput,
   };
 
-
-  // 유효성 검사 추가 예정(이미지/주소 등) 
+  // 유효성 검사 추가 예정(이미지/주소 등)
   const addProductPost = () => {
     if (title === "" || description === "") {
       alert("제목/내용을 적어주세요!");
@@ -173,7 +175,7 @@ export const AddProduct = () => {
           }
 
           dispatch(addProducts(formData));
-          navigate("/")
+          navigate("/");
         }
       });
     }
@@ -186,6 +188,184 @@ export const AddProduct = () => {
   };
 
   return (
+    // <Layout>
+    //   <StyledAddProductContainer>
+    //     <StyledAddProductForm encType="multipart/form-data">
+    //       <StyledPostingHeadWrap>
+    //         <StyledFormImageInputWrap>
+    //           <StyledImageLabel
+    //             htmlFor="inputFile"
+    //             onClick={(e) => imageLengthCheck(e)}
+    //           >
+    //             사진 업로드
+    //           </StyledImageLabel>
+    //           <StyledImageInput
+    //             id="inputFile"
+    //             type="file"
+    //             multiple="multiple"
+    //             onChange={(e) => {
+    //               fileChange(e.target.files);
+    //             }}
+    //           />
+    //           <StyledProductImagetWrap>
+    //             <SyltedImageView
+    //               src={imgView[0] === undefined ? defaultImg : imgView[0]}
+    //               alt="메인이미지 미리보기"
+    //               onClick={() => {
+    //                 initImage(imgView[0], 0);
+    //               }}
+    //             />
+    //             <StyledProductSubImageWrap>
+    //               {imgView[1] !== undefined
+    //                 ? imgView
+    //                     .filter((v, index) => index !== 0)
+    //                     .map((item, index) => (
+    //                       <StyledProductSubImage
+    //                         key={index}
+    //                         src={item}
+    //                         onClick={() => {
+    //                           initImage(item, index);
+    //                         }}
+    //                       />
+    //                     ))
+    //                 : null}
+    //             </StyledProductSubImageWrap>
+    //             <StyledDeleteImg>
+    //               사진을 누르면 삭제돼요!
+    //               <br />
+    //               (사진 등록 최대 10장)
+    //             </StyledDeleteImg>
+    //           </StyledProductImagetWrap>
+    //         </StyledFormImageInputWrap>
+    //         <StyledImageSource>
+    //           imageSource: "https://icons8.com/icon/85123/expand-arrow Expand
+    //           Arrow icon by https://icons8.com Icons8"
+    //         </StyledImageSource>
+    //         <StyledOptionInputs>
+    //           <StyledCategorySelector
+    //             defaultValue="noneData"
+    //             onChange={(e) => {
+    //               setCategoryInput(e.target.value);
+    //             }}
+    //           >
+    //             <StyledCategoryOptions value="noneData" disabled>
+    //               상품 종류를 골라주세요!
+    //             </StyledCategoryOptions>
+    //             <StyledCategoryOptions value="1">
+    //               디지털기기
+    //             </StyledCategoryOptions>
+    //             <StyledCategoryOptions value="2">공구</StyledCategoryOptions>
+    //             <StyledCategoryOptions value="3">
+    //               생활가전
+    //             </StyledCategoryOptions>
+    //             <StyledCategoryOptions value="4">잡화</StyledCategoryOptions>
+    //             <StyledCategoryOptions value="5">
+    //               스포츠/레저
+    //             </StyledCategoryOptions>
+    //             <StyledCategoryOptions value="6">
+    //               취미/게임/음반
+    //             </StyledCategoryOptions>
+    //             <StyledCategoryOptions value="7">도서</StyledCategoryOptions>
+    //             <StyledCategoryOptions value="8">기타</StyledCategoryOptions>
+    //           </StyledCategorySelector>
+    //           <StyledPriceWrap>
+    //             <StyledPriceInput
+    //               id="itemPrice"
+    //               type="text"
+    //               placeholder="가격"
+    //               maxlength="8"
+    //               onChange={(e) => {
+    //                 setPriceInput(e.target.value);
+    //               }}
+    //             />
+    //             <StyledPriceLabel htmlFor="itemPrice">원</StyledPriceLabel>
+    //             <StyledPriceData> / 일</StyledPriceData>
+    //           </StyledPriceWrap>
+    //           <StyledDateWrap>
+    //             <StyledStartLabel htmlFor="">렌탈시작일 : </StyledStartLabel>
+    //             <StyledDateInput
+    //               type="date"
+    //               onChange={(e) => {
+    //                 setStartDateInput(e.target.value);
+    //               }}
+    //             />
+    //           </StyledDateWrap>
+    //           <StyledDateWrap>
+    //             <StyledEndLabel htmlFor="">렌탈마감일 : </StyledEndLabel>
+    //             <StyledDateInput
+    //               type="date"
+    //               onChange={(e) => {
+    //                 setEndDateInput(e.target.value);
+    //               }}
+    //             />
+    //           </StyledDateWrap>
+    //         </StyledOptionInputs>
+    //       </StyledPostingHeadWrap>
+
+    //       <StyledPostLocation
+    //         type="text"
+    //         placeholder="거래 장소를 적어주세요!"
+    //         onChange={(e) => {
+    //           setTradeLocation(e.target.value);
+    //         }}
+    //       />
+    //       <StyledLocationBtn
+    //         type="button"
+    //         onClick={() => {
+    //           setShowModal(true);
+    //         }}
+    //       >
+    //         위치확인
+    //       </StyledLocationBtn>
+    //       <p style={{ fontSize: "12px" }}>
+    //         지도에 나온 장소가 원하는 곳이 아닌 경우, 도로명 주소로
+    //         입력해보세요!
+    //       </p>
+    //       <LocationModal
+    //         showModal={showModal}
+    //         closeModal={closeModal}
+    //         location={tradeLocation}
+    //         mapLocationCheck={mapLocationCheck}
+    //       />
+    //       <StyledPostTitle
+    //         type="text"
+    //         placeholder="제목은 4글자 이상 적어주세요!"
+    //         onChange={(e) => {
+    //           setTitle(e.target.value);
+    //         }}
+    //       />
+    //       <StyledDescription
+    //         id=""
+    //         cols="30"
+    //         rows="10"
+    //         placeholder="내용을 입력해주세요!"
+    //         maxLength={500}
+    //         onChange={(e) => {
+    //           setDescription(e.target.value);
+    //         }}
+    //       />
+    //       <StyledButtonBox>
+    //         <StyledGoBackButton
+    //           type="button"
+    //           onClick={() => {
+    //             navigate("/");
+    //           }}
+    //         >
+    //           홈으로
+    //         </StyledGoBackButton>
+    //         <StyledFormButton
+    //           disabled={disabled}
+    //           type="button"
+    //           onClick={addProductPost}
+    //         >
+    //           작성하기
+    //         </StyledFormButton>
+    //       </StyledButtonBox>
+    //     </StyledAddProductForm>
+    //   </StyledAddProductContainer>
+    // </Layout>
+
+    // for Mobile
     <Layout>
       <StyledAddProductContainer>
         <StyledAddProductForm encType="multipart/form-data">
@@ -239,6 +419,7 @@ export const AddProduct = () => {
               imageSource: "https://icons8.com/icon/85123/expand-arrow Expand
               Arrow icon by https://icons8.com Icons8"
             </StyledImageSource>
+          </StyledPostingHeadWrap>
             <StyledOptionInputs>
               <StyledCategorySelector
                 defaultValue="noneData"
@@ -298,7 +479,6 @@ export const AddProduct = () => {
                 />
               </StyledDateWrap>
             </StyledOptionInputs>
-          </StyledPostingHeadWrap>
 
           <StyledPostLocation
             type="text"
@@ -323,6 +503,7 @@ export const AddProduct = () => {
             showModal={showModal}
             closeModal={closeModal}
             location={tradeLocation}
+            mapLocationCheck={mapLocationCheck}
           />
           <StyledPostTitle
             type="text"

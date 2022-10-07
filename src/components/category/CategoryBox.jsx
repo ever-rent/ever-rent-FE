@@ -91,6 +91,9 @@ const StyledCategoryBox = styled.div`
 
   grid-template-rows: 200px 200px;
   grid-template-columns: 200px 200px 200px 200px;
+
+  animation: categoriFadein 1.5s;
+	
 `;
 
 const StyledKeyWordButton = styled.button`
