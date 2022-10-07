@@ -1,9 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
+import Swal from "sweetalert2";
 
 export const Footer = () => {
   const navigate = useNavigate();
+
+  const [isLogin, setIsLogin] = useState(false);
+
+  const goAddProduct = () => {
+    isLogin === true
+      ? navigate("/addproduct")
+      : Swal.fire({
+          position: "middle",
+          icon: "warning",
+          title: "로그인이 필요합니다.",
+          showConfirmButton: false,
+          timer: 1500,
+          width: "300px",
+        });
+  };
+  const goMyPage = () => {
+    isLogin === true
+      ? navigate("/addproduct")
+      : Swal.fire({
+          position: "middle",
+          icon: "warning",
+          title: "로그인이 필요합니다.",
+          showConfirmButton: false,
+          timer: 1500,
+          width: "300px",
+        });
+  };
+  
 
   return (
     // <StyledFooter>
@@ -12,24 +41,28 @@ export const Footer = () => {
 
     // for Mobile
     <StyledMobileFootNav>
-      <div>
-        <img
-          src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FUjHeg%2FbtrN27EGh2c%2FFUAuCglKKcKdPLOx1zjVK1%2Fimg.png"
-          alt="https://icons8.com/icon/kx4uQexsQTUC/write Write icon by https://icons8.com Icons8"
-        />
-      </div>
-      <div>
-        <img
+      <StyledNavImgWrap onClick={()=>{navigate("/")}}>
+        <StyledMypageImg
           src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FPW3Ya%2FbtrN3DCU40e%2FFg4kQSyTMv9gqnKOH2Tjvk%2Fimg.png"
           alt="https://icons8.com/icon/6RlaHUy2CmGh/home-page Home Page icon by https://icons8.com Icons8"
         />
-      </div>
-      <div>
-        <img
-          src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb1sd3N%2FbtrN4jDUg1z%2FW6gMyQSJXvK4k7bmjAiXAk%2Fimg.png"
-          alt="https://icons8.com/icon/15265/customer Customer icon by https://icons8.com Icons8"
+        <StyledImgSpan>홈으로</StyledImgSpan>
+      </StyledNavImgWrap>
+      <StyledNavImgWrap onClick={goAddProduct}>
+        <StyledMypageImg
+          src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
+          alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
         />
-      </div>
+        <StyledImgSpan>채팅</StyledImgSpan>
+      </StyledNavImgWrap>
+      <StyledNavImgWrap onClick={goMyPage}>
+        <StyledMypageImg
+          src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdqldLh%2FbtrN4aOcYSX%2FGfQqgud8sKNpsj7fXcBTRK%2Fimg.png"
+          alt="https://icons8.com/icon/111473/person Person icon by https://icons8.com Icons8"
+        />
+        <StyledImgSpan>마이페이지</StyledImgSpan>
+      </StyledNavImgWrap>
+      {/* <div>플러스 동동</div> */}
     </StyledMobileFootNav>
   );
 };
@@ -46,13 +79,28 @@ const StyledFooter = styled.footer`
 
 // for Mobile
 const StyledMobileFootNav = styled.footer`
-width:100%;
-  height: 50px;
+  width: 100%;
+  height: 60px;
   display: flex;
   justify-content: space-around;
   align-items: center;
 
   background-color: #f7f9fa;
-  position:fixed;
+  position: fixed;
   bottom: 0;
 `;
+
+const StyledNavImgWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
+const StyledMypageImg = styled.img`
+  width:35px;
+  height: 35px;
+`
+
+const StyledImgSpan = styled.span`
+  font-size:12px;
+`
