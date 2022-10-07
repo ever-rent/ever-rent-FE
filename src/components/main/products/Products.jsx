@@ -6,7 +6,6 @@ import { useInView } from "react-intersection-observer";
 import { base } from "../../../server/core/instance";
 
 export const Products = () => {
-
   // infi scroll
   // 현재 state 데이터 , 다음페이지 이동 여부,
   // 현재페이지, observer 뷰 교차 여부
@@ -31,7 +30,6 @@ export const Products = () => {
     }
   }, []);
 
-
   // ref / scroll 교차 시 데이터 패치
   useEffect(() => {
     console.log(inView, hasNextPage);
@@ -50,9 +48,10 @@ export const Products = () => {
         })}
       </StyledProductsGrid>
       <div ref={ref} style={{ position: "absolute" }} />
+      {/* <div style={{position: "absolute" }} /> */}
     </StyledProductsContainer>
 
-    // //mobile
+    //mobile
     // <StyledMobileContainer>
     //   <StyledMobileProducts>
     //     {products?.map((product) => {
@@ -60,7 +59,6 @@ export const Products = () => {
     //     })}
     //   </StyledMobileProducts>
     //   <div ref={ref} style={{ position: "absolute" }} />
-    //   {/* <div style={{position: "absolute" }} /> */}
     // </StyledMobileContainer>
   );
 };
@@ -84,10 +82,13 @@ const StyledProductsGrid = styled.div`
 `;
 
 const StyledMobileContainer = styled.div`
+  /* border: 1px solid red; */
   max-width: 480px;
+  margin: auto;
 `;
 
 const StyledMobileProducts = styled.div`
+  /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
   margin-top: 30px;

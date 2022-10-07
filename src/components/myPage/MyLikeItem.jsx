@@ -1,11 +1,13 @@
 import React from "react";
 import styled from "styled-components";
+import { imgFirstString } from "../../server/api";
+
 export const MyLikeItem = ({ item }) => {
   console.log(item);
   const { imgUrlArray, price, productName } = item;
   return (
     <StyledItem>
-      <img src={imgUrlArray[0]} alt="img" />
+      <img src={`${imgFirstString}${imgUrlArray[0]}`} alt="img" />
       {/* <img src={imgUrlArray[1]} alt="img" /> */}
       <div className="span-div">
         <span className="title"> 상품명 : {productName}</span>

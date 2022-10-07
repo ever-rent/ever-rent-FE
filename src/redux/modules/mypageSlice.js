@@ -96,7 +96,6 @@ export const getBorrowList = createAsyncThunk(
   }
 );
 
-//TODO: 아직 api 구현은 안됨.
 // 물건 목록 get
 export const getPastList = createAsyncThunk(
   "GET_PAST_LIST",
@@ -137,7 +136,6 @@ export const postLike = createAsyncThunk(
   "POST_LIKE",
   async (payload, thunkAPI) => {
     // console.log("postLike 시작");
-    // const likeData = {};
     try {
       const { data } = await mypageAPI.postLike(payload);
       // console.log("data", data);
@@ -162,13 +160,13 @@ export const getMyInfo = createAsyncThunk(
   }
 );
 
-export const getLikeList = createAsyncThunk(
+export const getWishList = createAsyncThunk(
   "GET_LIKE_LIST",
   async (_, thunkAPI) => {
-    console.log("getLikeList 시작");
+    console.log("getWishList 시작");
     try {
-      const { data } = await mypageAPI.getLikeList();
-      console.log("getLikeList 성공", data.data);
+      const { data } = await mypageAPI.getWishList();
+      console.log("getWishList 성공", data.data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -256,7 +254,7 @@ export const mypageSlice = createSlice({
     [getMyInfo.fulfilled]: (state, action) => {
       state.myinfo = action.payload;
     },
-    [getLikeList.fulfilled]: (state, action) => {
+    [getWishList.fulfilled]: (state, action) => {
       state.myLike = action.payload;
     },
 
