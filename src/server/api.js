@@ -21,7 +21,7 @@ export const mypageAPI = {
   postRent: (data, productId) => profile.post(`/orders/${productId}`, data),
   postLike: (productId) => profile.post(`/products/wishlists/${productId}`),
   getMyInfo: () => profile.get(`/mypages/myinfos`),
-  getLikeList: () => profile.get(`/mypages/myWishs`),
+  getWishList: () => profile.get(`/mypages/myWishs`),
 };
 
 export const userAPI = {};
