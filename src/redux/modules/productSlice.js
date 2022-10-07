@@ -78,7 +78,7 @@ export const deleteProducts = createAsyncThunk(
   "DELETE_PRODUCTS",
   async (payload, thunkAPI) => {
     try {
-      await productAPI.deleteProduct(payload.id);
+      await productAPI.deleteProduct(payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -117,8 +117,8 @@ export const productSlice = createSlice({
     },
 
     [getProductsDetail.fulfilled]: (state, action) => {
-      console.log(current(state))
-      console.log(action)
+      console.log(current(state));
+      console.log(action);
       state.products = action.payload.data;
     },
     [addProducts.fulfilled]: (state, action) => {

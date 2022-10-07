@@ -1,25 +1,60 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { FcLike } from "react-icons/fc";
 import { FcLikePlaceholder } from "react-icons/fc";
+import { useMutation } from "react-query";
+import { productAPI } from "../../server/api";
+import { timeToToday } from "../../util/timeToToday";
 
-export const WishItem = () => {
+export const WishItem = ({ item }) => {
   const [like, setLike] = useState(true);
+  const [writeAt, setWriteAt] = useState("");
+  const [createdAt, setCreatedAt] = useState("");
+
+  console.log(item);
+  const { mutate } = useMutation(productAPI.toggleWishProduct, {
+    onSuccess: (data) => {
+      console.log(data);
+    },
+    onError: (error) => {
+      console.dir(error);
+    },
+  });
+
+  useEffect(() => {
+    let timeStatus = item.productWriteAt;
+    timeStatus !== undefined ? setWriteAt(timeStatus) : (timeStatus = "");
+    setCreatedAt(timeToToday(writeAt));
+  }, [writeAt, item.productWriteAt]);
+
   return (
     <StyledItem>
       {like ? (
-        <FcLike className="like" onClick={() => setLike(false)} />
+        <FcLike
+          className="like"
+          onClick={() => {
+            setLike(!like);
+            mutate(item.productId);
+          }}
+        />
       ) : (
-        <FcLikePlaceholder className="like" onClick={() => setLike(true)} />
+        <FcLikePlaceholder
+          className="like"
+          onClick={() => {
+            setLike(true);
+            mutate(item.productId);
+          }}
+        />
       )}
-      <img
-        src="https://davidsone.s3.ap-northeast-2.amazonaws.com/9cfa90d7-d143-40ed-a2be-b1ab170faceb.jpg"
-        alt="img"
-      />
+      <img src={item.imgUrlArray[0]} alt="물건 사진" />
       <div className="span-div">
-        <span className="title">고양이 빌려드립니다</span>
-        <span className="date">방이동 · 1일 전</span>
-        <span className="price">20,000원 / 일</span>
+        <span className="title">{item.productName}</span>
+        <span className="date">
+          {item?.location} · {createdAt}
+        </span>
+        <span className="price">
+          {Number(item.price).toLocaleString("ko-KR")}원 / 일
+        </span>
       </div>
     </StyledItem>
   );
