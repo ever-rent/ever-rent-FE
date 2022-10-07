@@ -3,10 +3,11 @@ import styled from "styled-components";
 import { RentalStatus } from "./RentalStatus";
 import { BorrowStatus } from "./BorrowStatus";
 // import { StatusBox } from "./StatusBox";
-
+import { Desktop, Mobile } from "../../Hooks/MideaQuery";
 export const RentalBar = ({ like }) => {
   const [tabIndex, setTabIndex] = useState(0); //처음에 나오는 것이 빌려준 물건.
   console.log("RentalBar>>", like);
+
   const tabArray = [
     {
       key: "lendItems",
@@ -36,20 +37,30 @@ export const RentalBar = ({ like }) => {
 
   return (
     <>
-      <StyledLendAndBorrow>
-        {tabArray.map((item) => {
-          return <StyledRentalBar key={item.key}>{item.tab}</StyledRentalBar>;
-        })}
-        {/* {tabArray[tabIndex].content} */}
-      </StyledLendAndBorrow>
-      <StyledRentStatusBox>
-        {tabIndex ? <BorrowStatus /> : <RentalStatus />}
-      </StyledRentStatusBox>
+      <Desktop>
+        <StyledLendAndBorrow>
+          {tabArray.map((item) => {
+            return <StyledRentalBar key={item.key}>{item.tab}</StyledRentalBar>;
+          })}
+        </StyledLendAndBorrow>
+        <StyledRentStatusBox>
+          {tabIndex ? <BorrowStatus /> : <RentalStatus />}
+        </StyledRentStatusBox>
+      </Desktop>
+      {/* ################ 모바일 ################ */}
+      <Mobile>
+        <StyledLendAndBorrow>
+          {tabArray.map((item) => {
+            return <StyledRentalBar key={item.key}>{item.tab}</StyledRentalBar>;
+          })}
+        </StyledLendAndBorrow>
+        <StyledMobileRentStatusBox>
+          {tabIndex ? <BorrowStatus /> : <RentalStatus />}
+        </StyledMobileRentStatusBox>
+      </Mobile>
     </>
   );
 };
-
-const StyledContainer = styled.div``;
 
 const StyledLendAndBorrow = styled.div`
   /* border-bottom: 1px solid gray; */
@@ -60,8 +71,8 @@ const StyledLendAndBorrow = styled.div`
   justify-content: space-around;
   margin-bottom: 30px;
   /* border-radius: 5px; */
-  animation: fadein 0.5s;
-  @keyframes fadein {
+  animation: rentalBarfadein 0.5s;
+  @keyframes rentalBarfadein {
     from {
       opacity: 0;
     }
@@ -101,13 +112,33 @@ const StyledRentalBar = styled.a`
 const StyledRentStatusBox = styled.div`
   /* border: 1px solid red; */
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   height: 100%;
   grid-row: 2/4;
-  animation: fadein 0.5s;
-  @keyframes fadein {
+  animation: rentalBarfadein 0.5s;
+  @keyframes rentalBarfadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+`;
+
+const StyledMobileRentStatusBox = styled.div`
+  /* border: 1px solid red; */
+  display: flex;
+  justify-content: center;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  height: 100%;
+  animation: rentalBarfadein 0.5s;
+  @keyframes rentalBarfadein {
     from {
       opacity: 0;
     }

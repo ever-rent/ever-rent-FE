@@ -2,7 +2,12 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 
-export const LocationModal = ({ showModal, closeModal ,location}) => {
+export const LocationModal = ({
+  showModal,
+  closeModal,
+  location,
+  locationCheck,
+}) => {
   // 거래장소 props 추가 예정
   const { kakao } = window;
 
@@ -10,12 +15,10 @@ export const LocationModal = ({ showModal, closeModal ,location}) => {
   const [markers, setMarkers] = useState([]);
   const [map, setMap] = useState();
 
-  const [locationID, setLocationID] = useState("");
 
   useEffect(() => {
     if (!map) return;
     const places = new kakao.maps.services.Places();
-
 
     // 검색결과 데이터의 첫 번째 위치 정보 호출
     places.keywordSearch(location, (data, status, _pagination) => {
@@ -38,23 +41,25 @@ export const LocationModal = ({ showModal, closeModal ,location}) => {
       }
 
       // 법정주소 필터
-      getAddr(data[0].y,data[0].x)
+      getAddr(data[0].y, data[0].x);
     });
   }, [map]);
 
-  function getAddr(lat,lng){
+  function getAddr(lat, lng) {
     let geocoder = new kakao.maps.services.Geocoder();
 
     let coord = new kakao.maps.LatLng(lat, lng);
-    let callback = function(result, status) {
-        if (status === kakao.maps.services.Status.OK) {
-            console.log(result);
-            setLocationID(result)
-        }
+    let callback = function (result, status) {
+      if (status === kakao.maps.services.Status.OK) {
+        console.log(result);
+        let data = result[0].road_address.address_name.split(" ");
+        console.log(data);
+        locationCheck(`${data[0]} ${data[1]}`);
+      }
     };
 
     geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
-}
+  }
 
   return (
     <div onClick={(e) => e.stopPropagation()}>
