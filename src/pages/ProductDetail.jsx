@@ -189,9 +189,15 @@ export const ProductDetail = () => {
               </StyledInfoWrap>
               <StyledPostOptionWrap>
                 <StyledMyPostOption>
-                  <span>글 수정</span>
+                  <span
+                    onClick={() => {
+                      navigate(`/editProduct/${param.id}`, { state: state });
+                    }}
+                  >
+                    글 수정
+                  </span>
                   <StyledNoPointer>·</StyledNoPointer>
-                  <span>글 삭제</span>
+                  <span onClick={deletePost}>글 삭제</span>
                   <StyledNoPointer>·</StyledNoPointer>
                 </StyledMyPostOption>
                 <UserReport />
@@ -398,8 +404,7 @@ const StyledMyPostOption = styled.div`
 `;
 const StyledNoPointer = styled.span`
   cursor: text;
-`
-
+`;
 
 const StyledPostMain = styled.div`
   padding: 5px;
