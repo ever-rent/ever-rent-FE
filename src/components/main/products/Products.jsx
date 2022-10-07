@@ -32,7 +32,7 @@ export const Products = () => {
   }, []);
 
 
-  // 뷰포트 교차 시 데이터 패치
+  // ref / scroll 교차 시 데이터 패치
   useEffect(() => {
     console.log(inView, hasNextPage);
     if (inView && hasNextPage) {

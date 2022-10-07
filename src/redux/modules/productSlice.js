@@ -122,7 +122,10 @@ export const productSlice = createSlice({
       state.products = action.payload.data;
     },
     [addProducts.fulfilled]: (state, action) => {
+      console.log(current(state));
+      console.log(action);
       state.isLoading = false;
+      
       state.products = state.products.concat(action.payload);
       return state;
     },

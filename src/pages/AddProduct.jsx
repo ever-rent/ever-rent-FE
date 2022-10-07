@@ -134,7 +134,7 @@ export const AddProduct = () => {
   const mapLocationCheck = (value) => {
     setMapLocation(value);
   };
-  console.log(mapLocation);
+  // console.log(mapLocation);
 
   // formData
   let sendData = {
