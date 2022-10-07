@@ -42,13 +42,6 @@ export const Profile = ({ like, setLike }) => {
         <StyledIcon>
           <StyledLikeAndChatBox>
             <StyledEachWrap>
-            <StyledLikeAndChat
-              src="https://img.icons8.com/ios/50/47b5ff/reservation-2.png"
-              alt="https://icons8.com/icon/24814/reserve reserve icon by https://icons8.com Icons8"
-            />
-            <span>예약 목록</span>
-          </StyledEachWrap>
-            <StyledEachWrap>
               {like ? (
                 <>
                   <StyledLikeAndChat
@@ -68,7 +61,6 @@ export const Profile = ({ like, setLike }) => {
                   <span>찜목록</span>
                 </>
               )}
-              TODO: 찜목록 어떤식으로 구현할지 아직 미정.
             </StyledEachWrap>
             <StyledEachWrap>
               <StyledLikeAndChat
@@ -284,13 +276,14 @@ const StyledLikeAndChat = styled.img`
 `;
 
 const StyledMobileProfileContainer = styled.div`
-  border: 1px solid black;
+  /* border: 1px solid black; */
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
   padding: 10px 0;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  /* margin-bottom: 30px; */
+  /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
   /* border-radius: 10px; */
   /* padding: 30px 0 0 0; */
   height: 100%;

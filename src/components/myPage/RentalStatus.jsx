@@ -117,6 +117,7 @@ export const RentalStatus = () => {
     //     {CommonList(tabIndex)}
     //   </StyledisStatusDetail>
     // </div>
+
     // Mobile
     <StyledMobileisStatusDetail>
       <StyledTabBar>
@@ -124,8 +125,7 @@ export const RentalStatus = () => {
           return <div key={item.key}>{item.tab}</div>;
         })}
       </StyledTabBar>
-
-      {CommonList(tabIndex)}
+      <StyledCommonListBox>{CommonList(tabIndex)}</StyledCommonListBox>
     </StyledMobileisStatusDetail>
   );
 };
@@ -133,7 +133,7 @@ export const RentalStatus = () => {
 const StyledTab = styled.div`
   /* min-width: max-content; */
   /* margin: 0 5vw; */
-  /* padding: 0 15px; */
+  padding: 5px;
 `;
 
 const StyledisStatusDetail = styled.div`
@@ -174,8 +174,9 @@ const StyledMobileisStatusDetail = styled.div`
   height: 45px;
   align-items: center;
   justify-content: space-between;
-  margin: 10px 0;
-  padding: 0 20px 0 80px;
+  margin: auto;
+  margin-top: 10px;
+  /* padding: 0 20px 0 80px; */
   border-radius: 5px;
   gap: 0;
   cursor: pointer;
@@ -183,19 +184,24 @@ const StyledMobileisStatusDetail = styled.div`
     font-weight: bold;
     border-bottom: 3px solid #47b5ff;
   }
-  @media only screen and (max-width: 767px) {
-    display: flex;
-    /* flex-direction: column; */
-    gap: 0;
-    width: auto;
-    .select {
-      font-weight: bold;
-      border-bottom: 3px solid #47b5ff;
-    }
-  }
 `;
+
 const StyledTabBar = styled.div`
-  border: 1px solid red;
+  /* border: 1px solid blue; */
   display: flex;
+  justify-content: space-around;
+  align-items: center;
   width: 470px;
+  padding-top: 6px;
+  /* margin: auto; */
+`;
+
+const StyledListBox = styled.div`
+  height: 100%;
+`;
+
+const StyledCommonListBox = styled.div`
+  width: 100%;
+  margin-top: 7px;
+  /* border: 1px solid green; */
 `;

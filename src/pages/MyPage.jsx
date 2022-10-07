@@ -22,19 +22,20 @@ export const MyPage = () => {
     //     )}
     //   </StyledGridBox>
     // </Layout>
+
     //mobile
-    <Layout>
-      <StyledFlexBox>
-        <Profile like={like} setLike={setLike} />
-        {like ? (
-          <StyledLikeList>
-            <MyLikeList />
-          </StyledLikeList>
-        ) : (
-          <RentalBar />
-        )}
-      </StyledFlexBox>
-    </Layout>
+    // <Layout>
+    <StyledFlexBox>
+      <Profile like={like} setLike={setLike} />
+      {like ? (
+        <StyledLikeList>
+          <MyLikeList />
+        </StyledLikeList>
+      ) : (
+        <RentalBar />
+      )}
+    </StyledFlexBox>
+    // </Layout>
   );
 };
 
@@ -57,14 +58,15 @@ const StyledGridBox = styled.div`
 `;
 
 const StyledFlexBox = styled.div`
-  border: 1px solid red;
+  /* border: 1px solid red; */
   display: flex;
-  margin: auto;
+  margin: 50px auto;
   width: 480px;
   height: 100%;
   justify-content: space-between;
   flex-direction: column;
 `;
+
 const StyledLikeList = styled.div`
   grid-row: 1/4;
   box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;

@@ -7,6 +7,7 @@ import { BorrowStatus } from "./BorrowStatus";
 export const RentalBar = ({ like }) => {
   const [tabIndex, setTabIndex] = useState(0); //처음에 나오는 것이 빌려준 물건.
   console.log("RentalBar>>", like);
+
   const tabArray = [
     {
       key: "lendItems",
@@ -51,7 +52,9 @@ export const RentalBar = ({ like }) => {
           return <StyledRentalBar key={item.key}>{item.tab}</StyledRentalBar>;
         })}
       </StyledLendAndBorrow>
-      <div>{tabIndex ? <BorrowStatus /> : <RentalStatus />}</div>
+      <StyledMobileRentStatusBox>
+        {tabIndex ? <BorrowStatus /> : <RentalStatus />}
+      </StyledMobileRentStatusBox>
     </>
   );
 };
@@ -65,8 +68,8 @@ const StyledLendAndBorrow = styled.div`
   justify-content: space-around;
   margin-bottom: 30px;
   /* border-radius: 5px; */
-  animation: fadein 0.5s;
-  @keyframes fadein {
+  animation: rentalBarfadein 0.5s;
+  @keyframes rentalBarfadein {
     from {
       opacity: 0;
     }
@@ -111,8 +114,26 @@ const StyledRentStatusBox = styled.div`
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   height: 100%;
   grid-row: 2/4;
-  animation: fadein 0.5s;
-  @keyframes fadein {
+  animation: rentalBarfadein 0.5s;
+  @keyframes rentalBarfadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+`;
+
+const StyledMobileRentStatusBox = styled.div`
+  /* border: 1px solid red; */
+  display: flex;
+  justify-content: center;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  height: 100%;
+  animation: rentalBarfadein 0.5s;
+  @keyframes rentalBarfadein {
     from {
       opacity: 0;
     }

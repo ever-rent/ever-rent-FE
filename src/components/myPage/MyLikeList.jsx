@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getLikeList } from "../../redux/modules/mypageSlice";
+import { getWishList } from "../../redux/modules/mypageSlice";
 import { MyLikeItem } from "./MyLikeItem";
 export const MyLikeList = () => {
   const dispatch = useDispatch();
@@ -8,12 +8,12 @@ export const MyLikeList = () => {
   console.log("MyLikeList >> likeList", likeList);
 
   useEffect(() => {
-    dispatch(getLikeList());
+    dispatch(getWishList());
   }, [dispatch]);
 
   return (
     <div>
-      <div>나의 찜목록</div>
+      {/* <div>나의 찜목록</div> */}
       <div>
         {likeList?.map((item) => {
           return <MyLikeItem item={item} key={item.id} />;

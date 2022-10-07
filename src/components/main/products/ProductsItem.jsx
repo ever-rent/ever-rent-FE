@@ -16,7 +16,7 @@ export const ProductsItem = ({
   memberName,
   price,
   address,
-  Like,
+  wishNum,
   chat,
   content,
   writeAt,
@@ -25,6 +25,7 @@ export const ProductsItem = ({
   rentEnd,
   rentStart,
 }) => {
+  // console.log(wishNum);
   // 찜목록용 dispatch
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -66,15 +67,15 @@ export const ProductsItem = ({
     setCreatedAt(timeToToday(writeAt));
   }, [writeAt]);
 
-  // const reservationHandler = (e) => {
-  //   e.preventDefault();
-  //   const productData = {
-  //     productId: id,
-  //     buyStart: rentStart,
-  //     buyEnd: rentEnd,
-  //   };
-  //   dispatch(postRent(productData));
-  // };
+  const reservationHandler = (e) => {
+    e.preventDefault();
+    const productData = {
+      productId: id,
+      buyStart: rentStart,
+      buyEnd: rentEnd,
+    };
+    dispatch(postRent(productData));
+  };
 
   // navigate state 전달 데이터
   const sendData = {
@@ -85,7 +86,7 @@ export const ProductsItem = ({
     memberName: memberName,
     price: price,
     address: address,
-    Like: Like,
+    wishNum: wishNum,
     chat: chat,
     content: content,
     writeAt: writeAt,
@@ -96,8 +97,61 @@ export const ProductsItem = ({
   };
 
   return (
-    <StyledItemBox>
-      <StyledImgBox>
+    // <StyledItemBox>
+    //   <StyledImgBox>
+    //     <StyledImg
+    //       onClick={() => {
+    //         navigate(`/productDetail/${id}`, { state: sendData });
+    //       }}
+    //       src={`${imgFirstString}${imgUrlArray[0]}`}
+    //       alt="이미지 없음"
+    //     />
+    //   </StyledImgBox>
+    //   <StyledContentBox>
+    //     <StyledTitle>{productName}</StyledTitle>
+    //     <StyledCateId>{categoriNumber(cateId)}</StyledCateId>
+    //     <StyledTimeForToday> ∙ {createdAt}</StyledTimeForToday>
+    //     <StyledPayBox>
+    //       <StyledPay>{price}</StyledPay>
+    //       <StyledDay> / 일</StyledDay>
+    //     </StyledPayBox>
+
+    //     <StyledAddress>{address}</StyledAddress>
+    //     <StyledLikeAndChat>
+    //       <StyledLikeWrap>
+    //         {like ? (
+    //           <StyledLike
+    //             onClick={likeHandler}
+    //             src="https://img.icons8.com/ios-filled/50/47b5ff/like--v1.png"
+    //             alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
+    //           />
+    //         ) : (
+    //           <StyledLike
+    //             onClick={likeHandler}
+    //             src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
+    //             alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
+    //           />
+    //         )}
+    //         <span>찜 {wishNum}</span>
+    //       </StyledLikeWrap>
+
+    //       <StyledChatWrap>
+    //         <StyledChat
+    //           src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
+    //           alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
+    //         />
+    //         <span>채팅 </span>
+    //       </StyledChatWrap>
+    //       <StyledChatWrap>
+    //         <button onClick={reservationHandler}>예약 신청</button>
+    //       </StyledChatWrap>
+    //     </StyledLikeAndChat>
+    //   </StyledContentBox>
+    // </StyledItemBox>
+
+    // 모바일버전
+    <StyledMobileItemBox>
+      <StyledMobileImgBox>
         <StyledImg
           onClick={() => {
             navigate(`/productDetail/${id}`, { state: sendData });
@@ -105,7 +159,7 @@ export const ProductsItem = ({
           src={`${imgFirstString}${imgUrlArray[0]}`}
           alt="이미지 없음"
         />
-      </StyledImgBox>
+      </StyledMobileImgBox>
       <StyledContentBox>
         <StyledTitle>{productName}</StyledTitle>
         <StyledCateId>{categoriNumber(cateId)}</StyledCateId>
@@ -141,65 +195,12 @@ export const ProductsItem = ({
             />
             <span>채팅 </span>
           </StyledChatWrap>
-          {/* <StyledChatWrap> */}
-          {/* <button onClick={reservationHandler}>예약 신청</button> */}
-          {/* </StyledChatWrap> */}
+          {/* <StyledChatWrap>
+            <button onClick={reservationHandler}>예약 신청</button>
+          </StyledChatWrap> */}
         </StyledLikeAndChat>
       </StyledContentBox>
-    </StyledItemBox>
-
-    // 모바일버전
-    // <StyledMobileItemBox>
-    //   <StyledMobileImgBox>
-    //     <StyledImg
-    //       onClick={() => {
-    //         navigate(`/productDetail/${id}`);
-    //       }}
-    //       src={imgUrlArray[0]}
-    //       alt="이미지 없음"
-    //     />
-    //   </StyledMobileImgBox>
-    //   <StyledContentBox>
-    //     <StyledTitle>{productName}</StyledTitle>
-    //     <StyledCateId>{categoriNumber(cateId)}</StyledCateId>
-    //     <StyledTimeForToday> ∙ {createdAt}</StyledTimeForToday>
-    //     <StyledPayBox>
-    //       <StyledPay>{price}</StyledPay>
-    //       <StyledDay> / 일</StyledDay>
-    //     </StyledPayBox>
-
-    //     <StyledAddress>{address}</StyledAddress>
-    //     <StyledLikeAndChat>
-    //       <StyledLikeWrap>
-    //         {like ? (
-    //           <StyledLike
-    //             onClick={likeHandler}
-    //             src="https://img.icons8.com/ios-filled/50/47b5ff/like--v1.png"
-    //             alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
-    //           />
-    //         ) : (
-    //           <StyledLike
-    //             onClick={likeHandler}
-    //             src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
-    //             alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
-    //           />
-    //         )}
-    //         <span>찜 {likeCount}</span>
-    //       </StyledLikeWrap>
-
-    //       <StyledChatWrap>
-    //         <StyledChat
-    //           src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
-    //           alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
-    //         />
-    //         <span>채팅 </span>
-    //       </StyledChatWrap>
-    //       {/* <StyledChatWrap>
-    //         <button onClick={reservationHandler}>예약 신청</button>
-    //       </StyledChatWrap> */}
-    //     </StyledLikeAndChat>
-    //   </StyledContentBox>
-    // </StyledMobileItemBox>
+    </StyledMobileItemBox>
   );
 };
 
