@@ -34,7 +34,6 @@ export const AddProduct = () => {
     }
   };
 
-
   // 업로드 압축 & state 데이터로 저장
   const fileChange = (fileBlob) => {
     console.log(fileBlob);
@@ -95,7 +94,6 @@ export const AddProduct = () => {
     setSendImage([...sendImage].concat(file));
   };
 
-
   // 사진 클릭 시 미리보기/보낼 이미지에서 제거
   const initImage = (item, indexNum) => {
     setImgView(imgView.filter((element) => element !== item));
@@ -121,7 +119,6 @@ export const AddProduct = () => {
 
   const [disabled, setDisabled] = useState(true);
 
-
   // 게시글 작성 유효성 검사 추가 예정(이미지/주소 등)
   const checkPost = () => {
     if (title.length > 3 && description.length > 0) {
@@ -134,11 +131,10 @@ export const AddProduct = () => {
     checkPost();
   });
 
-
-  const mapLocationCheck = (value)=>{
-    setMapLocation(value)
-  }
-  console.log(mapLocation)
+  const mapLocationCheck = (value) => {
+    setMapLocation(value);
+  };
+  console.log(mapLocation);
 
   // formData
   let sendData = {
@@ -152,8 +148,7 @@ export const AddProduct = () => {
     rentEnd: endDateInput,
   };
 
-
-  // 유효성 검사 추가 예정(이미지/주소 등) 
+  // 유효성 검사 추가 예정(이미지/주소 등)
   const addProductPost = () => {
     if (title === "" || description === "") {
       alert("제목/내용을 적어주세요!");
@@ -180,7 +175,7 @@ export const AddProduct = () => {
           }
 
           dispatch(addProducts(formData));
-          navigate("/")
+          navigate("/");
         }
       });
     }

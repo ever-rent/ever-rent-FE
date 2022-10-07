@@ -117,8 +117,8 @@ export const productSlice = createSlice({
     },
 
     [getProductsDetail.fulfilled]: (state, action) => {
-      console.log(current(state))
-      console.log(action)
+      console.log(current(state));
+      console.log(action);
       state.products = action.payload.data;
     },
     [addProducts.fulfilled]: (state, action) => {
