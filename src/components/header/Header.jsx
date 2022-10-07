@@ -234,6 +234,7 @@ const StyledMobileHeader = styled.div`
   background-color: white;
   position: fixed;
   top: 0;
+  z-index:999;
 `;
 
 const StyledMobileHeaderWrap = styled.div`
