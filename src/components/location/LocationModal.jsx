@@ -6,7 +6,7 @@ export const LocationModal = ({
   showModal,
   closeModal,
   location,
-  mapLocationCheck,
+  locationCheck,
 }) => {
   // 거래장소 props 추가 예정
   const { kakao } = window;
@@ -15,7 +15,6 @@ export const LocationModal = ({
   const [markers, setMarkers] = useState([]);
   const [map, setMap] = useState();
 
-  const [locationID, setLocationID] = useState("");
 
   useEffect(() => {
     if (!map) return;
@@ -53,8 +52,9 @@ export const LocationModal = ({
     let callback = function (result, status) {
       if (status === kakao.maps.services.Status.OK) {
         console.log(result);
-        setLocationID(result);
-        mapLocationCheck(result);
+        let data = result[0].road_address.address_name.split(" ");
+        console.log(data);
+        locationCheck(`${data[0]} ${data[1]}`);
       }
     };
 

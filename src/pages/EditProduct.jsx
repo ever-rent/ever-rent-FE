@@ -133,6 +133,7 @@ export const EditProduct = () => {
   const [startDateInput, setStartDateInput] = useState("");
   const [endDateInput, setEndDateInput] = useState("");
   const [tradeLocation, setTradeLocation] = useState("");
+  const [location, setLocation] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
@@ -149,13 +150,18 @@ export const EditProduct = () => {
     checkPost();
   });
 
+  const locationCheck = (value) => {
+    setLocation(value);
+  };
+
   let sendData = {
     productName: title,
     content: description,
     cateId: categoryInput,
     price: priceInput,
-    rentStart: startDateInput,
     location: tradeLocation,
+    mapLocation: tradeLocation,
+    rentStart: startDateInput,
     rentEnd: endDateInput,
   };
   // productId: param.id,
@@ -242,21 +248,6 @@ export const EditProduct = () => {
                             ))
                         : null}
                     </StyledProductSubImageWrap>
-                    {/* <StyledProductSubImageWrap>
-                  {imgView.map((item, index) => {
-                    if (index !== 0) {
-                      return (
-                        <StyledProductSubImage
-                          key={index}
-                          src={item}
-                          onClick={() => {
-                            initImage(item, index);
-                          }}
-                        />
-                      );
-                    }
-                  })}
-                </StyledProductSubImageWrap> */}
                     <StyledDeleteImg>
                       사진을 누르면 삭제돼요!
                       <br />
@@ -366,6 +357,7 @@ export const EditProduct = () => {
                 showModal={showModal}
                 closeModal={closeModal}
                 location={tradeLocation}
+                locationCheck={locationCheck}
               />
               <StyledPostTitle
                 type="text"
@@ -553,6 +545,7 @@ export const EditProduct = () => {
                 showModal={showModal}
                 closeModal={closeModal}
                 location={tradeLocation}
+                locationCheck={locationCheck}
               />
               <StyledMobilePostTitle
                 type="text"
@@ -602,6 +595,17 @@ const StyledEditProductContainer = styled.div`
   margin-top: 100px;
   display: flex;
   justify-content: center;
+
+  animation: editProductFadein 1.5s;
+	&{
+	@keyframes editProductFadein {
+   	 from {
+       	 opacity:0;
+    	}
+   	 to {
+      	  opacity:1;
+   	 }		
+}}
 `;
 
 const StyledEditProductForm = styled.form`
@@ -861,12 +865,23 @@ const StyledMobileContainer = styled.div`
   margin-top: 100px;
   display: flex;
   justify-content: center;
+
+  animation: editProductFadein 1.5s;
+	&{
+	@keyframes editProductFadein {
+   	 from {
+       	 opacity:0;
+    	}
+   	 to {
+      	  opacity:1;
+   	 }		
+}}
 `;
 
 const StyledMobileProductForm = styled.form`
   display: flex;
   flex-direction: column;
-  width: 470px;
+  width: 400px;
 
   padding: 40px;
   /* box-shadow: 1px 1px 5px 1px rgb(71, 181, 255); */
@@ -1042,7 +1057,7 @@ const StyledMobileLocationBtn = styled.button`
 const StyledMobilePostTitle = styled.input`
   margin-top: 30px;
   padding: 10px;
-  width: 400px;
+  width: 300px;
   height: 30px;
   border: 1px solid rgb(71, 181, 255);
   border-radius: 10px;

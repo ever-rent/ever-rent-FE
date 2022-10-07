@@ -336,6 +336,17 @@ const StyledDetailProductContainer = styled.div`
   margin-top: 100px;
   display: flex;
   justify-content: center;
+
+  animation: productDetailFadein 1.5s;
+	&{
+	@keyframes productDetailFadein {
+   	 from {
+       	 opacity:0;
+    	}
+   	 to {
+      	  opacity:1;
+   	 }		
+}}
 `;
 
 const StyledDetailProductWrap = styled.div`
@@ -509,6 +520,17 @@ const StyledMobileDetailContainer = styled.div`
   margin-top: 100px;
   display: flex;
   justify-content: center;
+
+  animation: productDetailFadein 1.5s;
+	&{
+	@keyframes productDetailFadein {
+   	 from {
+       	 opacity:0;
+    	}
+   	 to {
+      	  opacity:1;
+   	 }		
+}}
 `;
 
 const StyledMobileDetailWrap = styled.div`
