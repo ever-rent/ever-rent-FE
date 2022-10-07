@@ -116,7 +116,7 @@ export const ProductDetail = () => {
         <StyledDetailProductWrap>
           <PostReport />
           {/* 게시글 리포트자리 */}
-          <StyledEditableOption
+          {/* <StyledEditableOption
             style={
               editabled === false ? { display: "none" } : { display: "flex" }
             }
@@ -131,7 +131,7 @@ export const ProductDetail = () => {
             <StyledDeleteButton onClick={deletePost}>
               글 삭제 X
             </StyledDeleteButton>
-          </StyledEditableOption>
+          </StyledEditableOption> */}
           <StyledPostHeadWrap>
             <StyledProductImagetWrap>
               <SyltedProductMainImage
