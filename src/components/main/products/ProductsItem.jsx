@@ -43,6 +43,16 @@ export const ProductsItem = ({
   // console.log("data", id, data);
   // console.log(id, like);
 
+  const presentStatus = (status) => {
+    if (status === "WAITING") {
+      return <StyledStatus>대기중</StyledStatus>;
+    } else if (status === "CONFIRMATION") {
+      return <StyledStatus>예약중</StyledStatus>;
+    } else if (status === "EXPIRATION") {
+      return <StyledStatus>예약중</StyledStatus>;
+    }
+  };
+
   const likeHandler = (e) => {
     e.preventDefault();
     setlike(!like);
@@ -115,14 +125,19 @@ export const ProductsItem = ({
           </StyledImgBox>
           <StyledContentBox>
             <StyledTitle>{productName}</StyledTitle>
-            <StyledCateId>{categoriNumber(cateId)}</StyledCateId>
-            <StyledTimeForToday> ∙ {createdAt}</StyledTimeForToday>
+            {/* <StyledCateId>{categoriNumber(cateId)}</StyledCateId> */}
+            <StyledLocation>{location}</StyledLocation>
+            <br />
+            {/* <StyledPeriod>
+              {rentEnd}~{rentStart}
+            </StyledPeriod> */}
             <StyledPayBox>
               <StyledPay>{price}</StyledPay>
               <StyledDay> / 일</StyledDay>
+              <br />
+              <StyledTimeForToday> {createdAt}</StyledTimeForToday>
             </StyledPayBox>
-
-            <StyledAddress>{address}</StyledAddress>
+            {presentStatus(status)}
             <StyledLikeAndChat>
               <StyledLikeWrap>
                 {like ? (
@@ -140,7 +155,6 @@ export const ProductsItem = ({
                 )}
                 <span>찜 {wishNum}</span>
               </StyledLikeWrap>
-
               <StyledChatWrap>
                 <StyledChat
                   src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
@@ -148,9 +162,9 @@ export const ProductsItem = ({
                 />
                 <span>채팅 </span>
               </StyledChatWrap>
-              <StyledChatWrap>
+              {/* <StyledChatWrap>
                 <button onClick={reservationHandler}>예약 신청</button>
-              </StyledChatWrap>
+              </StyledChatWrap> */}
             </StyledLikeAndChat>
           </StyledContentBox>
         </StyledItemBox>
@@ -169,16 +183,22 @@ export const ProductsItem = ({
           </StyledMobileImgBox>
           <StyledContentBox>
             <StyledTitle>{productName}</StyledTitle>
-            <StyledCateId>{categoriNumber(cateId)}</StyledCateId>
-            <StyledTimeForToday> ∙ {createdAt}</StyledTimeForToday>
+            {/* <StyledCateId>{categoriNumber(cateId)}</StyledCateId> */}
+            <StyledLocation>{location}</StyledLocation>
+            <br />
+            {/* <StyledPeriod>
+              {rentEnd}~{rentStart}
+            </StyledPeriod> */}
             <StyledPayBox>
               <StyledPay>{price}</StyledPay>
               <StyledDay> / 일</StyledDay>
+              <br />
+              <StyledTimeForToday>{createdAt}</StyledTimeForToday>
             </StyledPayBox>
 
             <StyledAddress>{address}</StyledAddress>
-            <StyledLikeAndChat>
-              <StyledLikeWrap>
+            <StyledMobileLikeAndChat>
+              <StyledMobileLikeWrap>
                 {like ? (
                   <StyledLike
                     onClick={likeHandler}
@@ -193,25 +213,31 @@ export const ProductsItem = ({
                   />
                 )}
                 <span>찜 {likeCount}</span>
-              </StyledLikeWrap>
+              </StyledMobileLikeWrap>
 
-              <StyledChatWrap>
+              <StyledMobileChatWrap>
                 <StyledChat
                   src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
                   alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
                 />
                 <span>채팅 </span>
-              </StyledChatWrap>
+              </StyledMobileChatWrap>
               {/* <StyledChatWrap>
             <button onClick={reservationHandler}>예약 신청</button>
           </StyledChatWrap> */}
-            </StyledLikeAndChat>
+            </StyledMobileLikeAndChat>
           </StyledContentBox>
         </StyledMobileItemBox>
       </Mobile>
     </>
   );
 };
+
+const StyledStatus = styled.span`
+  font-size: 14px;
+  font-weight: 600;
+  color: #1185d7;
+`;
 
 const StyledItemBox = styled.div`
   /* border: 1px solid red; */
@@ -250,7 +276,7 @@ const StyledMobileImgBox = styled.div`
   padding: 2px;
   width: 200px;
   height: 140px;
-  margin: 0 3px 3px 0;
+  margin: 5px 15px 5px 3px;
 `;
 
 const StyledImg = styled.img`
@@ -274,12 +300,19 @@ const StyledTitle = styled.div`
 const StyledCateId = styled.span`
   font-size: 13px;
 `;
-const StyledTimeForToday = styled.span`
-  font-size: 13px;
+const StyledTimeForToday = styled(StyledCateId)`
+  color: gray;
 `;
 
+const StyledLocation = styled(StyledCateId)`
+  color: gray;
+  /* font-weight: 600; */
+`;
+
+const StyledPeriod = styled(StyledLocation)``;
+
 const StyledPayBox = styled.div`
-  margin-top: 5px;
+  margin: 5px 0 5px 0;
 `;
 const StyledPay = styled.span`
   /* border: 1px solid red; */
@@ -305,6 +338,16 @@ const StyledLikeAndChat = styled.div`
   font-size: small;
 `;
 
+const StyledMobileLikeAndChat = styled.div`
+  /* border: 1px solid red; */
+  width: max-content;
+  height: max-content;
+  display: flex;
+  position: relative;
+  font-size: small;
+  padding-top: 5px;
+`;
+
 const StyledLikeWrap = styled.span`
   /* border: 1px solid red; */
   display: flex;
@@ -313,6 +356,17 @@ const StyledLikeWrap = styled.span`
   align-items: center;
   width: max-content;
 `;
+
+const StyledMobileLikeWrap = styled.span`
+  /* border: 1px solid red; */
+  display: flex;
+  /* flex-direction: column; */
+  /* margin: 5px 12px 0 0; */
+  align-items: center;
+  width: max-content;
+  bottom: 0;
+`;
+
 const StyledLike = styled.img`
   width: 20px;
   height: 20px;
@@ -325,6 +379,15 @@ const StyledChatWrap = styled.span`
   display: flex;
   /* flex-direction: column; */
   margin: 5px 5px 0 0;
+  align-items: center;
+  width: max-content;
+`;
+
+const StyledMobileChatWrap = styled.span`
+  /* border: 1px solid red; */
+  display: flex;
+  /* flex-direction: column; */
+  /* margin: 5px 5px 0 0; */
   align-items: center;
   width: max-content;
 `;

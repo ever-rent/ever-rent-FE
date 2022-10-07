@@ -70,7 +70,7 @@ export const Products = () => {
           }
         </StyledProductsContainer>
       </Desktop>
-
+      {/* ################ 모바일 ################ */}
       <Mobile>
         <StyledMobileContainer>
           <StyledMobileProducts>
@@ -108,8 +108,10 @@ const StyledProductsGrid = styled.div`
 
 const StyledMobileContainer = styled.div`
   /* border: 1px solid red; */
-  max-width: 480px;
+  max-width: 400px;
   margin: auto;
+  margin-bottom: 90px;
+  padding: 20px;
 `;
 
 const StyledMobileProducts = styled.div`

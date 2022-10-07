@@ -115,8 +115,8 @@ export const RentalStatus = () => {
           {tabArray.map((item) => {
             return <div key={item.key}>{item.tab}</div>;
           })}
-          {CommonList(tabIndex)}
         </StyledisStatusDetail>
+        <StyledList>{CommonList(tabIndex)}</StyledList>
       </Desktop>
       {/* ################ 모바일 ################ */}
       <Mobile>
@@ -148,7 +148,7 @@ const StyledisStatusDetail = styled.div`
   align-items: center;
   justify-content: space-between;
   margin: 10px 0;
-  padding: 0 20px 0 80px;
+  padding: 0 65px 0 80px;
   border-radius: 5px;
   gap: 60px;
   cursor: pointer;
@@ -156,18 +156,10 @@ const StyledisStatusDetail = styled.div`
     font-weight: bold;
     border-bottom: 3px solid #47b5ff;
   }
-  @media only screen and (max-width: 767px) {
-    display: flex;
-    /* flex-direction: column; */
-    gap: 0;
-    width: auto;
-    .select {
-      font-weight: bold;
-      border-bottom: 3px solid #47b5ff;
-    }
-  }
 `;
-
+const StyledList = styled.div`
+  display: flex;
+`;
 const StyledMobileisStatusDetail = styled.div`
   /* border: 1px solid red; */
   display: flex;
@@ -200,6 +192,7 @@ const StyledTabBar = styled.div`
 `;
 
 const StyledListBox = styled.div`
+  width: 100%;
   height: 100%;
 `;
 

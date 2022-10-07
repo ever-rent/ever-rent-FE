@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Layout } from "../components/layout/Layout";
 import { RentalBar } from "../components/myPage/RentalBar";
 import { Profile } from "../components/myPage/Profile";
-import { MyLikeList } from "../components/myPage/MyLikeList";
+import { MyWishList } from "../components/myPage/MyWishList";
 import { Desktop, Mobile } from "../Hooks/MideaQuery";
 
 export const MyPage = () => {
@@ -19,7 +19,7 @@ export const MyPage = () => {
             <Profile like={like} setLike={setLike} />
             {like ? (
               <StyledLikeList>
-                <MyLikeList />
+                <MyWishList />
               </StyledLikeList>
             ) : (
               <RentalBar />
@@ -29,18 +29,16 @@ export const MyPage = () => {
       </Desktop>
       {/* ################ 모바일 ################ */}
       <Mobile>
-        <Layout>
-          <StyledFlexBox>
-            <Profile like={like} setLike={setLike} />
-            {like ? (
-              <StyledLikeList>
-                <MyLikeList />
-              </StyledLikeList>
-            ) : (
-              <RentalBar />
-            )}
-          </StyledFlexBox>
-        </Layout>
+        <StyledFlexBox>
+          <Profile like={like} setLike={setLike} />
+          {like ? (
+            <StyledLikeList>
+              <MyWishList />
+            </StyledLikeList>
+          ) : (
+            <RentalBar />
+          )}
+        </StyledFlexBox>
       </Mobile>
     </>
   );
