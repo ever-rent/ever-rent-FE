@@ -807,9 +807,7 @@ const StyledMobileProductForm = styled.form`
   display: flex;
   flex-direction: column;
   width: 470px;
-
   padding: 40px;
-  /* box-shadow: 1px 1px 5px 1px rgb(71, 181, 255); */
   border-radius: 10px;
   margin-bottom:50px;
 `;

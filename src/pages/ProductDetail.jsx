@@ -111,30 +111,111 @@ export const ProductDetail = () => {
   };
 
   return (
+    // <Layout>
+    //   <StyledDetailProductContainer>
+    //     <StyledDetailProductWrap>
+    //       <PostReport />
+    //       {/* 게시글 리포트자리 */}
+    //       <StyledPostHeadWrap>
+    //         <StyledProductImagetWrap>
+    //           <SyltedProductMainImage
+    //             src={
+    //               detailData?.imgUrlArray[0] !== null
+    //                 ? `${firstUrl}${detailData?.imgUrlArray[0]}`
+    //                 : "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png"
+    //             }
+    //             alt="이미지 미리보기"
+    //           />
+    //           <StyledProductSubImageWrap>
+    //             {detailData?.imgUrlArray.map((item, index) => {
+    //               if (index !== 0) {
+    //                 return <StyledProductSubImage src={`${firstUrl}${item}`} />;
+    //               }
+    //             })}
+    //           </StyledProductSubImageWrap>
+    //         </StyledProductImagetWrap>
+    //       </StyledPostHeadWrap>
+    //       <StyledPostBodyWrap>
+    //         <StyledPostSubItems>
+    //           <StyledImagesWrap>
+    //             <StyledChatImage
+    //               src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
+    //               alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
+    //             />
+    //             <StyledChatImgAlt>채팅하기</StyledChatImgAlt>
+    //           </StyledImagesWrap>
+    //           <FavoritIconButton />
+    //           <StyledImagesWrap className="openPopupButton" onClick={openModal}>
+    //             <StyledMapImage
+    //               src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FZoOUr%2FbtrMtG2s1YT%2FLwGap5AgYCUktPDgK0hCik%2Fimg.png"
+    //               alt="https://icons8.com/icon/WbyzmoN1bnxR/map-marker Map Marker icon by https://icons8.com Icons8"
+    //             />
+    //             <StyledMapImgAlt>위치</StyledMapImgAlt>
+    //             <LocationModal
+    //               showModal={showModal}
+    //               closeModal={closeModal}
+    //               location={detailData?.location}
+    //             />
+    //           </StyledImagesWrap>
+    //         </StyledPostSubItems>
+    //         <StyledPostHr />
+    //         <StyledUserInfo>
+    //           <StyledInfoWrap>
+    //             <StyledUserimage src={userImage} />
+    //             <StyledUserSubInfo>
+    //               <StyledUserNickname>
+    //                 {detailData?.memberName}
+    //               </StyledUserNickname>
+    //               <StyledUserLocation>
+    //                 {detailData?.location}
+    //               </StyledUserLocation>
+    //             </StyledUserSubInfo>
+    //           </StyledInfoWrap>
+    //           <StyledPostOptionWrap>
+    //             <StyledMyPostOption>
+    //               <span
+    //                 onClick={() => {
+    //                   navigate(`/editProduct/${param.id}`, { state: state });
+    //                 }}
+    //               >
+    //                 글 수정
+    //               </span>
+    //               <StyledNoPointer>·</StyledNoPointer>
+    //               <span onClick={deletePost}>글 삭제</span>
+    //               <StyledNoPointer>·</StyledNoPointer>
+    //             </StyledMyPostOption>
+    //             <UserReport />
+    //             {/* 유저 리포트 자리 */}
+    //           </StyledPostOptionWrap>
+    //         </StyledUserInfo>
+    //         <StyledPostHr />
+    //         <StyledPostMain>
+    //           <StyledPostTitle>{detailData?.productName}</StyledPostTitle>
+    //           <StyledPostEachWrap>
+    //             <StyledPostCategory>
+    //               {categoriNumber(detailData?.cateId)}
+    //             </StyledPostCategory>
+    //             <StyledTimeForToday> ㆍ{createdAt}</StyledTimeForToday>
+    //           </StyledPostEachWrap>
+    //           <StyledProductPrice>
+    //             {detailData?.price}(원) / 일
+    //           </StyledProductPrice>
+    //           <StyledPostDescription>
+    //             {detailData?.content}
+    //           </StyledPostDescription>
+    //         </StyledPostMain>
+    //       </StyledPostBodyWrap>
+    //     </StyledDetailProductWrap>
+    //   </StyledDetailProductContainer>
+    // </Layout>
     <Layout>
-      <StyledDetailProductContainer>
-        <StyledDetailProductWrap>
+      <StyledMobileDetailContainer>
+        <StyledMobileDetailWrap>
           <PostReport />
           {/* 게시글 리포트자리 */}
-          {/* <StyledEditableOption
-            style={
-              editabled === false ? { display: "none" } : { display: "flex" }
-            }
-          >
-            <StyledEditButton
-              onClick={() => {
-                navigate(`/editProduct/${param.id}`, { state: state });
-              }}
-            >
-              글 수정
-            </StyledEditButton>
-            <StyledDeleteButton onClick={deletePost}>
-              글 삭제 X
-            </StyledDeleteButton>
-          </StyledEditableOption> */}
-          <StyledPostHeadWrap>
-            <StyledProductImagetWrap>
-              <SyltedProductMainImage
+          <StyledMobilePostHeadWrap>
+            <StyledMobileProductImagetWrap>
+              <SyltedMobileProductMainImage
                 src={
                   detailData?.imgUrlArray[0] !== null
                     ? `${firstUrl}${detailData?.imgUrlArray[0]}`
@@ -142,26 +223,26 @@ export const ProductDetail = () => {
                 }
                 alt="이미지 미리보기"
               />
-              <StyledProductSubImageWrap>
+              <StyledMobileSubImageWrap>
                 {detailData?.imgUrlArray.map((item, index) => {
                   if (index !== 0) {
-                    return <StyledProductSubImage src={`${firstUrl}${item}`} />;
+                    return <StyledMobileSubImage src={`${firstUrl}${item}`} />;
                   }
                 })}
-              </StyledProductSubImageWrap>
-            </StyledProductImagetWrap>
-          </StyledPostHeadWrap>
-          <StyledPostBodyWrap>
-            <StyledPostSubItems>
-              <StyledImagesWrap>
+              </StyledMobileSubImageWrap>
+            </StyledMobileProductImagetWrap>
+          </StyledMobilePostHeadWrap>
+          <StyledMobilePostBodyWrap>
+            <StyledMobilePostSubItems>
+              <StyledMobileImagesWrap>
                 <StyledChatImage
                   src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
                   alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
                 />
                 <StyledChatImgAlt>채팅하기</StyledChatImgAlt>
-              </StyledImagesWrap>
+              </StyledMobileImagesWrap>
               <FavoritIconButton />
-              <StyledImagesWrap className="openPopupButton" onClick={openModal}>
+              <StyledMobileImagesWrap className="openPopupButton" onClick={openModal}>
                 <StyledMapImage
                   src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FZoOUr%2FbtrMtG2s1YT%2FLwGap5AgYCUktPDgK0hCik%2Fimg.png"
                   alt="https://icons8.com/icon/WbyzmoN1bnxR/map-marker Map Marker icon by https://icons8.com Icons8"
@@ -172,23 +253,23 @@ export const ProductDetail = () => {
                   closeModal={closeModal}
                   location={detailData?.location}
                 />
-              </StyledImagesWrap>
-            </StyledPostSubItems>
-            <StyledPostHr />
-            <StyledUserInfo>
-              <StyledInfoWrap>
-                <StyledUserimage src={userImage} />
-                <StyledUserSubInfo>
-                  <StyledUserNickname>
+              </StyledMobileImagesWrap>
+            </StyledMobilePostSubItems>
+            <StyledMobilePostHr />
+            <StyledMobileUserInfo>
+              <StyledMobileInfoWrap>
+                <StyledMobileUserimage src={userImage} />
+                <StyledMobileUserSubInfo>
+                  <StyledMobileUserNickname>
                     {detailData?.memberName}
-                  </StyledUserNickname>
-                  <StyledUserLocation>
+                  </StyledMobileUserNickname>
+                  <StyledMobileUserLocation>
                     {detailData?.location}
-                  </StyledUserLocation>
-                </StyledUserSubInfo>
-              </StyledInfoWrap>
-              <StyledPostOptionWrap>
-                <StyledMyPostOption>
+                  </StyledMobileUserLocation>
+                </StyledMobileUserSubInfo>
+              </StyledMobileInfoWrap>
+              <StyledMobilePostOptionWrap>
+                <StyledMobileMyPostOption>
                   <span
                     onClick={() => {
                       navigate(`/editProduct/${param.id}`, { state: state });
@@ -199,30 +280,30 @@ export const ProductDetail = () => {
                   <StyledNoPointer>·</StyledNoPointer>
                   <span onClick={deletePost}>글 삭제</span>
                   <StyledNoPointer>·</StyledNoPointer>
-                </StyledMyPostOption>
+                </StyledMobileMyPostOption>
                 <UserReport />
                 {/* 유저 리포트 자리 */}
-              </StyledPostOptionWrap>
-            </StyledUserInfo>
+              </StyledMobilePostOptionWrap>
+            </StyledMobileUserInfo>
             <StyledPostHr />
-            <StyledPostMain>
-              <StyledPostTitle>{detailData?.productName}</StyledPostTitle>
-              <StyledPostEachWrap>
+            <StyledMobilePostMain>
+              <StyledMobilePostTitle>{detailData?.productName}</StyledMobilePostTitle>
+              <StyledMobilePostEachWrap>
                 <StyledPostCategory>
                   {categoriNumber(detailData?.cateId)}
                 </StyledPostCategory>
                 <StyledTimeForToday> ㆍ{createdAt}</StyledTimeForToday>
-              </StyledPostEachWrap>
-              <StyledProductPrice>
+              </StyledMobilePostEachWrap>
+              <StyledMobileProductPrice>
                 {detailData?.price}(원) / 일
-              </StyledProductPrice>
-              <StyledPostDescription>
+              </StyledMobileProductPrice>
+              <StyledMobilePostDescription>
                 {detailData?.content}
-              </StyledPostDescription>
-            </StyledPostMain>
-          </StyledPostBodyWrap>
-        </StyledDetailProductWrap>
-      </StyledDetailProductContainer>
+              </StyledMobilePostDescription>
+            </StyledMobilePostMain>
+          </StyledMobilePostBodyWrap>
+        </StyledMobileDetailWrap>
+      </StyledMobileDetailContainer>
     </Layout>
   );
 };
@@ -243,39 +324,6 @@ const StyledDetailProductWrap = styled.div`
   border-radius: 10px;
 `;
 
-const StyledEditableOption = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`;
-const StyledEditButton = styled.button`
-  color: rgb(62, 160, 226);
-  border-color: rgb(71, 181, 255);
-  border-radius: 5px;
-  background-color: white;
-
-  margin-right: 10px;
-  font-weight: bold;
-  font-size: 12px;
-  cursor: pointer;
-  &:hover {
-    color: white;
-    background-color: rgb(71, 181, 255);
-  }
-`;
-const StyledDeleteButton = styled.button`
-  color: white;
-  border: none;
-  border-radius: 5px;
-  background-color: rgb(224, 11, 11);
-
-  margin-right: 10px;
-  font-weight: bold;
-  font-size: 12px;
-  cursor: pointer;
-  &:hover {
-    color: black;
-  }
-`;
 
 const StyledPostHeadWrap = styled.div`
   display: flex;
@@ -428,6 +476,157 @@ const StyledProductPrice = styled.div`
 `;
 
 const StyledPostDescription = styled.div`
+  padding: 5px;
+  margin-top: 30px;
+`;
+
+
+
+
+// for Mobile
+
+const StyledMobileDetailContainer = styled.div`
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+`;
+
+const StyledMobileDetailWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 470px;
+  padding: 40px;
+  border-radius: 10px;
+  margin-bottom:50px;
+`;
+
+
+const StyledMobilePostHeadWrap = styled.div`
+  display: flex;
+  justify-content: space-around;
+
+  height: 250px;
+`;
+
+const StyledMobileProductImagetWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 200px;
+`;
+
+const SyltedMobileProductMainImage = styled.img`
+  margin-top: 20px;
+
+  width: 300px;
+  height: 300px;
+  cursor: pointer;
+`;
+
+const StyledMobileSubImageWrap = styled.div`
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: 50px 50px 50px 50px 50px;
+  grid-gap: 10px;
+`;
+const StyledMobileSubImage = styled.img`
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+`;
+
+const StyledMobilePostBodyWrap = styled.section`
+  margin-top: 250px;
+`;
+
+const StyledMobilePostSubItems = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 50px;
+`;
+
+const StyledMobileImagesWrap = styled.div`
+  width: 90px;
+  height: 90px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 20px;
+  cursor: pointer;
+  border-radius: 15px;
+  &:hover {
+    background-color: #ebebeb;
+  }
+`;
+
+const StyledMobilePostHr = styled.hr`
+  margin: 10px 0 10px;
+  border: none;
+  height: 1px;
+  box-shadow: 1px 1px 1px 1px #ebebeb;
+`;
+
+const StyledMobileUserInfo = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const StyledMobileInfoWrap = styled.div`
+  display: flex;
+`;
+
+const StyledMobileUserimage = styled.img`
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+`;
+
+const StyledMobileUserSubInfo = styled.div``;
+const StyledMobileUserNickname = styled.div`
+  padding: 5px;
+`;
+const StyledMobileUserLocation = styled.div`
+  padding: 5px;
+`;
+
+const StyledMobilePostOptionWrap = styled.div`
+  display: flex;
+`;
+const StyledMobileMyPostOption = styled.div`
+  display: flex;
+
+  & span {
+    margin-right: 10px;
+    font-size: 14px;
+    color: gray;
+    cursor: pointer;
+  }
+`;
+
+const StyledMobilePostMain = styled.div`
+  padding: 5px;
+`;
+const StyledMobilePostTitle = styled.h2`
+  margin: 10px;
+`;
+const StyledMobilePostEachWrap = styled.div`
+  display: flex;
+  font-size: 12px;
+  color: gray;
+  padding: 5px;
+`;
+
+const StyledMobileProductPrice = styled.div`
+  font-size: 18px;
+  font-weight: bold;
+
+  padding: 5px;
+`;
+
+const StyledMobilePostDescription = styled.div`
   padding: 5px;
   margin-top: 30px;
 `;
