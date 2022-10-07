@@ -26,10 +26,7 @@ export const mypageAPI = {
 
 export const userAPI = {};
 
-
-
-
-
 // imgUrlArray firstString
 // env 설정 예정
-export const imgFirstString = "https://davidsone.s3.ap-northeast-2.amazonaws.com/";
+export const imgFirstString =
+  "https://davidsone.s3.ap-northeast-2.amazonaws.com/";
