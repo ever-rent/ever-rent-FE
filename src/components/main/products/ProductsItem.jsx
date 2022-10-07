@@ -23,8 +23,11 @@ export const ProductsItem = ({
   writeAt,
   cateId,
   location,
+  mapLocation,
   rentEnd,
   rentStart,
+  status,
+  // like
 }) => {
   // console.log(wishNum);
   // 찜목록용 dispatch

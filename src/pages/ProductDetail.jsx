@@ -13,6 +13,7 @@ import { LocationModal } from "../components/location/LocationModal";
 import { imgFirstString } from "../server/api";
 
 import Swal from "sweetalert2";
+import { Desktop, Mobile } from "../Hooks/MideaQuery";
 
 import { UserReport } from "../components/report/UserReport";
 import { PostReport } from "../components/report/PostReport";
@@ -111,200 +112,223 @@ export const ProductDetail = () => {
   };
 
   return (
-    // <Layout>
-    //   <StyledDetailProductContainer>
-    //     <StyledDetailProductWrap>
-    //       <PostReport />
-    //       {/* 게시글 리포트자리 */}
-    //       <StyledPostHeadWrap>
-    //         <StyledProductImagetWrap>
-    //           <SyltedProductMainImage
-    //             src={
-    //               detailData?.imgUrlArray[0] !== null
-    //                 ? `${firstUrl}${detailData?.imgUrlArray[0]}`
-    //                 : "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png"
-    //             }
-    //             alt="이미지 미리보기"
-    //           />
-    //           <StyledProductSubImageWrap>
-    //             {detailData?.imgUrlArray.map((item, index) => {
-    //               if (index !== 0) {
-    //                 return <StyledProductSubImage src={`${firstUrl}${item}`} />;
-    //               }
-    //             })}
-    //           </StyledProductSubImageWrap>
-    //         </StyledProductImagetWrap>
-    //       </StyledPostHeadWrap>
-    //       <StyledPostBodyWrap>
-    //         <StyledPostSubItems>
-    //           <StyledImagesWrap>
-    //             <StyledChatImage
-    //               src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
-    //               alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
-    //             />
-    //             <StyledChatImgAlt>채팅하기</StyledChatImgAlt>
-    //           </StyledImagesWrap>
-    //           <FavoritIconButton />
-    //           <StyledImagesWrap className="openPopupButton" onClick={openModal}>
-    //             <StyledMapImage
-    //               src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FZoOUr%2FbtrMtG2s1YT%2FLwGap5AgYCUktPDgK0hCik%2Fimg.png"
-    //               alt="https://icons8.com/icon/WbyzmoN1bnxR/map-marker Map Marker icon by https://icons8.com Icons8"
-    //             />
-    //             <StyledMapImgAlt>위치</StyledMapImgAlt>
-    //             <LocationModal
-    //               showModal={showModal}
-    //               closeModal={closeModal}
-    //               location={detailData?.location}
-    //             />
-    //           </StyledImagesWrap>
-    //         </StyledPostSubItems>
-    //         <StyledPostHr />
-    //         <StyledUserInfo>
-    //           <StyledInfoWrap>
-    //             <StyledUserimage src={userImage} />
-    //             <StyledUserSubInfo>
-    //               <StyledUserNickname>
-    //                 {detailData?.memberName}
-    //               </StyledUserNickname>
-    //               <StyledUserLocation>
-    //                 {detailData?.location}
-    //               </StyledUserLocation>
-    //             </StyledUserSubInfo>
-    //           </StyledInfoWrap>
-    //           <StyledPostOptionWrap>
-    //             <StyledMyPostOption>
-    //               <span
-    //                 onClick={() => {
-    //                   navigate(`/editProduct/${param.id}`, { state: state });
-    //                 }}
-    //               >
-    //                 글 수정
-    //               </span>
-    //               <StyledNoPointer>·</StyledNoPointer>
-    //               <span onClick={deletePost}>글 삭제</span>
-    //               <StyledNoPointer>·</StyledNoPointer>
-    //             </StyledMyPostOption>
-    //             <UserReport />
-    //             {/* 유저 리포트 자리 */}
-    //           </StyledPostOptionWrap>
-    //         </StyledUserInfo>
-    //         <StyledPostHr />
-    //         <StyledPostMain>
-    //           <StyledPostTitle>{detailData?.productName}</StyledPostTitle>
-    //           <StyledPostEachWrap>
-    //             <StyledPostCategory>
-    //               {categoriNumber(detailData?.cateId)}
-    //             </StyledPostCategory>
-    //             <StyledTimeForToday> ㆍ{createdAt}</StyledTimeForToday>
-    //           </StyledPostEachWrap>
-    //           <StyledProductPrice>
-    //             {detailData?.price}(원) / 일
-    //           </StyledProductPrice>
-    //           <StyledPostDescription>
-    //             {detailData?.content}
-    //           </StyledPostDescription>
-    //         </StyledPostMain>
-    //       </StyledPostBodyWrap>
-    //     </StyledDetailProductWrap>
-    //   </StyledDetailProductContainer>
-    // </Layout>
-    <Layout>
-      <StyledMobileDetailContainer>
-        <StyledMobileDetailWrap>
-          <PostReport />
-          {/* 게시글 리포트자리 */}
-          <StyledMobilePostHeadWrap>
-            <StyledMobileProductImagetWrap>
-              <SyltedMobileProductMainImage
-                src={
-                  detailData?.imgUrlArray[0] !== null
-                    ? `${firstUrl}${detailData?.imgUrlArray[0]}`
-                    : "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png"
-                }
-                alt="이미지 미리보기"
-              />
-              <StyledMobileSubImageWrap>
-                {detailData?.imgUrlArray.map((item, index) => {
-                  if (index !== 0) {
-                    return <StyledMobileSubImage src={`${firstUrl}${item}`} />;
-                  }
-                })}
-              </StyledMobileSubImageWrap>
-            </StyledMobileProductImagetWrap>
-          </StyledMobilePostHeadWrap>
-          <StyledMobilePostBodyWrap>
-            <StyledMobilePostSubItems>
-              <StyledMobileImagesWrap>
-                <StyledChatImage
-                  src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
-                  alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
-                />
-                <StyledChatImgAlt>채팅하기</StyledChatImgAlt>
-              </StyledMobileImagesWrap>
-              <FavoritIconButton />
-              <StyledMobileImagesWrap className="openPopupButton" onClick={openModal}>
-                <StyledMapImage
-                  src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FZoOUr%2FbtrMtG2s1YT%2FLwGap5AgYCUktPDgK0hCik%2Fimg.png"
-                  alt="https://icons8.com/icon/WbyzmoN1bnxR/map-marker Map Marker icon by https://icons8.com Icons8"
-                />
-                <StyledMapImgAlt>위치</StyledMapImgAlt>
-                <LocationModal
-                  showModal={showModal}
-                  closeModal={closeModal}
-                  location={detailData?.location}
-                />
-              </StyledMobileImagesWrap>
-            </StyledMobilePostSubItems>
-            <StyledMobilePostHr />
-            <StyledMobileUserInfo>
-              <StyledMobileInfoWrap>
-                <StyledMobileUserimage src={userImage} />
-                <StyledMobileUserSubInfo>
-                  <StyledMobileUserNickname>
-                    {detailData?.memberName}
-                  </StyledMobileUserNickname>
-                  <StyledMobileUserLocation>
-                    {detailData?.location}
-                  </StyledMobileUserLocation>
-                </StyledMobileUserSubInfo>
-              </StyledMobileInfoWrap>
-              <StyledMobilePostOptionWrap>
-                <StyledMobileMyPostOption>
-                  <span
-                    onClick={() => {
-                      navigate(`/editProduct/${param.id}`, { state: state });
-                    }}
+    <>
+      <Desktop>
+        <Layout>
+          <StyledDetailProductContainer>
+            <StyledDetailProductWrap>
+              <PostReport />
+              {/* 게시글 리포트자리 */}
+              <StyledPostHeadWrap>
+                <StyledProductImagetWrap>
+                  <SyltedProductMainImage
+                    src={
+                      detailData?.imgUrlArray[0] !== null
+                        ? `${firstUrl}${detailData?.imgUrlArray[0]}`
+                        : "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png"
+                    }
+                    alt="이미지 미리보기"
+                  />
+                  <StyledProductSubImageWrap>
+                    {detailData?.imgUrlArray.map((item, index) => {
+                      if (index !== 0) {
+                        return (
+                          <StyledProductSubImage src={`${firstUrl}${item}`} />
+                        );
+                      }
+                    })}
+                  </StyledProductSubImageWrap>
+                </StyledProductImagetWrap>
+              </StyledPostHeadWrap>
+              <StyledPostBodyWrap>
+                <StyledPostSubItems>
+                  <StyledImagesWrap>
+                    <StyledChatImage
+                      src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
+                      alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
+                    />
+                    <StyledChatImgAlt>채팅하기</StyledChatImgAlt>
+                  </StyledImagesWrap>
+                  <FavoritIconButton />
+                  <StyledImagesWrap
+                    className="openPopupButton"
+                    onClick={openModal}
                   >
-                    글 수정
-                  </span>
-                  <StyledNoPointer>·</StyledNoPointer>
-                  <span onClick={deletePost}>글 삭제</span>
-                  <StyledNoPointer>·</StyledNoPointer>
-                </StyledMobileMyPostOption>
-                <UserReport />
-                {/* 유저 리포트 자리 */}
-              </StyledMobilePostOptionWrap>
-            </StyledMobileUserInfo>
-            <StyledPostHr />
-            <StyledMobilePostMain>
-              <StyledMobilePostTitle>{detailData?.productName}</StyledMobilePostTitle>
-              <StyledMobilePostEachWrap>
-                <StyledPostCategory>
-                  {categoriNumber(detailData?.cateId)}
-                </StyledPostCategory>
-                <StyledTimeForToday> ㆍ{createdAt}</StyledTimeForToday>
-              </StyledMobilePostEachWrap>
-              <StyledMobileProductPrice>
-                {detailData?.price}(원) / 일
-              </StyledMobileProductPrice>
-              <StyledMobilePostDescription>
-                {detailData?.content}
-              </StyledMobilePostDescription>
-            </StyledMobilePostMain>
-          </StyledMobilePostBodyWrap>
-        </StyledMobileDetailWrap>
-      </StyledMobileDetailContainer>
-    </Layout>
+                    <StyledMapImage
+                      src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FZoOUr%2FbtrMtG2s1YT%2FLwGap5AgYCUktPDgK0hCik%2Fimg.png"
+                      alt="https://icons8.com/icon/WbyzmoN1bnxR/map-marker Map Marker icon by https://icons8.com Icons8"
+                    />
+                    <StyledMapImgAlt>위치</StyledMapImgAlt>
+                    <LocationModal
+                      showModal={showModal}
+                      closeModal={closeModal}
+                      location={detailData?.location}
+                    />
+                  </StyledImagesWrap>
+                </StyledPostSubItems>
+                <StyledPostHr />
+                <StyledUserInfo>
+                  <StyledInfoWrap>
+                    <StyledUserimage src={userImage} />
+                    <StyledUserSubInfo>
+                      <StyledUserNickname>
+                        {detailData?.memberName}
+                      </StyledUserNickname>
+                      <StyledUserLocation>
+                        {detailData?.location}
+                      </StyledUserLocation>
+                    </StyledUserSubInfo>
+                  </StyledInfoWrap>
+                  <StyledPostOptionWrap>
+                    <StyledMyPostOption>
+                      <span
+                        onClick={() => {
+                          navigate(`/editProduct/${param.id}`, {
+                            state: state,
+                          });
+                        }}
+                      >
+                        글 수정
+                      </span>
+                      <StyledNoPointer>·</StyledNoPointer>
+                      <span onClick={deletePost}>글 삭제</span>
+                      <StyledNoPointer>·</StyledNoPointer>
+                    </StyledMyPostOption>
+                    <UserReport />
+                    {/* 유저 리포트 자리 */}
+                  </StyledPostOptionWrap>
+                </StyledUserInfo>
+                <StyledPostHr />
+                <StyledPostMain>
+                  <StyledPostTitle>{detailData?.productName}</StyledPostTitle>
+                  <StyledPostEachWrap>
+                    <StyledPostCategory>
+                      {categoriNumber(detailData?.cateId)}
+                    </StyledPostCategory>
+                    <StyledTimeForToday> ㆍ{createdAt}</StyledTimeForToday>
+                  </StyledPostEachWrap>
+                  <StyledProductPrice>
+                    {detailData?.price}(원) / 일
+                  </StyledProductPrice>
+                  <StyledPostDescription>
+                    {detailData?.content}
+                  </StyledPostDescription>
+                </StyledPostMain>
+              </StyledPostBodyWrap>
+            </StyledDetailProductWrap>
+          </StyledDetailProductContainer>
+        </Layout>
+      </Desktop>
+      {/* ################ 모바일 ################ */}
+      <Mobile>
+        <Layout>
+          <StyledMobileDetailContainer>
+            <StyledMobileDetailWrap>
+              <PostReport />
+              {/* 게시글 리포트자리 */}
+              <StyledMobilePostHeadWrap>
+                <StyledMobileProductImagetWrap>
+                  <SyltedMobileProductMainImage
+                    src={
+                      detailData?.imgUrlArray[0] !== null
+                        ? `${firstUrl}${detailData?.imgUrlArray[0]}`
+                        : "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png"
+                    }
+                    alt="이미지 미리보기"
+                  />
+                  <StyledMobileSubImageWrap>
+                    {detailData?.imgUrlArray.map((item, index) => {
+                      if (index !== 0) {
+                        return (
+                          <StyledMobileSubImage src={`${firstUrl}${item}`} />
+                        );
+                      }
+                    })}
+                  </StyledMobileSubImageWrap>
+                </StyledMobileProductImagetWrap>
+              </StyledMobilePostHeadWrap>
+              <StyledMobilePostBodyWrap>
+                <StyledMobilePostSubItems>
+                  <StyledMobileImagesWrap>
+                    <StyledChatImage
+                      src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
+                      alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
+                    />
+                    <StyledChatImgAlt>채팅하기</StyledChatImgAlt>
+                  </StyledMobileImagesWrap>
+                  <FavoritIconButton />
+                  <StyledMobileImagesWrap
+                    className="openPopupButton"
+                    onClick={openModal}
+                  >
+                    <StyledMapImage
+                      src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FZoOUr%2FbtrMtG2s1YT%2FLwGap5AgYCUktPDgK0hCik%2Fimg.png"
+                      alt="https://icons8.com/icon/WbyzmoN1bnxR/map-marker Map Marker icon by https://icons8.com Icons8"
+                    />
+                    <StyledMapImgAlt>위치</StyledMapImgAlt>
+                    <LocationModal
+                      showModal={showModal}
+                      closeModal={closeModal}
+                      location={detailData?.location}
+                    />
+                  </StyledMobileImagesWrap>
+                </StyledMobilePostSubItems>
+                <StyledMobilePostHr />
+                <StyledMobileUserInfo>
+                  <StyledMobileInfoWrap>
+                    <StyledMobileUserimage src={userImage} />
+                    <StyledMobileUserSubInfo>
+                      <StyledMobileUserNickname>
+                        {detailData?.memberName}
+                      </StyledMobileUserNickname>
+                      <StyledMobileUserLocation>
+                        {detailData?.location}
+                      </StyledMobileUserLocation>
+                    </StyledMobileUserSubInfo>
+                  </StyledMobileInfoWrap>
+                  <StyledMobilePostOptionWrap>
+                    <StyledMobileMyPostOption>
+                      <span
+                        onClick={() => {
+                          navigate(`/editProduct/${param.id}`, {
+                            state: state,
+                          });
+                        }}
+                      >
+                        글 수정
+                      </span>
+                      <StyledNoPointer>·</StyledNoPointer>
+                      <span onClick={deletePost}>글 삭제</span>
+                      <StyledNoPointer>·</StyledNoPointer>
+                    </StyledMobileMyPostOption>
+                    <UserReport />
+                    {/* 유저 리포트 자리 */}
+                  </StyledMobilePostOptionWrap>
+                </StyledMobileUserInfo>
+                <StyledPostHr />
+                <StyledMobilePostMain>
+                  <StyledMobilePostTitle>
+                    {detailData?.productName}
+                  </StyledMobilePostTitle>
+                  <StyledMobilePostEachWrap>
+                    <StyledPostCategory>
+                      {categoriNumber(detailData?.cateId)}
+                    </StyledPostCategory>
+                    <StyledTimeForToday> ㆍ{createdAt}</StyledTimeForToday>
+                  </StyledMobilePostEachWrap>
+                  <StyledMobileProductPrice>
+                    {detailData?.price}(원) / 일
+                  </StyledMobileProductPrice>
+                  <StyledMobilePostDescription>
+                    {detailData?.content}
+                  </StyledMobilePostDescription>
+                </StyledMobilePostMain>
+              </StyledMobilePostBodyWrap>
+            </StyledMobileDetailWrap>
+          </StyledMobileDetailContainer>
+        </Layout>
+      </Mobile>
+    </>
   );
 };
 
@@ -323,7 +347,6 @@ const StyledDetailProductWrap = styled.div`
   box-shadow: 1px 1px 5px 1px rgb(71, 181, 255);
   border-radius: 10px;
 `;
-
 
 const StyledPostHeadWrap = styled.div`
   display: flex;
@@ -480,9 +503,6 @@ const StyledPostDescription = styled.div`
   margin-top: 30px;
 `;
 
-
-
-
 // for Mobile
 
 const StyledMobileDetailContainer = styled.div`
@@ -497,9 +517,8 @@ const StyledMobileDetailWrap = styled.div`
   width: 470px;
   padding: 40px;
   border-radius: 10px;
-  margin-bottom:50px;
+  margin-bottom: 50px;
 `;
-
 
 const StyledMobilePostHeadWrap = styled.div`
   display: flex;
@@ -546,11 +565,11 @@ const StyledMobilePostSubItems = styled.div`
   margin-bottom: 50px;
 
   & img {
-    width:30px;
-    height: 30px;;
+    width: 30px;
+    height: 30px;
   }
   & span {
-    font-size:12px;
+    font-size: 12px;
   }
 `;
 
