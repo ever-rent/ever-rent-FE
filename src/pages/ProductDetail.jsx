@@ -402,9 +402,9 @@ const StyledMapImage = styled.img`
   padding: 10px;
 `;
 
-const StyledChatImgAlt = styled.div``;
-const StyledLikeImgAlt = styled.div``;
-const StyledMapImgAlt = styled.div``;
+const StyledChatImgAlt = styled.span``;
+const StyledLikeImgAlt = styled.span``;
+const StyledMapImgAlt = styled.span``;
 
 const StyledPostHr = styled.hr`
   margin: 10px 0 10px;
@@ -544,6 +544,14 @@ const StyledMobilePostSubItems = styled.div`
   justify-content: flex-end;
   align-items: center;
   margin-bottom: 50px;
+
+  & img {
+    width:30px;
+    height: 30px;;
+  }
+  & span {
+    font-size:12px;
+  }
 `;
 
 const StyledMobileImagesWrap = styled.div`
