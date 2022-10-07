@@ -109,14 +109,24 @@ export const RentalStatus = () => {
   ];
 
   return (
-    <div>
-      <StyledisStatusDetail>
+    // <div>
+    //   <StyledisStatusDetail>
+    //     {tabArray.map((item) => {
+    //       return <div key={item.key}>{item.tab}</div>;
+    //     })}
+    //     {CommonList(tabIndex)}
+    //   </StyledisStatusDetail>
+    // </div>
+    // Mobile
+    <StyledMobileisStatusDetail>
+      <StyledTabBar>
         {tabArray.map((item) => {
           return <div key={item.key}>{item.tab}</div>;
         })}
-        {CommonList(tabIndex)}
-      </StyledisStatusDetail>
-    </div>
+      </StyledTabBar>
+
+      {CommonList(tabIndex)}
+    </StyledMobileisStatusDetail>
   );
 };
 
@@ -155,4 +165,37 @@ const StyledisStatusDetail = styled.div`
   }
 `;
 
-const StyledBar = styled.div``;
+const StyledMobileisStatusDetail = styled.div`
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  max-width: max-content;
+  height: 45px;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px 0;
+  padding: 0 20px 0 80px;
+  border-radius: 5px;
+  gap: 0;
+  cursor: pointer;
+  .select {
+    font-weight: bold;
+    border-bottom: 3px solid #47b5ff;
+  }
+  @media only screen and (max-width: 767px) {
+    display: flex;
+    /* flex-direction: column; */
+    gap: 0;
+    width: auto;
+    .select {
+      font-weight: bold;
+      border-bottom: 3px solid #47b5ff;
+    }
+  }
+`;
+const StyledTabBar = styled.div`
+  border: 1px solid red;
+  display: flex;
+  width: 470px;
+`;

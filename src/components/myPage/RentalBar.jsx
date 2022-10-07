@@ -36,20 +36,25 @@ export const RentalBar = ({ like }) => {
 
   return (
     <>
+      {/* <StyledLendAndBorrow>
+        {tabArray.map((item) => {
+          return <StyledRentalBar key={item.key}>{item.tab}</StyledRentalBar>;
+        })}
+      </StyledLendAndBorrow>
+      <StyledRentStatusBox>
+        {tabIndex ? <BorrowStatus /> : <RentalStatus />}
+      </StyledRentStatusBox> */}
+
+      {/* 모바일   */}
       <StyledLendAndBorrow>
         {tabArray.map((item) => {
           return <StyledRentalBar key={item.key}>{item.tab}</StyledRentalBar>;
         })}
-        {/* {tabArray[tabIndex].content} */}
       </StyledLendAndBorrow>
-      <StyledRentStatusBox>
-        {tabIndex ? <BorrowStatus /> : <RentalStatus />}
-      </StyledRentStatusBox>
+      <div>{tabIndex ? <BorrowStatus /> : <RentalStatus />}</div>
     </>
   );
 };
-
-const StyledContainer = styled.div``;
 
 const StyledLendAndBorrow = styled.div`
   /* border-bottom: 1px solid gray; */

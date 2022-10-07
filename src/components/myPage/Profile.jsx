@@ -122,13 +122,13 @@ export const Profile = ({ like, setLike }) => {
                 </>
               )}
             </StyledMobileEachWrap>
-            <StyledEachWrap>
+            <StyledMobileEachWrap>
               <StyleMobileLikeAndChat
                 src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
                 alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
               />
               <span>채팅목록</span>
-            </StyledEachWrap>
+            </StyledMobileEachWrap>
           </StyledMobileIcon>
         </div>
       </StyledMobileProfileContainer>
@@ -335,6 +335,9 @@ const StyledMobileEditButton = styled.button`
   margin: 8px 0 5px 0;
   cursor: pointer;
   min-width: max-content;
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
 `;
 
 const StyledMobileFlexBox = styled.div`
@@ -362,7 +365,7 @@ const StyledMobileIcon = styled.div`
   /* height: 230px; */
   display: flex;
   position: relative;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   margin: 20px 0 0 0;
   @media only screen and (max-width: 767px) {
