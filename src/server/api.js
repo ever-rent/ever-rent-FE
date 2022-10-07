@@ -5,7 +5,7 @@ import { profile } from "./core/instance";
 export const productAPI = {
   getProducts: () => base.get(`/products`),
   getCategory: (categoryId) => base.get(`/categories/${categoryId}`),
-  addProduct: (data) => auth.post(`/products`, data),
+  addProduct: (data) => profile.post(`/products`, data),
   getProductDetail: (productId) => base.get(`/products/${productId}`),
   updateProduct: (data, productId) => auth.put(`/products/${productId}`, data),
   deleteProduct: (productId) => auth.delete(`/products/${productId}`),
@@ -26,10 +26,7 @@ export const mypageAPI = {
 
 export const userAPI = {};
 
-
-
-
-
 // imgUrlArray firstString
 // env 설정 예정
-export const imgFirstString = "https://davidsone.s3.ap-northeast-2.amazonaws.com/";
+export const imgFirstString =
+  "https://davidsone.s3.ap-northeast-2.amazonaws.com/";
