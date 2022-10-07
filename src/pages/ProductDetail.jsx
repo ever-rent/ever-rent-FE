@@ -6,65 +6,18 @@ import { deleteProducts } from "../redux/modules/productSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useLocation } from "react-router";
-import { useMutation } from "react-query";
 
 import { categoriNumber } from "../util/categoryNumber";
 import { timeToToday } from "../util/timeToToday";
 import { LocationModal } from "../components/location/LocationModal";
-import { imgFirstString, productAPI } from "../server/api";
+import { imgFirstString } from "../server/api";
 
 import Swal from "sweetalert2";
 import { Desktop, Mobile } from "../Hooks/MideaQuery";
 
 import { UserReport } from "../components/report/UserReport";
 import { PostReport } from "../components/report/PostReport";
-
-// liked 컴포넌트
-const FavoritIconButton = () => {
-  const { id } = useParams();
-  const [liked, setLiked] = useState(false);
-
-  const { mutate } = useMutation(productAPI.toggleWishProduct, {
-    onSuccess: (data) => {
-      console.log(data);
-    },
-    onError: (error) => {
-      console.dir(error);
-    },
-  });
-
-  if (liked === false) {
-    return (
-      <StyledImagesWrap
-        onClick={() => {
-          setLiked(!liked);
-          mutate(id);
-        }}
-      >
-        <StyledLikeImage
-          src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
-          alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
-        />
-        <StyledLikeImgAlt>찜하기</StyledLikeImgAlt>
-      </StyledImagesWrap>
-    );
-  } else {
-    return (
-      <StyledImagesWrap
-        onClick={() => {
-          setLiked(!liked);
-          mutate(id);
-        }}
-      >
-        <StyledLikeImage
-          src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FDoa5l%2FbtrMvM9d2ZW%2FoA2ssgiZFbkWmn9PZwGbS0%2Fimg.png"
-          alt="https://icons8.com/icon/7697/heart Heart icon by https://icons8.com Icons8"
-        />
-        <StyledLikeImgAlt>찜하기</StyledLikeImgAlt>
-      </StyledImagesWrap>
-    );
-  }
-};
+import { WishButton } from "../components/button/WishButton";
 
 // 게시글 상세 페이지 컴포넌트
 export const ProductDetail = () => {
@@ -166,7 +119,7 @@ export const ProductDetail = () => {
                     />
                     <StyledChatImgAlt>채팅하기</StyledChatImgAlt>
                   </StyledImagesWrap>
-                  <FavoritIconButton />
+                  <WishButton productId={id} data={detailData} />
                   <StyledImagesWrap
                     className="openPopupButton"
                     onClick={openModal}
@@ -200,7 +153,7 @@ export const ProductDetail = () => {
                     <StyledMyPostOption>
                       <span
                         onClick={() => {
-                          navigate(`/editProduct/${param.id}`, {
+                          navigate(`/editProduct/${id}`, {
                             state: state,
                           });
                         }}
@@ -273,7 +226,7 @@ export const ProductDetail = () => {
                     />
                     <StyledChatImgAlt>채팅하기</StyledChatImgAlt>
                   </StyledMobileImagesWrap>
-                  <FavoritIconButton />
+                  <WishButton productId={id} data={detailData} />
                   <StyledMobileImagesWrap
                     className="openPopupButton"
                     onClick={openModal}
@@ -307,7 +260,7 @@ export const ProductDetail = () => {
                     <StyledMobileMyPostOption>
                       <span
                         onClick={() => {
-                          navigate(`/editProduct/${param.id}`, {
+                          navigate(`/editProduct/${id}`, {
                             state: state,
                           });
                         }}
@@ -355,15 +308,16 @@ const StyledDetailProductContainer = styled.div`
   justify-content: center;
 
   animation: productDetailFadein 1.5s;
-	&{
-	@keyframes productDetailFadein {
-   	 from {
-       	 opacity:0;
-    	}
-   	 to {
-      	  opacity:1;
-   	 }		
-}}
+  & {
+    @keyframes productDetailFadein {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  }
 `;
 
 const StyledDetailProductWrap = styled.div`
@@ -422,10 +376,9 @@ const StyledPostSubItems = styled.div`
   margin-bottom: 50px;
 `;
 
-const StyledImagesWrap = styled.div`
+export const StyledImagesWrap = styled.div`
   width: 90px;
   height: 90px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -442,7 +395,7 @@ const StyledChatImage = styled.img`
   height: 50px;
   padding: 10px;
 `;
-const StyledLikeImage = styled.img`
+export const StyledLikeImage = styled.img`
   width: 50px;
   height: 50px;
   padding: 10px;
@@ -539,15 +492,16 @@ const StyledMobileDetailContainer = styled.div`
   justify-content: center;
 
   animation: productDetailFadein 1.5s;
-	&{
-	@keyframes productDetailFadein {
-   	 from {
-       	 opacity:0;
-    	}
-   	 to {
-      	  opacity:1;
-   	 }		
-}}
+  & {
+    @keyframes productDetailFadein {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  }
 `;
 
 const StyledMobileDetailWrap = styled.div`
