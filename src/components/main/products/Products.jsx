@@ -8,6 +8,9 @@ import { base } from "../../../server/core/instance";
 import { Desktop, Mobile } from "../../../Hooks/MideaQuery";
 
 export const Products = () => {
+
+  const [isLoading, setIsLoading] = useState(false);
+  console.log(isLoading)
   // infi scroll
   // 현재 state 데이터 , 다음페이지 이동 여부,
   // 현재페이지, observer 뷰 교차 여부
@@ -27,6 +30,7 @@ export const Products = () => {
       if (data.data.length) {
         page.current += 1;
       }
+      
     } catch (err) {
       console.error(err);
     }
@@ -34,10 +38,18 @@ export const Products = () => {
 
   // ref / scroll 교차 시 데이터 패치
   useEffect(() => {
+    setIsLoading(true)
     console.log(inView, hasNextPage);
     if (inView && hasNextPage) {
-      fetch();
+      setTimeout(()=>{
+        fetch();
+      } ,500)
+      
     }
+    setTimeout(()=>{
+      setIsLoading(false)
+    } ,500)
+    
   }, [fetch, hasNextPage, inView]);
 
   console.log(products);
@@ -51,8 +63,11 @@ export const Products = () => {
               return <ProductsItem {...product} key={product.id} />;
             })}
           </StyledProductsGrid>
-          <div ref={ref} style={{ position: "absolute" }} />
-          {/* <div style={{position: "absolute" }} /> */}
+          
+          <div ref={ref} style={{ position: "relative" }} />
+          {
+            isLoading===true?<StyledSpinner ><span className="spinner"></span></StyledSpinner>:null
+          }
         </StyledProductsContainer>
       </Desktop>
 
@@ -63,7 +78,10 @@ export const Products = () => {
               return <ProductsItem {...product} key={product.id} />;
             })}
           </StyledMobileProducts>
-          <div ref={ref} style={{ position: "absolute" }} />
+          <div ref={ref} style={{ position: "relative" }} />
+          {
+            isLoading===true?<StyledSpinner ><span className="spinner"></span></StyledSpinner>:null
+          }
         </StyledMobileContainer>
       </Mobile>
     </>
@@ -100,3 +118,33 @@ const StyledMobileProducts = styled.div`
   flex-direction: column;
   margin-top: 30px;
 `;
+
+const StyledSpinner = styled.div`
+  /* display: none; */
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top:0;
+  left:0;
+
+  & .spinner{
+  box-sizing: border-box;
+  position: fixed;
+  bottom:200px;
+  left: 50%;
+  width: 64px;
+  height: 64px;
+  margin-top: -32px;
+  margin-left: -32px;
+  border-radius: 50%;
+  border: 8px solid transparent;
+  border-top-color: rgb(71, 181, 255);
+  border-bottom-color: rgb(71, 181, 255);
+  animation: spinner .7s ease infinite;
+
+    @keyframes spinner {
+  from {transform: rotate(0deg); }
+  to {transform: rotate(360deg);}
+}
+  }
+`

@@ -37,9 +37,9 @@ export const Footer = () => {
   return (
     <>
       <Desktop>
-        <StyledFooter>
+        {/* <StyledFooter>
           <h1>Footer</h1>
-        </StyledFooter>
+        </StyledFooter> */}
       </Desktop>
       {/* ################ 모바일 ################ */}
       <Mobile>
@@ -71,6 +71,11 @@ export const Footer = () => {
           </StyledNavImgWrap>
           {/* <div>플러스 동동</div> */}
         </StyledMobileFootNav>
+        <StyledMobileFixedButton
+          onClick={()=>{navigate("/addproduct")}}
+          src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fdkpt6F%2FbtrN5GrRGLP%2FMYYQzLfy3eV8MSN5kY72K0%2Fimg.png"
+          alt="fixed버튼"
+        />
       </Mobile>
     </>
   );
@@ -112,4 +117,19 @@ const StyledMypageImg = styled.img`
 
 const StyledImgSpan = styled.span`
   font-size: 12px;
+`;
+
+const StyledMobileFixedButton = styled.img`
+  width: 50px;
+  height: 50px;
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  transition: 0.1s;
+
+  &:active {
+    width: 45px;
+    height: 45px;
+    bottom: 79px;
+  }
 `;

@@ -113,8 +113,8 @@ export const AddProduct = () => {
   const [priceInput, setPriceInput] = useState(0);
   const [startDateInput, setStartDateInput] = useState("");
   const [endDateInput, setEndDateInput] = useState("");
-  const [tradeLocation, setTradeLocation] = useState("송내역");
-  const [mapLocation, setMapLocation] = useState("");
+  const [tradeLocation, setTradeLocation] = useState("");
+  const [location, setLocation] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
@@ -132,10 +132,9 @@ export const AddProduct = () => {
     checkPost();
   });
 
-  const mapLocationCheck = (value) => {
-    setMapLocation(value);
+  const locationCheck = (value) => {
+    setLocation(value);
   };
-  // console.log(mapLocation);
 
   // formData
   let sendData = {
@@ -143,8 +142,8 @@ export const AddProduct = () => {
     content: description,
     cateId: categoryInput,
     price: priceInput,
-    location: tradeLocation,
-    // mapLocation:mapLocation,
+    location: location,
+    mapLocation: tradeLocation,
     rentStart: startDateInput,
     rentEnd: endDateInput,
   };
@@ -176,7 +175,7 @@ export const AddProduct = () => {
           }
 
           dispatch(addProducts(formData));
-          navigate("/");
+          // navigate("/");
         }
       });
     }
@@ -338,7 +337,7 @@ export const AddProduct = () => {
                 showModal={showModal}
                 closeModal={closeModal}
                 location={tradeLocation}
-                mapLocationCheck={mapLocationCheck}
+                locationCheck={locationCheck}
               />
               <StyledPostTitle
                 type="text"
@@ -519,7 +518,7 @@ export const AddProduct = () => {
                 showModal={showModal}
                 closeModal={closeModal}
                 location={tradeLocation}
-                mapLocationCheck={mapLocationCheck}
+                locationCheck={locationCheck}
               />
               <StyledMobilePostTitle
                 type="text"
@@ -560,361 +559,6 @@ export const AddProduct = () => {
         </Layout>
       </Mobile>
     </>
-
-    // <Layout>
-    //   <StyledAddProductContainer>
-    //     <StyledAddProductForm encType="multipart/form-data">
-    //       <StyledPostingHeadWrap>
-    //         <StyledFormImageInputWrap>
-    //           <StyledImageLabel
-    //             htmlFor="inputFile"
-    //             onClick={(e) => imageLengthCheck(e)}
-    //           >
-    //             사진 업로드
-    //           </StyledImageLabel>
-    //           <StyledImageInput
-    //             id="inputFile"
-    //             type="file"
-    //             multiple="multiple"
-    //             onChange={(e) => {
-    //               fileChange(e.target.files);
-    //             }}
-    //           />
-    //           <StyledProductImagetWrap>
-    //             <SyltedImageView
-    //               src={imgView[0] === undefined ? defaultImg : imgView[0]}
-    //               alt="메인이미지 미리보기"
-    //               onClick={() => {
-    //                 initImage(imgView[0], 0);
-    //               }}
-    //             />
-    //             <StyledProductSubImageWrap>
-    //               {imgView[1] !== undefined
-    //                 ? imgView
-    //                     .filter((v, index) => index !== 0)
-    //                     .map((item, index) => (
-    //                       <StyledProductSubImage
-    //                         key={index}
-    //                         src={item}
-    //                         onClick={() => {
-    //                           initImage(item, index);
-    //                         }}
-    //                       />
-    //                     ))
-    //                 : null}
-    //             </StyledProductSubImageWrap>
-    //             <StyledDeleteImg>
-    //               사진을 누르면 삭제돼요!
-    //               <br />
-    //               (사진 등록 최대 10장)
-    //             </StyledDeleteImg>
-    //           </StyledProductImagetWrap>
-    //         </StyledFormImageInputWrap>
-    //         <StyledImageSource>
-    //           imageSource: "https://icons8.com/icon/85123/expand-arrow Expand
-    //           Arrow icon by https://icons8.com Icons8"
-    //         </StyledImageSource>
-    //         <StyledOptionInputs>
-    //           <StyledCategorySelector
-    //             defaultValue="noneData"
-    //             onChange={(e) => {
-    //               setCategoryInput(e.target.value);
-    //             }}
-    //           >
-    //             <StyledCategoryOptions value="noneData" disabled>
-    //               상품 종류를 골라주세요!
-    //             </StyledCategoryOptions>
-    //             <StyledCategoryOptions value="1">
-    //               디지털기기
-    //             </StyledCategoryOptions>
-    //             <StyledCategoryOptions value="2">공구</StyledCategoryOptions>
-    //             <StyledCategoryOptions value="3">
-    //               생활가전
-    //             </StyledCategoryOptions>
-    //             <StyledCategoryOptions value="4">잡화</StyledCategoryOptions>
-    //             <StyledCategoryOptions value="5">
-    //               스포츠/레저
-    //             </StyledCategoryOptions>
-    //             <StyledCategoryOptions value="6">
-    //               취미/게임/음반
-    //             </StyledCategoryOptions>
-    //             <StyledCategoryOptions value="7">도서</StyledCategoryOptions>
-    //             <StyledCategoryOptions value="8">기타</StyledCategoryOptions>
-    //           </StyledCategorySelector>
-    //           <StyledPriceWrap>
-    //             <StyledPriceInput
-    //               id="itemPrice"
-    //               type="text"
-    //               placeholder="가격"
-    //               maxlength="8"
-    //               onChange={(e) => {
-    //                 setPriceInput(e.target.value);
-    //               }}
-    //             />
-    //             <StyledPriceLabel htmlFor="itemPrice">원</StyledPriceLabel>
-    //             <StyledPriceData> / 일</StyledPriceData>
-    //           </StyledPriceWrap>
-    //           <StyledDateWrap>
-    //             <StyledStartLabel htmlFor="">렌탈시작일 : </StyledStartLabel>
-    //             <StyledDateInput
-    //               type="date"
-    //               onChange={(e) => {
-    //                 setStartDateInput(e.target.value);
-    //               }}
-    //             />
-    //           </StyledDateWrap>
-    //           <StyledDateWrap>
-    //             <StyledEndLabel htmlFor="">렌탈마감일 : </StyledEndLabel>
-    //             <StyledDateInput
-    //               type="date"
-    //               onChange={(e) => {
-    //                 setEndDateInput(e.target.value);
-    //               }}
-    //             />
-    //           </StyledDateWrap>
-    //         </StyledOptionInputs>
-    //       </StyledPostingHeadWrap>
-
-    //       <StyledPostLocation
-    //         type="text"
-    //         placeholder="거래 장소를 적어주세요!"
-    //         onChange={(e) => {
-    //           setTradeLocation(e.target.value);
-    //         }}
-    //       />
-    //       <StyledLocationBtn
-    //         type="button"
-    //         onClick={() => {
-    //           setShowModal(true);
-    //         }}
-    //       >
-    //         위치확인
-    //       </StyledLocationBtn>
-    //       <p style={{ fontSize: "12px" }}>
-    //         지도에 나온 장소가 원하는 곳이 아닌 경우, 도로명 주소로
-    //         입력해보세요!
-    //       </p>
-    //       <LocationModal
-    //         showModal={showModal}
-    //         closeModal={closeModal}
-    //         location={tradeLocation}
-    //         mapLocationCheck={mapLocationCheck}
-    //       />
-    //       <StyledPostTitle
-    //         type="text"
-    //         placeholder="제목은 4글자 이상 적어주세요!"
-    //         onChange={(e) => {
-    //           setTitle(e.target.value);
-    //         }}
-    //       />
-    //       <StyledDescription
-    //         id=""
-    //         cols="30"
-    //         rows="10"
-    //         placeholder="내용을 입력해주세요!"
-    //         maxLength={500}
-    //         onChange={(e) => {
-    //           setDescription(e.target.value);
-    //         }}
-    //       />
-    //       <StyledButtonBox>
-    //         <StyledGoBackButton
-    //           type="button"
-    //           onClick={() => {
-    //             navigate("/");
-    //           }}
-    //         >
-    //           홈으로
-    //         </StyledGoBackButton>
-    //         <StyledFormButton
-    //           disabled={disabled}
-    //           type="button"
-    //           onClick={addProductPost}
-    //         >
-    //           작성하기
-    //         </StyledFormButton>
-    //       </StyledButtonBox>
-    //     </StyledAddProductForm>
-    //   </StyledAddProductContainer>
-    // </Layout>
-
-    // for Mobile#################################
-    // <Layout>
-    //   <StyledMobileContainer>
-    //     <StyledMobileProductForm encType="multipart/form-data">
-    //       <StyledMobilePostHeadWrap>
-    //         <StyledMobileFormImageInputWrap>
-    //           <StyledMobileImageLabel
-    //             htmlFor="inputFile"
-    //             onClick={(e) => imageLengthCheck(e)}
-    //           >
-    //             사진 업로드
-    //           </StyledMobileImageLabel>
-    //           <StyledMobileImageInput
-    //             id="inputFile"
-    //             type="file"
-    //             multiple="multiple"
-    //             onChange={(e) => {
-    //               fileChange(e.target.files);
-    //             }}
-    //           />
-    //           <StyledMobileProductImagetWrap>
-    //             <SyltedMobileImageView
-    //               src={imgView[0] === undefined ? defaultImg : imgView[0]}
-    //               alt="메인이미지 미리보기"
-    //               onClick={() => {
-    //                 initImage(imgView[0], 0);
-    //               }}
-    //             />
-    //             <StyledMobileProductSubImageWrap>
-    //               {imgView[1] !== undefined
-    //                 ? imgView
-    //                     .filter((v, index) => index !== 0)
-    //                     .map((item, index) => (
-    //                       <StyledMobileProductSubImage
-    //                         key={index}
-    //                         src={item}
-    //                         onClick={() => {
-    //                           initImage(item, index);
-    //                         }}
-    //                       />
-    //                     ))
-    //                 : null}
-    //             </StyledMobileProductSubImageWrap>
-    //             <StyledMobileDeleteImg>
-    //               사진을 누르면 삭제돼요!
-    //               <br />
-    //               (사진 등록 최대 10장)
-    //             </StyledMobileDeleteImg>
-    //           </StyledMobileProductImagetWrap>
-    //         </StyledMobileFormImageInputWrap>
-    //         <StyledMobileImageSource>
-    //           imageSource: "https://icons8.com/icon/85123/expand-arrow Expand
-    //           Arrow icon by https://icons8.com Icons8"
-    //         </StyledMobileImageSource>
-    //       </StyledMobilePostHeadWrap>
-    //       <StyledMobileOptionInputs>
-    //         <StyledMobileCategorySelector
-    //           defaultValue="noneData"
-    //           onChange={(e) => {
-    //             setCategoryInput(e.target.value);
-    //           }}
-    //         >
-    //           <StyledCategoryOptions value="noneData" disabled>
-    //             상품 종류를 골라주세요!
-    //           </StyledCategoryOptions>
-    //           <StyledCategoryOptions value="1">
-    //             디지털기기
-    //           </StyledCategoryOptions>
-    //           <StyledCategoryOptions value="2">공구</StyledCategoryOptions>
-    //           <StyledCategoryOptions value="3">생활가전</StyledCategoryOptions>
-    //           <StyledCategoryOptions value="4">잡화</StyledCategoryOptions>
-    //           <StyledCategoryOptions value="5">
-    //             스포츠/레저
-    //           </StyledCategoryOptions>
-    //           <StyledCategoryOptions value="6">
-    //             취미/게임/음반
-    //           </StyledCategoryOptions>
-    //           <StyledCategoryOptions value="7">도서</StyledCategoryOptions>
-    //           <StyledCategoryOptions value="8">기타</StyledCategoryOptions>
-    //         </StyledMobileCategorySelector>
-    //         <StyledPriceWrap>
-    //           <StyledMobilePriceInput
-    //             id="itemPrice"
-    //             type="text"
-    //             placeholder="가격"
-    //             maxlength="8"
-    //             onChange={(e) => {
-    //               setPriceInput(e.target.value);
-    //             }}
-    //           />
-    //           <StyledMobilePriceLabel htmlFor="itemPrice">
-    //             원
-    //           </StyledMobilePriceLabel>
-    //           <StyledMobilePriceData> / 일</StyledMobilePriceData>
-    //         </StyledPriceWrap>
-    //         <StyledDateWrap>
-    //           <StyledStartLabel htmlFor="">렌탈시작일 : </StyledStartLabel>
-    //           <StyledMobileDateInput
-    //             type="date"
-    //             onChange={(e) => {
-    //               setStartDateInput(e.target.value);
-    //             }}
-    //           />
-    //         </StyledDateWrap>
-    //         <StyledDateWrap>
-    //           <StyledEndLabel htmlFor="">렌탈마감일 : </StyledEndLabel>
-    //           <StyledMobileDateInput
-    //             type="date"
-    //             onChange={(e) => {
-    //               setEndDateInput(e.target.value);
-    //             }}
-    //           />
-    //         </StyledDateWrap>
-    //       </StyledMobileOptionInputs>
-
-    //       <StyledMobilePostLocation
-    //         type="text"
-    //         placeholder="거래 장소를 적어주세요!"
-    //         onChange={(e) => {
-    //           setTradeLocation(e.target.value);
-    //         }}
-    //       />
-    //       <StyledMobileLocationBtn
-    //         type="button"
-    //         onClick={() => {
-    //           setShowModal(true);
-    //         }}
-    //       >
-    //         위치확인
-    //       </StyledMobileLocationBtn>
-    //       <p style={{ fontSize: "12px" }}>
-    //         지도에 나온 장소가 원하는 곳이 아닌 경우, 도로명 주소로
-    //         입력해보세요!
-    //       </p>
-    //       <LocationModal
-    //         showModal={showModal}
-    //         closeModal={closeModal}
-    //         location={tradeLocation}
-    //         mapLocationCheck={mapLocationCheck}
-    //       />
-    //       <StyledMobilePostTitle
-    //         type="text"
-    //         placeholder="제목은 4글자 이상 적어주세요!"
-    //         onChange={(e) => {
-    //           setTitle(e.target.value);
-    //         }}
-    //       />
-    //       <StyledMobileDescription
-    //         id=""
-    //         cols="30"
-    //         rows="10"
-    //         placeholder="내용을 입력해주세요!"
-    //         maxLength={500}
-    //         onChange={(e) => {
-    //           setDescription(e.target.value);
-    //         }}
-    //       />
-    //       <StyledMobileButtonBox>
-    //         <StyledMobileGoBackButton
-    //           type="button"
-    //           onClick={() => {
-    //             navigate("/");
-    //           }}
-    //         >
-    //           홈으로
-    //         </StyledMobileGoBackButton>
-    //         <StyledMobileFormButton
-    //           disabled={disabled}
-    //           type="button"
-    //           onClick={addProductPost}
-    //         >
-    //           작성하기
-    //         </StyledMobileFormButton>
-    //       </StyledMobileButtonBox>
-    //     </StyledMobileProductForm>
-    //   </StyledMobileContainer>
-    // </Layout>
   );
 };
 
@@ -922,6 +566,17 @@ const StyledAddProductContainer = styled.div`
   margin-top: 100px;
   display: flex;
   justify-content: center;
+
+  animation: addProductFadein 1.5s;
+	&{
+	@keyframes addProductFadein {
+   	 from {
+       	 opacity:0;
+    	}
+   	 to {
+      	  opacity:1;
+   	 }		
+}}
 `;
 
 const StyledAddProductForm = styled.form`
@@ -1174,12 +829,23 @@ const StyledMobileContainer = styled.div`
   margin-top: 100px;
   display: flex;
   justify-content: center;
+
+  animation: addProductFadein 1.0s;
+	&{
+	@keyframes addProductFadein {
+   	 from {
+       	 opacity:0;
+    	}
+   	 to {
+      	  opacity:1;
+   	 }		
+}}
 `;
 
 const StyledMobileProductForm = styled.form`
   display: flex;
   flex-direction: column;
-  width: 470px;
+  width: 400px;
   padding: 40px;
   border-radius: 10px;
   margin-bottom: 50px;
@@ -1353,7 +1019,7 @@ const StyledMobileLocationBtn = styled.button`
 const StyledMobilePostTitle = styled.input`
   margin-top: 30px;
   padding: 10px;
-  width: 400px;
+  width: 300px;
   height: 30px;
   border: 1px solid rgb(71, 181, 255);
   border-radius: 10px;

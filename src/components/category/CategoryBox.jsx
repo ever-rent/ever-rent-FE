@@ -164,8 +164,16 @@ const StyledCategoryBox = styled.div`
   grid-template-rows: 200px 200px;
   grid-template-columns: 200px 200px 200px 200px;
 
-  animation: categoriFadein 1.5s;
-	
+  animation: categoriFadein 1.2s;
+	&{
+	@keyframes categoriFadein {
+   	 from {
+       	 opacity:0;
+    	}
+   	 to {
+      	  opacity:1;
+   	 }		
+}}
 `;
 
 const StyledKeyWordButton = styled.button`
@@ -218,7 +226,16 @@ const StyledMobileCategoryBox = styled.div`
   grid-template-rows: 100px 100px;
   grid-template-columns: 100px 100px 100px 100px;
 
-  animation: categoriFadein 1.5s;
+  animation: categoriFadein 1.2s;
+	&{
+	@keyframes categoriFadein {
+   	 from {
+       	 opacity:0;
+    	}
+   	 to {
+      	  opacity:1;
+   	 }		
+}}
 	
 `;
 
