@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { MyPage } from "../../pages/MyPage";
 import { getMyInfo } from "../../redux/modules/mypageSlice";
+import { Desktop, Mobile } from "../../Hooks/MideaQuery";
 
 export const Profile = ({ like, setLike }) => {
   const navigate = useNavigate();
@@ -24,106 +25,110 @@ export const Profile = ({ like, setLike }) => {
 
   return (
     <>
-      {/* <StyledProfileBox>
-        <StyledImgFlexBox>
-          <StyledImgBox>
-            <StyledImg
+      <Desktop>
+        <StyledProfileBox>
+          <StyledImgFlexBox>
+            <StyledImgBox>
+              <StyledImg
+                src="https://image.ajunews.com/content/image/2019/12/25/20191225170826943516.jpg"
+                alt="이미지 없음"
+              />
+            </StyledImgBox>
+            <StyledNickname>{info?.memberName}</StyledNickname>
+            <StyledProfileEdit
+              onClick={() => navigate(`/editUserInfo/${info?.memberName}`)}
+            >
+              프로필 수정
+            </StyledProfileEdit>
+          </StyledImgFlexBox>
+          <StyledIcon>
+            <StyledLikeAndChatBox>
+              <StyledEachWrap>
+                {like ? (
+                  <>
+                    <StyledLikeAndChat
+                      onClick={likeListhandler}
+                      src="https://img.icons8.com/ios/50/47b5ff/reservation-2.png"
+                      alt="https://icons8.com/icon/24814/reserve reserve icon by https://icons8.com Icons8"
+                    />
+                    <span>렌탈 목록</span>
+                  </>
+                ) : (
+                  <>
+                    <StyledLikeAndChat
+                      onClick={likeListhandler}
+                      src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
+                      alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
+                    />
+                    <span>찜목록</span>
+                  </>
+                )}
+              </StyledEachWrap>
+              <StyledEachWrap>
+                <StyledLikeAndChat
+                  src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
+                  alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
+                />
+                <span>채팅목록</span>
+              </StyledEachWrap>
+            </StyledLikeAndChatBox>
+          </StyledIcon>
+        </StyledProfileBox>
+      </Desktop>
+
+      {/* ################ 모바일 ################ */}
+      <Mobile>
+        <StyledMobileProfileContainer>
+          <StyledMobileImgBox>
+            <StyledMobileImg
               src="https://image.ajunews.com/content/image/2019/12/25/20191225170826943516.jpg"
               alt="이미지 없음"
             />
-          </StyledImgBox>
-          <StyledNickname>{info?.memberName}</StyledNickname>
-          <StyledProfileEdit
-            onClick={() => navigate(`/editUserInfo/${info?.memberName}`)}
-          >
-            프로필 수정
-          </StyledProfileEdit>
-        </StyledImgFlexBox>
-        <StyledIcon>
-          <StyledLikeAndChatBox>
-            <StyledEachWrap>
-              {like ? (
-                <>
-                  <StyledLikeAndChat
-                    onClick={likeListhandler}
-                    src="https://img.icons8.com/ios/50/47b5ff/reservation-2.png"
-                    alt="https://icons8.com/icon/24814/reserve reserve icon by https://icons8.com Icons8"
-                  />
-                  <span>렌탈 목록</span>
-                </>
-              ) : (
-                <>
-                  <StyledLikeAndChat
-                    onClick={likeListhandler}
-                    src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
-                    alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
-                  />
-                  <span>찜목록</span>
-                </>
-              )}
-            </StyledEachWrap>
-            <StyledEachWrap>
-              <StyledLikeAndChat
-                src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
-                alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
-              />
-              <span>채팅목록</span>
-            </StyledEachWrap>
-          </StyledLikeAndChatBox>
-        </StyledIcon>
-      </StyledProfileBox> */}
+          </StyledMobileImgBox>
+          <StyledMobileFlexBox>
+            <StyledMobileNickname>{info?.memberName}</StyledMobileNickname>
 
-      {/* Mobile */}
-      <StyledMobileProfileContainer>
-        <StyledMobileImgBox>
-          <StyledMobileImg
-            src="https://image.ajunews.com/content/image/2019/12/25/20191225170826943516.jpg"
-            alt="이미지 없음"
-          />
-        </StyledMobileImgBox>
-        <StyledMobileFlexBox>
-          <StyledMobileNickname>{info?.memberName}</StyledMobileNickname>
+            <StyledMobileEditButton
+              onClick={() => navigate(`/editUserInfo/${info?.memberName}`)}
+            >
+              프로필 수정
+            </StyledMobileEditButton>
+          </StyledMobileFlexBox>
 
-          <StyledMobileEditButton
-            onClick={() => navigate(`/editUserInfo/${info?.memberName}`)}
-          >
-            프로필 수정
-          </StyledMobileEditButton>
-        </StyledMobileFlexBox>
-
-        <div>
-          <StyledMobileIcon>
-            <StyledMobileEachWrap>
-              {like ? (
-                <>
-                  <StyleMobileLikeAndChat
-                    onClick={likeListhandler}
-                    src="https://img.icons8.com/ios/50/47b5ff/reservation-2.png"
-                    alt="https://icons8.com/icon/24814/reserve reserve icon by https://icons8.com Icons8"
-                  />
-                  <span>렌탈 목록</span>
-                </>
-              ) : (
-                <>
-                  <StyleMobileLikeAndChat
-                    onClick={likeListhandler}
-                    src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
-                    alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
-                  />
-                  <span>찜목록</span>
-                </>
-              )}
-            </StyledMobileEachWrap>
-            <StyledMobileEachWrap>
-              <StyleMobileLikeAndChat
-                src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
-                alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
-              />
-              <span>채팅목록</span>
-            </StyledMobileEachWrap>
-          </StyledMobileIcon>
-        </div>
-      </StyledMobileProfileContainer>
+          <div>
+            <StyledMobileIcon>
+              <StyledMobileEachWrap>
+                {like ? (
+                  <>
+                    <StyleMobileLikeAndChat
+                      onClick={likeListhandler}
+                      src="https://img.icons8.com/ios/50/47b5ff/reservation-2.png"
+                      alt="https://icons8.com/icon/24814/reserve reserve icon by https://icons8.com Icons8"
+                    />
+                    <span>렌탈 목록</span>
+                  </>
+                ) : (
+                  <>
+                    <StyleMobileLikeAndChat
+                      onClick={likeListhandler}
+                      src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
+                      alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
+                    />
+                    <span>찜목록</span>
+                  </>
+                )}
+              </StyledMobileEachWrap>
+              <StyledMobileEachWrap>
+                <StyleMobileLikeAndChat
+                  src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
+                  alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
+                />
+                <span>채팅목록</span>
+              </StyledMobileEachWrap>
+            </StyledMobileIcon>
+          </div>
+        </StyledMobileProfileContainer>
+      </Mobile>
     </>
   );
 };

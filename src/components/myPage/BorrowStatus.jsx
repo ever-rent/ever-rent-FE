@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { getBorrowList } from "../../redux/modules/mypageSlice";
 import { getPastList } from "../../redux/modules/mypageSlice";
 import { BorrowCommonList } from "./BorrowCommonList";
+import { Desktop, Mobile } from "../../Hooks/MideaQuery";
 
 export const BorrowStatus = () => {
   const dispatch = useDispatch();
@@ -67,24 +68,27 @@ export const BorrowStatus = () => {
   ];
 
   return (
-    // <div>
-    //   <StyledisStatusDetail>
-    //     {tabArray.map((item) => {
-    //       return <div key={item.key}>{item.tab}</div>;
-    //     })}
-    //   </StyledisStatusDetail>
-    //   {CommonList(tabIndex)}
-    // </div>
-    // Mobile
-
-    <StyledMobileisStatusDetail>
-      <StyledTabBar>
-        {tabArray.map((item) => {
-          return <div key={item.key}>{item.tab}</div>;
-        })}
-      </StyledTabBar>
-      <StyledCommonListBox>{CommonList(tabIndex)}</StyledCommonListBox>
-    </StyledMobileisStatusDetail>
+    <>
+      <Desktop>
+        <StyledisStatusDetail>
+          {tabArray.map((item) => {
+            return <div key={item.key}>{item.tab}</div>;
+          })}
+        </StyledisStatusDetail>
+        {CommonList(tabIndex)}
+      </Desktop>
+      {/* ################ 모바일 ################ */}
+      <Mobile>
+        <StyledMobileisStatusDetail>
+          <StyledTabBar>
+            {tabArray.map((item) => {
+              return <div key={item.key}>{item.tab}</div>;
+            })}
+          </StyledTabBar>
+          <StyledCommonListBox>{CommonList(tabIndex)}</StyledCommonListBox>
+        </StyledMobileisStatusDetail>
+      </Mobile>
+    </>
   );
 };
 
@@ -97,7 +101,7 @@ const StyledisStatusDetail = styled.div`
   /* border: 1px solid red; */
   display: flex;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  /* width: 630px; */
+  width: 630px;
   height: 45px;
   align-items: center;
   justify-content: space-around;

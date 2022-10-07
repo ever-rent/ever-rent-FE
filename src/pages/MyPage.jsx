@@ -4,38 +4,45 @@ import { Layout } from "../components/layout/Layout";
 import { RentalBar } from "../components/myPage/RentalBar";
 import { Profile } from "../components/myPage/Profile";
 import { MyLikeList } from "../components/myPage/MyLikeList";
+import { Desktop, Mobile } from "../Hooks/MideaQuery";
 
 export const MyPage = () => {
+  //찜목록, 렌탈목록 토글.
   const [like, setLike] = useState(false);
   console.log(like);
 
   return (
-    // <Layout>
-    //   <StyledGridBox>
-    //     <Profile like={like} setLike={setLike} />
-    //     {like ? (
-    //       <StyledLikeList>
-    //         <MyLikeList />
-    //       </StyledLikeList>
-    //     ) : (
-    //       <RentalBar />
-    //     )}
-    //   </StyledGridBox>
-    // </Layout>
-
-    //mobile
-    // <Layout>
-    <StyledFlexBox>
-      <Profile like={like} setLike={setLike} />
-      {like ? (
-        <StyledLikeList>
-          <MyLikeList />
-        </StyledLikeList>
-      ) : (
-        <RentalBar />
-      )}
-    </StyledFlexBox>
-    // </Layout>
+    <>
+      <Desktop>
+        <Layout>
+          <StyledGridBox>
+            <Profile like={like} setLike={setLike} />
+            {like ? (
+              <StyledLikeList>
+                <MyLikeList />
+              </StyledLikeList>
+            ) : (
+              <RentalBar />
+            )}
+          </StyledGridBox>
+        </Layout>
+      </Desktop>
+      {/* ################ 모바일 ################ */}
+      <Mobile>
+        <Layout>
+          <StyledFlexBox>
+            <Profile like={like} setLike={setLike} />
+            {like ? (
+              <StyledLikeList>
+                <MyLikeList />
+              </StyledLikeList>
+            ) : (
+              <RentalBar />
+            )}
+          </StyledFlexBox>
+        </Layout>
+      </Mobile>
+    </>
   );
 };
 

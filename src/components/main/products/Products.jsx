@@ -5,6 +5,8 @@ import { ProductsItem } from "./ProductsItem";
 import { useInView } from "react-intersection-observer";
 import { base } from "../../../server/core/instance";
 
+import { Desktop, Mobile } from "../../../Hooks/MideaQuery";
+
 export const Products = () => {
   // infi scroll
   // 현재 state 데이터 , 다음페이지 이동 여부,
@@ -41,25 +43,30 @@ export const Products = () => {
   console.log(products);
 
   return (
-    <StyledProductsContainer>
-      <StyledProductsGrid>
-        {products?.map((product) => {
-          return <ProductsItem {...product} key={product.id} />;
-        })}
-      </StyledProductsGrid>
-      <div ref={ref} style={{ position: "absolute" }} />
-      {/* <div style={{position: "absolute" }} /> */}
-    </StyledProductsContainer>
+    <>
+      <Desktop>
+        <StyledProductsContainer>
+          <StyledProductsGrid>
+            {products?.map((product) => {
+              return <ProductsItem {...product} key={product.id} />;
+            })}
+          </StyledProductsGrid>
+          <div ref={ref} style={{ position: "absolute" }} />
+          {/* <div style={{position: "absolute" }} /> */}
+        </StyledProductsContainer>
+      </Desktop>
 
-    //mobile
-    // <StyledMobileContainer>
-    //   <StyledMobileProducts>
-    //     {products?.map((product) => {
-    //       return <ProductsItem {...product} key={product.id} />;
-    //     })}
-    //   </StyledMobileProducts>
-    //   <div ref={ref} style={{ position: "absolute" }} />
-    // </StyledMobileContainer>
+      <Mobile>
+        <StyledMobileContainer>
+          <StyledMobileProducts>
+            {products?.map((product) => {
+              return <ProductsItem {...product} key={product.id} />;
+            })}
+          </StyledMobileProducts>
+          <div ref={ref} style={{ position: "absolute" }} />
+        </StyledMobileContainer>
+      </Mobile>
+    </>
   );
 };
 

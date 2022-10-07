@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { RentalStatus } from "./RentalStatus";
 import { BorrowStatus } from "./BorrowStatus";
 // import { StatusBox } from "./StatusBox";
-
+import { Desktop, Mobile } from "../../Hooks/MideaQuery";
 export const RentalBar = ({ like }) => {
   const [tabIndex, setTabIndex] = useState(0); //처음에 나오는 것이 빌려준 물건.
   console.log("RentalBar>>", like);
@@ -37,24 +37,27 @@ export const RentalBar = ({ like }) => {
 
   return (
     <>
-      {/* <StyledLendAndBorrow>
-        {tabArray.map((item) => {
-          return <StyledRentalBar key={item.key}>{item.tab}</StyledRentalBar>;
-        })}
-      </StyledLendAndBorrow>
-      <StyledRentStatusBox>
-        {tabIndex ? <BorrowStatus /> : <RentalStatus />}
-      </StyledRentStatusBox> */}
-
-      {/* 모바일   */}
-      <StyledLendAndBorrow>
-        {tabArray.map((item) => {
-          return <StyledRentalBar key={item.key}>{item.tab}</StyledRentalBar>;
-        })}
-      </StyledLendAndBorrow>
-      <StyledMobileRentStatusBox>
-        {tabIndex ? <BorrowStatus /> : <RentalStatus />}
-      </StyledMobileRentStatusBox>
+      <Desktop>
+        <StyledLendAndBorrow>
+          {tabArray.map((item) => {
+            return <StyledRentalBar key={item.key}>{item.tab}</StyledRentalBar>;
+          })}
+        </StyledLendAndBorrow>
+        <StyledRentStatusBox>
+          {tabIndex ? <BorrowStatus /> : <RentalStatus />}
+        </StyledRentStatusBox>
+      </Desktop>
+      {/* ################ 모바일 ################ */}
+      <Mobile>
+        <StyledLendAndBorrow>
+          {tabArray.map((item) => {
+            return <StyledRentalBar key={item.key}>{item.tab}</StyledRentalBar>;
+          })}
+        </StyledLendAndBorrow>
+        <StyledMobileRentStatusBox>
+          {tabIndex ? <BorrowStatus /> : <RentalStatus />}
+        </StyledMobileRentStatusBox>
+      </Mobile>
     </>
   );
 };

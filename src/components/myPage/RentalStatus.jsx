@@ -6,7 +6,7 @@ import { getMyPageList } from "../../redux/modules/mypageSlice";
 import { getMyPagePending } from "../../redux/modules/mypageSlice";
 import { getMyPageConfirm } from "../../redux/modules/mypageSlice";
 import { getMyPageExpired } from "../../redux/modules/mypageSlice";
-
+import { Desktop, Mobile } from "../../Hooks/MideaQuery";
 export const RentalStatus = () => {
   const dispatch = useDispatch();
 
@@ -109,24 +109,27 @@ export const RentalStatus = () => {
   ];
 
   return (
-    // <div>
-    //   <StyledisStatusDetail>
-    //     {tabArray.map((item) => {
-    //       return <div key={item.key}>{item.tab}</div>;
-    //     })}
-    //     {CommonList(tabIndex)}
-    //   </StyledisStatusDetail>
-    // </div>
-
-    // Mobile
-    <StyledMobileisStatusDetail>
-      <StyledTabBar>
-        {tabArray.map((item) => {
-          return <div key={item.key}>{item.tab}</div>;
-        })}
-      </StyledTabBar>
-      <StyledCommonListBox>{CommonList(tabIndex)}</StyledCommonListBox>
-    </StyledMobileisStatusDetail>
+    <>
+      <Desktop>
+        <StyledisStatusDetail>
+          {tabArray.map((item) => {
+            return <div key={item.key}>{item.tab}</div>;
+          })}
+          {CommonList(tabIndex)}
+        </StyledisStatusDetail>
+      </Desktop>
+      {/* ################ 모바일 ################ */}
+      <Mobile>
+        <StyledMobileisStatusDetail>
+          <StyledTabBar>
+            {tabArray.map((item) => {
+              return <div key={item.key}>{item.tab}</div>;
+            })}
+          </StyledTabBar>
+          <StyledCommonListBox>{CommonList(tabIndex)}</StyledCommonListBox>
+        </StyledMobileisStatusDetail>
+      </Mobile>
+    </>
   );
 };
 
