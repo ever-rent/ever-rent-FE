@@ -1,29 +1,28 @@
 import { base } from "./core/instance";
 import { auth } from "./core/instance";
-import { profile } from "./core/instance";
 
 export const productAPI = {
   getProducts: () => base.get(`/products`),
   getCategory: (categoryId) => base.get(`/categories/${categoryId}`),
-  addProduct: (data) => profile.post(`/products`, data),
+  addProduct: (data) => auth.post(`/products`, data),
   getProductDetail: (productId) => base.get(`/products/${productId}`),
-  updateProduct: (data, productId) => auth.put(`/products/${productId}`, data),
-  deleteProduct: (productId) => auth.delete(`/products/${productId}`),
+  updateProduct: (data, productId) => auth.put(`/auth/products/${productId}`, data),
+  deleteProduct: (productId) => auth.delete(`/auth/products/${productId}`),
   toggleWishProduct: (productId) =>
-    profile.post(`/products/wishlists/${productId}`),
+    auth.post(`/products/wishlists/${productId}`),
 };
 
 export const mypageAPI = {
-  getMyPageList: () => profile.get(`/mypages/lists`),
-  acceptOrder: (orderId) => profile.put(`/mypages/confirms/${orderId}`),
-  getMyPagePending: () => profile.get(`/mypages/waitlists`),
-  getMyPageConfirm: () => profile.get(`/mypages/confirms`),
-  getMyPageExpired: () => profile.get(`/mypages/expired`),
-  getBorrowList: () => profile.get(`/mypages/myrent`),
-  postRent: (data, productId) => profile.post(`/orders/${productId}`, data),
-  postLike: (productId) => profile.post(`/products/wishlists/${productId}`),
-  getMyInfo: () => profile.get(`/mypages/myinfos`),
-  getWishList: () => profile.get(`/mypages/myWishs`),
+  getMyPageList: () => auth.get(`/mypages/lists`),
+  acceptOrder: (orderId) => auth.put(`/mypages/confirms/${orderId}`),
+  getMyPagePending: () => auth.get(`/mypages/waitlists`),
+  getMyPageConfirm: () => auth.get(`/mypages/confirms`),
+  getMyPageExpired: () => auth.get(`/mypages/expired`),
+  getBorrowList: () => auth.get(`/mypages/myrent`),
+  postRent: (data, productId) => auth.post(`/orders/${productId}`, data),
+  postLike: (productId) => auth.post(`/products/wishlists/${productId}`),
+  getMyInfo: () => auth.get(`/mypages/myinfos`),
+  getWishList: () => auth.get(`/mypages/myWishs`),
 };
 
 // imgUrlArray firstString
