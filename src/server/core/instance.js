@@ -23,13 +23,13 @@ auth.interceptors.request.use((config) => {
   return config;
 });
 
-auth.interceptors.response.use((response) => {
-  if (response.headers["authorization"]) {
-    localStorage.removeItem("accessToken");
-    localStorage.setItem("accessToken", response.headers["authorization"]);
-  } else if(response.data.error === "INVALID_TOKEN") {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    window.location.href = "/login";
-  }
-});
+// auth.interceptors.response.use((response) => {
+//   if (response.headers["authorization"]) {
+//     localStorage.removeItem("accessToken");
+//     localStorage.setItem("accessToken", response.headers["authorization"]);
+//   } else if (response.data.error === "INVALID_TOKEN") {
+//     localStorage.removeItem("accessToken");
+//     localStorage.removeItem("refreshToken");
+//     window.location.href = "/login";
+//   }
+// });
