@@ -45,11 +45,11 @@ export const ProductsItem = ({
 
   const presentStatus = (status) => {
     if (status === "WAITING") {
-      return <StyledStatus>대기중</StyledStatus>;
+      return <StyledStatus></StyledStatus>;
     } else if (status === "CONFIRMATION") {
-      return <StyledStatus>예약중</StyledStatus>;
+      return <StyledStatus></StyledStatus>;
     } else if (status === "EXPIRATION") {
-      return <StyledStatus>예약중</StyledStatus>;
+      return <StyledStatus></StyledStatus>;
     }
   };
 
