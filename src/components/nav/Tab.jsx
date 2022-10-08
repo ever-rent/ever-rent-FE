@@ -27,7 +27,7 @@ export const Tab = () => {
           className={tabIndex === 1 ? "select" : ""}
           onClick={() => setTabIndex(1)}
         >
-          렌트내역
+          상품목록
         </div>
       ),
       content: <RentList />,
@@ -57,7 +57,9 @@ export const Tab = () => {
   );
 };
 
-const StyledContainer = styled.div``;
+const StyledContainer = styled.div`
+  height: 100%;
+`;
 
 const StyledTab = styled.div`
   display: flex;
