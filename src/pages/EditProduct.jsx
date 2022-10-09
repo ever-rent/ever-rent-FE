@@ -9,6 +9,7 @@ import { useLocation } from "react-router";
 import axios from "axios";
 
 import { LocationModal } from "../components/location/LocationModal";
+import { RangeCalrendar } from "../components/calrendar/RangeCalrendar";
 import { imgFirstString } from "../server/api";
 
 import imageCompression from "browser-image-compression";
@@ -154,6 +155,23 @@ export const EditProduct = () => {
   const [description, setDescription] = useState("");
 
   const [disabled, setDisabled] = useState(true);
+
+  const startEndDays = (start, end) => {
+    let startDay = start;
+    let endDay = end;
+
+    let sYaer = startDay?.getFullYear();
+    let sMonth = startDay?.getMonth() + 1;
+    let sDay = startDay?.getDate();
+    let eYaer = endDay?.getFullYear();
+    let eMonth = endDay?.getMonth() + 1;
+    let eDay = endDay?.getDate();
+
+    setStartDateInput(`${sYaer}-${sMonth}-${sDay}`);
+    setEndDateInput(`${eYaer}-${eMonth}-${eDay}`);
+  };
+  console.log(startDateInput);
+  console.log(endDateInput);
 
   const checkPost = () => {
     if (title.length > 3 && description.length > 0) {
@@ -325,26 +343,7 @@ export const EditProduct = () => {
                     <StyledPriceData> / 일</StyledPriceData>
                   </StyledPriceWrap>
                   <StyledDateWrap>
-                    <StyledStartLabel htmlFor="">
-                      렌탈시작일 :{" "}
-                    </StyledStartLabel>
-                    <StyledDateInput
-                      type="date"
-                      defaultValue={editData?.rentStart}
-                      onChange={(e) => {
-                        setStartDateInput(e.target.value);
-                      }}
-                    />
-                  </StyledDateWrap>
-                  <StyledDateWrap>
-                    <StyledEndLabel htmlFor="">렌탈마감일 : </StyledEndLabel>
-                    <StyledDateInput
-                      type="date"
-                      defaultValue={editData?.rentEnd}
-                      onChange={(e) => {
-                        setEndDateInput(e.target.value);
-                      }}
-                    />
+                    <RangeCalrendar startEndDays={startEndDays} />
                   </StyledDateWrap>
                 </StyledOptionInputs>
               </StyledPostingHeadWrap>
@@ -516,24 +515,7 @@ export const EditProduct = () => {
                   <StyledMobilePriceData> / 일</StyledMobilePriceData>
                 </StyledPriceWrap>
                 <StyledDateWrap>
-                  <StyledStartLabel htmlFor="">렌탈시작일 : </StyledStartLabel>
-                  <StyledMobileDateInput
-                    type="date"
-                    defaultValue={editData?.rentStart}
-                    onChange={(e) => {
-                      setStartDateInput(e.target.value);
-                    }}
-                  />
-                </StyledDateWrap>
-                <StyledDateWrap>
-                  <StyledEndLabel htmlFor="">렌탈마감일 : </StyledEndLabel>
-                  <StyledMobileDateInput
-                    type="date"
-                    defaultValue={editData?.rentEnd}
-                    onChange={(e) => {
-                      setEndDateInput(e.target.value);
-                    }}
-                  />
+                  <RangeCalrendar />
                 </StyledDateWrap>
               </StyledMobileOptionInputs>
 
@@ -715,7 +697,7 @@ const StyledCategorySelector = styled.select`
     no-repeat 95% 50%;
   padding: 10px;
   padding-right: 20px;
-  margin-top: 30px;
+  margin-top: 150px;
   margin-bottom: 15px;
   font-size: 16px;
   border-radius: 10px;
@@ -756,13 +738,7 @@ const StyledPriceLabel = styled.label`
 `;
 
 const StyledDateWrap = styled.div`
-  & {
-    @media all and (max-width: 767px) {
-      margin-top: 10px;
-    }
-    @media all and (max-width: 480px) {
-    }
-  }
+
 `;
 const StyledStartLabel = styled.label``;
 const StyledEndLabel = styled.label``;
