@@ -25,7 +25,7 @@ export const RentalStatus = () => {
     dispatch(getMyPageList());
   }, [dispatch]);
 
-  const CommonList = (tabIndex) => {
+  const commonList = (tabIndex) => {
     switch (tabIndex) {
       case 0:
         return <RentalCommonList props={list} index={tabIndex} />;
@@ -116,7 +116,7 @@ export const RentalStatus = () => {
             return <div key={item.key}>{item.tab}</div>;
           })}
         </StyledisStatusDetail>
-        <StyledList>{CommonList(tabIndex)}</StyledList>
+        <StyledList>{commonList(tabIndex)}</StyledList>
       </Desktop>
       {/* ################ 모바일 ################ */}
       <Mobile>
@@ -126,7 +126,7 @@ export const RentalStatus = () => {
               return <div key={item.key}>{item.tab}</div>;
             })}
           </StyledTabBar>
-          <StyledCommonListBox>{CommonList(tabIndex)}</StyledCommonListBox>
+          <StyledCommonListBox>{commonList(tabIndex)}</StyledCommonListBox>
         </StyledMobileisStatusDetail>
       </Mobile>
     </>

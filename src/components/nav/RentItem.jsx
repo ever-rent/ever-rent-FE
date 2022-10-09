@@ -1,17 +1,16 @@
 import React from "react";
 import styled from "styled-components";
+import { imgFirstString } from "../../server/api";
 
-export const RentItem = () => {
+export const RentItem = ({ item }) => {
   return (
     <StyledItem>
-      <img
-        src="https://static.megamart.com/product/image/0601/06013295/06013295_1_960.jpg"
-        alt="img"
-      />
+      <img src={`${imgFirstString}${item.imgUrlArray[0]}`} alt="상품이미지" />
       <div className="span-div">
-        <span className="title">스팸 대여해드립니다</span>
+        <span className="title">{item.productName}</span>
         <span>
-          남은 기간 : <span className="date">3일</span>
+          <span className="location">{item.mapLocation}</span> ·{" "}
+          {item.rentStart} ~ <span className="date">{item.rentEnd}</span>
         </span>
       </div>
     </StyledItem>
@@ -39,6 +38,9 @@ const StyledItem = styled.div`
     display: flex;
     flex-direction: column;
     .title {
+      font-weight: 500;
+    }
+    .location {
       color: #999;
       font-size: 12px;
     }
