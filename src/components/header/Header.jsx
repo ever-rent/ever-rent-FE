@@ -234,7 +234,7 @@ const StyledSideMenu = styled.span`
 // for Mobile
 
 const StyledMobileHeader = styled.div`
-  width: 480px;
+  width: 450px;
   height: 80px;
   display: flex;
   background-color: white;
