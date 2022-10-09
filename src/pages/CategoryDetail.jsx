@@ -1,16 +1,17 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Layout } from "../components/layout/Layout";
 import { getCategory } from "../redux/modules/productSlice";
 import { DetailItem } from "../components/detail/DetailItem";
 
-import {useInView} from "react-intersection-observer";
+import { useInView } from "react-intersection-observer";
 import { base } from "../server/core/instance"; // 리팩토링 예정
 import axios from "axios";
 
 export const CategoryDetail = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   // const dispatch = useDispatch();
   // const category = useSelector((state) => state.products.category);
@@ -20,8 +21,6 @@ export const CategoryDetail = () => {
   // useEffect(() => {
   //   dispatch(getCategory(id));
   // }, [dispatch, id]);
-
-
 
   const categoryList = [
     { value: "0", name: "카테고리를 선택하세요" },
@@ -73,7 +72,12 @@ export const CategoryDetail = () => {
     // console.log(e.target.value);
 
     // infi
-    setCategoryId(e.target.value)
+    page.current = 1;
+    console.log(page);
+    setCategoryItems([]);
+    console.log(e.target.value);
+    navigate(`/categoryDetail/${e.target.value}`);
+    // setCategoryId(e.target.value)
   };
 
   const addressHandler = (e) => {
@@ -93,10 +97,10 @@ export const CategoryDetail = () => {
   // useEffect(() => {
   //   dispatch();
   // });
-  
 
+  // infi scroll
 
-// infi scroll
+  const [isLoading, setIsLoading] = useState(false);
 
   // 카테고리 id 파라미터
   const [categoryId, setCategoryId] = useState(id);
@@ -112,7 +116,7 @@ export const CategoryDetail = () => {
   const fetch = useCallback(async () => {
     try {
       const { data } = await base.get(
-        `http://13.209.8.18/categories/${categoryId}?page=${page.current}`
+        `http://13.209.8.18/categories/${id}?page=${page.current}`
       );
       setCategoryItems((prevPosts) => [...prevPosts, ...data.data]);
       setHasNextPage(data.data.length === 12);
@@ -124,14 +128,23 @@ export const CategoryDetail = () => {
     }
   }, []);
 
+  useEffect(() => {
+    setCategoryItems([]);
+  }, []);
 
   // 데이터 패치 처리
   useEffect(() => {
+    setIsLoading(true);
     console.log(inView, hasNextPage);
     if (inView && hasNextPage) {
-      fetch();
+      setTimeout(() => {
+        fetch();
+      }, 500);
     }
-  }, [fetch, hasNextPage, inView]);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+  }, [fetch, hasNextPage, inView, page]);
 
   console.log(categoryItems);
 
@@ -139,21 +152,35 @@ export const CategoryDetail = () => {
     <Layout>
       <StyledCategoryContainer>
         <StyledSelectBox>
-          <StyledSelect onChange={categoryHandler}>
-            {categoryList?.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.name}
-              </option>
-            ))}
+          <StyledSelect onChange={categoryHandler} defaultValue={id}>
+            {categoryList?.map((option, index) => {
+              if (index === 0) {
+                return (
+                  <option
+                    key={option.value}
+                    value={option.value}
+                    disabled={true}
+                  >
+                    {option.name}
+                  </option>
+                );
+              } else {
+                return (
+                  <option key={option.value} value={option.value}>
+                    {option.name}
+                  </option>
+                );
+              }
+            })}
           </StyledSelect>
 
-          <StyledSelect onChange={addressHandler}>
+          {/* <StyledSelect onChange={addressHandler}>
             {addressList?.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.name}
               </option>
             ))}
-          </StyledSelect>
+          </StyledSelect> */}
 
           <StyledSelect onChange={priceHandler}>
             {priceList?.map((option) => (
@@ -170,8 +197,12 @@ export const CategoryDetail = () => {
           })}
         </StyledDetailContainer>
       </StyledCategoryContainer>
-      <div ref={ref} style={{ position: "absolute" }} />
-      {/* <div style={{position: "absolute" }} /> */}
+      <div ref={ref} style={{ position: "relative" }} />
+      {isLoading === true ? (
+        <StyledSpinner>
+          <span className="spinner"></span>
+        </StyledSpinner>
+      ) : null}
     </Layout>
   );
 };
@@ -206,5 +237,39 @@ const StyledSelect = styled.select`
   &:hover {
     box-shadow: 0 0 3px 0 rgb(71, 181, 255);
     transition: box-shadow 0.1s ease-in-out 0s;
+  }
+`;
+
+const StyledSpinner = styled.div`
+  /* display: none; */
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  & .spinner {
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 200px;
+    left: 50%;
+    width: 64px;
+    height: 64px;
+    margin-top: -32px;
+    margin-left: -32px;
+    border-radius: 50%;
+    border: 8px solid transparent;
+    border-top-color: rgb(71, 181, 255);
+    border-bottom-color: rgb(71, 181, 255);
+    animation: spinner 0.7s ease infinite;
+
+    @keyframes spinner {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
   }
 `;

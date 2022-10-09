@@ -117,7 +117,7 @@ export const ProductsItem = ({
           <StyledImgBox>
             <StyledImg
               onClick={() => {
-                navigate(`/productDetail/${id}`, { state: sendData });
+                navigate(`/productDetail/${id}`);
               }}
               src={`${imgFirstString}${imgUrlArray[0]}`}
               alt="이미지 없음"
@@ -180,7 +180,7 @@ export const ProductsItem = ({
           <StyledMobileImgBox>
             <StyledImg
               onClick={() => {
-                navigate(`/productDetail/${id}`, { state: sendData });
+                navigate(`/productDetail/${id}`);
               }}
               src={`${imgFirstString}${imgUrlArray[0]}`}
               alt="이미지 없음"
