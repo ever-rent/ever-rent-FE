@@ -224,7 +224,7 @@ const StyledKeyWordName = styled.span`
 
 // for Mobile
 const StyledMobileCategoryH2 = styled.h2`
-  margin-top: 120px;
+  margin-top: 60px;
   text-align: center;
   font-size: 20px;
 `;

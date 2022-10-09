@@ -1,24 +1,40 @@
 import React from "react";
 import styled from "styled-components";
+import { Desktop, Mobile } from "../../Hooks/MideaQuery";
 
 export const Banner = () => {
-  return <StyledBanner src="img/bannerImg.png" alt="이미지 중비중 입니다." />;
+  return (
+    <>
+      <Desktop>
+        <StyledBanner src="img/bannerImg.png" alt="이미지 중비중 입니다." />
+      </Desktop>
+
+      <Mobile>
+        <StyledMobileBanner
+          src="img/bannerMobileImg.png"
+          alt="이미지 중비중 입니다."
+        />
+      </Mobile>
+    </>
+  );
 };
 
 const StyledBanner = styled.img`
-  /* max-width: 1024px;
-  margin: auto; */
   display: flex;
-  /* justify-content: center; */
-  /* align-items: center;
-  position: relative; */
-  /* top: 130px; */
-  /* left: 0px; */
-
   width: 1024px;
-  width: 100%;
-  height: 250px;
+  /* width: 90%; */
+  height: 230px;
   margin: auto;
-  margin-top: 50px;
-  border-bottom: 1px solid #ececec;
+  margin-top: 60px;
+  border-radius: 10px;
+`;
+
+const StyledMobileBanner = styled.img`
+  display: flex;
+  width: 480px;
+  width: 90%;
+  /* height: 150px; */
+  margin: auto;
+  margin-top: 120px;
+  border-radius: 10px;
 `;
