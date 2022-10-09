@@ -19,9 +19,8 @@ export const EditProduct = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const param = useParams();
-  
-  const firstUrl = imgFirstString;
 
+  const firstUrl = imgFirstString;
 
   const [data, setData] = useState();
   const fetchDetail = async () => {
@@ -29,12 +28,12 @@ export const EditProduct = () => {
     await axios
       .get(`http://13.209.8.18/products/${param.id}`)
       .then((response) => {
-        setData(response)
-      })
-    };
-    useEffect(() => {
-      fetchDetail();
-    }, []);
+        setData(response);
+      });
+  };
+  useEffect(() => {
+    fetchDetail();
+  }, []);
 
   const editDataSet = [data?.data.data];
   const editData = editDataSet?.filter((element) => element)[0];

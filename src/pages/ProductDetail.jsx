@@ -1,20 +1,15 @@
 import styled from "styled-components";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 
 import { Layout } from "../components/layout/Layout";
-import {
-  deleteProducts,
-  getProductsDetail,
-} from "../redux/modules/productSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { deleteProducts } from "../redux/modules/productSlice";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { useLocation } from "react-router";
-import { useQueries, useQuery } from "react-query";
 
 import { categoriNumber } from "../util/categoryNumber";
 import { timeToToday } from "../util/timeToToday";
 import { LocationModal } from "../components/location/LocationModal";
-import { imgFirstString, productAPI } from "../server/api";
+import { imgFirstString } from "../server/api";
 
 import Swal from "sweetalert2";
 import { Desktop, Mobile } from "../Hooks/MideaQuery";
@@ -23,36 +18,7 @@ import { UserReport } from "../components/report/UserReport";
 import { PostReport } from "../components/report/PostReport";
 import axios from "axios";
 
-// liked 컴포넌트
-const FavoritIconButton = () => {
-  const [liked, setLiked] = useState(false);
-
-  const likeUp = () => {
-    liked === false ? setLiked(true) : setLiked(false);
-  };
-
-  if (liked === false) {
-    return (
-      <StyledImagesWrap onClick={likeUp}>
-        <StyledLikeImage
-          src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
-          alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
-        />
-        <StyledLikeImgAlt>찜하기</StyledLikeImgAlt>
-      </StyledImagesWrap>
-    );
-  } else {
-    return (
-      <StyledImagesWrap onClick={likeUp}>
-        <StyledLikeImage
-          src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FDoa5l%2FbtrMvM9d2ZW%2FoA2ssgiZFbkWmn9PZwGbS0%2Fimg.png"
-          alt="https://icons8.com/icon/7697/heart Heart icon by https://icons8.com Icons8"
-        />
-        <StyledLikeImgAlt>찜하기</StyledLikeImgAlt>
-      </StyledImagesWrap>
-    );
-  }
-};
+import { WishButton } from "../components/button/WishButton";
 
 // 게시글 상세 페이지 컴포넌트
 export const ProductDetail = () => {
@@ -67,20 +33,18 @@ export const ProductDetail = () => {
     await axios
       .get(`http://13.209.8.18/products/${param.id}`)
       .then((response) => {
-        setData(response)
-      })
-    };
-    useEffect(() => {
-      fetchDetail();
-    }, []);
-
+        setData(response);
+      });
+  };
+  useEffect(() => {
+    fetchDetail();
+  }, []);
 
   console.log(data);
 
   const detailDataSet = [data?.data.data];
   const detailData = detailDataSet?.filter((element) => element)[0];
   console.log(detailData);
-
 
   const firstUrl = imgFirstString;
 
@@ -118,7 +82,7 @@ export const ProductDetail = () => {
       cancelButtonText: "취소",
     }).then((result) => {
       if (result.value) {
-        dispatch(deleteProducts(param));
+        dispatch(deleteProducts(param.id));
         alert("삭제완료");
         navigate("/");
       }
@@ -172,7 +136,7 @@ export const ProductDetail = () => {
                     />
                     <StyledChatImgAlt>채팅하기</StyledChatImgAlt>
                   </StyledImagesWrap>
-                  <FavoritIconButton />
+                  <WishButton productId={param.id} data={detailData} />
                   <StyledImagesWrap
                     className="openPopupButton"
                     onClick={openModal}
@@ -277,7 +241,7 @@ export const ProductDetail = () => {
                     />
                     <StyledChatImgAlt>채팅하기</StyledChatImgAlt>
                   </StyledMobileImagesWrap>
-                  <FavoritIconButton />
+                  <WishButton productId={param.id} data={detailData} />
                   <StyledMobileImagesWrap
                     className="openPopupButton"
                     onClick={openModal}
@@ -425,10 +389,9 @@ const StyledPostSubItems = styled.div`
   margin-bottom: 50px;
 `;
 
-const StyledImagesWrap = styled.div`
+export const StyledImagesWrap = styled.div`
   width: 90px;
   height: 90px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -445,7 +408,7 @@ const StyledChatImage = styled.img`
   height: 50px;
   padding: 10px;
 `;
-const StyledLikeImage = styled.img`
+export const StyledLikeImage = styled.img`
   width: 50px;
   height: 50px;
   padding: 10px;

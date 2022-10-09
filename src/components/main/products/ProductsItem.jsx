@@ -34,32 +34,32 @@ export const ProductsItem = ({
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [like, setlike] = useState(false);
+  const [togglelike, setTogglelike] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
 
   // const [isrent, setIsrent] = useState(false);
 
   const data = useSelector((state) => state.mypage?.like);
-  // console.log("data", id, data);
+  console.log("data", id, data);
   // console.log(id, like);
 
   const presentStatus = (status) => {
     if (status === "WAITING") {
-      return <StyledStatus>대기중</StyledStatus>;
+      return <StyledStatus></StyledStatus>;
     } else if (status === "CONFIRMATION") {
-      return <StyledStatus>예약중</StyledStatus>;
+      return <StyledStatus></StyledStatus>;
     } else if (status === "EXPIRATION") {
-      return <StyledStatus>예약중</StyledStatus>;
+      return <StyledStatus></StyledStatus>;
     }
   };
 
   const likeHandler = (e) => {
     e.preventDefault();
-    setlike(!like);
-    if (!like) {
+    setTogglelike(!togglelike);
+    if (!togglelike) {
       setLikeCount(likeCount + 1);
       dispatch(postLike(id));
-    } else if (like) {
+    } else if (togglelike) {
       setLikeCount(likeCount - 1);
       dispatch(postLike(id));
     }
@@ -140,20 +140,25 @@ export const ProductsItem = ({
             {presentStatus(status)}
             <StyledLikeAndChat>
               <StyledLikeWrap>
-                {like ? (
-                  <StyledLike
-                    onClick={likeHandler}
-                    src="https://img.icons8.com/ios-filled/50/47b5ff/like--v1.png"
-                    alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
-                  />
+                {togglelike ? (
+                  <>
+                    <StyledLike
+                      onClick={likeHandler}
+                      src="https://img.icons8.com/ios-filled/50/47b5ff/like--v1.png"
+                      alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
+                    />
+                    <span>찜 {wishNum + likeCount}</span>
+                  </>
                 ) : (
-                  <StyledLike
-                    onClick={likeHandler}
-                    src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
-                    alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
-                  />
+                  <>
+                    <StyledLike
+                      onClick={likeHandler}
+                      src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
+                      alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
+                    />
+                    <span>찜 {wishNum - likeCount}</span>
+                  </>
                 )}
-                <span>찜 {wishNum}</span>
               </StyledLikeWrap>
               <StyledChatWrap>
                 <StyledChat
@@ -199,7 +204,7 @@ export const ProductsItem = ({
             <StyledAddress>{address}</StyledAddress>
             <StyledMobileLikeAndChat>
               <StyledMobileLikeWrap>
-                {like ? (
+                {togglelike ? (
                   <StyledLike
                     onClick={likeHandler}
                     src="https://img.icons8.com/ios-filled/50/47b5ff/like--v1.png"
