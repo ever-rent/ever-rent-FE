@@ -1,22 +1,27 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 import { Layout } from "../components/layout/Layout";
-import { deleteProducts } from "../redux/modules/productSlice";
-import { useDispatch } from "react-redux";
+import {
+  deleteProducts,
+  getProductsDetail,
+} from "../redux/modules/productSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useLocation } from "react-router";
+import { useQueries, useQuery } from "react-query";
 
 import { categoriNumber } from "../util/categoryNumber";
 import { timeToToday } from "../util/timeToToday";
 import { LocationModal } from "../components/location/LocationModal";
-import { imgFirstString } from "../server/api";
+import { imgFirstString, productAPI } from "../server/api";
 
 import Swal from "sweetalert2";
 import { Desktop, Mobile } from "../Hooks/MideaQuery";
 
 import { UserReport } from "../components/report/UserReport";
 import { PostReport } from "../components/report/PostReport";
+import axios from "axios";
 
 // liked 컴포넌트
 const FavoritIconButton = () => {
@@ -54,10 +59,28 @@ export const ProductDetail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const param = useParams();
-  const { state } = useLocation();
+  console.log(param.id);
 
-  const detailData = state;
+  const [data, setData] = useState();
+  const fetchDetail = async () => {
+    console.log("패치데이터", param);
+    await axios
+      .get(`http://13.209.8.18/products/${param.id}`)
+      .then((response) => {
+        setData(response)
+      })
+    };
+    useEffect(() => {
+      fetchDetail();
+    }, []);
+
+
+  console.log(data);
+
+  const detailDataSet = [data?.data.data];
+  const detailData = detailDataSet?.filter((element) => element)[0];
   console.log(detailData);
+
 
   const firstUrl = imgFirstString;
 
@@ -183,9 +206,7 @@ export const ProductDetail = () => {
                     <StyledMyPostOption>
                       <span
                         onClick={() => {
-                          navigate(`/editProduct/${param.id}`, {
-                            state: state,
-                          });
+                          navigate(`/editProduct/${param.id}`);
                         }}
                       >
                         글 수정
@@ -290,9 +311,7 @@ export const ProductDetail = () => {
                     <StyledMobileMyPostOption>
                       <span
                         onClick={() => {
-                          navigate(`/editProduct/${param.id}`, {
-                            state: state,
-                          });
+                          navigate(`/editProduct/${param.id}`);
                         }}
                       >
                         글 수정
@@ -338,15 +357,16 @@ const StyledDetailProductContainer = styled.div`
   justify-content: center;
 
   animation: productDetailFadein 1.5s;
-	&{
-	@keyframes productDetailFadein {
-   	 from {
-       	 opacity:0;
-    	}
-   	 to {
-      	  opacity:1;
-   	 }		
-}}
+  & {
+    @keyframes productDetailFadein {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  }
 `;
 
 const StyledDetailProductWrap = styled.div`
@@ -522,15 +542,16 @@ const StyledMobileDetailContainer = styled.div`
   justify-content: center;
 
   animation: productDetailFadein 1.5s;
-	&{
-	@keyframes productDetailFadein {
-   	 from {
-       	 opacity:0;
-    	}
-   	 to {
-      	  opacity:1;
-   	 }		
-}}
+  & {
+    @keyframes productDetailFadein {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  }
 `;
 
 const StyledMobileDetailWrap = styled.div`

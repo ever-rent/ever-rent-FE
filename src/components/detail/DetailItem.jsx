@@ -1,8 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { imgFirstString } from "../../server/api";
 
-export const DetailItem = ({ id, imgUrl, productName, price }) => {
+export const DetailItem = ({ id, imgUrl, imgUrlArray, productName, price }) => {
   const navigate = useNavigate();
 
   return (
@@ -10,7 +11,7 @@ export const DetailItem = ({ id, imgUrl, productName, price }) => {
       <StyledImgBox>
         {/* TODO: onClick event 만들기.(detail page로 이동.) */}
         <StyledImg
-          src={imgUrl}
+          src={`${imgFirstString}${imgUrlArray[0]}`}
           alt="이미지 없음"
           onClick={() => {
             navigate(`/productDetail/${id}`);

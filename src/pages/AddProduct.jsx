@@ -568,15 +568,16 @@ const StyledAddProductContainer = styled.div`
   justify-content: center;
 
   animation: addProductFadein 1.5s;
-	&{
-	@keyframes addProductFadein {
-   	 from {
-       	 opacity:0;
-    	}
-   	 to {
-      	  opacity:1;
-   	 }		
-}}
+  & {
+    @keyframes addProductFadein {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  }
 `;
 
 const StyledAddProductForm = styled.form`
@@ -830,16 +831,17 @@ const StyledMobileContainer = styled.div`
   display: flex;
   justify-content: center;
 
-  animation: addProductFadein 1.0s;
-	&{
-	@keyframes addProductFadein {
-   	 from {
-       	 opacity:0;
-    	}
-   	 to {
-      	  opacity:1;
-   	 }		
-}}
+  animation: addProductFadein 1s;
+  & {
+    @keyframes addProductFadein {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  }
 `;
 
 const StyledMobileProductForm = styled.form`
