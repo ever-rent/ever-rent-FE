@@ -135,10 +135,10 @@ export const postRent = createAsyncThunk(
 export const postLike = createAsyncThunk(
   "POST_LIKE",
   async (payload, thunkAPI) => {
-    // console.log("postLike 시작");
+    console.log("postLike 시작");
     try {
       const { data } = await mypageAPI.postLike(payload);
-      // console.log("data", data);
+      console.log("data", data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (errer) {
       return thunkAPI.rejectWithValue(errer);
@@ -241,13 +241,13 @@ export const mypageSlice = createSlice({
 
     //TODO: 테스트용 렌트 신청!!
     [postRent.fulfilled]: (state, action) => {
-      console.log("action", action);
-      console.log("state", current(state));
+      // console.log("action", action);
+      // console.log("state", current(state));
       state.reservation.push(action.payload);
       // state.reservation = state.reservation.concat(action.payload);
     },
     [postLike.fulfilled]: (state, action) => {
-      // console.log("action", action);
+      console.log("action", action);
       // console.log("state", state);
       state.like = action.payload;
     },
