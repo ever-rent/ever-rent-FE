@@ -1,18 +1,17 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+
 import { Layout } from "../components/layout/Layout";
-import { getCategory } from "../redux/modules/productSlice";
 import { DetailItem } from "../components/detail/DetailItem";
 
 import { useInView } from "react-intersection-observer";
 import { base } from "../server/core/instance"; // 리팩토링 예정
-import axios from "axios";
 
 export const CategoryDetail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+
   // const dispatch = useDispatch();
   // const category = useSelector((state) => state.products.category);
   // const categoryItems = category?.data;
@@ -72,13 +71,13 @@ export const CategoryDetail = () => {
     // console.log(e.target.value);
 
     // infi
-    page.current = 1;
-    console.log(page);
-    setCategoryItems([]);
     console.log(e.target.value);
     navigate(`/categoryDetail/${e.target.value}`);
-    // setCategoryId(e.target.value)
   };
+
+  useEffect(() => {
+    setCategoryId(id);
+  }, []);
 
   const addressHandler = (e) => {
     e.preventDefault();
@@ -113,10 +112,10 @@ export const CategoryDetail = () => {
   const [ref, inView] = useInView(true);
 
   // 다음 구간 데이터 패치 함수
-  const fetch = useCallback(async () => {
+  const fetch = useCallback(async (categoryId) => {
     try {
       const { data } = await base.get(
-        `http://13.209.8.18/categories/${id}?page=${page.current}`
+        `http://13.209.8.18/categories/${categoryId}?page=${page.current}`
       );
       setCategoryItems((prevPosts) => [...prevPosts, ...data.data]);
       setHasNextPage(data.data.length === 12);
@@ -128,9 +127,17 @@ export const CategoryDetail = () => {
     }
   }, []);
 
+  //categoryDetail/:id 를 통해 카테고리 항목이 옮겨질 경우
+  // axios 캐시 문제인지 아래의 데이터 패치 처리 Effect가 작동하지 않고
+  // 이전 데이터를 그대로 반영하는 문제 확인(headers cache-control은 이미 max-age=0 )
+  // 추가 headers 옵션 적용되지 않음
+  // 해당 useEffect를 통해 API 요청 & 카테고리 아이템 Array & 다음 요청시 호출할 page number 초기화
   useEffect(() => {
-    setCategoryItems([]);
-  }, []);
+    setCategoryId(id);
+    const init = [];
+    setCategoryItems(init);
+    page.current = 1;
+  }, [id]);
 
   // 데이터 패치 처리
   useEffect(() => {
@@ -138,15 +145,13 @@ export const CategoryDetail = () => {
     console.log(inView, hasNextPage);
     if (inView && hasNextPage) {
       setTimeout(() => {
-        fetch();
+        fetch(categoryId);
       }, 500);
     }
     setTimeout(() => {
       setIsLoading(false);
     }, 500);
   }, [fetch, hasNextPage, inView, page]);
-
-  console.log(categoryItems);
 
   return (
     <Layout>
