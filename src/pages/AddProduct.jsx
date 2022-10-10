@@ -477,7 +477,7 @@ export const AddProduct = () => {
                   <StyledMobilePriceData> / 일</StyledMobilePriceData>
                 </StyledPriceWrap>
                 <StyledDateWrap>
-                  <RangeCalrendar />
+                  <RangeCalrendar startEndDays={startEndDays} />
                 </StyledDateWrap>
               </StyledMobileOptionInputs>
 

@@ -47,6 +47,7 @@ export const DetailItem = ({ id, imgUrl, imgUrlArray, productName, price }) => {
 
 const StyledItemBox = styled.div`
   /* border: 1px solid red; */
+  margin-bottom:20px;
   padding: 10px 10px 0 10px;
   position: relative;
   border-radius: 10px;

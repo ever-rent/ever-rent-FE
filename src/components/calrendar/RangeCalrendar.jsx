@@ -7,9 +7,11 @@ import { ko } from "date-fns/esm/locale";
 import styled from "styled-components";
 
 export const RangeCalrendar = ({startEndDays}) => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
+  const [readOnly, setReadOnly] = useState(false);
+  
   const onChange = (dates) => {
     const [start, end] = dates;
     startEndDays(start,end)
@@ -31,6 +33,7 @@ export const RangeCalrendar = ({startEndDays}) => {
     <StyledDatePickerWrapper>
       <StyledDateSetting>예약 기간을 설정해주세요!</StyledDateSetting>
       <StyledDatePicker
+        withPortal
         onChange={onChange}
         startDate={startDate}
         endDate={endDate}
@@ -39,14 +42,14 @@ export const RangeCalrendar = ({startEndDays}) => {
         dateFormat="yy년MM월dd일"
         minDate={new Date()}
         showDisabledMonthNavigation
-        withPortal
+        
       />
       <StyledDaysWrap>
         <StyledRentDays>
-          렌탈시작일 : {endDate === null ? startDay : startDay}
+          렌탈시작일 : {startDay.length >14 ? "-" : startDay}
         </StyledRentDays>
         <StyledRentDays>
-          렌탈종료일 : {endDate === null ? startDay : endDay}
+          렌탈종료일 : {endDay.length >14 ? "-" : endDay}
         </StyledRentDays>
         <StyledRentDays>
           렌탈기간 : {endDate === null ? 1 : dateTime}일
@@ -61,23 +64,11 @@ export const RangeCalrendar = ({startEndDays}) => {
 };
 
 const StyledDatePickerWrapper = styled.section`
-  /* display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 300px;
-  height: 380px;
-  border-radius: 20px;
-  box-shadow: 0 0 5px 0 rgb(71, 181, 255); */
   margin-top:50px;
-
-  
-
   .react-datepicker {
-    background-color: white;
-    border-color: rgb(198, 232, 255);
-    border-radius: 20px;
+    
   }
+
   .react-datepicker__navigation-icon--previous::before {
     border-color: white;
   }
@@ -119,11 +110,15 @@ const StyledDatePickerWrapper = styled.section`
   .react-datepicker__week {
     color: white;
   }
+  
   .react-datepicker__day {
     font-size: 15px;
     font-weight: bold;
     color: white;
     border-radius:30px;
+  }
+  .react-datepicker__day--keyboard-selected{
+    border-radius:50px;
   }
   .react-datepicker__day--disabled{
     background-color:  #e2e2e2;
