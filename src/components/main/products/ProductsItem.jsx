@@ -248,6 +248,7 @@ const StyledItemBox = styled.div`
 `;
 
 const StyledMobileItemBox = styled.div`
+  margin-bottom: 20px;
   border-bottom: 1px solid #c7c6c6bc;
   /* max-width: 480px; */
   padding: 10px 10px 0 10px;
