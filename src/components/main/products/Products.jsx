@@ -98,12 +98,6 @@ const StyledProductsGrid = styled.div`
   grid-template-columns: repeat(4, 226px);
   margin-top: 30px;
   gap: 50px 40px;
-  @media only screen and (max-width: 767px) {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    width: 100%;
-  }
 `;
 
 const StyledMobileContainer = styled.div`

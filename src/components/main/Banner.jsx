@@ -23,7 +23,7 @@ const StyledBanner = styled.img`
   display: flex;
   width: 1024px;
   /* width: 90%; */
-  height: 230px;
+  height: 200px;
   margin: auto;
   margin-top: 60px;
   border-radius: 10px;
@@ -31,10 +31,9 @@ const StyledBanner = styled.img`
 
 const StyledMobileBanner = styled.img`
   display: flex;
-  width: 480px;
-  width: 90%;
-  /* height: 150px; */
+  width: 100%;
+  height: 140px;
   margin: auto;
   margin-top: 120px;
-  border-radius: 10px;
+  /* border-radius: 10px; */
 `;

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { timeToToday } from "../../../util/timeToToday";
-import { categoriNumber } from "../../../util/categoryNumber";
 import { useDispatch, useSelector } from "react-redux";
 import { postRent } from "../../../redux/modules/mypageSlice";
 import { postLike } from "../../../redux/modules/mypageSlice";
@@ -125,12 +124,7 @@ export const ProductsItem = ({
           </StyledImgBox>
           <StyledContentBox>
             <StyledTitle>{productName}</StyledTitle>
-            {/* <StyledCateId>{categoriNumber(cateId)}</StyledCateId> */}
             <StyledLocation>{location}</StyledLocation>
-            <br />
-            {/* <StyledPeriod>
-              {rentEnd}~{rentStart}
-            </StyledPeriod> */}
             <StyledPayBox>
               <StyledPay>{price}</StyledPay>
               <StyledDay> / 일</StyledDay>
