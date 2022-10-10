@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { Layout } from "../components/layout/Layout";
 import { DetailItem } from "../components/detail/DetailItem";
+import { Skeleton } from "../components/skeleton/Skeleton";
 
 import { useInView } from "react-intersection-observer";
 import { base } from "../server/core/instance";
@@ -122,11 +123,11 @@ export const CategoryDetail = () => {
     if (inView && hasNextPage) {
       setTimeout(() => {
         fetch(categoryId);
-      }, 500);
+      }, 700);
     }
     setTimeout(() => {
       setIsLoading(false);
-    }, 500);
+    }, 1500);
   }, [fetch, hasNextPage, inView, page]);
 
   return (
@@ -169,12 +170,15 @@ export const CategoryDetail = () => {
           })}
         </StyledDetailContainer>
       </StyledCategoryContainer>
-      <div ref={ref} style={{ position: "relative" }} />
       {isLoading === true ? (
-        <StyledSpinner>
-          <span className="spinner"></span>
-        </StyledSpinner>
+        <>
+          <Skeleton />
+          <StyledSpinner>
+            <span className="spinner"></span>
+          </StyledSpinner>
+        </>
       ) : null}
+      <div ref={ref} style={{ position: "relative" }} />
     </Layout>
   );
 };

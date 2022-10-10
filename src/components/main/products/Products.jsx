@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import styled from "styled-components";
 import { ProductsItem } from "./ProductsItem";
+import { Skeleton } from "../../skeleton/Skeleton";
 
 import { useInView } from "react-intersection-observer";
 import { base } from "../../../server/core/instance";
@@ -41,11 +42,11 @@ export const Products = () => {
     if (inView && hasNextPage) {
       setTimeout(() => {
         fetch();
-      }, 500);
+      }, 700);
     }
     setTimeout(() => {
       setIsLoading(false);
-    }, 500);
+    }, 1500);
   }, [fetch, hasNextPage, inView]);
 
   console.log(products);
@@ -60,12 +61,15 @@ export const Products = () => {
             })}
           </StyledProductsGrid>
 
-          <div ref={ref} style={{ position: "relative" }} />
           {isLoading === true ? (
-            <StyledSpinner>
-              <span className="spinner"></span>
-            </StyledSpinner>
+            <>
+              <Skeleton />
+              <StyledSpinner>
+                <span className="spinner"></span>
+              </StyledSpinner>
+            </>
           ) : null}
+          <div ref={ref} style={{ position: "relative"}} />
         </StyledProductsContainer>
       </Desktop>
       {/* ################ 모바일 ################ */}
@@ -78,9 +82,12 @@ export const Products = () => {
           </StyledMobileProducts>
           <div ref={ref} style={{ position: "relative" }} />
           {isLoading === true ? (
-            <StyledSpinner>
-              <span className="spinner"></span>
-            </StyledSpinner>
+            <>
+              <Skeleton />
+              <StyledSpinner>
+                <span className="spinner"></span>
+              </StyledSpinner>
+            </>
           ) : null}
         </StyledMobileContainer>
       </Mobile>
