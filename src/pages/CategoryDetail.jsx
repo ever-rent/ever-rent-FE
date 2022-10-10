@@ -6,20 +6,11 @@ import { Layout } from "../components/layout/Layout";
 import { DetailItem } from "../components/detail/DetailItem";
 
 import { useInView } from "react-intersection-observer";
-import { base } from "../server/core/instance"; // 리팩토링 예정
+import { base } from "../server/core/instance";
 
 export const CategoryDetail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-
-  // const dispatch = useDispatch();
-  // const category = useSelector((state) => state.products.category);
-  // const categoryItems = category?.data;
-  // console.log(categoryItems);
-
-  // useEffect(() => {
-  //   dispatch(getCategory(id));
-  // }, [dispatch, id]);
 
   const categoryList = [
     { value: "0", name: "카테고리를 선택하세요" },
@@ -66,10 +57,6 @@ export const CategoryDetail = () => {
 
   const categoryHandler = (e) => {
     e.preventDefault();
-    // const categoryId = e.target.value;
-    // dispatch(getCategory(categoryId));
-    // console.log(e.target.value);
-
     // infi
     console.log(e.target.value);
     navigate(`/categoryDetail/${e.target.value}`);
@@ -81,24 +68,13 @@ export const CategoryDetail = () => {
 
   const addressHandler = (e) => {
     e.preventDefault();
-    // const addressPayload = e.target.value;
-    // dispatch(getCategoryDetail(addressPayload));
-    // console.log(e.target.value);
   };
 
   const priceHandler = (e) => {
     e.preventDefault();
-    // const pricePayload = e.target.value;
-    // dispatch(getCategoryDetail(pricePayload));
-    // console.log(e.target.value);
   };
 
-  // useEffect(() => {
-  //   dispatch();
-  // });
-
   // infi scroll
-
   const [isLoading, setIsLoading] = useState(false);
 
   // 카테고리 id 파라미터
@@ -178,15 +154,6 @@ export const CategoryDetail = () => {
               }
             })}
           </StyledSelect>
-
-          {/* <StyledSelect onChange={addressHandler}>
-            {addressList?.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.name}
-              </option>
-            ))}
-          </StyledSelect> */}
-
           <StyledSelect onChange={priceHandler}>
             {priceList?.map((option) => (
               <option key={option.value} value={option.value}>
