@@ -8,7 +8,7 @@ import { EditProduct } from "../pages/EditProduct";
 import { CategoryDetail } from "../pages/CategoryDetail";
 import { EditUserInfo } from "../pages/EditUserInfo";
 import { MyPage } from "../pages/MyPage";
-
+import { SearchItems } from "../components/searchItems/SearchItems";
 
 export const Router = () => {
   return (
@@ -20,6 +20,7 @@ export const Router = () => {
       <Route path="/editProduct/:id" element={<EditProduct />} />
       <Route path="/productDetail/:id" element={<ProductDetail />} />
       <Route path="/categoryDetail/:id" element={<CategoryDetail />} />
+      <Route path="/searchItems/:id" element={<SearchItems />} />
       <Route path="/editUserInfo/:id" element={<EditUserInfo />} />
       <Route path="/myPage" element={<MyPage />} />
     </Routes>

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { openNav } from "../../redux/modules/navSlice";
 import { Desktop, Mobile } from "../../Hooks/MideaQuery";
+import Swal from "sweetalert2";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -11,6 +12,12 @@ export const Header = () => {
 
   const [isLogin, setIsLogin] = useState(false);
 
+  const [submitData, setSubmitData] = useState("");
+  const goSearch = (e)=>{
+    e.preventDefault();
+    navigate(`/searchItems/${submitData}`)
+  }
+  
   return (
     <>
       <Desktop>
@@ -24,15 +31,17 @@ export const Header = () => {
             />
           </StyledLogoImageWrap>
           <StyledHeaderWrap>
-            <StyledSearchWrap>
+            <StyledSearchWrap onSubmit={(e)=>goSearch(e)}>
               <StyledSearchButton
                 type="button"
                 alt="https://icons8.com/icon/59878/search https://icons8.com Icons8"
+                
               />
               <StyledSearchInput
                 type="text"
                 placeholder="지역, 물품명으로 찾아보세요"
                 maxLength={35}
+                onChange={(e)=>setSubmitData(e.target.value)}
               />
             </StyledSearchWrap>
           </StyledHeaderWrap>
