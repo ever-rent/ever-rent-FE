@@ -54,12 +54,13 @@ export const SearchItems = () => {
     });
   };
 
+  // 렌더링시 데이터 패치
   useEffect(() => {
     setIsLoading(true);
     fetchData();
     setTimeout(() => {
       setIsLoading(false);
-    }, 800);
+    }, 1000);
   }, [param.id]);
   console.log("패치", searchData);
 
@@ -70,15 +71,12 @@ export const SearchItems = () => {
     setPriceNumber(e.target.value);
   };
 
+  //검색조건 초기화
   const initOptions = () => {
     setCategoryNumber(0);
     setPriceNumber(0);
     setProducts(searchData);
   };
-
-  console.log("필터데이터", filterData);
-  console.log("products", products);
-  console.log("카테", categoryNumber, "가격", priceNumber);
 
   // 카테고리, 가격 필터 예정
   useEffect(() => {
@@ -90,8 +88,8 @@ export const SearchItems = () => {
     let priceFilter = cateFilter?.filter((element) => {
       if (priceNumber === 0) {
         return element;
-      // === 값으로 조건 설정시 5만원 이상 데이터 비정상 동기화
-      // == 조건 값으로 대체
+        // === 값으로 조건 설정시 5만원 이상 데이터 비정상 동기화
+        // == 조건 값으로 대체
       } else if (priceNumber == 1) {
         return Number(element.price) < 10000;
       } else if (priceNumber == 6) {
@@ -103,11 +101,10 @@ export const SearchItems = () => {
         );
       }
     });
-    console.log("검색조건필터", priceFilter);
     setFilterData(priceFilter);
     setTimeout(() => {
       setIsLoading(false);
-    }, 800);
+    }, 1000);
   }, [categoryNumber, priceNumber]);
 
   // pagination
@@ -132,14 +129,11 @@ export const SearchItems = () => {
         pagingData.push(filterData?.[pageIndex[i]]);
       }
     }
-    console.log("페이징데이터", pagingData);
     setProducts(pagingData);
   };
 
   useEffect(() => {
-    setTimeout(() => {
       pagingFetching();
-    }, 200);
   }, [page, searchData, filterData]);
 
   return (
@@ -187,7 +181,7 @@ export const SearchItems = () => {
                       <option
                         key={option.value}
                         value={option.value}
-                        disabled="true"
+                        disabled={true}
                       >
                         {option.name}
                       </option>
@@ -201,7 +195,7 @@ export const SearchItems = () => {
                   }
                 })}
               </StyledSelect>
-              <span onClick={initOptions}>검색조건 초기화</span>
+              <StyledInitSpan onClick={initOptions}>검색조건 초기화</StyledInitSpan>
             </StyledSelectBox>
             <span>다음으로 검색된 목록 : {param.id}</span>
             {isLoading ? (
@@ -261,6 +255,12 @@ const StyledSelect = styled.select`
     transition: box-shadow 0.1s ease-in-out 0s;
   }
 `;
+
+const StyledInitSpan = styled.span`
+  color: gray;
+  font-size:16px;
+  cursor: pointer;
+`
 
 // for Mobile
 const StyledMobileContainer = styled.div`

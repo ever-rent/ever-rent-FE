@@ -10,7 +10,7 @@ export const Pagination = ({
   handlePageChange,
 }) => {
   const pagingArray = Array.from(
-    { length: parseInt(totalItemsCount / itemsCountPerPage+1) },
+    { length: parseInt(totalItemsCount / itemsCountPerPage + 1) },
     (item, index) => {
       return index;
     }
@@ -20,7 +20,14 @@ export const Pagination = ({
     <>
       <Desktop>
         <StyledPageList>
-          <li onClick={() => handlePageChange(activePage - 1)}>
+          <li
+            onClick={() => {
+              if (activePage !== 1) {
+                handlePageChange(activePage - 1);
+              }
+            }}
+            style={activePage === 1 ? { backgroundColor: "#e9e9e9" } : null}
+          >
             {prevPageText}
           </li>
           {pagingArray.map((i, index) => {
@@ -44,7 +51,18 @@ export const Pagination = ({
               );
             }
           })}
-          <li onClick={() => handlePageChange(activePage + 1)}>
+          <li
+            onClick={() => {
+              if (activePage !== pagingArray.length) {
+                handlePageChange(activePage + 1);
+              }
+            }}
+            style={
+              activePage === pagingArray.length
+                ? { backgroundColor: "#e9e9e9" }
+                : null
+            }
+          >
             {nextPageText}
           </li>
         </StyledPageList>
