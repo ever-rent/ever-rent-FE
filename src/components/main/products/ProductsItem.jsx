@@ -124,7 +124,9 @@ export const ProductsItem = ({
           </StyledImgBox>
           <StyledContentBox>
             <StyledTitle>{productName}</StyledTitle>
-            <StyledLocation>{location}</StyledLocation>
+            <StyledLocation>
+              {location ? location : "지역 선택 안함"}
+            </StyledLocation>
             <StyledPayBox>
               <StyledPay>{price}</StyledPay>
               <StyledDay> / 일</StyledDay>
@@ -132,7 +134,7 @@ export const ProductsItem = ({
               <StyledTimeForToday> {createdAt}</StyledTimeForToday>
             </StyledPayBox>
             {presentStatus(status)}
-            <StyledLikeAndChat>
+            <StyledLikeAndChatBox>
               <StyledLikeWrap>
                 {togglelike ? (
                   <>
@@ -164,7 +166,7 @@ export const ProductsItem = ({
               {/* <StyledChatWrap>
                 <button onClick={reservationHandler}>예약 신청</button>
               </StyledChatWrap> */}
-            </StyledLikeAndChat>
+            </StyledLikeAndChatBox>
           </StyledContentBox>
         </StyledItemBox>
       </Desktop>
@@ -196,7 +198,7 @@ export const ProductsItem = ({
             </StyledPayBox>
 
             <StyledAddress>{address}</StyledAddress>
-            <StyledMobileLikeAndChat>
+            <StyledMobileLikeAndChatBox>
               <StyledMobileLikeWrap>
                 {togglelike ? (
                   <StyledLike
@@ -224,7 +226,7 @@ export const ProductsItem = ({
               {/* <StyledChatWrap>
             <button onClick={reservationHandler}>예약 신청</button>
           </StyledChatWrap> */}
-            </StyledMobileLikeAndChat>
+            </StyledMobileLikeAndChatBox>
           </StyledContentBox>
         </StyledMobileItemBox>
       </Mobile>
@@ -329,7 +331,7 @@ const StyledAddress = styled.div`
   /* padding-top: 10px; */
 `;
 
-const StyledLikeAndChat = styled.div`
+const StyledLikeAndChatBox = styled.div`
   /* border: 1px solid red; */
   width: max-content;
   height: max-content;
@@ -338,7 +340,7 @@ const StyledLikeAndChat = styled.div`
   font-size: small;
 `;
 
-const StyledMobileLikeAndChat = styled.div`
+const StyledMobileLikeAndChatBox = styled.div`
   /* border: 1px solid red; */
   width: max-content;
   height: max-content;
