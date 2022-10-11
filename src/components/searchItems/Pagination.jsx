@@ -10,7 +10,7 @@ export const Pagination = ({
   handlePageChange,
 }) => {
   const pagingArray = Array.from(
-    { length: parseInt(totalItemsCount / itemsCountPerPage) },
+    { length: parseInt(totalItemsCount / itemsCountPerPage+1) },
     (item, index) => {
       return index;
     }
@@ -20,7 +20,9 @@ export const Pagination = ({
     <>
       <Desktop>
         <StyledPageList>
-          <li onClick={()=>handlePageChange(activePage-1)}>{prevPageText}</li>
+          <li onClick={() => handlePageChange(activePage - 1)}>
+            {prevPageText}
+          </li>
           {pagingArray.map((i, index) => {
             if (index + 1 === activePage) {
               return (
@@ -42,7 +44,9 @@ export const Pagination = ({
               );
             }
           })}
-          <li onClick={()=>handlePageChange(activePage+1)}>{nextPageText}</li>
+          <li onClick={() => handlePageChange(activePage + 1)}>
+            {nextPageText}
+          </li>
         </StyledPageList>
       </Desktop>
       {/* ################ 모바일 ################ */}
@@ -65,8 +69,8 @@ const StyledPageList = styled.ul`
     list-style: none;
   }
   & li {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     text-align: center;
     font-size: 25px;
     border-radius: 5px;

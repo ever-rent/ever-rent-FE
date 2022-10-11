@@ -40,25 +40,25 @@ export const SearchItems = () => {
   const [categoryNumber, setCategoryNumber] = useState(0);
   const [priceNumber, setPriceNumber] = useState(0);
 
-  const [searchData, setSearchData] = useState();
+  // 패치 데이터
+  const [searchData, setSearchData] = useState([]);
+  // map용 데이터
   const [products, setProducts] = useState([]);
-  let productsData = searchData?.filter((element) => element);
 
   const fetchData = async () => {
     await productAPI.getSearch(param.id).then((response) => {
       setSearchData(response.data.data);
-      setProducts(response.data.data)
+      // setProducts(response.data.data);
     });
   };
 
   useEffect(() => {
     setIsLoading(true);
     setTimeout(() => {
-      fetchData();  
+      fetchData();
       setIsLoading(false);
     }, 700);
-    
-  }, []);
+  }, [param.id]);
   console.log("패치", searchData);
 
   const categoryHandler = (e) => {
@@ -73,66 +73,48 @@ export const SearchItems = () => {
     setPriceNumber(0);
   };
 
-
-  useEffect(() => {
-    setIsLoading(true);
-    if (categoryNumber === 0) {
-      setProducts(
-        priceNumber === 0
-          ? searchData
-          : (productsData = searchData?.filter(
-              (element) => element.cateId === categoryNumber
-            ))
-      );
-    }
-    if (categoryNumber !== 0) {
-      if (priceNumber === 0) {
-        setProducts(
-          searchData?.filter((element) => element.cateId === categoryNumber)
-        );
-      } else if (priceNumber === "1") {
-        setProducts(
-          searchData?.filter(
-            (element) =>
-              (element.cateId === categoryNumber) &
-              (Number(element.price) < 10000)
-          )
-        );
-      } else if (priceNumber === "6") {
-        setProducts(
-          searchData?.filter(
-            (element) =>
-              (element.cateId === categoryNumber) &
-              (Number(element.price) < 50000)
-          )
-        );
-      } else {
-        setProducts(
-          searchData?.filter(
-            (element) =>
-              (element.cateId === categoryNumber) &
-              (priceNumber * 10000 - 10000 <= Number(element.price)) &
-              (Number(element.price) < priceNumber * 10000)
-          )
-        );
-      }
-    }
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 700);
-  }, [categoryNumber, priceNumber]);
-
   console.log("products", products);
   console.log("카테", categoryNumber, "가격", priceNumber);
 
+  // 카테고리, 가격 필터 예정
+  useEffect(() => {
+
+  }, [categoryNumber,priceNumber]);
 
 
-// pagination
 
-const [page, setPage] = useState(1);
+  // pagination
+  const [page, setPage] = useState(1);
   const handlePageChange = (page) => {
     setPage(page);
   };
+
+  let indexArray = Array.from({ length: 12 }, (item, index) => {
+    return index;
+  });
+  let pageIndex = [];
+  pageIndex =
+    page === 1 ? indexArray : indexArray.map((item) => item + (page - 1) * 12);
+
+  const pagingFetching = () => {
+    let pagingData = [];
+    for (let i = 0; i < indexArray.length; i++) {
+      if (searchData?.[pageIndex[i]] === undefined) {
+        break;
+      } else {
+        pagingData.push(searchData?.[pageIndex[i]]);
+      }
+    }
+    console.log("페이징데이터", pagingData);
+    setProducts(pagingData);
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      pagingFetching();  
+    }, 100);
+    
+  }, [page,searchData]);
 
   return (
     <>
@@ -193,13 +175,15 @@ const [page, setPage] = useState(1);
                 })}
               </StyledProductsGrid>
             )}
-            <Pagination 
-            activePage={page}
-            itemsCountPerPage={12}
-            totalItemsCount={products?.length === undefined ? 1 : products?.length}
-            prevPageText={"<"}
-            nextPageText={">"}
-            handlePageChange={handlePageChange}
+            <Pagination
+              activePage={page}
+              itemsCountPerPage={12}
+              totalItemsCount={
+                searchData?.length === undefined ? 1 : searchData?.length
+              }
+              prevPageText={"<"}
+              nextPageText={">"}
+              handlePageChange={handlePageChange}
             />
           </StyledProductsContainer>
         </Layout>
