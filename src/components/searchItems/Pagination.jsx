@@ -6,7 +6,9 @@ export const Pagination = ()=>{
     return (
         <>
             <Desktop>
-                
+                <ul>
+                    
+                </ul>
             </Desktop>
             {/* ################ 모바일 ################ */}
             <Mobile></Mobile>

@@ -64,55 +64,63 @@ export const SearchItems = () => {
     setPriceNumber(0);
   };
 
-  //   const products = [];
-  const products = searchData?.filter((element) => element);
+  const productsData = searchData?.filter((element) => element);
+
+  const [products, setProducts] = useState([]);
+
 
   let dataTest = searchData;
-  const testData = () => {
+  useEffect(() => {
+    setIsLoading(true)
     if (categoryNumber === 0) {
-      dataTest =
+      setProducts(
         priceNumber === 0
           ? searchData
           : (dataTest = searchData?.filter(
               (element) => element.cateId === categoryNumber
-            ));
-      return dataTest;
+            ))
+      );
     }
     if (categoryNumber !== 0) {
       if (priceNumber === 0) {
-        dataTest = searchData?.filter(
-          (element) => element.cateId === categoryNumber
+        setProducts(
+          searchData?.filter((element) => element.cateId === categoryNumber)
         );
-        return dataTest;
       } else if (priceNumber === "1") {
-        dataTest = searchData?.filter(
-          (element) =>
-            (element.cateId === categoryNumber) &
-            (Number(element.price) < 10000)
+        setProducts(
+          searchData?.filter(
+            (element) =>
+              (element.cateId === categoryNumber) &
+              (Number(element.price) < 10000)
+          )
         );
-        return dataTest;
       } else if (priceNumber === "6") {
-        dataTest = searchData?.filter(
-          (element) =>
-            (element.cateId === categoryNumber) &
-            (Number(element.price) < 50000)
+        setProducts(
+          searchData?.filter(
+            (element) =>
+              (element.cateId === categoryNumber) &
+              (Number(element.price) < 50000)
+          )
         );
-        return dataTest;
       } else {
-        dataTest = searchData?.filter(
-          (element) =>
-            (element.cateId === categoryNumber) &
-            (priceNumber * 10000 - 10000 <= Number(element.price)) &
-            (Number(element.price) < priceNumber * 10000)
+        setProducts(
+          searchData?.filter(
+            (element) =>
+              (element.cateId === categoryNumber) &
+              (priceNumber * 10000 - 10000 <= Number(element.price)) &
+              (Number(element.price) < priceNumber * 10000)
+          )
         );
-        return dataTest;
       }
     }
-  };
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 700);
+  }, [categoryNumber, priceNumber]);
 
   console.log("products", products);
   console.log("카테", categoryNumber, "가격", priceNumber);
-  console.log("test Data", testData());
+
   return (
     <>
       <Desktop>
@@ -149,7 +157,7 @@ export const SearchItems = () => {
                 defaultChecked={0}
                 value={`${priceNumber}`}
                 // 임시 제거
-                style={{display:"none"}}
+                style={{ display: "none" }}
               >
                 {priceList?.map((option) => (
                   <option key={option.value} value={option.value}>
