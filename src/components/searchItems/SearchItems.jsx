@@ -42,22 +42,24 @@ export const SearchItems = () => {
 
   // 패치 데이터
   const [searchData, setSearchData] = useState([]);
+  // 필터 데이터
+  const [filterData, setFilterData] = useState([]);
   // map용 데이터
   const [products, setProducts] = useState([]);
 
   const fetchData = async () => {
     await productAPI.getSearch(param.id).then((response) => {
       setSearchData(response.data.data);
-      // setProducts(response.data.data);
+      setFilterData(response.data.data);
     });
   };
 
   useEffect(() => {
     setIsLoading(true);
+    fetchData();
     setTimeout(() => {
-      fetchData();
       setIsLoading(false);
-    }, 700);
+    }, 800);
   }, [param.id]);
   console.log("패치", searchData);
 
@@ -71,17 +73,42 @@ export const SearchItems = () => {
   const initOptions = () => {
     setCategoryNumber(0);
     setPriceNumber(0);
+    setProducts(searchData);
   };
 
+  console.log("필터데이터", filterData);
   console.log("products", products);
   console.log("카테", categoryNumber, "가격", priceNumber);
 
   // 카테고리, 가격 필터 예정
   useEffect(() => {
-
-  }, [categoryNumber,priceNumber]);
-
-
+    setIsLoading(true);
+    let cateFilter = searchData?.filter((element) =>
+      categoryNumber === 0 ? element : element.cateId === categoryNumber
+    );
+    // let priceFilter = cateFilter.filter((element)=>element);
+    let priceFilter = cateFilter?.filter((element) => {
+      if (priceNumber === 0) {
+        return element;
+      // === 값으로 조건 설정시 5만원 이상 데이터 비정상 동기화
+      // == 조건 값으로 대체
+      } else if (priceNumber == 1) {
+        return Number(element.price) < 10000;
+      } else if (priceNumber == 6) {
+        return Number(element.price) >= 50000;
+      } else {
+        return (
+          (Number(element.price) < priceNumber * 10000) &
+          (Number(element.price) >= priceNumber * 10000 - 10000)
+        );
+      }
+    });
+    console.log("검색조건필터", priceFilter);
+    setFilterData(priceFilter);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 800);
+  }, [categoryNumber, priceNumber]);
 
   // pagination
   const [page, setPage] = useState(1);
@@ -99,10 +126,10 @@ export const SearchItems = () => {
   const pagingFetching = () => {
     let pagingData = [];
     for (let i = 0; i < indexArray.length; i++) {
-      if (searchData?.[pageIndex[i]] === undefined) {
+      if (filterData?.[pageIndex[i]] === undefined) {
         break;
       } else {
-        pagingData.push(searchData?.[pageIndex[i]]);
+        pagingData.push(filterData?.[pageIndex[i]]);
       }
     }
     console.log("페이징데이터", pagingData);
@@ -111,10 +138,9 @@ export const SearchItems = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      pagingFetching();  
-    }, 100);
-    
-  }, [page,searchData]);
+      pagingFetching();
+    }, 200);
+  }, [page, searchData, filterData]);
 
   return (
     <>
@@ -153,13 +179,27 @@ export const SearchItems = () => {
                 value={`${priceNumber}`}
                 // 가격 필터 임시 제거
                 //###############################
-                style={{ display: "none" }}
+                // style={{ display: "none" }}
               >
-                {priceList?.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.name}
-                  </option>
-                ))}
+                {priceList?.map((option) => {
+                  if (option.value === 0) {
+                    return (
+                      <option
+                        key={option.value}
+                        value={option.value}
+                        disabled="true"
+                      >
+                        {option.name}
+                      </option>
+                    );
+                  } else {
+                    return (
+                      <option key={option.value} value={option.value}>
+                        {option.name}
+                      </option>
+                    );
+                  }
+                })}
               </StyledSelect>
               <span onClick={initOptions}>검색조건 초기화</span>
             </StyledSelectBox>
@@ -179,7 +219,7 @@ export const SearchItems = () => {
               activePage={page}
               itemsCountPerPage={12}
               totalItemsCount={
-                searchData?.length === undefined ? 1 : searchData?.length
+                filterData?.length === undefined ? 1 : filterData?.length
               }
               prevPageText={"<"}
               nextPageText={">"}

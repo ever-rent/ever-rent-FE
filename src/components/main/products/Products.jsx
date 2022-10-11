@@ -46,7 +46,7 @@ export const Products = () => {
     }
     setTimeout(() => {
       setIsLoading(false);
-    }, 1500);
+    }, 1000);
   }, [fetch, hasNextPage, inView]);
 
   console.log(products);
