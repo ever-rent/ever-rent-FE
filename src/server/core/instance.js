@@ -1,11 +1,11 @@
 import axios from "axios";
 
 export const base = axios.create({
-  baseURL: "http://13.209.8.18",
+  baseURL: process.env.REACT_APP_SERVER_URL,
 });
 
 export const auth = axios.create({
-  baseURL: "http://13.209.8.18",
+  baseURL: process.env.REACT_APP_SERVER_URL,
   // baseURL: "http://3.35.19.62:8080",
   // baseURL: "http://davidpai.shop",
 });
