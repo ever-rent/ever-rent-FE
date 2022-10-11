@@ -11,7 +11,7 @@ export const Login = () => {
   const password = useRef(null);
 
   const handleLogin = async (data) => {
-    return await axios.post("http://13.209.8.18/logins", {
+    return await axios.post(`${process.env.REACT_APP_SERVER_URL}/logins`, {
       email: data.email,
       password: data.password,
     });
