@@ -33,9 +33,9 @@ export const getCategory = createAsyncThunk(
 export const getProductsDetail = createAsyncThunk(
   "GET_PRODUCTS",
   async (payload, thunkAPI) => {
-    // console.log("products get 시작", payload);
+    console.log("products get 시작", payload);
     try {
-      const res = await productAPI.getProductDetail(payload.id);
+      const res = await productAPI.getProductDetail(payload);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

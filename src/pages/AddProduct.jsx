@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { addProducts } from "../redux/modules/productSlice";
 import { Layout } from "../components/layout/Layout";
 import { LocationModal } from "../components/location/LocationModal";
+import { RangeCalrendar } from "../components/calrendar/RangeCalrendar";
 
 import imageCompression from "browser-image-compression";
 import Swal from "sweetalert2";
@@ -119,6 +120,23 @@ export const AddProduct = () => {
   const [description, setDescription] = useState("");
 
   const [disabled, setDisabled] = useState(true);
+
+  const startEndDays = (start, end) => {
+    let startDay = start;
+    let endDay = end;
+
+    let sYaer = startDay?.getFullYear();
+    let sMonth = startDay?.getMonth() + 1;
+    let sDay = startDay?.getDate();
+    let eYaer = endDay?.getFullYear();
+    let eMonth = endDay?.getMonth() + 1;
+    let eDay = endDay?.getDate();
+
+    setStartDateInput(`${sYaer}-${sMonth}-${sDay}`);
+    setEndDateInput(`${eYaer}-${eMonth}-${eDay}`);
+  };
+  console.log(startDateInput);
+  console.log(endDateInput);
 
   // 게시글 작성 유효성 검사 추가 예정(이미지/주소 등)
   const checkPost = () => {
@@ -292,24 +310,7 @@ export const AddProduct = () => {
                     <StyledPriceData> / 일</StyledPriceData>
                   </StyledPriceWrap>
                   <StyledDateWrap>
-                    <StyledStartLabel htmlFor="">
-                      렌탈시작일 :{" "}
-                    </StyledStartLabel>
-                    <StyledDateInput
-                      type="date"
-                      onChange={(e) => {
-                        setStartDateInput(e.target.value);
-                      }}
-                    />
-                  </StyledDateWrap>
-                  <StyledDateWrap>
-                    <StyledEndLabel htmlFor="">렌탈마감일 : </StyledEndLabel>
-                    <StyledDateInput
-                      type="date"
-                      onChange={(e) => {
-                        setEndDateInput(e.target.value);
-                      }}
-                    />
+                    <RangeCalrendar startEndDays={startEndDays} />
                   </StyledDateWrap>
                 </StyledOptionInputs>
               </StyledPostingHeadWrap>
@@ -476,22 +477,7 @@ export const AddProduct = () => {
                   <StyledMobilePriceData> / 일</StyledMobilePriceData>
                 </StyledPriceWrap>
                 <StyledDateWrap>
-                  <StyledStartLabel htmlFor="">렌탈시작일 : </StyledStartLabel>
-                  <StyledMobileDateInput
-                    type="date"
-                    onChange={(e) => {
-                      setStartDateInput(e.target.value);
-                    }}
-                  />
-                </StyledDateWrap>
-                <StyledDateWrap>
-                  <StyledEndLabel htmlFor="">렌탈마감일 : </StyledEndLabel>
-                  <StyledMobileDateInput
-                    type="date"
-                    onChange={(e) => {
-                      setEndDateInput(e.target.value);
-                    }}
-                  />
+                  <RangeCalrendar startEndDays={startEndDays} />
                 </StyledDateWrap>
               </StyledMobileOptionInputs>
 
@@ -568,15 +554,16 @@ const StyledAddProductContainer = styled.div`
   justify-content: center;
 
   animation: addProductFadein 1.5s;
-	&{
-	@keyframes addProductFadein {
-   	 from {
-       	 opacity:0;
-    	}
-   	 to {
-      	  opacity:1;
-   	 }		
-}}
+  & {
+    @keyframes addProductFadein {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  }
 `;
 
 const StyledAddProductForm = styled.form`
@@ -669,7 +656,7 @@ const StyledCategorySelector = styled.select`
     no-repeat 95% 50%;
   padding: 10px;
   padding-right: 20px;
-  margin-top: 30px;
+  margin-top: 150px;
   margin-bottom: 15px;
   font-size: 16px;
   border-radius: 10px;
@@ -830,24 +817,25 @@ const StyledMobileContainer = styled.div`
   display: flex;
   justify-content: center;
 
-  animation: addProductFadein 1.0s;
-	&{
-	@keyframes addProductFadein {
-   	 from {
-       	 opacity:0;
-    	}
-   	 to {
-      	  opacity:1;
-   	 }		
-}}
+  animation: addProductFadein 1s;
+  & {
+    @keyframes addProductFadein {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  }
 `;
 
 const StyledMobileProductForm = styled.form`
   display: flex;
   flex-direction: column;
-  width: 400px;
+  width: 350px;
   padding: 40px;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   margin-bottom: 50px;
 `;
 

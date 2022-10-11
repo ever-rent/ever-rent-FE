@@ -205,8 +205,6 @@ const StyledEditInfoContainer = styled.section`
   margin-top: 100px;
   display: flex;
   justify-content: center;
-
-  
 `;
 
 const StyledAddProductForm = styled.div`

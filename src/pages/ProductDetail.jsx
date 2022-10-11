@@ -5,7 +5,6 @@ import { Layout } from "../components/layout/Layout";
 import { deleteProducts } from "../redux/modules/productSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { useLocation } from "react-router";
 
 import { categoriNumber } from "../util/categoryNumber";
 import { timeToToday } from "../util/timeToToday";
@@ -17,16 +16,34 @@ import { Desktop, Mobile } from "../Hooks/MideaQuery";
 
 import { UserReport } from "../components/report/UserReport";
 import { PostReport } from "../components/report/PostReport";
+import axios from "axios";
+
 import { WishButton } from "../components/button/WishButton";
 
 // 게시글 상세 페이지 컴포넌트
 export const ProductDetail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { id } = useParams();
-  const { state } = useLocation();
+  const param = useParams();
+  console.log(param.id);
 
-  const detailData = state;
+  const [data, setData] = useState();
+  const fetchDetail = async () => {
+    console.log("패치데이터", param);
+    await axios
+      .get(`http://13.209.8.18/products/${param.id}`)
+      .then((response) => {
+        setData(response);
+      });
+  };
+  useEffect(() => {
+    fetchDetail();
+  }, []);
+
+  console.log(data);
+
+  const detailDataSet = [data?.data.data];
+  const detailData = detailDataSet?.filter((element) => element)[0];
   console.log(detailData);
 
   const firstUrl = imgFirstString;
@@ -65,7 +82,7 @@ export const ProductDetail = () => {
       cancelButtonText: "취소",
     }).then((result) => {
       if (result.value) {
-        dispatch(deleteProducts(id));
+        dispatch(deleteProducts(param.id));
         alert("삭제완료");
         navigate("/");
       }
@@ -119,7 +136,7 @@ export const ProductDetail = () => {
                     />
                     <StyledChatImgAlt>채팅하기</StyledChatImgAlt>
                   </StyledImagesWrap>
-                  <WishButton productId={id} data={detailData} />
+                  <WishButton productId={param.id} data={detailData} />
                   <StyledImagesWrap
                     className="openPopupButton"
                     onClick={openModal}
@@ -153,9 +170,7 @@ export const ProductDetail = () => {
                     <StyledMyPostOption>
                       <span
                         onClick={() => {
-                          navigate(`/editProduct/${id}`, {
-                            state: state,
-                          });
+                          navigate(`/editProduct/${param.id}`);
                         }}
                       >
                         글 수정
@@ -226,7 +241,7 @@ export const ProductDetail = () => {
                     />
                     <StyledChatImgAlt>채팅하기</StyledChatImgAlt>
                   </StyledMobileImagesWrap>
-                  <WishButton productId={id} data={detailData} />
+                  <WishButton productId={param.id} data={detailData} />
                   <StyledMobileImagesWrap
                     className="openPopupButton"
                     onClick={openModal}
@@ -260,9 +275,7 @@ export const ProductDetail = () => {
                     <StyledMobileMyPostOption>
                       <span
                         onClick={() => {
-                          navigate(`/editProduct/${id}`, {
-                            state: state,
-                          });
+                          navigate(`/editProduct/${param.id}`);
                         }}
                       >
                         글 수정

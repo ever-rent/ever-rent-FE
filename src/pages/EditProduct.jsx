@@ -6,8 +6,10 @@ import { useDispatch } from "react-redux";
 import { updateProducts } from "../redux/modules/productSlice";
 import { useNavigate, useParams } from "react-router-dom";
 import { useLocation } from "react-router";
+import axios from "axios";
 
 import { LocationModal } from "../components/location/LocationModal";
+import { RangeCalrendar } from "../components/calrendar/RangeCalrendar";
 import { imgFirstString } from "../server/api";
 
 import imageCompression from "browser-image-compression";
@@ -18,17 +20,32 @@ export const EditProduct = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const param = useParams();
-  const { state } = useLocation();
+
   const firstUrl = imgFirstString;
 
-  const editData = state;
+  const [data, setData] = useState();
+  const fetchDetail = async () => {
+    console.log("패치데이터", param);
+    await axios
+      .get(`http://13.209.8.18/products/${param.id}`)
+      .then((response) => {
+        setData(response);
+      });
+  };
+  useEffect(() => {
+    fetchDetail();
+  }, []);
+
+  const editDataSet = [data?.data.data];
+  const editData = editDataSet?.filter((element) => element)[0];
+
   const defaultImg =
     "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png";
 
   const [imgView, setImgView] = useState([]);
   const [sendImage, setSendImage] = useState([]);
 
-  console.log(editData);
+  // console.log(editData);
 
   // imgUrl to Blob err 처리 예정
   // const convertURLtoFile = (url) => {
@@ -138,6 +155,23 @@ export const EditProduct = () => {
   const [description, setDescription] = useState("");
 
   const [disabled, setDisabled] = useState(true);
+
+  const startEndDays = (start, end) => {
+    let startDay = start;
+    let endDay = end;
+
+    let sYaer = startDay?.getFullYear();
+    let sMonth = startDay?.getMonth() + 1;
+    let sDay = startDay?.getDate();
+    let eYaer = endDay?.getFullYear();
+    let eMonth = endDay?.getMonth() + 1;
+    let eDay = endDay?.getDate();
+
+    setStartDateInput(`${sYaer}-${sMonth}-${sDay}`);
+    setEndDateInput(`${eYaer}-${eMonth}-${eDay}`);
+  };
+  console.log(startDateInput);
+  console.log(endDateInput);
 
   const checkPost = () => {
     if (title.length > 3 && description.length > 0) {
@@ -261,7 +295,7 @@ export const EditProduct = () => {
                 </StyledImageSource>
                 <StyledOptionInputs>
                   <StyledCategorySelector
-                    defaultValue={editData.cateId}
+                    defaultValue={editData?.cateId}
                     onChange={(e) => {
                       setCategoryInput(e.target.value);
                     }}
@@ -299,7 +333,7 @@ export const EditProduct = () => {
                       id="itemPrice"
                       type="number"
                       placeholder="가격"
-                      defaultValue={editData.price}
+                      defaultValue={editData?.price}
                       maxlength="8"
                       onChange={(e) => {
                         setPriceInput(e.target.value);
@@ -309,26 +343,7 @@ export const EditProduct = () => {
                     <StyledPriceData> / 일</StyledPriceData>
                   </StyledPriceWrap>
                   <StyledDateWrap>
-                    <StyledStartLabel htmlFor="">
-                      렌탈시작일 :{" "}
-                    </StyledStartLabel>
-                    <StyledDateInput
-                      type="date"
-                      defaultValue={editData.rentStart}
-                      onChange={(e) => {
-                        setStartDateInput(e.target.value);
-                      }}
-                    />
-                  </StyledDateWrap>
-                  <StyledDateWrap>
-                    <StyledEndLabel htmlFor="">렌탈마감일 : </StyledEndLabel>
-                    <StyledDateInput
-                      type="date"
-                      defaultValue={editData.rentEnd}
-                      onChange={(e) => {
-                        setEndDateInput(e.target.value);
-                      }}
-                    />
+                    <RangeCalrendar startEndDays={startEndDays} />
                   </StyledDateWrap>
                 </StyledOptionInputs>
               </StyledPostingHeadWrap>
@@ -336,7 +351,7 @@ export const EditProduct = () => {
               <StyledPostLocation
                 type="text"
                 placeholder="거래 장소를 적어주세요!"
-                defaultValue={editData.location}
+                defaultValue={editData?.location}
                 onChange={(e) => {
                   setTradeLocation(e.target.value);
                 }}
@@ -362,7 +377,7 @@ export const EditProduct = () => {
               <StyledPostTitle
                 type="text"
                 placeholder="제목은 4글자 이상 적어주세요!"
-                defaultValue={editData.productName}
+                defaultValue={editData?.productName}
                 onChange={(e) => {
                   setTitle(e.target.value);
                 }}
@@ -372,7 +387,7 @@ export const EditProduct = () => {
                 cols="30"
                 rows="10"
                 placeholder="내용을 입력해주세요!"
-                defaultValue={editData.content}
+                defaultValue={editData?.content}
                 maxLength={500}
                 onChange={(e) => {
                   setDescription(e.target.value);
@@ -458,7 +473,7 @@ export const EditProduct = () => {
               </StyledMobilePostHeadWrap>
               <StyledMobileOptionInputs>
                 <StyledMobileCategorySelector
-                  defaultValue={editData.cateId}
+                  defaultValue={editData?.cateId}
                   onChange={(e) => {
                     setCategoryInput(e.target.value);
                   }}
@@ -488,7 +503,7 @@ export const EditProduct = () => {
                     id="itemPrice"
                     type="number"
                     placeholder="가격"
-                    defaultValue={editData.price}
+                    defaultValue={editData?.price}
                     maxlength="8"
                     onChange={(e) => {
                       setPriceInput(e.target.value);
@@ -500,31 +515,14 @@ export const EditProduct = () => {
                   <StyledMobilePriceData> / 일</StyledMobilePriceData>
                 </StyledPriceWrap>
                 <StyledDateWrap>
-                  <StyledStartLabel htmlFor="">렌탈시작일 : </StyledStartLabel>
-                  <StyledMobileDateInput
-                    type="date"
-                    defaultValue={editData.rentStart}
-                    onChange={(e) => {
-                      setStartDateInput(e.target.value);
-                    }}
-                  />
-                </StyledDateWrap>
-                <StyledDateWrap>
-                  <StyledEndLabel htmlFor="">렌탈마감일 : </StyledEndLabel>
-                  <StyledMobileDateInput
-                    type="date"
-                    defaultValue={editData.rentEnd}
-                    onChange={(e) => {
-                      setEndDateInput(e.target.value);
-                    }}
-                  />
+                  <RangeCalrendar startEndDays={startEndDays}/>
                 </StyledDateWrap>
               </StyledMobileOptionInputs>
 
               <StyledMobilePostLocation
                 type="text"
                 placeholder="거래 장소를 적어주세요!"
-                defaultValue={editData.location}
+                defaultValue={editData?.location}
                 onChange={(e) => {
                   setTradeLocation(e.target.value);
                 }}
@@ -550,7 +548,7 @@ export const EditProduct = () => {
               <StyledMobilePostTitle
                 type="text"
                 placeholder="제목은 4글자 이상 적어주세요!"
-                defaultValue={editData.productName}
+                defaultValue={editData?.productName}
                 onChange={(e) => {
                   setTitle(e.target.value);
                 }}
@@ -560,7 +558,7 @@ export const EditProduct = () => {
                 cols="30"
                 rows="10"
                 placeholder="내용을 입력해주세요!"
-                defaultValue={editData.content}
+                defaultValue={editData?.content}
                 maxLength={500}
                 onChange={(e) => {
                   setDescription(e.target.value);
@@ -597,15 +595,16 @@ const StyledEditProductContainer = styled.div`
   justify-content: center;
 
   animation: editProductFadein 1.5s;
-	&{
-	@keyframes editProductFadein {
-   	 from {
-       	 opacity:0;
-    	}
-   	 to {
-      	  opacity:1;
-   	 }		
-}}
+  & {
+    @keyframes editProductFadein {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  }
 `;
 
 const StyledEditProductForm = styled.form`
@@ -698,7 +697,7 @@ const StyledCategorySelector = styled.select`
     no-repeat 95% 50%;
   padding: 10px;
   padding-right: 20px;
-  margin-top: 30px;
+  margin-top: 150px;
   margin-bottom: 15px;
   font-size: 16px;
   border-radius: 10px;
@@ -739,13 +738,7 @@ const StyledPriceLabel = styled.label`
 `;
 
 const StyledDateWrap = styled.div`
-  & {
-    @media all and (max-width: 767px) {
-      margin-top: 10px;
-    }
-    @media all and (max-width: 480px) {
-    }
-  }
+
 `;
 const StyledStartLabel = styled.label``;
 const StyledEndLabel = styled.label``;
@@ -867,15 +860,16 @@ const StyledMobileContainer = styled.div`
   justify-content: center;
 
   animation: editProductFadein 1.5s;
-	&{
-	@keyframes editProductFadein {
-   	 from {
-       	 opacity:0;
-    	}
-   	 to {
-      	  opacity:1;
-   	 }		
-}}
+  & {
+    @keyframes editProductFadein {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  }
 `;
 
 const StyledMobileProductForm = styled.form`
