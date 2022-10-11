@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Layout } from "../layout/Layout";
 import { Skeleton } from "../skeleton/Skeleton";
 import { ProductsItem } from "../main/products/ProductsItem";
+import { Pagination } from "./Pagination";
 
 import { Desktop, Mobile } from "../../Hooks/MideaQuery";
 import { useEffect, useState } from "react";
@@ -38,17 +39,25 @@ export const SearchItems = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [categoryNumber, setCategoryNumber] = useState(0);
   const [priceNumber, setPriceNumber] = useState(0);
-  const [searchData, setSearchData] = useState();
 
-  console.log(param.id);
+  const [searchData, setSearchData] = useState();
+  const [products, setProducts] = useState([]);
+  let productsData = searchData?.filter((element) => element);
+
   const fetchData = async () => {
     await productAPI.getSearch(param.id).then((response) => {
       setSearchData(response.data.data);
+      setProducts(response.data.data)
     });
   };
 
   useEffect(() => {
-    fetchData();
+    setIsLoading(true);
+    setTimeout(() => {
+      fetchData();  
+      setIsLoading(false);
+    }, 700);
+    
   }, []);
   console.log("패치", searchData);
 
@@ -64,19 +73,14 @@ export const SearchItems = () => {
     setPriceNumber(0);
   };
 
-  const productsData = searchData?.filter((element) => element);
 
-  const [products, setProducts] = useState([]);
-
-
-  let dataTest = searchData;
   useEffect(() => {
-    setIsLoading(true)
+    setIsLoading(true);
     if (categoryNumber === 0) {
       setProducts(
         priceNumber === 0
           ? searchData
-          : (dataTest = searchData?.filter(
+          : (productsData = searchData?.filter(
               (element) => element.cateId === categoryNumber
             ))
       );
@@ -114,12 +118,21 @@ export const SearchItems = () => {
       }
     }
     setTimeout(() => {
-      setIsLoading(false)
+      setIsLoading(false);
     }, 700);
   }, [categoryNumber, priceNumber]);
 
   console.log("products", products);
   console.log("카테", categoryNumber, "가격", priceNumber);
+
+
+
+// pagination
+
+const [page, setPage] = useState(1);
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
 
   return (
     <>
@@ -156,7 +169,8 @@ export const SearchItems = () => {
                 onChange={(e) => priceHandler(e)}
                 defaultChecked={0}
                 value={`${priceNumber}`}
-                // 임시 제거
+                // 가격 필터 임시 제거
+                //###############################
                 style={{ display: "none" }}
               >
                 {priceList?.map((option) => (
@@ -179,6 +193,14 @@ export const SearchItems = () => {
                 })}
               </StyledProductsGrid>
             )}
+            <Pagination 
+            activePage={page}
+            itemsCountPerPage={12}
+            totalItemsCount={products?.length === undefined ? 1 : products?.length}
+            prevPageText={"<"}
+            nextPageText={">"}
+            handlePageChange={handlePageChange}
+            />
           </StyledProductsContainer>
         </Layout>
       </Desktop>
