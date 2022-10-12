@@ -16,7 +16,7 @@ export const Main = () => {
       <Banner />
       <SideNav openState={openState} />
       <CategoryBox />
-      <BestProducts />
+      {/* <BestProducts /> */}
       {/* <SlideShow /> */}
       <Products />
     </Layout>

@@ -9,6 +9,7 @@ import { Desktop, Mobile } from "../../Hooks/MideaQuery";
 export const Profile = ({ like, setLike }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const info = useSelector((state) => state.mypage.myinfo);
   console.log("Profile >> info", info);
 
@@ -21,7 +22,13 @@ export const Profile = ({ like, setLike }) => {
   const likeListhandler = () => {
     setLike(!like);
   };
+
   console.log("likeListhandler >> like", like);
+
+  const profileImg =
+    info?.imgUrl == null
+      ? `https://source.boringavatars.com/beam/110/${info?.memberName}?colors=7965EE,6FE7F1,FFDD4C,46B5FF,2883E0`
+      : info?.imgUrl;
 
   return (
     <>
@@ -29,11 +36,7 @@ export const Profile = ({ like, setLike }) => {
         <StyledProfileBox>
           <StyledImgFlexBox>
             <StyledImgBox>
-              <StyledImg
-                src={`https://source.boringavatars.com/beam/110/${info?.memberName}?colors=7965EE,6FE7F1,FFDD4C,46B5FF,2883E0 
-                `}
-                alt="이미지 없음"
-              />
+              <StyledImg src={profileImg} alt="이미지 없음" />
             </StyledImgBox>
             <StyledNickname>{info?.memberName}</StyledNickname>
             <StyledProfileEdit

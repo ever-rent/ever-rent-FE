@@ -1,108 +1,22 @@
-import React, { useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { BestProductItem } from "./BestProductItem";
 import { Desktop, Mobile } from "../../../Hooks/MideaQuery";
+import { auth } from "../../../server/core/instance";
 
 export const BestProducts = () => {
-  const dummydata = [
-    {
-      cateId: "1",
-      content: "쌉니",
-      id: 1,
-      mockUrl:
-        "https://dnvefa72aowie.cloudfront.net/origin/article/202210/FB78ABBCE586F6D1F5C3328D31B5C40E489C2FAB9948A1F2F23114C5633EEF36.jpg?q=82&s=300x300&t=crop",
-      imgUrlArray: (2)[("85ad39a5517.PNG", "aab13382ae6.png")],
-      location: "경기도 용인시",
-      mapLocation: "기흥구청",
-      memberName: "test1",
-      price: "150000",
-      productName: "1",
-    },
-    {
-      cateId: "1",
-      content: "비싸요",
-      id: 2,
-      mockUrl:
-        "https://dnvefa72aowie.cloudfront.net/origin/article/202210/0779c4eb89fb181468c05bb3557b284963b9bdcb370d79c3c581e3c5f8b8aa38.webp?q=82&s=300x300&t=crop",
-      imgUrlArray: (2)[("85ad39a5517.PNG", "aab13382ae6.png")],
-      location: "서울시 강남구",
-      mapLocation: "기흥구청",
-      memberName: "test1",
-      price: "350000",
-      productName: "1",
-    },
-    {
-      cateId: "1",
-      content: "싸게 빌려가세요",
-      id: 3,
-      mockUrl:
-        "https://dnvefa72aowie.cloudfront.net/origin/article/202210/4581E8B8E1FE027F2E0C284437CF1D878292A13F69FE83D38C866FDB5ABF3754.jpg?q=82&s=300x300&t=crop",
-      imgUrlArray: (2)[("85ad39a5517.PNG", "aab13382ae6.png")],
-      location: "서울시 서대문구",
-      mapLocation: "기흥구청",
-      memberName: "test1",
-      price: "15000",
-      productName: "1",
-    },
-    {
-      cateId: "1",
-      content: "쌉니",
-      id: 4,
-      mockUrl:
-        "https://dnvefa72aowie.cloudfront.net/origin/article/202210/b87b50190ef6f45140238a24a25fa9781960925be86e40fbed0b001b9cc1b71e.webp?q=82&s=300x300&t=crop",
+  const [products, setProducts] = useState([]);
+  // const page = useRef(1);
 
-      imgUrlArray: (2)[("85ad39a5517.PNG", "aab13382ae6.png")],
-      location: "경기도 용인시",
-      mapLocation: "기흥구청",
-      memberName: "test1",
-      price: "150000",
-      productName: "1",
-    },
-    {
-      cateId: "1",
-      content: "쌉니",
-      id: 5,
-      imgUrlArray: (2)[("85ad39a5517.PNG", "aab13382ae6.png")],
-      location: "경기도 용인시",
-      mapLocation: "기흥구청",
-      memberName: "test1",
-      price: "150000",
-      productName: "1",
-    },
-    {
-      cateId: "1",
-      content: "쌉니",
-      id: 6,
-      imgUrlArray: (2)[("85ad39a5517.PNG", "aab13382ae6.png")],
-      location: "경기도 용인시",
-      mapLocation: "기흥구청",
-      memberName: "test1",
-      price: "150000",
-      productName: "1",
-    },
-    {
-      cateId: "1",
-      content: "쌉니",
-      id: 7,
-      imgUrlArray: (2)[("85ad39a5517.PNG", "aab13382ae6.png")],
-      location: "경기도 용인시",
-      mapLocation: "기흥구청",
-      memberName: "test1",
-      price: "150000",
-      productName: "1",
-    },
-    {
-      cateId: "1",
-      content: "쌉니",
-      id: 8,
-      imgUrlArray: (2)[("85ad39a5517.PNG", "aab13382ae6.png")],
-      location: "경기도 용인시",
-      mapLocation: "기흥구청",
-      memberName: "test1",
-      price: "150000",
-      productName: "1",
-    },
-  ];
+  const fetch = useCallback(async () => {
+    try {
+      const { data } = await auth.get(`/products?page=1`);
+      console.log("data.best", data.best);
+      setProducts(data.best);
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
   // const bestProducts = useSelector((store) => store.product.bestProducts);
 
   const productsRef = useRef();
@@ -111,9 +25,9 @@ export const BestProducts = () => {
   // const dispatch = useDispatch();
   // const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   dispatch(getBestProducts());
-  // }, []);
+  useEffect(() => {
+    fetch();
+  }, []);
 
   // const allProducts = () => {
   //   navigate("/products");
@@ -125,7 +39,7 @@ export const BestProducts = () => {
     return arr;
   };
 
-  const idxArr = makeArr(dummydata);
+  const idxArr = makeArr(products);
   let idx = 0;
 
   const back = () => {
@@ -150,6 +64,7 @@ export const BestProducts = () => {
   const move = (idx) => {
     productsRef.current.style.transform = `translateX(${-idx * 212}px)`; // 180(card width)+32(gap)
   };
+  console.log("BestProducts", products);
 
   return (
     <>
@@ -166,7 +81,7 @@ export const BestProducts = () => {
             </StyeldMoveButtonLeft>
             <StyledContainer>
               <StyledGridBox ref={productsRef}>
-                {dummydata.map((item) => {
+                {products?.map((item) => {
                   return <BestProductItem item={item} key={item.id} />;
                 })}
               </StyledGridBox>
@@ -209,7 +124,7 @@ const StyledItemAndButtonContainer = styled.div`
   /* margin: auto; */
   /* overflow: hidden; */
   padding: 0 30px;
-  margin: 25px 0 60px 0;
+  margin: 40px 0 100px 0;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 `;
 
@@ -222,7 +137,6 @@ const StyeldMoveButtonLeft = styled.button`
   top: 40%;
   max-width: max-content;
   background-color: transparent;
-  color: #5923ff;
   cursor: pointer;
   /* margin-right: 20px; */
 `;

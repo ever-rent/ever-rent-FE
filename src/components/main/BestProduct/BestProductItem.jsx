@@ -1,23 +1,36 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { imgFirstString } from "../../../server/api";
+import { timeToToday } from "../../../util/timeToToday";
 
 export const BestProductItem = (item) => {
   // console.log(item.item);
   const navigate = useNavigate();
   const {
     cateId,
-    mockUrl,
-    content,
+    heart,
     id,
-    imgUrlArray,
+    thumbimgUrl,
     location,
     mapLocation,
     memberName,
     price,
     productName,
+    status,
+    wishNum,
+    writeAt,
   } = item.item;
+
+  //글쓴 시간 표시.
+  const [write, setWrite] = useState("");
+  const [createdAt, setCreatedAt] = useState("");
+
+  useEffect(() => {
+    let timeStatus = writeAt;
+    timeStatus !== undefined ? setWrite(timeStatus) : (timeStatus = "");
+    setCreatedAt(timeToToday(writeAt));
+  }, [writeAt]);
 
   return (
     <>
@@ -27,19 +40,21 @@ export const BestProductItem = (item) => {
             onClick={() => {
               navigate(`/productDetail/${id}`);
             }}
-            src={mockUrl}
+            src={`${imgFirstString}${thumbimgUrl}`}
             alt="이미지 없음"
           />
         </StyledImgBox>
         <StyledContentBox>
           <StyledPayBox>
-            <StyledTitle>{content}</StyledTitle>
+            <StyledTitle>{productName}</StyledTitle>
             <StyledLocation>
               {location ? location : "지역 선택 안함"}
             </StyledLocation>
             <br />
             <StyledPay>{price}</StyledPay>
             <StyledDay> / 일</StyledDay>
+            <br />
+            <StyledTimeForToday> {createdAt}</StyledTimeForToday>
           </StyledPayBox>
         </StyledContentBox>
       </StyledItemBox>
@@ -50,6 +65,7 @@ export const BestProductItem = (item) => {
 const StyledItemBox = styled.div`
   /* border: 1px solid red; */
   display: flex;
+  align-items: center;
   flex-direction: column;
   padding: 10px 10px 0 10px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -61,20 +77,21 @@ const StyledImgBox = styled.div`
   justify-content: center;
   align-items: center;
   padding: 2px;
-  /* width: 150px;
-  height: 150px; */
-  /* margin-bottom: 10px; */
+  width: 150px;
+  height: 150px;
 `;
 
 const StyledImg = styled.img`
   border-radius: 8px;
-  width: 150px;
-  height: 150px;
+  width: 100%;
+  height: 100%;
+
   /* padding-bottom: 10px; */
   cursor: pointer;
 `;
 
 const StyledContentBox = styled.div`
+  width: 100%;
   margin: 12px 0;
 `;
 
@@ -100,4 +117,7 @@ const StyledDay = styled.span`
   font-size: 13px;
 `;
 
-const StyledTimeForToday = styled.span``;
+const StyledTimeForToday = styled.span`
+  font-size: 13px;
+  color: gray;
+`;
