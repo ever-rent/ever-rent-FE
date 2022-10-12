@@ -4,6 +4,7 @@ import { RentalStatus } from "./RentalStatus";
 import { BorrowStatus } from "./BorrowStatus";
 // import { StatusBox } from "./StatusBox";
 import { Desktop, Mobile } from "../../Hooks/MideaQuery";
+
 export const RentalBar = ({ like }) => {
   const [tabIndex, setTabIndex] = useState(0); //처음에 나오는 것이 빌려준 물건.
   console.log("RentalBar>>", like);
@@ -12,24 +13,24 @@ export const RentalBar = ({ like }) => {
     {
       key: "lendItems",
       tab: (
-        <div
+        <StyledTabArray
           className={tabIndex === 0 ? "select" : ""}
           onClick={() => setTabIndex(0)}
         >
           빌려준 물건
-        </div>
+        </StyledTabArray>
       ),
       content: <RentalStatus />,
     },
     {
       key: "BorrowStatus",
       tab: (
-        <div
+        <StyledTabArray
           className={tabIndex === 1 ? "select" : ""}
           onClick={() => setTabIndex(1)}
         >
           빌린 물건
-        </div>
+        </StyledTabArray>
       ),
       content: <BorrowStatus />,
     },
@@ -38,14 +39,18 @@ export const RentalBar = ({ like }) => {
   return (
     <>
       <Desktop>
-        <StyledLendAndBorrow>
-          {tabArray.map((item) => {
-            return <StyledRentalBar key={item.key}>{item.tab}</StyledRentalBar>;
-          })}
-        </StyledLendAndBorrow>
-        <StyledRentStatusBox>
-          {tabIndex ? <BorrowStatus /> : <RentalStatus />}
-        </StyledRentStatusBox>
+        <StyledRentalBarContainer>
+          <StyledLendAndBorrow>
+            {tabArray.map((item) => {
+              return (
+                <StyledRentalBar key={item.key}>{item.tab}</StyledRentalBar>
+              );
+            })}
+          </StyledLendAndBorrow>
+          <StyledRentStatusBox>
+            {tabIndex ? <BorrowStatus /> : <RentalStatus />}
+          </StyledRentStatusBox>
+        </StyledRentalBarContainer>
       </Desktop>
       {/* ################ 모바일 ################ */}
       <Mobile>
@@ -62,6 +67,9 @@ export const RentalBar = ({ like }) => {
   );
 };
 
+const StyledTabArray = styled.div``;
+
+const StyledRentalBarContainer = styled.div``;
 const StyledLendAndBorrow = styled.div`
   /* border-bottom: 1px solid gray; */
   display: flex;
@@ -71,15 +79,6 @@ const StyledLendAndBorrow = styled.div`
   justify-content: space-around;
   margin-bottom: 30px;
   /* border-radius: 5px; */
-  animation: rentalBarfadein 0.5s;
-  @keyframes rentalBarfadein {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
 `;
 
 const StyledRentalBar = styled.a`
@@ -92,6 +91,7 @@ const StyledRentalBar = styled.a`
   text-align: center;
   font-weight: bold;
   margin: 30px;
+  transition: 0.6s;
 
   cursor: pointer;
   .select {
@@ -106,6 +106,15 @@ const StyledRentalBar = styled.a`
       top: 45px;
       left: 45px;
     }
+    animation: tabarray 0.8s;
+    @keyframes tabarray {
+      from {
+        opacity: 0.5;
+      }
+      to {
+        opacity: 1;
+      }
+    }
   }
 `;
 
@@ -116,18 +125,10 @@ const StyledRentStatusBox = styled.div`
   /* justify-content: center; */
   align-items: center;
   border-radius: 5px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
   height: 100%;
   grid-row: 2/4;
-  animation: rentalBarfadein 0.5s;
-  @keyframes rentalBarfadein {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
+  /* transition: 0.6s; */
 `;
 
 const StyledMobileRentStatusBox = styled.div`
@@ -137,7 +138,7 @@ const StyledMobileRentStatusBox = styled.div`
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   height: 100%;
-  animation: rentalBarfadein 0.5s;
+  /* animation: rentalBarfadein 0.5s;
   @keyframes rentalBarfadein {
     from {
       opacity: 0;
@@ -145,5 +146,5 @@ const StyledMobileRentStatusBox = styled.div`
     to {
       opacity: 1;
     }
-  }
+  } */
 `;

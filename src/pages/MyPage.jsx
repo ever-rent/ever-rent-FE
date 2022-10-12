@@ -22,7 +22,9 @@ export const MyPage = () => {
                 <MyWishList />
               </StyledLikeList>
             ) : (
-              <RentalBar />
+              <StyledFadeBox>
+                <RentalBar />
+              </StyledFadeBox>
             )}
           </StyledGridBox>
         </Layout>
@@ -54,11 +56,14 @@ const StyledGridBox = styled.div`
   grid-template-columns: 250px 700px;
   justify-content: space-between;
   /* align-items: center; */
-  @media only screen and (max-width: 767px) {
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+  animation: fadein 0.6s;
+  @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 `;
 
@@ -75,8 +80,20 @@ const StyledFlexBox = styled.div`
 const StyledLikeList = styled.div`
   grid-row: 1/4;
   box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
-  animation: fadein 0.8s;
+  animation: fadein 0.6s;
   @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+`;
+
+const StyledFadeBox = styled.div`
+  animation: FadeBox 0.6s;
+  @keyframes FadeBox {
     from {
       opacity: 0;
     }

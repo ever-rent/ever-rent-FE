@@ -4,10 +4,11 @@ import styled from "styled-components";
 import { imgFirstString } from "../../../server/api";
 
 export const BestProductItem = (item) => {
-  console.log(item);
+  // console.log(item.item);
   const navigate = useNavigate();
   const {
     cateId,
+    mockUrl,
     content,
     id,
     imgUrlArray,
@@ -16,7 +17,7 @@ export const BestProductItem = (item) => {
     memberName,
     price,
     productName,
-  } = item;
+  } = item.item;
 
   return (
     <>
@@ -26,20 +27,18 @@ export const BestProductItem = (item) => {
             onClick={() => {
               navigate(`/productDetail/${id}`);
             }}
-            src="https://dnvefa72aowie.cloudfront.net/origin/article/202210/92F53297C5CBF171F0A87AADD70C605A72EB133C46431E88C0563F4529BAA175.jpg?q=82&s=300x300&t=crop"
+            src={mockUrl}
             alt="이미지 없음"
           />
         </StyledImgBox>
         <StyledContentBox>
           <StyledPayBox>
-            {/* <StyledTitle>{content}</StyledTitle> */}
-            <StyledTitle>다이슨 청소기 싸게 빌려드립니다.</StyledTitle>
+            <StyledTitle>{content}</StyledTitle>
             <StyledLocation>
               {location ? location : "지역 선택 안함"}
             </StyledLocation>
             <br />
-            {/* <StyledPay>{price}</StyledPay> */}
-            <StyledPay>5000원</StyledPay>
+            <StyledPay>{price}</StyledPay>
             <StyledDay> / 일</StyledDay>
           </StyledPayBox>
         </StyledContentBox>
@@ -49,10 +48,11 @@ export const BestProductItem = (item) => {
 };
 
 const StyledItemBox = styled.div`
-  border: 1px solid red;
+  /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
-  padding: 15px 10px 0 10px;
+  padding: 10px 10px 0 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 `;
 
 const StyledImgBox = styled.div`
