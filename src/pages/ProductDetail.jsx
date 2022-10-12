@@ -9,6 +9,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { categoriNumber } from "../util/categoryNumber";
 import { timeToToday } from "../util/timeToToday";
 import { LocationModal } from "../components/location/LocationModal";
+import { ImageModal } from "../components/imageModal/ImageModal";
 import { imgFirstString } from "../server/api";
 
 import Swal from "sweetalert2";
@@ -98,6 +99,17 @@ export const ProductDetail = () => {
     setShowModal(false);
   };
 
+  //이미지 모달
+  const [showImages, setShowImages] = useState(false);
+  const [imageIndex, setImageIndex] = useState(0);
+  const openImage = (index) => {
+    setImageIndex(index);
+    setShowImages(true);
+  };
+  const closeImage = () => {
+    setShowImages(false);
+  };
+
   return (
     <>
       <Desktop>
@@ -107,6 +119,13 @@ export const ProductDetail = () => {
               <PostReport />
               {/* 게시글 리포트자리 */}
               <StyledPostHeadWrap>
+                <ImageModal
+                  showImages={showImages}
+                  imageArray={detailData?.imgUrlArray}
+                  imageIndex={imageIndex}
+                  closeImage={closeImage}
+                />
+                {/* 이미지 모달 */}
                 <StyledProductImagetWrap>
                   <SyltedProductMainImage
                     src={
@@ -115,12 +134,16 @@ export const ProductDetail = () => {
                         : "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png"
                     }
                     alt="이미지 미리보기"
+                    onClick={() => openImage(0)}
                   />
                   <StyledProductSubImageWrap>
                     {detailData?.imgUrlArray.map((item, index) => {
                       if (index !== 0) {
                         return (
-                          <StyledProductSubImage src={`${firstUrl}${item}`} />
+                          <StyledProductSubImage
+                            src={`${firstUrl}${item}`}
+                            onClick={() => openImage(index)}
+                          />
                         );
                       }
                     })}
@@ -211,6 +234,13 @@ export const ProductDetail = () => {
             <StyledMobileDetailWrap>
               <PostReport />
               {/* 게시글 리포트자리 */}
+              <ImageModal
+                showImages={showImages}
+                imageArray={detailData?.imgUrlArray}
+                imageIndex={imageIndex}
+                closeImage={closeImage}
+              />
+              {/* 이미지 모달 */}
               <StyledMobilePostHeadWrap>
                 <StyledMobileProductImagetWrap>
                   <SyltedMobileProductMainImage
@@ -220,12 +250,16 @@ export const ProductDetail = () => {
                         : "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png"
                     }
                     alt="이미지 미리보기"
+                    onClick={() => openImage(0)}
                   />
                   <StyledMobileSubImageWrap>
                     {detailData?.imgUrlArray.map((item, index) => {
                       if (index !== 0) {
                         return (
-                          <StyledMobileSubImage src={`${firstUrl}${item}`} />
+                          <StyledMobileSubImage
+                            src={`${firstUrl}${item}`}
+                            onClick={() => openImage(index)}
+                          />
                         );
                       }
                     })}
