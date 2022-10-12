@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 export const SlideShow = () => {
-  //이걸 응용해서 4개씩 12개를 보여주면 될 것 같긴한데...
   const colors = ["#0088FE", "#00C49F", "#FFBB28"];
 
   const [index, setIndex] = useState(0);

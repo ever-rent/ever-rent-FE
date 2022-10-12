@@ -30,7 +30,8 @@ export const Profile = ({ like, setLike }) => {
           <StyledImgFlexBox>
             <StyledImgBox>
               <StyledImg
-                src="https://image.ajunews.com/content/image/2019/12/25/20191225170826943516.jpg"
+                src={`https://source.boringavatars.com/beam/110/${info?.memberName}?colors=7965EE,6FE7F1,FFDD4C,46B5FF,2883E0 
+                `}
                 alt="이미지 없음"
               />
             </StyledImgBox>
@@ -181,14 +182,6 @@ const StyledImgBox = styled.div`
   height: 110px;
   border-radius: 70%;
   overflow: hidden;
-  @media only screen and (max-width: 767px) {
-    /* border: 2px solid green; */
-    height: 100px;
-    width: 100px;
-    /* padding: 10px 0; */
-    margin-right: 20px;
-    position: relative;
-  }
   ::after {
     content: "";
     display: block;
@@ -224,14 +217,6 @@ const StyledProfileEdit = styled.button`
   padding: 4px 5px;
   cursor: pointer;
   min-width: max-content;
-  @media only screen and (max-width: 767px) {
-    /* border: 1px solid red; */
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
-    /* margin: 10px; */
-    margin-right: 10px;
-  }
 `;
 
 const StyledIcon = styled.div`
