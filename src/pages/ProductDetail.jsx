@@ -320,7 +320,7 @@ const StyledDetailProductContainer = styled.div`
   display: flex;
   justify-content: center;
 
-  animation: productDetailFadein 1.5s;
+  animation: productDetailFadein 0.8s;
   & {
     @keyframes productDetailFadein {
       from {
@@ -504,7 +504,7 @@ const StyledMobileDetailContainer = styled.div`
   display: flex;
   justify-content: center;
 
-  animation: productDetailFadein 1.5s;
+  animation: productDetailFadein 0.8s;
   & {
     @keyframes productDetailFadein {
       from {

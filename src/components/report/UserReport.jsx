@@ -16,7 +16,9 @@ export const UserReport = ({ targetNicename }) => {
 
   // 로그인 처리 예정
   // useEffect(() => {
-
+  //  if(localStorage.getItem("accessToken")!==null){
+  //   setIsLogedIn(true);
+  //  }
   // }, []);
 
   // 로그인 여부 확인
@@ -145,7 +147,7 @@ export const UserReport = ({ targetNicename }) => {
                   />
                 </div>
                 <span>기타</span>
-                <input
+                <StyledEtcInput
                   onChange={(e) => {
                     setSendReason(e.target.value);
                   }}
@@ -209,22 +211,35 @@ const StyledModalContainer = styled.div`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 400px;
+  width: 350px;
   height: 400px;
   padding: 20px;
   background: rgb(255, 255, 255);
   border-radius: 10px;
   box-shadow: 1px 1px 5px 1px rgb(71, 181, 255);
   text-align: center;
+
+  animation: reportFadein 0.6s;
+  &{
+    @keyframes reportFadein {
+      from{
+        opacity:0;
+      }
+      to{
+        opacity:1;
+      }
+    }
+  }
 `;
 
 const StyledReportForm = styled.form`
   display: flex;
   flex-direction: column;
-  margin-top: 50px;
+  margin-top: 35px;
+  align-items: center;
 
   & label {
-    width: 380px;
+    width: 280px;
   }
 `;
 
@@ -233,7 +248,7 @@ const StyledRadioLabel = styled.label`
   justify-content: center;
   justify-content: flex-start;
   margin-top: 15px;
-  margin-left: 70px;
+
 
   & input[type="radio"],
   input[type="radio"]:checked {
@@ -249,7 +264,18 @@ const StyledRadioLabel = styled.label`
   & input[type="radio"]:checked {
     background-color: rgb(71, 181, 255);
   }
+  & span{
+    margin-right:10px;
+  }
 `;
+
+const StyledEtcInput = styled.input`
+  border-radius:5px;
+  border:1px solid rgb(71, 181, 255);
+  &:focus{
+    outline-color:rgb(71, 181, 255);
+  }
+`
 
 const StyledButtonWrap = styled.div`
   display: flex;
