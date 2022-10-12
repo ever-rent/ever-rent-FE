@@ -39,7 +39,7 @@ export const ProductsItem = ({
   // const [isrent, setIsrent] = useState(false);
 
   const data = useSelector((state) => state.mypage?.like);
-  console.log("data", id, data);
+  // console.log("data", id, data);
   // console.log(id, like);
 
   const presentStatus = (status) => {
