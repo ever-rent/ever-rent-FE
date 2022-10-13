@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { imgFirstString } from "../../server/api";
 
@@ -11,40 +11,58 @@ export const ImageModal = ({
   console.log(imageIndex);
   console.log(imageArray);
 
+  let idxIndex = imageArray?.length + 2;
+  let idxRight = 620;
+
   const [imageNum, setImageNum] = useState(imageIndex);
+  const [idxPx, setIdxPx] = useState(0);
+  const [idxInit, setIdxInit] = useState(0.25);
 
-  const [idxPersent, setIdxPersent] = useState(0);
-
-  let idxRight = -1 * (100 / imageArray?.length);
-  let idxLeft = idxRight * -1;
-  console.log("idx퍼센트", idxPersent);
+  console.log("idx픽셀", idxPx);
   console.log("idx라이트", idxRight);
-  console.log("idx레프트", idxLeft);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIdxPx(idxPx - idxRight);
+    }, 200);
+  }, []);
 
   const imageChange = (index) => {
     setImageNum(index);
-    setIdxPersent(idxRight * imageNum);
+
+    setIdxPx(-idxRight * (imageNum + 1));
   };
   console.log(imageNum);
 
   const goPrev = (e) => {
     e.stopPropagation();
     if (imageNum !== 0) {
-      imageNum !== 0
-        ? setImageNum(imageNum - 1)
-        : setImageNum(imageArray.length - 1);
-      setIdxPersent(idxPersent + idxLeft);
+      setImageNum(imageNum - 1);
+      setIdxPx(idxPx + idxRight);
+    } else {
+      setImageNum(imageArray.length - 1);
+      setIdxPx(idxPx + idxRight);
+      setTimeout(() => {
+        setIdxInit(0);
+        setIdxPx((imageArray.length) * -idxRight);
+      }, 300);
     }
+    setIdxInit(0.25);
   };
   const goNext = (e) => {
     e.stopPropagation();
     if (imageNum !== imageArray.length - 1) {
-      imageNum !== imageArray.length - 1
-        ? setImageNum(imageNum + 1)
-        : setImageNum(0);
-
-      setIdxPersent(idxPersent + idxRight);
+      setImageNum(imageNum + 1);
+      setIdxPx(idxPx - idxRight);
+    } else {
+      setImageNum(0);
+      setIdxPx(idxPx - idxRight);
+      setTimeout(() => {
+        setIdxInit(0);
+        setIdxPx(idxRight * -1);
+      }, 300);
     }
+    setIdxInit(0.25);
   };
 
   return (
@@ -55,14 +73,28 @@ export const ImageModal = ({
       <StyledModalContainer onClick={(e) => e.stopPropagation()}>
         <StyledSlideBox
           style={{
-            width: `${imageArray?.length * 100}%`,
-            // transform: `translateX(${(imageArray?.length*50)})`
-            transform: `translateX(${idxPersent}%)`,
+            width: `${idxIndex * 620}px`,
+            transform: `translateX(${idxPx}px)`,
+            transition: `${idxInit}s`,
           }}
         >
+          <img
+            src={`${imgFirstString}${
+              imageArray?.filter(
+                (e, index) => index === imageArray?.length - 1
+              )[0]
+            }`}
+            alt="cloneEnd"
+          />
           {imageArray?.map((item, index) => (
             <img key={index} src={`${imgFirstString}${item}`} alt="slideImg" />
           ))}
+          <img
+            src={`${imgFirstString}${
+              imageArray?.filter((e, index) => index === 0)[0]
+            }`}
+            alt="cloneStart"
+          />
         </StyledSlideBox>
       </StyledModalContainer>
       <StyledPrevNext
@@ -131,12 +163,13 @@ const StyledBackground = styled.div`
   & ul,
   li {
     list-style: none;
+    padding-left: 4px;
   }
 `;
 
 const StyledModalContainer = styled.div`
-  width: 50vw;
-  height: 50vh;
+  width: 600px;
+  height: 600px;
   border-radius: 10px;
   overflow: hidden;
 
@@ -148,12 +181,13 @@ const StyledModalContainer = styled.div`
 
 const StyledSlideBox = styled.div`
   display: flex;
-  transition: 0.4s;
 
   & img {
-    width: 50vw;
-    height: 50vh;
-    border: 2px solid rgb(150, 212, 253);
+    width: 600px;
+    height: 600px;
+    margin-left: 10px;
+    margin-right: 10px;
+    /* border: 2px solid rgb(150, 212, 253); */
     border-radius: 10px;
     text-align: center;
   }
@@ -169,7 +203,7 @@ const StyledPrevNext = styled.button`
   background-color: rgb(150, 212, 253);
 
   position: fixed;
-  left: 18%;
+  left: 30%;
   top: 40%;
   transform: translate(-50%, -50%);
   cursor: pointer;
@@ -178,7 +212,7 @@ const StyledPrevNext = styled.button`
 
   &.next {
     position: fixed;
-    left: 82%;
+    left: 70%;
     top: 40%;
     transform: translate(-50%, -50%);
   }
@@ -208,8 +242,10 @@ const StyledSubContainer = styled.div`
   cursor: pointer;
 
   & ul {
-    display: flex;
+    display: grid;
     align-items: center;
+    grid-gap: 1vw;
+    grid-template-columns: 7vw 7vw 7vw 7vw 7vw;
   }
   & .checkedImg {
     border: 3px solid rgb(71, 181, 255);
