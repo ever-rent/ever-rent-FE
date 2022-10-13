@@ -7,7 +7,7 @@ export const productAPI = {
   getSearch: (searchWord) => base.get(`/searchs?keyword=${searchWord}`),
   addProduct: (data) => auth.post(`/products`, data),
   getProductDetail: (productId) => base.get(`/products/${productId}`),
-  updateProduct: (data, productId) => auth.put(`/auth/products/${productId}`, data),
+  updateProduct: (data, productId) => auth.put(`/products/${productId}`, data),
   deleteProduct: (productId) => auth.delete(`/auth/products/${productId}`),
   toggleWishProduct: (productId) =>
     auth.post(`/products/wishlists/${productId}`),

@@ -49,8 +49,6 @@ export const ProductDetail = () => {
 
   const firstUrl = imgFirstString;
 
-  // const defaultImg =
-  //   "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png";
 
   // 유저 프로필 없을 시 기본이미지
   const defaultUserImg =
@@ -420,6 +418,7 @@ const StyledPostSubItems = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  margin-top:50px;
   margin-bottom: 50px;
 `;
 

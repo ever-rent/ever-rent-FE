@@ -5,7 +5,6 @@ import { Layout } from "../components/layout/Layout";
 import { useDispatch } from "react-redux";
 import { updateProducts } from "../redux/modules/productSlice";
 import { useNavigate, useParams } from "react-router-dom";
-import { useLocation } from "react-router";
 import axios from "axios";
 
 import { LocationModal } from "../components/location/LocationModal";
@@ -21,8 +20,6 @@ export const EditProduct = () => {
   const dispatch = useDispatch();
   const param = useParams();
 
-  const firstUrl = imgFirstString;
-
   const [data, setData] = useState();
   const fetchDetail = async () => {
     console.log("패치데이터", param);
@@ -30,6 +27,7 @@ export const EditProduct = () => {
       .get(`http://13.209.8.18/products/${param.id}`)
       .then((response) => {
         setData(response);
+        console.log(response);
       });
   };
   useEffect(() => {
@@ -45,26 +43,15 @@ export const EditProduct = () => {
   const [imgView, setImgView] = useState([]);
   const [sendImage, setSendImage] = useState([]);
 
-  // console.log(editData);
-
-  // imgUrl to Blob err 처리 예정
-  // const convertURLtoFile = (url) => {
-  //   const response = fetch(url);
-  //   const data = response.blob();
-  //   const ext = url.split(".")[1]; // url 구조에 맞게 수정할 것
-  //   const filename = url.split("/")[4];
-  //   const metadata = { type: `image/${ext}` };
-  //   let imgBlob = new File([data], !filename, metadata);
-  //   console.log(imgBlob)
-  //   setImgView([...setImgView].concat(imgBlob))
-  //   setSendImage([...sendImage].concat(imgBlob))
-  // };
-
-  // useEffect(() => {
-  //   for(let i = 0;i<editData.imgUrlArray.length;i++){
-  //     convertURLtoFile(`${firstUrl}${editData.imgUrlArray[i]}`)
-  //   }
-  // }, []);
+  useEffect(() => {
+    let urlArray = [];
+    for (let i = 0; i < editData?.imgUrlArray.length; i++) {
+      urlArray.push(`${imgFirstString}${editData?.imgUrlArray[i]}`);
+    }
+    console.log(urlArray);
+    setImgView(urlArray);
+    setSendImage(urlArray);
+  }, [editData]);
 
   const imageLengthCheck = (e) => {
     if (imgView.length === 10) {
@@ -145,8 +132,9 @@ export const EditProduct = () => {
     );
   };
 
+  // Send Data
   const [categoryInput, setCategoryInput] = useState("");
-  const [priceInput, setPriceInput] = useState(0);
+  const [priceInput, setPriceInput] = useState("");
   const [startDateInput, setStartDateInput] = useState("");
   const [endDateInput, setEndDateInput] = useState("");
   const [tradeLocation, setTradeLocation] = useState("");
@@ -154,7 +142,7 @@ export const EditProduct = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-  const [disabled, setDisabled] = useState(true);
+  const [disabled, setDisabled] = useState(false);
 
   const startEndDays = (start, end) => {
     let startDay = start;
@@ -193,7 +181,7 @@ export const EditProduct = () => {
     content: description,
     cateId: categoryInput,
     price: priceInput,
-    location: tradeLocation,
+    location: location,
     mapLocation: tradeLocation,
     rentStart: startDateInput,
     rentEnd: endDateInput,
@@ -229,6 +217,7 @@ export const EditProduct = () => {
         }
       });
     }
+    console.log(sendData);
   };
 
   const [showModal, setShowModal] = useState(false);
@@ -295,7 +284,7 @@ export const EditProduct = () => {
                 </StyledImageSource>
                 <StyledOptionInputs>
                   <StyledCategorySelector
-                    defaultValue={editData?.cateId}
+                    defaultValue={categoryInput}
                     onChange={(e) => {
                       setCategoryInput(e.target.value);
                     }}
@@ -331,9 +320,9 @@ export const EditProduct = () => {
                   <StyledPriceWrap>
                     <StyledPriceInput
                       id="itemPrice"
-                      type="number"
+                      type="text"
                       placeholder="가격"
-                      defaultValue={editData?.price}
+                      defaultValue={priceInput}
                       maxlength="8"
                       onChange={(e) => {
                         setPriceInput(e.target.value);
@@ -351,7 +340,7 @@ export const EditProduct = () => {
               <StyledPostLocation
                 type="text"
                 placeholder="거래 장소를 적어주세요!"
-                defaultValue={editData?.location}
+                defaultValue={tradeLocation}
                 onChange={(e) => {
                   setTradeLocation(e.target.value);
                 }}
@@ -377,7 +366,7 @@ export const EditProduct = () => {
               <StyledPostTitle
                 type="text"
                 placeholder="제목은 4글자 이상 적어주세요!"
-                defaultValue={editData?.productName}
+                defaultValue={title}
                 onChange={(e) => {
                   setTitle(e.target.value);
                 }}
@@ -387,7 +376,7 @@ export const EditProduct = () => {
                 cols="30"
                 rows="10"
                 placeholder="내용을 입력해주세요!"
-                defaultValue={editData?.content}
+                defaultValue={description}
                 maxLength={500}
                 onChange={(e) => {
                   setDescription(e.target.value);
@@ -473,7 +462,7 @@ export const EditProduct = () => {
               </StyledMobilePostHeadWrap>
               <StyledMobileOptionInputs>
                 <StyledMobileCategorySelector
-                  defaultValue={editData?.cateId}
+                  defaultValue={categoryInput}
                   onChange={(e) => {
                     setCategoryInput(e.target.value);
                   }}
@@ -501,9 +490,9 @@ export const EditProduct = () => {
                 <StyledPriceWrap>
                   <StyledMobilePriceInput
                     id="itemPrice"
-                    type="number"
+                    type="text"
                     placeholder="가격"
-                    defaultValue={editData?.price}
+                    defaultValue={priceInput}
                     maxlength="8"
                     onChange={(e) => {
                       setPriceInput(e.target.value);
@@ -515,14 +504,14 @@ export const EditProduct = () => {
                   <StyledMobilePriceData> / 일</StyledMobilePriceData>
                 </StyledPriceWrap>
                 <StyledDateWrap>
-                  <RangeCalrendar startEndDays={startEndDays}/>
+                  <RangeCalrendar startEndDays={startEndDays} />
                 </StyledDateWrap>
               </StyledMobileOptionInputs>
 
               <StyledMobilePostLocation
                 type="text"
                 placeholder="거래 장소를 적어주세요!"
-                defaultValue={editData?.location}
+                defaultValue={tradeLocation}
                 onChange={(e) => {
                   setTradeLocation(e.target.value);
                 }}
@@ -548,7 +537,7 @@ export const EditProduct = () => {
               <StyledMobilePostTitle
                 type="text"
                 placeholder="제목은 4글자 이상 적어주세요!"
-                defaultValue={editData?.productName}
+                defaultValue={title}
                 onChange={(e) => {
                   setTitle(e.target.value);
                 }}
@@ -558,7 +547,7 @@ export const EditProduct = () => {
                 cols="30"
                 rows="10"
                 placeholder="내용을 입력해주세요!"
-                defaultValue={editData?.content}
+                defaultValue={description}
                 maxLength={500}
                 onChange={(e) => {
                   setDescription(e.target.value);
@@ -737,9 +726,7 @@ const StyledPriceLabel = styled.label`
   font-weight: bold;
 `;
 
-const StyledDateWrap = styled.div`
-
-`;
+const StyledDateWrap = styled.div``;
 const StyledStartLabel = styled.label``;
 const StyledEndLabel = styled.label``;
 const StyledDateInput = styled.input`
@@ -757,7 +744,7 @@ const StyledDateInput = styled.input`
 `;
 
 const StyledPostLocation = styled.input`
-  margin-top: 250px;
+  margin-top: 320px;
   padding: 10px;
   width: 250px;
   height: 30px;
