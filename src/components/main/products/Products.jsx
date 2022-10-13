@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef, useCallback } from "react";
 import styled from "styled-components";
 import { ProductsItem } from "./ProductsItem";
 import { Skeleton } from "../../skeleton/Skeleton";
-
 import { useInView } from "react-intersection-observer";
 import { base } from "../../../server/core/instance";
 import { auth } from "../../../server/core/instance";
@@ -56,7 +55,7 @@ export const Products = () => {
   return (
     <>
       <Desktop>
-        <BestProducts />
+        {/* <BestProducts /> */}
         <StyledProductsContainer>
           <StyledProductsGrid>
             {products?.map((product) => {

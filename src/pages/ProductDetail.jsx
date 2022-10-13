@@ -110,6 +110,25 @@ export const ProductDetail = () => {
     setShowImages(false);
   };
 
+  //최근 본 상품
+  // const [recent, setRecent] = useState("");
+
+  // useEffect(() => {
+  //   let get_local = localStorage.getItem("recentItem"); //recentItem는 로컬스토리지의 키 값
+  //   if (get_local == null) {
+  //     get_local = [];
+  //   } else {
+  //     get_local = JSON.parse(get_local);
+  //   }
+  //   setTimeout(() => {
+  //     get_local.push(detailData?.productName);
+  //     console.log(detailData?.productName);
+  //     get_local = new Set(get_local); //중복제거를 위함
+  //     get_local = [...get_local];
+  //     localStorage.setItem("recentItem", JSON.stringify(get_local));
+  //   }, 700);
+  // }, []);
+
   return (
     <>
       <Desktop>

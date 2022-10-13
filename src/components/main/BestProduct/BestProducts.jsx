@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { BestProductItem } from "./BestProductItem";
 import { Desktop, Mobile } from "../../../Hooks/MideaQuery";
 import { auth } from "../../../server/core/instance";
+import { useSelector } from "react-redux";
 
 export const BestProducts = () => {
   const [products, setProducts] = useState([]);
@@ -17,8 +18,8 @@ export const BestProducts = () => {
       console.error(err);
     }
   }, []);
-  // const bestProducts = useSelector((store) => store.product.bestProducts);
-
+  const bestProducts = useSelector((store) => store.product.bestProducts);
+  console.log(bestProducts);
   const productsRef = useRef();
   // const productsBox = useRef();
 

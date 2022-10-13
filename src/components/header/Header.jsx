@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { openNav } from "../../redux/modules/navSlice";
 import { Desktop, Mobile } from "../../Hooks/MideaQuery";
 import Swal from "sweetalert2";
+import { RecentItem } from "./RecentItem";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -13,11 +14,11 @@ export const Header = () => {
   const [isLogin, setIsLogin] = useState(false);
 
   const [submitData, setSubmitData] = useState("");
-  const goSearch = (e)=>{
+  const goSearch = (e) => {
     e.preventDefault();
-    navigate(`/searchItems/${submitData}`)
-  }
-  
+    navigate(`/searchItems/${submitData}`);
+  };
+
   return (
     <>
       <Desktop>
@@ -31,17 +32,16 @@ export const Header = () => {
             />
           </StyledLogoImageWrap>
           <StyledHeaderWrap>
-            <StyledSearchWrap onSubmit={(e)=>goSearch(e)}>
+            <StyledSearchWrap onSubmit={(e) => goSearch(e)}>
               <StyledSearchButton
                 type="button"
                 alt="https://icons8.com/icon/59878/search https://icons8.com Icons8"
-                
               />
               <StyledSearchInput
                 type="text"
                 placeholder="지역, 물품명으로 찾아보세요"
                 maxLength={35}
-                onChange={(e)=>setSubmitData(e.target.value)}
+                onChange={(e) => setSubmitData(e.target.value)}
               />
             </StyledSearchWrap>
           </StyledHeaderWrap>
@@ -75,6 +75,7 @@ export const Header = () => {
             alt="https://icons8.com/icon/36389/menu-rounded Menu Rounded https://icons8.com"
           />
         </StyledHeaderTop>
+        <RecentItem />
       </Desktop>
       {/* ################ 모바일 ################ */}
       <Mobile>
