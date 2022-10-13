@@ -20,7 +20,10 @@ export const Login = () => {
   const { mutate } = useMutation(handleLogin, {
     onSuccess: (data) => {
       if (data.status === 200) {
-        localStorage.setItem("email", data.data.email);
+        console.log(data);
+        localStorage.setItem("email", data.data.data.email);
+        localStorage.setItem("memberId", data.data.data.id);
+        localStorage.setItem("memberName", data.data.data.memberName);
         localStorage.setItem("accessToken", data.headers["authorization"]);
         localStorage.setItem("refreshToken", data.headers["refresh-token"]);
         alert("로그인 성공!!");

@@ -27,6 +27,8 @@ export const mypageAPI = {
   getWishList: () => auth.get(`/mypages/myWishs`),
 };
 
+export const chatAPI = {};
+
 // imgUrlArray firstString
 // env 설정 예정
 export const imgFirstString =
