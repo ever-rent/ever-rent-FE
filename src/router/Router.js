@@ -8,6 +8,7 @@ import { EditProduct } from "../pages/EditProduct";
 import { CategoryDetail } from "../pages/CategoryDetail";
 import { EditUserInfo } from "../pages/EditUserInfo";
 import { MyPage } from "../pages/MyPage";
+import { SearchItems } from "../components/searchItems/SearchItems";
 import { ChatRoomList } from "../pages/chat/ChatRoomList";
 import { ChatRoom } from "../pages/chat/ChatRoom";
 
@@ -21,6 +22,7 @@ export const Router = () => {
       <Route path="/editProduct/:id" element={<EditProduct />} />
       <Route path="/productDetail/:id" element={<ProductDetail />} />
       <Route path="/categoryDetail/:id" element={<CategoryDetail />} />
+      <Route path="/searchItems/:id" element={<SearchItems />} />
       <Route path="/editUserInfo/:id" element={<EditUserInfo />} />
       <Route path="/myPage" element={<MyPage />} />
       <Route path="/chatRoomList" element={<ChatRoomList />} />

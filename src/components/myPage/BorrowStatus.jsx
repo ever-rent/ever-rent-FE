@@ -111,6 +111,15 @@ const StyledisStatusDetail = styled.div`
   .select {
     font-weight: bold;
     border-bottom: 3px solid #47b5ff;
+    animation: tabarray 0.8s;
+    @keyframes tabarray {
+      from {
+        opacity: 0.5;
+      }
+      to {
+        opacity: 1;
+      }
+    }
   }
 `;
 

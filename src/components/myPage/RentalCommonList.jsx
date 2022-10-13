@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import { RentalCommonItem } from "./RentalCommonItem";
 
 export const RentalCommonList = (props) => {
@@ -8,11 +9,24 @@ export const RentalCommonList = (props) => {
   // console.log("props>>", props);
   // console.log("props.props>>", props.props);
   // console.log("index", index);
+
   return (
-    <div>
+    <StyledListContainer>
       {list?.map((item) => {
         return <RentalCommonItem item={item} key={item.id} index={index} />;
       })}
-    </div>
+    </StyledListContainer>
   );
 };
+
+const StyledListContainer = styled.div`
+  animation: fadein 0.8s;
+  @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+`;
