@@ -8,7 +8,8 @@ import { EditProduct } from "../pages/EditProduct";
 import { CategoryDetail } from "../pages/CategoryDetail";
 import { EditUserInfo } from "../pages/EditUserInfo";
 import { MyPage } from "../pages/MyPage";
-
+import { ChatRoomList } from "../pages/chat/ChatRoomList";
+import { ChatRoom } from "../pages/chat/ChatRoom";
 
 export const Router = () => {
   return (
@@ -22,6 +23,8 @@ export const Router = () => {
       <Route path="/categoryDetail/:id" element={<CategoryDetail />} />
       <Route path="/editUserInfo/:id" element={<EditUserInfo />} />
       <Route path="/myPage" element={<MyPage />} />
+      <Route path="/chatRoomList" element={<ChatRoomList />} />
+      <Route path="/chat/room/:productId/:roomId" element={<ChatRoom />} />
     </Routes>
   );
 };
