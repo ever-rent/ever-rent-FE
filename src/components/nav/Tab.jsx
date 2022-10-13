@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { WishList } from "./WishList";
 import { RentList } from "./RentList";
-import { ChatList } from "./ChatList";
+import { ChatRoomList } from "../../pages/chat/ChatRoomList";
 
 export const Tab = () => {
   const [tabIndex, setTabIndex] = useState(0);
@@ -42,7 +42,7 @@ export const Tab = () => {
           채팅목록
         </div>
       ),
-      content: <ChatList />,
+      content: <ChatRoomList />,
     },
   ];
   return (
