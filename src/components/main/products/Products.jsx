@@ -5,8 +5,10 @@ import { Skeleton } from "../../skeleton/Skeleton";
 
 import { useInView } from "react-intersection-observer";
 import { base } from "../../../server/core/instance";
+import { auth } from "../../../server/core/instance";
 
 import { Desktop, Mobile } from "../../../Hooks/MideaQuery";
+import { BestProducts } from "../BestProduct/BestProducts";
 
 export const Products = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -23,7 +25,7 @@ export const Products = () => {
   // 다음 구간 데이터 패치
   const fetch = useCallback(async () => {
     try {
-      const { data } = await base.get(`/products?page=${page.current}`);
+      const { data } = await auth.get(`/products?page=${page.current}`);
       setProducts((prevPosts) => [...prevPosts, ...data.data]);
 
       setHasNextPage(data.data.length === 12);
@@ -54,6 +56,7 @@ export const Products = () => {
   return (
     <>
       <Desktop>
+        <BestProducts />
         <StyledProductsContainer>
           <StyledProductsGrid>
             {products?.map((product) => {
@@ -69,7 +72,7 @@ export const Products = () => {
               </StyledSpinner>
             </>
           ) : null}
-          <div ref={ref} style={{ position: "relative"}} />
+          <div ref={ref} style={{ position: "relative" }} />
         </StyledProductsContainer>
       </Desktop>
       {/* ################ 모바일 ################ */}

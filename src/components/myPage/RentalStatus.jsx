@@ -155,11 +155,23 @@ const StyledisStatusDetail = styled.div`
   .select {
     font-weight: bold;
     border-bottom: 3px solid #47b5ff;
+    animation: tabarray 0.8s;
+    @keyframes tabarray {
+      from {
+        opacity: 0.5;
+      }
+      to {
+        opacity: 1;
+      }
+    }
   }
 `;
+
 const StyledList = styled.div`
   display: flex;
+  transition: 0.6s;
 `;
+
 const StyledMobileisStatusDetail = styled.div`
   /* border: 1px solid red; */
   display: flex;
@@ -175,6 +187,7 @@ const StyledMobileisStatusDetail = styled.div`
   border-radius: 5px;
   gap: 0;
   cursor: pointer;
+  transition: 0.6s;
   .select {
     font-weight: bold;
     border-bottom: 3px solid #47b5ff;

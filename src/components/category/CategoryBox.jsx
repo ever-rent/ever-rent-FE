@@ -171,6 +171,7 @@ const StyledCategoryH2 = styled.h2`
 
 const StyledCategoryBox = styled.div`
   margin-top: 50px;
+  margin-bottom: 30px;
 
   display: grid;
   justify-content: center;

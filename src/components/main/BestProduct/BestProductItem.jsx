@@ -1,50 +1,123 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { Desktop, Mobile } from "../../../Hooks/MideaQuery";
+import { imgFirstString } from "../../../server/api";
+import { timeToToday } from "../../../util/timeToToday";
 
-export const BestProductItem = () => {
+export const BestProductItem = (item) => {
+  // console.log(item.item);
+  const navigate = useNavigate();
+  const {
+    cateId,
+    heart,
+    id,
+    thumbimgUrl,
+    location,
+    mapLocation,
+    memberName,
+    price,
+    productName,
+    status,
+    wishNum,
+    writeAt,
+  } = item.item;
+
+  //글쓴 시간 표시.
+  const [write, setWrite] = useState("");
+  const [createdAt, setCreatedAt] = useState("");
+
+  useEffect(() => {
+    let timeStatus = writeAt;
+    timeStatus !== undefined ? setWrite(timeStatus) : (timeStatus = "");
+    setCreatedAt(timeToToday(writeAt));
+  }, [writeAt]);
+
   return (
     <>
-      <Desktop>
-        <StyledItemBox>
+      <StyledItemBox>
+        <StyledImgBox>
           <StyledImg
-            src="https://dnvefa72aowie.cloudfront.net/origin/article/202210/92F53297C5CBF171F0A87AADD70C605A72EB133C46431E88C0563F4529BAA175.jpg?q=82&s=300x300&t=crop"
+            onClick={() => {
+              navigate(`/productDetail/${id}`);
+            }}
+            src={`${imgFirstString}${thumbimgUrl}`}
             alt="이미지 없음"
           />
+        </StyledImgBox>
+        <StyledContentBox>
           <StyledPayBox>
-            <StyledTitle>다이슨 청소기 팔아요</StyledTitle>
-            <StyledPay>5000원</StyledPay>
+            <StyledTitle>{productName}</StyledTitle>
+            <StyledLocation>
+              {location ? location : "지역 선택 안함"}
+            </StyledLocation>
+            <br />
+            <StyledPay>{price}</StyledPay>
             <StyledDay> / 일</StyledDay>
+            <br />
+            <StyledTimeForToday> {createdAt}</StyledTimeForToday>
           </StyledPayBox>
-        </StyledItemBox>
-      </Desktop>
-      <Mobile>
-        <></>
-      </Mobile>
+        </StyledContentBox>
+      </StyledItemBox>
     </>
   );
 };
 
 const StyledItemBox = styled.div`
-  border: 1px solid red;
-  padding: 15px 10px 0 10px;
+  /* border: 1px solid red; */
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 10px 10px 0 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+`;
+
+const StyledImgBox = styled.div`
+  /* border: 1px solid red; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2px;
+  width: 150px;
+  height: 150px;
 `;
 
 const StyledImg = styled.img`
-  width: 150px;
-  height: 150px;
-  padding-bottom: 10px;
+  border-radius: 8px;
+  width: 100%;
+  height: 100%;
+
+  /* padding-bottom: 10px; */
+  cursor: pointer;
+`;
+
+const StyledContentBox = styled.div`
+  width: 100%;
+  margin: 12px 0;
 `;
 
 const StyledTitle = styled.div``;
 
+const StyledLocation = styled.span`
+  color: gray;
+  font-size: 13px;
+  /* font-weight: 600; */
+`;
+
 const StyledPayBox = styled.div`
+  margin: 5px 0 5px 0;
   /* position: absolute;
   bottom: 0; */
 `;
 
-const StyledPay = styled.span``;
+const StyledPay = styled.span`
+  font-weight: 600;
+`;
 
-const StyledDay = styled.span``;
+const StyledDay = styled.span`
+  font-size: 13px;
+`;
 
-const StyledTimeForToday = styled.span``;
+const StyledTimeForToday = styled.span`
+  font-size: 13px;
+  color: gray;
+`;

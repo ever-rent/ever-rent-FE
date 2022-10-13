@@ -72,9 +72,9 @@ export const DetailItem = ({
               <StyledPay>{price}</StyledPay>
               <StyledDay> / 일</StyledDay>
               <br />
-              <StyledTimeForToday> {createdAt}</StyledTimeForToday>
+              <StyledTimeForToday>{createdAt}</StyledTimeForToday>
             </StyledPayBox>
-            <StyledLikeAndChat>
+            <StyledLikeAndChatBox>
               <StyledLikeWrap>
                 {togglelike ? (
                   <>
@@ -106,7 +106,7 @@ export const DetailItem = ({
               {/* <StyledChatWrap>
                 <button onClick={reservationHandler}>예약 신청</button>
               </StyledChatWrap> */}
-            </StyledLikeAndChat>
+            </StyledLikeAndChatBox>
           </StyledContentBox>
         </StyledItemBox>
       </Desktop>
@@ -138,7 +138,7 @@ export const DetailItem = ({
             </StyledPayBox>
 
             <StyledAddress>{address}</StyledAddress>
-            <StyledMobileLikeAndChat>
+            <StyledMobileLikeAndChatBox>
               <StyledMobileLikeWrap>
                 {togglelike ? (
                   <StyledLike
@@ -166,7 +166,7 @@ export const DetailItem = ({
               {/* <StyledChatWrap>
             <button onClick={reservationHandler}>예약 신청</button>
           </StyledChatWrap> */}
-            </StyledMobileLikeAndChat>
+            </StyledMobileLikeAndChatBox>
           </StyledContentBox>
         </StyledMobileItemBox>
       </Mobile>
@@ -182,7 +182,7 @@ const StyledStatus = styled.span`
 
 const StyledItemBox = styled.div`
   /* border: 1px solid red; */
-  margin-bottom:20px;
+  margin-bottom: 20px;
   padding: 10px 10px 0 10px;
   position: relative;
   border-radius: 10px;
@@ -271,7 +271,7 @@ const StyledAddress = styled.div`
   /* padding-top: 10px; */
 `;
 
-const StyledLikeAndChat = styled.div`
+const StyledLikeAndChatBox = styled.div`
   /* border: 1px solid red; */
   width: max-content;
   height: max-content;
@@ -280,7 +280,12 @@ const StyledLikeAndChat = styled.div`
   font-size: small;
 `;
 
-const StyledMobileLikeAndChat = styled.div`
+const StyledLikeAndChat = styled.div`
+  position: absolute;
+  bottom: 0;
+`;
+
+const StyledMobileLikeAndChatBox = styled.div`
   /* border: 1px solid red; */
   width: max-content;
   height: max-content;

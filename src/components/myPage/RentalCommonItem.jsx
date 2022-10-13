@@ -1,18 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { acceptOrder } from "../../redux/modules/mypageSlice";
 import Swal from "sweetalert2";
 import { Mobile, Desktop } from "../../Hooks/MideaQuery";
 import { imgFirstString } from "../../server/api";
+import { dateToTime } from "../../util/timeToToday";
 
 export const RentalCommonItem = ({ item, index }) => {
   const dispatch = useDispatch();
-  const { id, imgUrlArray, productName, content, memberName } = item;
-  //TODO: 현재 데이터 id가 null 뿐이어서 확인 불가.
-  // console.log("RentalCommonItem >> id", String(id))
-  // console.log(typeof String(id))
-  // console.log("RentalCommonItem", item);
+  const { id, price, imgUrlArray, productName, content, memberName, rentEnd } =
+    item;
+
+  console.log("RentalCommonItem", item);
 
   const acceptHandler = () => {
     Swal.fire({
@@ -54,17 +54,30 @@ export const RentalCommonItem = ({ item, index }) => {
     }
   };
 
+  // const [writeAt, setWriteAt] = useState("");
+  // const [createdAt, setCreatedAt] = useState("");
+  // console.log("createdAt", createdAt);
+
+  // useEffect(() => {
+  //   let timeStatus = item?.rentEnd;
+  //   timeStatus !== undefined ? setWriteAt(timeStatus) : (timeStatus = "");
+  //   setCreatedAt(dateToTime(writeAt));
+  // }, [writeAt, item]);
+
   return (
     <>
       <Desktop>
         <StyledItem>
-          {/* <img src={imgUrl} alt="img" /> */}
           {insertImg(index)}
           <div className="span-div">
             <span className="title">{productName}</span>
             <span>{content}</span>
             <span>
-              남은 기간 : <span className="date">3일</span>
+              남은 기간 :{" "}
+              <span className="date">
+                {dateToTime(item?.rentEnd)}
+                {/* {createdAt !== undefined ? createdAt : createdAt} */}
+              </span>
             </span>
             {reservation(index)}
           </div>
@@ -74,13 +87,12 @@ export const RentalCommonItem = ({ item, index }) => {
 
       <Mobile>
         <StyledMobileItem>
-          {/* <img src={imgUrl} alt="img" /> */}
           {insertImg(index)}
           <div className="span-div">
             <span className="title">{productName}</span>
             <span>{content}</span>
             <span>
-              남은 기간 : <span className="date">3일</span>
+              {/* 남은 기간 : <span className="date">{createdAt}</span> */}
             </span>
             {reservation(index)}
           </div>
