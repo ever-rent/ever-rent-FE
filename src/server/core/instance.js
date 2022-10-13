@@ -1,13 +1,14 @@
 import axios from "axios";
 
 export const base = axios.create({
-  baseURL: process.env.REACT_APP_SERVER_URL,
+  // baseURL: process.env.REACT_APP_SERVER_URL,
+  baseURL: "http://3.35.19.62:8080",
 });
 
 export const auth = axios.create({
   baseURL: process.env.REACT_APP_SERVER_URL,
   // baseURL: "http://3.35.19.62:8080",
-  // baseURL: "http://davidpai.shop",
+  // baseURL: "https://davidpai.shop",
 });
 
 auth.interceptors.request.use((config) => {

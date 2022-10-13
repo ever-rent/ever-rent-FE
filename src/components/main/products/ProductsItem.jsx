@@ -26,15 +26,13 @@ export const ProductsItem = ({
   rentEnd,
   rentStart,
   status,
-  // like
+  heart,
+  thumbimgUrl,
 }) => {
   // console.log(wishNum);
   // 찜목록용 dispatch
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const [togglelike, setTogglelike] = useState(false);
-  const [likeCount, setLikeCount] = useState(0);
 
   // const [isrent, setIsrent] = useState(false);
 
@@ -52,21 +50,25 @@ export const ProductsItem = ({
     }
   };
 
+  // 찜하기
+  const [togglelike, setTogglelike] = useState(heart);
+  const [likeCount, setLikeCount] = useState(wishNum);
+  // console.log("heart 처음상태 >>", togglelike);
+
   const likeHandler = (e) => {
     e.preventDefault();
     setTogglelike(!togglelike);
-    if (!togglelike) {
-      setLikeCount(likeCount + 1);
-      dispatch(postLike(id));
-    } else if (togglelike) {
-      setLikeCount(likeCount - 1);
-      dispatch(postLike(id));
-    }
+    setLikeCount(likeCount + 1);
+    dispatch(postLike(id));
   };
 
-  // useEffect(() => {
-  //   data === "찜 등록이 완료되었습니다." ? setlike(false) : setlike(true);
-  // }, []);
+  const canceLikeHandler = (e) => {
+    e.preventDefault();
+    setTogglelike(!togglelike);
+    setLikeCount(likeCount - 1);
+
+    dispatch(postLike(id));
+  };
 
   //글쓴 시간 표시.
 
@@ -118,13 +120,15 @@ export const ProductsItem = ({
               onClick={() => {
                 navigate(`/productDetail/${id}`);
               }}
-              src={`${imgFirstString}${imgUrlArray[0]}`}
+              src={`${imgFirstString}${thumbimgUrl}`}
               alt="이미지 없음"
             />
           </StyledImgBox>
           <StyledContentBox>
             <StyledTitle>{productName}</StyledTitle>
-            <StyledLocation>{location}</StyledLocation>
+            <StyledLocation>
+              {location ? location : "지역 선택 안함"}
+            </StyledLocation>
             <StyledPayBox>
               <StyledPay>{price}</StyledPay>
               <StyledDay> / 일</StyledDay>
@@ -132,16 +136,16 @@ export const ProductsItem = ({
               <StyledTimeForToday> {createdAt}</StyledTimeForToday>
             </StyledPayBox>
             {presentStatus(status)}
-            <StyledLikeAndChat>
+            <StyledLikeAndChatBox>
               <StyledLikeWrap>
                 {togglelike ? (
                   <>
                     <StyledLike
-                      onClick={likeHandler}
+                      onClick={canceLikeHandler}
                       src="https://img.icons8.com/ios-filled/50/47b5ff/like--v1.png"
                       alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
                     />
-                    <span>찜 {wishNum + likeCount}</span>
+                    <span>찜 {likeCount}</span>
                   </>
                 ) : (
                   <>
@@ -150,7 +154,7 @@ export const ProductsItem = ({
                       src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
                       alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
                     />
-                    <span>찜 {wishNum - likeCount}</span>
+                    <span>찜 {likeCount}</span>
                   </>
                 )}
               </StyledLikeWrap>
@@ -164,7 +168,7 @@ export const ProductsItem = ({
               {/* <StyledChatWrap>
                 <button onClick={reservationHandler}>예약 신청</button>
               </StyledChatWrap> */}
-            </StyledLikeAndChat>
+            </StyledLikeAndChatBox>
           </StyledContentBox>
         </StyledItemBox>
       </Desktop>
@@ -176,7 +180,7 @@ export const ProductsItem = ({
               onClick={() => {
                 navigate(`/productDetail/${id}`);
               }}
-              src={`${imgFirstString}${imgUrlArray[0]}`}
+              src={`${imgFirstString}${thumbimgUrl}`}
               alt="이미지 없음"
             />
           </StyledMobileImgBox>
@@ -196,7 +200,7 @@ export const ProductsItem = ({
             </StyledPayBox>
 
             <StyledAddress>{address}</StyledAddress>
-            <StyledMobileLikeAndChat>
+            <StyledMobileLikeAndChatBox>
               <StyledMobileLikeWrap>
                 {togglelike ? (
                   <StyledLike
@@ -224,7 +228,7 @@ export const ProductsItem = ({
               {/* <StyledChatWrap>
             <button onClick={reservationHandler}>예약 신청</button>
           </StyledChatWrap> */}
-            </StyledMobileLikeAndChat>
+            </StyledMobileLikeAndChatBox>
           </StyledContentBox>
         </StyledMobileItemBox>
       </Mobile>
@@ -329,7 +333,7 @@ const StyledAddress = styled.div`
   /* padding-top: 10px; */
 `;
 
-const StyledLikeAndChat = styled.div`
+const StyledLikeAndChatBox = styled.div`
   /* border: 1px solid red; */
   width: max-content;
   height: max-content;
@@ -338,7 +342,7 @@ const StyledLikeAndChat = styled.div`
   font-size: small;
 `;
 
-const StyledMobileLikeAndChat = styled.div`
+const StyledMobileLikeAndChatBox = styled.div`
   /* border: 1px solid red; */
   width: max-content;
   height: max-content;

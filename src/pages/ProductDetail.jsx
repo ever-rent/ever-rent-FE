@@ -20,6 +20,7 @@ import { PostReport } from "../components/report/PostReport";
 import axios from "axios";
 
 import { WishButton } from "../components/button/WishButton";
+import { createChatRoom } from "../redux/modules/chatSlice";
 
 // 게시글 상세 페이지 컴포넌트
 export const ProductDetail = () => {
@@ -45,7 +46,7 @@ export const ProductDetail = () => {
 
   const detailDataSet = [data?.data.data];
   const detailData = detailDataSet?.filter((element) => element)[0];
-  console.log(detailData);
+  console.log(detailData?.id);
 
   const firstUrl = imgFirstString;
 
@@ -95,6 +96,22 @@ export const ProductDetail = () => {
   };
   const closeModal = () => {
     setShowModal(false);
+  };
+
+  const onCreateChatRoom = async () => {
+    if (localStorage.getItem("accessToken")) {
+      try {
+        const data = await dispatch(createChatRoom(detailData?.id)).unwrap();
+        if (data) {
+          return navigate(`/chat/room/${detailData?.id}/${data}`);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      // modalTrue();
+      alert("로그인이 필요한 서비스입니다.");
+    }
   };
 
   //이미지 모달
@@ -155,7 +172,9 @@ export const ProductDetail = () => {
                       src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
                       alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
                     />
-                    <StyledChatImgAlt>채팅하기</StyledChatImgAlt>
+                    <StyledChatImgAlt onClick={onCreateChatRoom}>
+                      채팅하기
+                    </StyledChatImgAlt>
                   </StyledImagesWrap>
                   <WishButton productId={param.id} data={detailData} />
                   <StyledImagesWrap
@@ -271,7 +290,9 @@ export const ProductDetail = () => {
                       src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
                       alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
                     />
-                    <StyledChatImgAlt>채팅하기</StyledChatImgAlt>
+                    <StyledChatImgAlt onClick={onCreateChatRoom}>
+                      채팅하기
+                    </StyledChatImgAlt>
                   </StyledMobileImagesWrap>
                   <WishButton productId={param.id} data={detailData} />
                   <StyledMobileImagesWrap

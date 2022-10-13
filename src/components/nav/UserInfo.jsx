@@ -9,7 +9,7 @@ export const UserInfo = () => {
 
   const { data: userData } = useQuery("getUserInfo", mypageAPI.getMyInfo);
   const userInfo = userData?.data.data;
-
+console.log(userData)
   return (
     <StyledContainer>
       {userInfo?.imgUrl ? (
@@ -28,6 +28,8 @@ export const UserInfo = () => {
         className="logout"
         onClick={() => {
           localStorage.removeItem("email");
+          localStorage.removeItem("memberId");
+          localStorage.removeItem("memberName");
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
           window.location.reload();
