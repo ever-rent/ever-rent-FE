@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { imgFirstString } from "../../server/api";
+import { Desktop, Mobile } from "../../Hooks/MideaQuery";
+import { ImageMobileModal } from "./ImageMobileModal";
 
 export const ImageModal = ({
   showImages,
@@ -44,7 +46,7 @@ export const ImageModal = ({
       setIdxPx(idxPx + idxRight);
       setTimeout(() => {
         setIdxInit(0);
-        setIdxPx((imageArray.length) * -idxRight);
+        setIdxPx(imageArray.length * -idxRight);
       }, 300);
     }
     setIdxInit(0.25);
@@ -66,87 +68,103 @@ export const ImageModal = ({
   };
 
   return (
-    <StyledBackground
-      style={!showImages ? { display: "none" } : null}
-      onClick={closeImage}
-    >
-      <StyledModalContainer onClick={(e) => e.stopPropagation()}>
-        <StyledSlideBox
-          style={{
-            width: `${idxIndex * 620}px`,
-            transform: `translateX(${idxPx}px)`,
-            transition: `${idxInit}s`,
-          }}
+    <>
+      <Desktop>
+        <StyledBackground
+          style={!showImages ? { display: "none" } : null}
+          onClick={closeImage}
         >
-          <img
-            src={`${imgFirstString}${
-              imageArray?.filter(
-                (e, index) => index === imageArray?.length - 1
-              )[0]
-            }`}
-            alt="cloneEnd"
-          />
-          {imageArray?.map((item, index) => (
-            <img key={index} src={`${imgFirstString}${item}`} alt="slideImg" />
-          ))}
-          <img
-            src={`${imgFirstString}${
-              imageArray?.filter((e, index) => index === 0)[0]
-            }`}
-            alt="cloneStart"
-          />
-        </StyledSlideBox>
-      </StyledModalContainer>
-      <StyledPrevNext
-        className="prev"
-        onClick={(e) => {
-          goPrev(e);
-        }}
-      >
-        {"<"}
-      </StyledPrevNext>
-      <StyledPrevNext
-        className="next"
-        onClick={(e) => {
-          goNext(e);
-        }}
-      >
-        {">"}
-      </StyledPrevNext>
-      <StyledSubContainer onClick={(e) => e.stopPropagation()}>
-        <ul>
-          {imageArray?.map((item, index) => {
-            if (index === imageNum) {
-              return (
-                <li
+          <StyledModalContainer onClick={(e) => e.stopPropagation()}>
+            <StyledSlideBox
+              style={{
+                width: `${idxIndex * 620}px`,
+                transform: `translateX(${idxPx}px)`,
+                transition: `${idxInit}s`,
+              }}
+            >
+              <img
+                src={`${imgFirstString}${
+                  imageArray?.filter(
+                    (e, index) => index === imageArray?.length - 1
+                  )[0]
+                }`}
+                alt="cloneEnd"
+              />
+              {imageArray?.map((item, index) => (
+                <img
                   key={index}
-                  onClick={() => {
-                    imageChange(index);
-                  }}
-                >
-                  <img
-                    className="checkedImg"
-                    src={`${imgFirstString}${item}`}
-                    alt="현재 이미지"
-                  />
-                </li>
-              );
-            } else {
-              return (
-                <li
-                  key={index}
-                  onClick={() => {
-                    imageChange(index);
-                  }}
-                >
-                  <img src={`${imgFirstString}${item}`} alt="현재 이미지" />
-                </li>
-              );
-            }
-          })}
-        </ul>
-      </StyledSubContainer>
-    </StyledBackground>
+                  src={`${imgFirstString}${item}`}
+                  alt="slideImg"
+                />
+              ))}
+              <img
+                src={`${imgFirstString}${
+                  imageArray?.filter((e, index) => index === 0)[0]
+                }`}
+                alt="cloneStart"
+              />
+            </StyledSlideBox>
+          </StyledModalContainer>
+          <StyledPrevNext
+            className="prev"
+            onClick={(e) => {
+              goPrev(e);
+            }}
+          >
+            {"<"}
+          </StyledPrevNext>
+          <StyledPrevNext
+            className="next"
+            onClick={(e) => {
+              goNext(e);
+            }}
+          >
+            {">"}
+          </StyledPrevNext>
+          <StyledSubContainer onClick={(e) => e.stopPropagation()}>
+            <ul>
+              {imageArray?.map((item, index) => {
+                if (index === imageNum) {
+                  return (
+                    <li
+                      key={index}
+                      onClick={() => {
+                        imageChange(index);
+                      }}
+                    >
+                      <img
+                        className="checkedImg"
+                        src={`${imgFirstString}${item}`}
+                        alt="현재 이미지"
+                      />
+                    </li>
+                  );
+                } else {
+                  return (
+                    <li
+                      key={index}
+                      onClick={() => {
+                        imageChange(index);
+                      }}
+                    >
+                      <img src={`${imgFirstString}${item}`} alt="현재 이미지" />
+                    </li>
+                  );
+                }
+              })}
+            </ul>
+          </StyledSubContainer>
+        </StyledBackground>
+      </Desktop>
+      <Mobile>
+        <ImageMobileModal
+          showImages={showImages}
+          imageArray={imageArray}
+          imageIndex={imageIndex}
+          closeImage={closeImage}
+        />
+      </Mobile>
+    </>
   );
 };
 
@@ -187,7 +205,6 @@ const StyledSlideBox = styled.div`
     height: 600px;
     margin-left: 10px;
     margin-right: 10px;
-    /* border: 2px solid rgb(150, 212, 253); */
     border-radius: 10px;
     text-align: center;
   }
@@ -203,7 +220,7 @@ const StyledPrevNext = styled.button`
   background-color: rgb(150, 212, 253);
 
   position: fixed;
-  left: 30%;
+  left: 25%;
   top: 40%;
   transform: translate(-50%, -50%);
   cursor: pointer;
@@ -212,7 +229,7 @@ const StyledPrevNext = styled.button`
 
   &.next {
     position: fixed;
-    left: 70%;
+    left: 76%;
     top: 40%;
     transform: translate(-50%, -50%);
   }

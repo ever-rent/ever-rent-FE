@@ -172,7 +172,7 @@ export const ProductDetail = () => {
                     <LocationModal
                       showModal={showModal}
                       closeModal={closeModal}
-                      location={detailData?.location}
+                      location={detailData?.mapLocation}
                     />
                   </StyledImagesWrap>
                 </StyledPostSubItems>
@@ -185,7 +185,7 @@ export const ProductDetail = () => {
                         {detailData?.memberName}
                       </StyledUserNickname>
                       <StyledUserLocation>
-                        {detailData?.location}
+                        {detailData?.mapLocation}
                       </StyledUserLocation>
                     </StyledUserSubInfo>
                   </StyledInfoWrap>
@@ -288,7 +288,7 @@ export const ProductDetail = () => {
                     <LocationModal
                       showModal={showModal}
                       closeModal={closeModal}
-                      location={detailData?.location}
+                      location={detailData?.mapLocation}
                     />
                   </StyledMobileImagesWrap>
                 </StyledMobilePostSubItems>
@@ -301,7 +301,7 @@ export const ProductDetail = () => {
                         {detailData?.memberName}
                       </StyledMobileUserNickname>
                       <StyledMobileUserLocation>
-                        {detailData?.location}
+                        {detailData?.mapLocation}
                       </StyledMobileUserLocation>
                     </StyledMobileUserSubInfo>
                   </StyledMobileInfoWrap>
