@@ -9,6 +9,7 @@ import axios from "axios";
 
 import { LocationModal } from "../components/location/LocationModal";
 import { RangeCalrendar } from "../components/calrendar/RangeCalrendar";
+import { LocationSearch } from "../components/location/LocationSearch";
 import { imgFirstString } from "../server/api";
 
 import imageCompression from "browser-image-compression";
@@ -24,7 +25,7 @@ export const EditProduct = () => {
   const fetchDetail = async () => {
     console.log("패치데이터", param);
     await axios
-      .get(`http://13.209.8.18/products/${param.id}`)
+      .get(`${process.env.REACT_APP_SERVER_URL}/products/${param.id}`)
       .then((response) => {
         setData(response);
         console.log(response);
@@ -189,7 +190,7 @@ export const EditProduct = () => {
   // productId: param.id,
 
   const editProductData = () => {
-    if (title === "" || description === "") {
+    if (title === "" || description === "" || categoryInput === "") {
       alert("제목/내용을 적어주세요!");
     } else {
       Swal.fire({
@@ -223,6 +224,16 @@ export const EditProduct = () => {
   const [showModal, setShowModal] = useState(false);
   const closeModal = () => {
     setShowModal(false);
+  };
+
+  // 위치정보 상세검색 모달창
+  const [showMapSearch, setShowMapSearch] = useState(false);
+  const closeSearchModal = () => {
+    setShowMapSearch(false);
+  };
+
+  const searchMapInput = (value) => {
+    setTradeLocation(value);
   };
 
   return (
@@ -341,9 +352,18 @@ export const EditProduct = () => {
                 type="text"
                 placeholder="거래 장소를 적어주세요!"
                 defaultValue={tradeLocation}
+                onClick={() => setShowMapSearch(true)}
                 onChange={(e) => {
                   setTradeLocation(e.target.value);
                 }}
+                value={tradeLocation}
+              />
+              <LocationSearch
+                showMapSearch={showMapSearch}
+                closeSearchModal={closeSearchModal}
+                location={tradeLocation}
+                locationCheck={locationCheck}
+                searchMapInput={searchMapInput}
               />
               <StyledLocationBtn
                 type="button"
@@ -512,9 +532,18 @@ export const EditProduct = () => {
                 type="text"
                 placeholder="거래 장소를 적어주세요!"
                 defaultValue={tradeLocation}
+                onClick={() => setShowMapSearch(true)}
                 onChange={(e) => {
                   setTradeLocation(e.target.value);
                 }}
+                value={tradeLocation}
+              />
+              <LocationSearch
+                showMapSearch={showMapSearch}
+                closeSearchModal={closeSearchModal}
+                location={tradeLocation}
+                locationCheck={locationCheck}
+                searchMapInput={searchMapInput}
               />
               <StyledMobileLocationBtn
                 type="button"

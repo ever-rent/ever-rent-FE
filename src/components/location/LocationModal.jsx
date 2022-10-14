@@ -45,7 +45,7 @@ export const LocationModal = ({
     });
   }, [map]);
 
-  function getAddr(lat, lng) {
+  const getAddr=(lat, lng) =>{
     let geocoder = new kakao.maps.services.Geocoder();
 
     let coord = new kakao.maps.LatLng(lat, lng);
