@@ -8,6 +8,7 @@ import { addProducts } from "../redux/modules/productSlice";
 import { Layout } from "../components/layout/Layout";
 import { LocationModal } from "../components/location/LocationModal";
 import { RangeCalrendar } from "../components/calrendar/RangeCalrendar";
+import { LocationSearch } from "../components/location/LocationSearch";
 
 import imageCompression from "browser-image-compression";
 import Swal from "sweetalert2";
@@ -168,7 +169,7 @@ export const AddProduct = () => {
 
   // 유효성 검사 추가 예정(이미지/주소 등)
   const addProductPost = () => {
-    if (title === "" || description === "") {
+    if (title === "" || description === "" || categoryInput === "") {
       alert("제목/내용을 적어주세요!");
     } else {
       Swal.fire({
@@ -203,6 +204,17 @@ export const AddProduct = () => {
   const [showModal, setShowModal] = useState(false);
   const closeModal = () => {
     setShowModal(false);
+  };
+
+  // 위치정보 상세검색 모달창
+  const [showMapSearch, setShowMapSearch] = useState(false);
+  const closeSearchModal = () => {
+    setShowMapSearch(false);
+  };
+
+  // 검색 데이터 위치정보 input의 value로 넣기
+  const searchMapInput = (value) => {
+    setTradeLocation(value);
   };
 
   return (
@@ -317,10 +329,19 @@ export const AddProduct = () => {
 
               <StyledPostLocation
                 type="text"
-                placeholder="거래 장소를 적어주세요!"
+                placeholder="거래 장소를 입력해주세요!"
+                onClick={() => setShowMapSearch(true)}
                 onChange={(e) => {
                   setTradeLocation(e.target.value);
                 }}
+                value={tradeLocation}
+              />
+              <LocationSearch
+                showMapSearch={showMapSearch}
+                closeSearchModal={closeSearchModal}
+                location={tradeLocation}
+                locationCheck={locationCheck}
+                searchMapInput={searchMapInput}
               />
               <StyledLocationBtn
                 type="button"
@@ -484,9 +505,18 @@ export const AddProduct = () => {
               <StyledMobilePostLocation
                 type="text"
                 placeholder="거래 장소를 적어주세요!"
+                onClick={() => setShowMapSearch(true)}
                 onChange={(e) => {
                   setTradeLocation(e.target.value);
                 }}
+                value={tradeLocation}
+              />
+              <LocationSearch
+                showMapSearch={showMapSearch}
+                closeSearchModal={closeSearchModal}
+                location={tradeLocation}
+                locationCheck={locationCheck}
+                searchMapInput={searchMapInput}
               />
               <StyledMobileLocationBtn
                 type="button"

@@ -15,6 +15,7 @@ export const Products = () => {
   // infi scroll
   // 현재 state 데이터 , 다음페이지 이동 여부,
   // 현재페이지, observer 뷰 교차 여부
+  
   const [products, setProducts] = useState([]);
   const [hasNextPage, setHasNextPage] = useState(true);
   const page = useRef(1);
@@ -56,7 +57,7 @@ export const Products = () => {
   return (
     <>
       <Desktop>
-        <BestProducts />
+        {/* <BestProducts /> */}
         <StyledProductsContainer>
           <StyledProductsGrid>
             {products?.map((product) => {
