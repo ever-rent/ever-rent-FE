@@ -25,8 +25,8 @@ export const Products = () => {
   const fetch = useCallback(async () => {
     try {
       const { data } = await auth.get(`/products?page=${page.current}`);
+      console.log(data);
       setProducts((prevPosts) => [...prevPosts, ...data.data]);
-
       setHasNextPage(data.data.length === 12);
       if (data.data.length) {
         page.current += 1;
@@ -36,6 +36,7 @@ export const Products = () => {
     }
   }, []);
 
+  // console.log(products);
   // ref / scroll 교차 시 데이터 패치
   useEffect(() => {
     setIsLoading(true);
@@ -55,7 +56,7 @@ export const Products = () => {
   return (
     <>
       <Desktop>
-        {/* <BestProducts /> */}
+        <BestProducts />
         <StyledProductsContainer>
           <StyledProductsGrid>
             {products?.map((product) => {
@@ -100,6 +101,7 @@ export const Products = () => {
 const StyledProductsContainer = styled.div`
   max-width: 1024px;
   margin: 40px auto;
+  position: relative;
 `;
 
 const StyledProductsGrid = styled.div`

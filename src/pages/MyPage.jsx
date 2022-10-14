@@ -34,9 +34,9 @@ export const MyPage = () => {
         <StyledFlexBox>
           <Profile like={like} setLike={setLike} />
           {like ? (
-            <StyledLikeList>
+            <StyledMobileLikeList>
               <MyWishList />
-            </StyledLikeList>
+            </StyledMobileLikeList>
           ) : (
             <RentalBar />
           )}
@@ -79,6 +79,7 @@ const StyledFlexBox = styled.div`
 
 const StyledLikeList = styled.div`
   grid-row: 1/4;
+  width: 600px;
   box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
   animation: fadein 0.6s;
   @keyframes fadein {
@@ -94,6 +95,20 @@ const StyledLikeList = styled.div`
 const StyledFadeBox = styled.div`
   animation: FadeBox 0.6s;
   @keyframes FadeBox {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+`;
+
+const StyledMobileLikeList = styled.div`
+  grid-row: 1/4;
+  box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+  animation: fadein 0.6s;
+  @keyframes fadein {
     from {
       opacity: 0;
     }

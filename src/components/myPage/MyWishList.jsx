@@ -18,24 +18,24 @@ export const MyWishList = () => {
     <>
       <Desktop>
         <StyledItem>
-          {/* <div>나의 찜목록</div> */}
-          <div>
+          <StyledTitle>나의 찜목록</StyledTitle>
+          <StyledList>
             {likeList?.map((item) => {
               return <MyWishItem item={item} key={item.id} />;
             })}
-          </div>
+          </StyledList>
         </StyledItem>
       </Desktop>
 
       <Mobile>
-        <div>
-          {/* <div>나의 찜목록</div> */}
-          <div>
+        <StyledMobileItem>
+          <StyledMobileTitle>나의 찜목록</StyledMobileTitle>
+          <StyledMobileList>
             {likeList?.map((item) => {
               return <MyWishItem item={item} key={item.id} />;
             })}
-          </div>
-        </div>
+          </StyledMobileList>
+        </StyledMobileItem>
       </Mobile>
     </>
   );
@@ -49,5 +49,37 @@ export const MyWishList = () => {
 // const StyledTitle = styled.div``;
 
 const StyledItem = styled.div`
+  display: flex;
+  flex-direction: column;
   padding-top: 10px;
+`;
+
+const StyledList = styled.div`
+  width: 100%;
+  margin-top: 15px;
+`;
+
+const StyledTitle = styled.span`
+  color: #46b5ff;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 10px 0 0 15px;
+`;
+
+const StyledMobileItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+`;
+
+const StyledMobileTitle = styled.span`
+  color: #1b9cf2;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 10px 0 0 15px;
+`;
+
+const StyledMobileList = styled.div`
+  width: 100%;
+  margin-top: 15px;
 `;

@@ -151,8 +151,10 @@ const StyledisStatusDetail = styled.div`
   padding: 0 65px 0 80px;
   border-radius: 5px;
   gap: 60px;
+  color: gray;
   cursor: pointer;
   .select {
+    color: black;
     font-weight: bold;
     border-bottom: 3px solid #47b5ff;
     animation: tabarray 0.8s;

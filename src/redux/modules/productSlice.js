@@ -91,6 +91,7 @@ export const productSlice = createSlice({
   initialState: {
     products: [],
     category: [],
+    recent: [],
   },
   reducers: {},
   extraReducers: {
@@ -120,12 +121,13 @@ export const productSlice = createSlice({
       console.log(current(state));
       console.log(action);
       state.products = action.payload.data;
+      state.recent = state.recent.concat(action.payload.data);
     },
     [addProducts.fulfilled]: (state, action) => {
       console.log(current(state));
       console.log(action);
       state.isLoading = false;
-      
+
       state.products = state.products.concat(action.payload);
       return state;
     },

@@ -99,6 +99,7 @@ const StyledTab = styled.div`
 `;
 const StyledisStatusDetail = styled.div`
   /* border: 1px solid red; */
+  color: gray;
   display: flex;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   width: 630px;
@@ -107,8 +108,13 @@ const StyledisStatusDetail = styled.div`
   justify-content: space-around;
   margin: 10px 0;
   border-radius: 5px;
+  transition: 0.1ms;
+  :hover {
+    transform: scale(1.1);
+  }
   cursor: pointer;
   .select {
+    color: black;
     font-weight: bold;
     border-bottom: 3px solid #47b5ff;
     animation: tabarray 0.8s;

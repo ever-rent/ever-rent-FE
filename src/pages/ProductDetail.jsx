@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Layout } from "../components/layout/Layout";
 import { deleteProducts } from "../redux/modules/productSlice";
 import { useDispatch } from "react-redux";
+import { getProductsDetail } from "../redux/modules/productSlice";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { categoriNumber } from "../util/categoryNumber";
@@ -40,6 +41,8 @@ export const ProductDetail = () => {
   };
   useEffect(() => {
     fetchDetail();
+    // 최근 본 상품용 dispatch
+    dispatch(getProductsDetail(param.id));
   }, []);
 
   console.log(data);
@@ -49,7 +52,6 @@ export const ProductDetail = () => {
   console.log(detailData?.id);
 
   const firstUrl = imgFirstString;
-
 
   // 유저 프로필 없을 시 기본이미지
   const defaultUserImg =
@@ -124,25 +126,6 @@ export const ProductDetail = () => {
   const closeImage = () => {
     setShowImages(false);
   };
-
-  //최근 본 상품
-  // const [recent, setRecent] = useState("");
-
-  // useEffect(() => {
-  //   let get_local = localStorage.getItem("recentItem"); //recentItem는 로컬스토리지의 키 값
-  //   if (get_local == null) {
-  //     get_local = [];
-  //   } else {
-  //     get_local = JSON.parse(get_local);
-  //   }
-  //   setTimeout(() => {
-  //     get_local.push(detailData?.productName);
-  //     console.log(detailData?.productName);
-  //     get_local = new Set(get_local); //중복제거를 위함
-  //     get_local = [...get_local];
-  //     localStorage.setItem("recentItem", JSON.stringify(get_local));
-  //   }, 700);
-  // }, []);
 
   return (
     <>
@@ -458,7 +441,7 @@ const StyledPostSubItems = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-top:50px;
+  margin-top: 50px;
   margin-bottom: 50px;
 `;
 
