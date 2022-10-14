@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef, useCallback } from "react";
 import styled from "styled-components";
 import { ProductsItem } from "./ProductsItem";
 import { Skeleton } from "../../skeleton/Skeleton";
-
 import { useInView } from "react-intersection-observer";
 import { base } from "../../../server/core/instance";
 import { auth } from "../../../server/core/instance";
@@ -16,6 +15,7 @@ export const Products = () => {
   // infi scroll
   // 현재 state 데이터 , 다음페이지 이동 여부,
   // 현재페이지, observer 뷰 교차 여부
+  
   const [products, setProducts] = useState([]);
   const [hasNextPage, setHasNextPage] = useState(true);
   const page = useRef(1);
@@ -26,8 +26,8 @@ export const Products = () => {
   const fetch = useCallback(async () => {
     try {
       const { data } = await auth.get(`/products?page=${page.current}`);
+      console.log(data);
       setProducts((prevPosts) => [...prevPosts, ...data.data]);
-
       setHasNextPage(data.data.length === 12);
       if (data.data.length) {
         page.current += 1;
@@ -37,6 +37,7 @@ export const Products = () => {
     }
   }, []);
 
+  // console.log(products);
   // ref / scroll 교차 시 데이터 패치
   useEffect(() => {
     setIsLoading(true);
@@ -56,7 +57,7 @@ export const Products = () => {
   return (
     <>
       <Desktop>
-        <BestProducts />
+        {/* <BestProducts /> */}
         <StyledProductsContainer>
           <StyledProductsGrid>
             {products?.map((product) => {
@@ -101,6 +102,7 @@ export const Products = () => {
 const StyledProductsContainer = styled.div`
   max-width: 1024px;
   margin: 40px auto;
+  position: relative;
 `;
 
 const StyledProductsGrid = styled.div`

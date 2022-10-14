@@ -54,15 +54,14 @@ export const RentalCommonItem = ({ item, index }) => {
     }
   };
 
-  // const [writeAt, setWriteAt] = useState("");
-  // const [createdAt, setCreatedAt] = useState("");
-  // console.log("createdAt", createdAt);
+  
+  const [rentStatus, setRentStatus] = useState("");
+  console.log("createdAt", rentStatus);
 
-  // useEffect(() => {
-  //   let timeStatus = item?.rentEnd;
-  //   timeStatus !== undefined ? setWriteAt(timeStatus) : (timeStatus = "");
-  //   setCreatedAt(dateToTime(writeAt));
-  // }, [writeAt, item]);
+  useEffect(() => {
+    let timeStatus = item?.rentEnd;
+    setRentStatus(dateToTime(new Date(timeStatus)));
+  }, [rentEnd, item]);
 
   return (
     <>
@@ -77,6 +76,7 @@ export const RentalCommonItem = ({ item, index }) => {
               <span className="date">
                 {dateToTime(item?.rentEnd)}
                 {/* {createdAt !== undefined ? createdAt : createdAt} */}
+                <div>테스트(남은기간) : {rentStatus}</div>
               </span>
             </span>
             {reservation(index)}

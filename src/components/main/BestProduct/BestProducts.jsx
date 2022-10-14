@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { BestProductItem } from "./BestProductItem";
 import { Desktop, Mobile } from "../../../Hooks/MideaQuery";
 import { auth } from "../../../server/core/instance";
+import { useSelector } from "react-redux";
 
 export const BestProducts = () => {
   const [products, setProducts] = useState([]);
@@ -17,8 +18,9 @@ export const BestProducts = () => {
       console.error(err);
     }
   }, []);
-  // const bestProducts = useSelector((store) => store.product.bestProducts);
 
+  // const bestProducts = useSelector((store) => store.product.bestProducts);
+  // console.log(bestProducts);
   const productsRef = useRef();
   // const productsBox = useRef();
 
@@ -28,10 +30,6 @@ export const BestProducts = () => {
   useEffect(() => {
     fetch();
   }, []);
-
-  // const allProducts = () => {
-  //   navigate("/products");
-  // };
 
   const makeArr = (bestProducts) => {
     let arr = [];
@@ -70,9 +68,9 @@ export const BestProducts = () => {
     <>
       <Desktop>
         <StyledBestProductsContainer>
-          <StyledHotItem>우리 동네 Hot Item</StyledHotItem>
+          <StyledTitle>우리 동네 </StyledTitle>
+          <StyledHotItem>Hot Item</StyledHotItem>
           <StyledItemAndButtonContainer>
-            {/* <StyeldMoveButton onClick={back}> */}
             <StyeldMoveButtonLeft onClick={back}>
               <img
                 src="https://img.icons8.com/ios/50/5923ff/back--v1.png"
@@ -86,7 +84,6 @@ export const BestProducts = () => {
                 })}
               </StyledGridBox>
             </StyledContainer>
-            {/* <StyeldMoveButton onClick={forward}> */}
             <StyeldMoveButtonRight onClick={forward}>
               <img
                 src="https://img.icons8.com/ios/50/5923ff/forward--v1.png"
@@ -109,10 +106,19 @@ const StyledBestProductsContainer = styled.div`
   margin: auto;
 `;
 
-const StyledHotItem = styled.span`
+const StyledTitle = styled.span`
   font-size: 25px;
   font-weight: 500;
   color: #5923ff;
+`;
+
+const StyledHotItem = styled.span`
+  font-size: 25px;
+  font-weight: 500;
+  color: white;
+  text-shadow:
+  /* White glow */ 0 0 7px #fff, /* purple glow */ 0 0 7px #0026ff,
+    0 0 10px #0026ff, 0 0 21px #0026ff;
 `;
 
 const StyledItemAndButtonContainer = styled.div`

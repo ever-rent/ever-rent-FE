@@ -115,11 +115,12 @@ export const ProductsItem = ({
     <>
       <Desktop>
         <StyledItemBox>
-          <StyledImgBox>
+          <StyledImgBox
+            onClick={() => {
+              navigate(`/productDetail/${id}`);
+            }}
+          >
             <StyledImg
-              onClick={() => {
-                navigate(`/productDetail/${id}`);
-              }}
               src={`${imgFirstString}${thumbimgUrl}`}
               alt="이미지 없음"
             />

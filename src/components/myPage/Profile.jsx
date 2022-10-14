@@ -27,7 +27,7 @@ export const Profile = ({ like, setLike }) => {
 
   const profileImg =
     info?.imgUrl == null
-      ? `https://source.boringavatars.com/beam/110/${info?.memberName}?colors=7965EE,6FE7F1,FFDD4C,46B5FF,2883E0`
+      ? `https://source.boringavatars.com/beam/110/${info?.id}?colors=7965EE,6FE7F1,FFDD4C,46B5FF,2883E0`
       : info?.imgUrl;
 
   return (

@@ -24,13 +24,12 @@ export const dateToTime = (createdAt) => {
   console.log("dateToTime >>", createdAt);
   console.log("dateToTime >>", new Date(createdAt));
 
-  const milliSeconds = new Date(createdAt) - new Date();
+  const milliSeconds = createdAt - new Date();
   const seconds = milliSeconds / 1000;
   const minutes = seconds / 60;
-  if (minutes < 60)
-    return `${Math.floor(minutes) === 0 ? 1 : Math.floor(minutes)}분 전`;
   const hours = minutes / 60;
-  if (hours < 24) return `${Math.floor(hours)}시간 전`;
   const days = hours / 24;
+
+  if (hours < 24) return `금일 마감`;
   if (days < 7) return `${Math.floor(days)}일 전`;
 };

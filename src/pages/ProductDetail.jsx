@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Layout } from "../components/layout/Layout";
 import { deleteProducts } from "../redux/modules/productSlice";
 import { useDispatch } from "react-redux";
+import { getProductsDetail } from "../redux/modules/productSlice";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { categoriNumber } from "../util/categoryNumber";
@@ -40,6 +41,8 @@ export const ProductDetail = () => {
   };
   useEffect(() => {
     fetchDetail();
+    // 최근 본 상품용 dispatch
+    dispatch(getProductsDetail(param.id));
   }, []);
 
   console.log(data);
@@ -49,9 +52,6 @@ export const ProductDetail = () => {
   console.log(detailData?.id);
 
   const firstUrl = imgFirstString;
-
-  // const defaultImg =
-  //   "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png";
 
   // 유저 프로필 없을 시 기본이미지
   const defaultUserImg =
@@ -191,7 +191,7 @@ export const ProductDetail = () => {
                     <LocationModal
                       showModal={showModal}
                       closeModal={closeModal}
-                      location={detailData?.location}
+                      location={detailData?.mapLocation}
                     />
                   </StyledImagesWrap>
                 </StyledPostSubItems>
@@ -204,7 +204,7 @@ export const ProductDetail = () => {
                         {detailData?.memberName}
                       </StyledUserNickname>
                       <StyledUserLocation>
-                        {detailData?.location}
+                        {detailData?.mapLocation}
                       </StyledUserLocation>
                     </StyledUserSubInfo>
                   </StyledInfoWrap>
@@ -309,7 +309,7 @@ export const ProductDetail = () => {
                     <LocationModal
                       showModal={showModal}
                       closeModal={closeModal}
-                      location={detailData?.location}
+                      location={detailData?.mapLocation}
                     />
                   </StyledMobileImagesWrap>
                 </StyledMobilePostSubItems>
@@ -322,7 +322,7 @@ export const ProductDetail = () => {
                         {detailData?.memberName}
                       </StyledMobileUserNickname>
                       <StyledMobileUserLocation>
-                        {detailData?.location}
+                        {detailData?.mapLocation}
                       </StyledMobileUserLocation>
                     </StyledMobileUserSubInfo>
                   </StyledMobileInfoWrap>
@@ -441,6 +441,7 @@ const StyledPostSubItems = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  margin-top: 50px;
   margin-bottom: 50px;
 `;
 
