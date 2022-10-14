@@ -8,6 +8,9 @@ import { ChatHeader } from "../../components/header/ChatHeader";
 import { StyledChatRoom } from "./styled";
 import { auth } from "../../server/core/instance";
 import { Layout } from "../../components/layout/Layout";
+import { chatAPI, imgFirstString } from "../../server/api";
+import { FaMoneyBillAlt } from "react-icons/fa";
+import { RangeCalrendar } from "../../components/calrendar/RangeCalrendar";
 
 let stompClient = null;
 
@@ -22,6 +25,8 @@ export const ChatRoom = () => {
   const token = localStorage.getItem("accessToken").slice(7);
 
   const roomData = useSelector((state) => state.chat.chatRoomDetail);
+  console.log(roomData);
+
   const [chatList, setChatList] = useState([]);
   const [userData, setUserData] = useState({
     type: "",
@@ -117,6 +122,8 @@ export const ChatRoom = () => {
     scrollToBottom();
   };
 
+  console.log(chatList);
+
   const sendMessage = () => {
     if (stompClient && userData.message) {
       let chatMessage = {
@@ -210,49 +217,86 @@ export const ChatRoom = () => {
   const postPrice = roomData.price
     ?.toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  const postDeposit = roomData.deposit
-    ?.toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+  const [showDateInput, setShowDateInput] = useState(false);
+  const [startDateInput, setStartDateInput] = useState("");
+  const [endDateInput, setEndDateInput] = useState("");
+
+  const startEndDays = (start, end) => {
+    let startDay = start;
+    let endDay = end;
+
+    let sYaer = startDay?.getFullYear();
+    let sMonth = startDay?.getMonth() + 1;
+    let sDay = startDay?.getDate();
+    let eYaer = endDay?.getFullYear();
+    let eMonth = endDay?.getMonth() + 1;
+    let eDay = endDay?.getDate();
+
+    setStartDateInput(`${sYaer}-${sMonth}-${sDay}`);
+    setEndDateInput(`${eYaer}-${eMonth}-${eDay}`);
+  };
+  console.log(startDateInput);
+  console.log(endDateInput);
+
+  const postOrderDate = async (startDate, endDate) => {
+    await chatAPI
+      .postOrderDate(roomData.id, {
+        buyStart: startDate,
+        buyEnd: endDate,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log(startDate, endDate);
+    setShowDateInput(false);
+  };
 
   return (
     <Layout>
       <StyledChatRoom>
         <div className="chat_head_wrap">
           <ChatHeader quitRoom={quitRoom} />
-          <div
-            className="chat_head_container"
-            onClick={() => navigate(`/detail/${roomData.id}`)}
-          >
+          <div className="chat_head_container">
             <div className="chat_head_box">
-              <div className="chat_head_text_box">
+              <div
+                className="chat_head_text_box"
+                onClick={() => navigate(`/productDetail/${roomData.id}`)}
+              >
                 <img
-                  src={roomData.postImgUrl?.postImgUrlList[0]}
+                  // src={`${imgFirstString}${roomData?.imgUrlArray[0]}`}
                   className="chat_head_img"
                   alt="img"
                 />
               </div>
               <div className="Chat_Head_Text_Box">
-                <div className="chat_head_title">{roomData.title}</div>
+                <div className="chat_head_title">{roomData.productName}</div>
                 <div className="chat_head_cost">
-                  <div className="chat_head_cost_icon_box">
-                    {/* <img
-                    className="chat_head_cost_icon"
-                    src={dailycost}
-                    alt="img"
-                  /> */}
-                  </div>
+                  <FaMoneyBillAlt />
                   {postPrice}원
-                  <div className="chat_head_cost_icon_box">
-                    {/* <img
-                    className="chat_head_cost_icon"
-                    src={deposit}
-                    alt="img"
-                  /> */}
-                  </div>
-                  {postDeposit}원
                 </div>
               </div>
             </div>
+            {chatList ? (
+              <button onClick={() => setShowDateInput(true)}>
+                렌탈 신청하기
+              </button>
+            ) : (
+              <button disabled>렌탈 신청하기</button>
+            )}
+            {showDateInput && (
+              <div>
+                <RangeCalrendar startEndDays={startEndDays} />
+                <button
+                  onClick={() => postOrderDate(startDateInput, endDateInput)}
+                >
+                  신청하기
+                </button>
+              </div>
+            )}
           </div>
         </div>
         <div className="chat_container">
@@ -265,7 +309,11 @@ export const ChatRoom = () => {
                   ) : (
                     <div className="chat_other_wrap">
                       <img
-                        src={chat.profileUrl}
+                        src={
+                          chat?.profileUrl === null
+                            ? `https://source.boringavatars.com/beam/110/${chat?.memberId}?colors=7965EE,6FE7F1,FFDD4C,46B5FF,2883E0`
+                            : chat?.profileUrl
+                        }
                         className="chat_other_profile"
                         alt="img"
                       />

@@ -60,20 +60,9 @@ export const StyledChatRoom = styled.div`
   }
   .chat_head_cost {
     display: flex;
-    flex-direction: row;
-    gap: 5px;
-    font-size: 0.875rem;
+    align-items: center;
+    gap: 0.25rem;
   }
-  .chat_head_cost_icon_box {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .chat_head_cost_icon {
-    width: 13px;
-    height: 13px;
-  }
-
   .chat_head_img_box {
     width: 3.125rem;
     height: 3.125rem;

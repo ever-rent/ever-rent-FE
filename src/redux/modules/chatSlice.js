@@ -3,7 +3,7 @@ import { productAPI } from "../../server/api";
 import { auth } from "../../server/core/instance";
 
 export const getMyChatRoom = createAsyncThunk(
-  "getMyChatRoom",
+  "GET_CHAT_LIST",
   async (payload, thunkAPI) => {
     try {
       const response = await auth.get("/chat/rooms");
@@ -19,13 +19,10 @@ export const getMyChatRoom = createAsyncThunk(
 );
 
 export const createChatRoom = createAsyncThunk(
-  "createChatRoom",
+  "CREATE_CHAT_ROOM",
   async (payload, thunkAPI) => {
     try {
       const response = await auth.post(`/create/chat/${payload}`);
-      console.log(payload);
-      console.log(response);
-      //  return console.log(response)
       return thunkAPI.fulfillWithValue(response.data.data);
     } catch (err) {
       console.log(err);
@@ -34,12 +31,11 @@ export const createChatRoom = createAsyncThunk(
 );
 
 export const getProductsDetail = createAsyncThunk(
-  "GET_PRODUCTS",
+  "GET_PRODUCT",
   async (payload, thunkAPI) => {
-    console.log("products get 시작", payload);
     try {
-      const res = await productAPI.getProductDetail(payload);
-      return thunkAPI.fulfillWithValue(res.data);
+      const { data } = await productAPI.getProductDetail(payload);
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -58,6 +54,7 @@ const chatSlice = createSlice({
       state.chatRoomList = action.payload;
     },
     [getProductsDetail.fulfilled]: (state, action) => {
+      console.log(action.payload);
       state.chatRoomDetail = action.payload;
     },
   },
