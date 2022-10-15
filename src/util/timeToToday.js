@@ -1,11 +1,7 @@
 export const timeToToday = (writeAt) => {
-    // 몇 분 전 로직
-    // 백엔드 미수정시 -32,400,000 필요
-    console.log(writeAt);
   let createdAt = new Date(
     `${writeAt[0]}-${writeAt[1]}-${writeAt[2]} ${writeAt[3]}:${writeAt[4]}:${writeAt[5]}`
   );
-  console.log(createdAt);
 
   const milliSeconds = new Date() - createdAt;
   const seconds = milliSeconds / 1000;
@@ -22,4 +18,18 @@ export const timeToToday = (writeAt) => {
   if (months < 12) return `${Math.floor(months)}개월 전`;
   const years = days / 365;
   return `${Math.floor(years)}년 전`;
+};
+
+export const dateToTime = (createdAt) => {
+  console.log("dateToTime >>", createdAt);
+  console.log("dateToTime >>", new Date(createdAt));
+
+  const milliSeconds = createdAt - new Date();
+  const seconds = milliSeconds / 1000;
+  const minutes = seconds / 60;
+  const hours = minutes / 60;
+  const days = hours / 24;
+
+  if (hours < 24) return `금일 마감`;
+  if (days < 7) return `${Math.floor(days)}일 전`;
 };

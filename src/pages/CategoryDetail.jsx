@@ -1,27 +1,18 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { Layout } from "../components/layout/Layout";
-import { getCategory } from "../redux/modules/productSlice";
-import { DetailItem } from "../components/detail/DetailItem";
+import { useNavigate, useParams } from "react-router-dom";
 
-import {useInView} from "react-intersection-observer";
-import { base } from "../server/core/instance"; // 리팩토링 예정
-import axios from "axios";
+import { Layout } from "../components/layout/Layout";
+import { DetailItem } from "../components/detail/DetailItem";
+import { Skeleton } from "../components/skeleton/Skeleton";
+
+import { useInView } from "react-intersection-observer";
+import { base } from "../server/core/instance";
+import { auth } from "../server/core/instance";
 
 export const CategoryDetail = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
-  // const dispatch = useDispatch();
-  // const category = useSelector((state) => state.products.category);
-  // const categoryItems = category?.data;
-  // console.log(categoryItems);
-
-  // useEffect(() => {
-  //   dispatch(getCategory(id));
-  // }, [dispatch, id]);
-
-
 
   const categoryList = [
     { value: "0", name: "카테고리를 선택하세요" },
@@ -68,35 +59,25 @@ export const CategoryDetail = () => {
 
   const categoryHandler = (e) => {
     e.preventDefault();
-    // const categoryId = e.target.value;
-    // dispatch(getCategory(categoryId));
-    // console.log(e.target.value);
-
     // infi
-    setCategoryId(e.target.value)
+    console.log(e.target.value);
+    navigate(`/categoryDetail/${e.target.value}`);
   };
+
+  useEffect(() => {
+    setCategoryId(id);
+  }, []);
 
   const addressHandler = (e) => {
     e.preventDefault();
-    // const addressPayload = e.target.value;
-    // dispatch(getCategoryDetail(addressPayload));
-    // console.log(e.target.value);
   };
 
   const priceHandler = (e) => {
     e.preventDefault();
-    // const pricePayload = e.target.value;
-    // dispatch(getCategoryDetail(pricePayload));
-    // console.log(e.target.value);
   };
 
-  // useEffect(() => {
-  //   dispatch();
-  // });
-  
-
-
-// infi scroll
+  // infi scroll
+  const [isLoading, setIsLoading] = useState(false);
 
   // 카테고리 id 파라미터
   const [categoryId, setCategoryId] = useState(id);
@@ -109,7 +90,7 @@ export const CategoryDetail = () => {
   const [ref, inView] = useInView(true);
 
   // 다음 구간 데이터 패치 함수
-  const fetch = useCallback(async () => {
+  const fetch = useCallback(async (categoryId) => {
     try {
       const { data } = await base.get(
         `http://13.209.8.18/categories/${categoryId}?page=${page.current}`
@@ -124,37 +105,57 @@ export const CategoryDetail = () => {
     }
   }, []);
 
+  //categoryDetail/:id 를 통해 카테고리 항목이 옮겨질 경우
+  // axios 캐시 문제인지 아래의 데이터 패치 처리 Effect가 작동하지 않고
+  // 이전 데이터를 그대로 반영하는 문제 확인(headers cache-control은 이미 max-age=0 )
+  // 추가 headers 옵션 적용되지 않음
+  // 해당 useEffect를 통해 API 요청 & 카테고리 아이템 Array & 다음 요청시 호출할 page number 초기화
+  useEffect(() => {
+    setCategoryId(id);
+    const init = [];
+    setCategoryItems(init);
+    page.current = 1;
+  }, [id]);
 
   // 데이터 패치 처리
   useEffect(() => {
+    setIsLoading(true);
     console.log(inView, hasNextPage);
     if (inView && hasNextPage) {
-      fetch();
+      setTimeout(() => {
+        fetch(categoryId);
+      }, 700);
     }
-  }, [fetch, hasNextPage, inView]);
-
-  console.log(categoryItems);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+  }, [fetch, hasNextPage, inView, page]);
 
   return (
     <Layout>
       <StyledCategoryContainer>
         <StyledSelectBox>
-          <StyledSelect onChange={categoryHandler}>
-            {categoryList?.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.name}
-              </option>
-            ))}
+          <StyledSelect onChange={categoryHandler} defaultValue={id}>
+            {categoryList?.map((option, index) => {
+              if (index === 0) {
+                return (
+                  <option
+                    key={option.value}
+                    value={option.value}
+                    disabled={true}
+                  >
+                    {option.name}
+                  </option>
+                );
+              } else {
+                return (
+                  <option key={option.value} value={option.value}>
+                    {option.name}
+                  </option>
+                );
+              }
+            })}
           </StyledSelect>
-
-          <StyledSelect onChange={addressHandler}>
-            {addressList?.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.name}
-              </option>
-            ))}
-          </StyledSelect>
-
           <StyledSelect onChange={priceHandler}>
             {priceList?.map((option) => (
               <option key={option.value} value={option.value}>
@@ -170,8 +171,15 @@ export const CategoryDetail = () => {
           })}
         </StyledDetailContainer>
       </StyledCategoryContainer>
-      <div ref={ref} style={{ position: "absolute" }} />
-      {/* <div style={{position: "absolute" }} /> */}
+      {isLoading === true ? (
+        <>
+          <Skeleton />
+          <StyledSpinner>
+            <span className="spinner"></span>
+          </StyledSpinner>
+        </>
+      ) : null}
+      <div ref={ref} style={{ position: "relative" }} />
     </Layout>
   );
 };
@@ -206,5 +214,39 @@ const StyledSelect = styled.select`
   &:hover {
     box-shadow: 0 0 3px 0 rgb(71, 181, 255);
     transition: box-shadow 0.1s ease-in-out 0s;
+  }
+`;
+
+const StyledSpinner = styled.div`
+  /* display: none; */
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  & .spinner {
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 200px;
+    left: 50%;
+    width: 64px;
+    height: 64px;
+    margin-top: -32px;
+    margin-left: -32px;
+    border-radius: 50%;
+    border: 8px solid transparent;
+    border-top-color: rgb(71, 181, 255);
+    border-bottom-color: rgb(71, 181, 255);
+    animation: spinner 0.7s ease infinite;
+
+    @keyframes spinner {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
   }
 `;

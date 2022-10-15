@@ -12,13 +12,14 @@ export const UserReport = ({ targetNicename }) => {
   const [sendReason, setSendReason] = useState("타인에게 불쾌감을 주는 닉네임");
   const [etcDisabled, setEtcDisabled] = useState(true);
 
-  const [isLogedIn, setIsLogedIn] = useState(false);
+  const [isLogedIn, setIsLogedIn] = useState(true);
 
   // 로그인 처리 예정
   // useEffect(() => {
-
+  //  if(localStorage.getItem("accessToken")!==null){
+  //   setIsLogedIn(true);
+  //  }
   // }, []);
-
 
   // 로그인 여부 확인
   const loginCheck = () => {
@@ -34,17 +35,25 @@ export const UserReport = ({ targetNicename }) => {
   };
   const etcOn = () => {
     setEtcDisabled(false);
+    setSendReason("");
   };
-
 
   // 신고접수
   const sendReport = (e) => {
     e.preventDefault();
     console.log(sendReason);
-    Swal.fire({
-      title: "해당 유저의 신고 접수가 완료되었습니다.",
-      icon: "success",
-    });
+    if (sendReason === "") {
+      Swal.fire({
+        title: "신고 사유를 입력해주세요",
+        icon: "warning",
+      });
+    } else {
+      Swal.fire({
+        title: "해당 유저의 신고 접수가 완료되었습니다.",
+        icon: "success",
+      });
+      setShowModal(false);
+    }
   };
 
   return (
@@ -52,6 +61,7 @@ export const UserReport = ({ targetNicename }) => {
       <StyledReportAlert
         onClick={() => {
           loginCheck();
+          setSendReason("타인에게 불쾌감을 주는 닉네임");
         }}
       >
         신고하기
@@ -137,7 +147,7 @@ export const UserReport = ({ targetNicename }) => {
                   />
                 </div>
                 <span>기타</span>
-                <input
+                <StyledEtcInput
                   onChange={(e) => {
                     setSendReason(e.target.value);
                   }}
@@ -172,6 +182,8 @@ export const UserReport = ({ targetNicename }) => {
 };
 
 const StyledReportAlert = styled.span`
+  font-size: 14px;
+  color: gray;
   cursor: pointer;
 `;
 
@@ -199,29 +211,71 @@ const StyledModalContainer = styled.div`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 400px;
+  width: 350px;
   height: 400px;
   padding: 20px;
   background: rgb(255, 255, 255);
   border-radius: 10px;
   box-shadow: 1px 1px 5px 1px rgb(71, 181, 255);
   text-align: center;
+
+  animation: reportFadein 0.6s;
+  &{
+    @keyframes reportFadein {
+      from{
+        opacity:0;
+      }
+      to{
+        opacity:1;
+      }
+    }
+  }
 `;
 
 const StyledReportForm = styled.form`
   display: flex;
   flex-direction: column;
-  margin-top: 50px;
+  margin-top: 35px;
+  align-items: center;
 
-  & {
+  & label {
+    width: 280px;
   }
 `;
 
 const StyledRadioLabel = styled.label`
   display: flex;
   justify-content: center;
+  justify-content: flex-start;
   margin-top: 15px;
+
+
+  & input[type="radio"],
+  input[type="radio"]:checked {
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 100%;
+    margin-right: 10px;
+  }
+  & input[type="radio"] {
+    border: 2px solid rgb(71, 181, 255);
+  }
+  & input[type="radio"]:checked {
+    background-color: rgb(71, 181, 255);
+  }
+  & span{
+    margin-right:10px;
+  }
 `;
+
+const StyledEtcInput = styled.input`
+  border-radius:5px;
+  border:1px solid rgb(71, 181, 255);
+  &:focus{
+    outline-color:rgb(71, 181, 255);
+  }
+`
 
 const StyledButtonWrap = styled.div`
   display: flex;

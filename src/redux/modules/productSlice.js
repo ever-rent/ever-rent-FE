@@ -33,9 +33,9 @@ export const getCategory = createAsyncThunk(
 export const getProductsDetail = createAsyncThunk(
   "GET_PRODUCTS",
   async (payload, thunkAPI) => {
-    // console.log("products get 시작", payload);
+    console.log("products get 시작", payload);
     try {
-      const res = await productAPI.getProductDetail(payload.id);
+      const res = await productAPI.getProductDetail(payload);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -78,7 +78,7 @@ export const deleteProducts = createAsyncThunk(
   "DELETE_PRODUCTS",
   async (payload, thunkAPI) => {
     try {
-      await productAPI.deleteProduct(payload.id);
+      await productAPI.deleteProduct(payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -91,6 +91,7 @@ export const productSlice = createSlice({
   initialState: {
     products: [],
     category: [],
+    recent: [],
   },
   reducers: {},
   extraReducers: {
@@ -117,12 +118,16 @@ export const productSlice = createSlice({
     },
 
     [getProductsDetail.fulfilled]: (state, action) => {
-      console.log(current(state))
-      console.log(action)
+      console.log(current(state));
+      console.log(action);
       state.products = action.payload.data;
+      state.recent = state.recent.concat(action.payload.data);
     },
     [addProducts.fulfilled]: (state, action) => {
+      console.log(current(state));
+      console.log(action);
       state.isLoading = false;
+
       state.products = state.products.concat(action.payload);
       return state;
     },

@@ -6,7 +6,7 @@ import { getMyPageList } from "../../redux/modules/mypageSlice";
 import { getMyPagePending } from "../../redux/modules/mypageSlice";
 import { getMyPageConfirm } from "../../redux/modules/mypageSlice";
 import { getMyPageExpired } from "../../redux/modules/mypageSlice";
-
+import { Desktop, Mobile } from "../../Hooks/MideaQuery";
 export const RentalStatus = () => {
   const dispatch = useDispatch();
 
@@ -25,7 +25,7 @@ export const RentalStatus = () => {
     dispatch(getMyPageList());
   }, [dispatch]);
 
-  const CommonList = (tabIndex) => {
+  const commonList = (tabIndex) => {
     switch (tabIndex) {
       case 0:
         return <RentalCommonList props={list} index={tabIndex} />;
@@ -109,21 +109,34 @@ export const RentalStatus = () => {
   ];
 
   return (
-    <div>
-      <StyledisStatusDetail>
-        {tabArray.map((item) => {
-          return <div key={item.key}>{item.tab}</div>;
-        })}
-        {CommonList(tabIndex)}
-      </StyledisStatusDetail>
-    </div>
+    <>
+      <Desktop>
+        <StyledisStatusDetail>
+          {tabArray.map((item) => {
+            return <div key={item.key}>{item.tab}</div>;
+          })}
+        </StyledisStatusDetail>
+        <StyledList>{commonList(tabIndex)}</StyledList>
+      </Desktop>
+      {/* ################ 모바일 ################ */}
+      <Mobile>
+        <StyledMobileisStatusDetail>
+          <StyledTabBar>
+            {tabArray.map((item) => {
+              return <div key={item.key}>{item.tab}</div>;
+            })}
+          </StyledTabBar>
+          <StyledCommonListBox>{commonList(tabIndex)}</StyledCommonListBox>
+        </StyledMobileisStatusDetail>
+      </Mobile>
+    </>
   );
 };
 
 const StyledTab = styled.div`
   /* min-width: max-content; */
   /* margin: 0 5vw; */
-  /* padding: 0 15px; */
+  padding: 5px;
 `;
 
 const StyledisStatusDetail = styled.div`
@@ -135,24 +148,71 @@ const StyledisStatusDetail = styled.div`
   align-items: center;
   justify-content: space-between;
   margin: 10px 0;
-  padding: 0 20px 0 80px;
+  padding: 0 65px 0 80px;
   border-radius: 5px;
   gap: 60px;
+  color: gray;
   cursor: pointer;
   .select {
+    color: black;
     font-weight: bold;
     border-bottom: 3px solid #47b5ff;
-  }
-  @media only screen and (max-width: 767px) {
-    display: flex;
-    /* flex-direction: column; */
-    gap: 0;
-    width: auto;
-    .select {
-      font-weight: bold;
-      border-bottom: 3px solid #47b5ff;
+    animation: tabarray 0.8s;
+    @keyframes tabarray {
+      from {
+        opacity: 0.5;
+      }
+      to {
+        opacity: 1;
+      }
     }
   }
 `;
 
-const StyledBar = styled.div``;
+const StyledList = styled.div`
+  display: flex;
+  transition: 0.6s;
+`;
+
+const StyledMobileisStatusDetail = styled.div`
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  max-width: max-content;
+  height: 45px;
+  align-items: center;
+  justify-content: space-between;
+  margin: auto;
+  margin-top: 10px;
+  /* padding: 0 20px 0 80px; */
+  border-radius: 5px;
+  gap: 0;
+  cursor: pointer;
+  transition: 0.6s;
+  .select {
+    font-weight: bold;
+    border-bottom: 3px solid #47b5ff;
+  }
+`;
+
+const StyledTabBar = styled.div`
+  /* border: 1px solid blue; */
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 470px;
+  padding-top: 6px;
+  /* margin: auto; */
+`;
+
+const StyledListBox = styled.div`
+  width: 100%;
+  height: 100%;
+`;
+
+const StyledCommonListBox = styled.div`
+  width: 100%;
+  margin-top: 7px;
+  /* border: 1px solid green; */
+`;

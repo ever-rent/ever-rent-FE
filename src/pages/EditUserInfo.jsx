@@ -31,7 +31,6 @@ export const EditUserInfo = () => {
     });
   };
 
-
   // 회원탈퇴
   const deleteUser = () => {
     Swal.fire({
@@ -50,12 +49,10 @@ export const EditUserInfo = () => {
     });
   };
 
-
   // formData
   let sendData = {
-    testcode:"testcode"
-  }
-
+    testcode: "testcode",
+  };
 
   // 회원정보 수정
   const editMyInfo = () => {
@@ -208,14 +205,6 @@ const StyledEditInfoContainer = styled.section`
   margin-top: 100px;
   display: flex;
   justify-content: center;
-
-  & {
-    @media all and (max-width: 767px) {
-      margin-top: 80px;
-    }
-    @media all and (max-width: 480px) {
-    }
-  }
 `;
 
 const StyledAddProductForm = styled.div`
@@ -226,15 +215,6 @@ const StyledAddProductForm = styled.div`
   padding: 40px;
   box-shadow: 1px 1px 5px 1px rgb(71, 181, 255);
   border-radius: 10px;
-
-  & {
-    @media all and (max-width: 767px) {
-      width: 60vw;
-    }
-    @media all and (max-width: 480px) {
-      width: 100vw;
-    }
-  }
 `;
 
 const StyledInfoTop = styled.div`
