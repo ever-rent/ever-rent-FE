@@ -6,7 +6,6 @@ export const base = axios.create({
 
 export const auth = axios.create({
   baseURL: process.env.REACT_APP_SERVER_URL,
-  // baseURL: "https://davidpai.shop",
 });
 
 auth.interceptors.request.use((config) => {

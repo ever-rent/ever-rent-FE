@@ -8,6 +8,10 @@ import { ChatHeader } from "../../components/header/ChatHeader";
 import { StyledChatRoom } from "./styled";
 import { auth } from "../../server/core/instance";
 import { Layout } from "../../components/layout/Layout";
+import { chatAPI, imgFirstString } from "../../server/api";
+import { RangeCalrendar } from "../../components/calrendar/RangeCalrendar";
+import { FaMoneyBillAlt } from "react-icons/fa";
+import { AiOutlineSend } from "react-icons/ai";
 
 let stompClient = null;
 
@@ -22,6 +26,8 @@ export const ChatRoom = () => {
   const token = localStorage.getItem("accessToken").slice(7);
 
   const roomData = useSelector((state) => state.chat.chatRoomDetail);
+  console.log(roomData);
+
   const [chatList, setChatList] = useState([]);
   const [userData, setUserData] = useState({
     type: "",
@@ -117,6 +123,8 @@ export const ChatRoom = () => {
     scrollToBottom();
   };
 
+  console.log(chatList);
+
   const sendMessage = () => {
     if (stompClient && userData.message) {
       let chatMessage = {
@@ -171,37 +179,41 @@ export const ChatRoom = () => {
     scrollToBottom();
   }, [chatList]);
 
-  const detailTime = (a) => {
-    const nowTime = new Date(a);
-    const nowHour = nowTime.getHours();
-    const nowMt = nowTime.getMinutes();
-    if (nowHour <= 12) {
-      if (nowHour < 10) {
-        if (nowMt < 10) {
-          return `오전 ` + "0" + nowHour + ":" + "0" + nowMt;
+  const detailTime = (createdAt) => {
+    const time = new Date(createdAt);
+    const hour = time.getHours() + 9;
+    const minute = time.getMinutes();
+
+    if (hour <= 12 || hour === 24) {
+      if (hour === 24) {
+        return `오전 ${hour - 12}:${minute}0`;
+      }
+      if (hour < 10) {
+        if (minute < 10) {
+          return `오전 0${hour}:0${minute}`;
         } else {
-          return `오전 ` + "0" + nowHour + ":" + nowMt;
+          return `오전 0${hour}:${minute}`;
         }
       } else {
-        if (nowMt < 10) {
-          return `오전 ` + nowHour + ":" + "0" + nowMt;
+        if (minute < 10) {
+          return `오전 ${hour}:0${minute}`;
         } else {
-          return `오전 ` + nowHour + ":" + nowMt;
+          return `오전 ${hour}:${minute}`;
         }
       }
     } else {
-      const afterHour = nowHour - 12;
+      const afterHour = hour - 12;
       if (afterHour < 10) {
-        if (nowMt < 10) {
-          return `오후 ` + "0" + afterHour + ":" + "0" + nowMt;
+        if (minute < 10) {
+          return `오후 0${afterHour}:0${minute}`;
         } else {
-          return `오후 ` + "0" + afterHour + ":" + nowMt;
+          return `오후 0${afterHour}:${minute}`;
         }
       } else {
-        if (nowMt < 10) {
-          return `오후 ` + afterHour + ":" + "0" + nowMt;
+        if (minute < 10) {
+          return `오후 ${afterHour}:0${minute}`;
         } else {
-          return `오후 ` + afterHour + ":" + nowMt;
+          return `오후 ${afterHour}:${minute}`;
         }
       }
     }
@@ -210,88 +222,117 @@ export const ChatRoom = () => {
   const postPrice = roomData.price
     ?.toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  const postDeposit = roomData.deposit
-    ?.toString()
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+  const [showDateInput, setShowDateInput] = useState(false);
+  const [startDateInput, setStartDateInput] = useState("");
+  const [endDateInput, setEndDateInput] = useState("");
+
+  const startEndDays = (start, end) => {
+    let startDay = start;
+    let endDay = end;
+
+    let sYaer = startDay?.getFullYear();
+    let sMonth = startDay?.getMonth() + 1;
+    let sDay = startDay?.getDate();
+    let eYaer = endDay?.getFullYear();
+    let eMonth = endDay?.getMonth() + 1;
+    let eDay = endDay?.getDate();
+
+    setStartDateInput(`${sYaer}-${sMonth}-${sDay}`);
+    setEndDateInput(`${eYaer}-${eMonth}-${eDay}`);
+  };
+
+  const postOrderDate = async (startDate, endDate) => {
+    await chatAPI
+      .postOrderDate(roomData.id, {
+        buyStart: startDate,
+        buyEnd: endDate,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log(startDate, endDate);
+    setShowDateInput(false);
+  };
 
   return (
-    <Layout>
       <StyledChatRoom>
         <div className="chat_head_wrap">
           <ChatHeader quitRoom={quitRoom} />
-          <div
-            className="chat_head_container"
-            onClick={() => navigate(`/detail/${roomData.id}`)}
-          >
+          <div className="chat_head_container">
             <div className="chat_head_box">
-              <div className="chat_head_text_box">
+              <div
+                className="chat_head_text_box"
+                onClick={() => navigate(`/productDetail/${roomData.id}`)}
+              >
                 <img
-                  src={roomData.postImgUrl?.postImgUrlList[0]}
+                  // src={`${imgFirstString}${roomData?.imgUrlArray[0]}`}
                   className="chat_head_img"
                   alt="img"
                 />
               </div>
               <div className="Chat_Head_Text_Box">
-                <div className="chat_head_title">{roomData.title}</div>
+                <div className="chat_head_title">{roomData.productName}</div>
                 <div className="chat_head_cost">
-                  <div className="chat_head_cost_icon_box">
-                    {/* <img
-                    className="chat_head_cost_icon"
-                    src={dailycost}
-                    alt="img"
-                  /> */}
-                  </div>
+                  <FaMoneyBillAlt />
                   {postPrice}원
-                  <div className="chat_head_cost_icon_box">
-                    {/* <img
-                    className="chat_head_cost_icon"
-                    src={deposit}
-                    alt="img"
-                  /> */}
-                  </div>
-                  {postDeposit}원
                 </div>
               </div>
             </div>
+            {chatList
+              ? chatList[0]?.memberId !== Number(PK) && (
+                  <button onClick={() => setShowDateInput(true)}>
+                    렌탈 신청하기
+                  </button>
+                )
+              : chatList[0]?.memberId !== Number(PK) && (
+                  <button disabled>렌탈 신청하기</button>
+                )}
+            {showDateInput && (
+              <div>
+                <RangeCalrendar startEndDays={startEndDays} />
+                <button
+                  onClick={() => postOrderDate(startDateInput, endDateInput)}
+                >
+                  신청하기
+                </button>
+                <button onClick={() => setShowDateInput(false)}>취소</button>
+              </div>
+            )}
           </div>
         </div>
+        
         <div className="chat_container">
           {chatList?.map((chat, idx) => {
             return (
               <div key={idx}>
-                {chat.memberId !== PK ? (
-                  chat.message === "" ? (
-                    ""
-                  ) : (
-                    <div className="chat_other_wrap">
-                      <img
-                        src={chat.profileUrl}
-                        className="chat_other_profile"
-                        alt="img"
-                      />
-                      <div className="chat_other_container">
-                        <div className="chat_other_name">{chat.sender}</div>
-                        <div className="chat_other_msg_clock">
-                          <div className="chat_other_box">{chat.message}</div>
-                          <div className="chat_clock_box">
-                            <div className="chat_clock">
-                              {/* {detailTime(chat.createdAt)} */}
-                            </div>
+                {chat.message === "" ? (
+                  ""
+                ) : (
+                  <div className="chat_other_wrap">
+                    <img
+                      src={
+                        chat?.profileUrl === null
+                          ? `https://source.boringavatars.com/beam/110/${chat?.memberId}?colors=7965EE,6FE7F1,FFDD4C,46B5FF,2883E0`
+                          : chat?.profileUrl
+                      }
+                      className="chat_other_profile"
+                      alt="img"
+                    />
+                    <div className="chat_other_container">
+                      <div className="chat_other_name">{chat.sender}</div>
+                      <div className="chat_other_msg_clock">
+                        <div className="chat_other_box">{chat.message}</div>
+                        <div className="chat_clock_box">
+                          <div className="chat_clock">
+                            {detailTime(chat.createdAt)}
                           </div>
                         </div>
                       </div>
                     </div>
-                  )
-                ) : chat.message === "" ? (
-                  ""
-                ) : (
-                  <div className="chat_me_container">
-                    <div className="chat_clock_box">
-                      <div className="Chat_Clock">
-                        {/* {detailTime(chat.createdAt)} */}
-                      </div>
-                    </div>
-                    <div className="chat_me_box">{chat.message}</div>
                   </div>
                 )}
               </div>
@@ -305,20 +346,14 @@ export const ChatRoom = () => {
               <input
                 className="chat_input"
                 type="text"
-                placeholder="대화를 시작해보세요!"
+                placeholder="메시지 보내기"
                 value={userData.message}
                 onChange={(event) => handleValue(event)}
               />
-              <div className="chat_input_button_box">
-                <button className="chat_input_button">
-                  {/* <Icon icon="akar-icons:send" className="chat_button_icon" /> */}
-                  전송
-                </button>
-              </div>
+                <AiOutlineSend size="2rem" color="gray" cursor="pointer" />
             </form>
           </div>
         </div>
       </StyledChatRoom>
-    </Layout>
   );
 };

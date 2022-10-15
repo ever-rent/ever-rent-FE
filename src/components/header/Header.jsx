@@ -11,9 +11,8 @@ export const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [isLogin, setIsLogin] = useState(false);
-
   const [submitData, setSubmitData] = useState("");
+
   const goSearch = (e) => {
     e.preventDefault();
     navigate(`/searchItems/${submitData}`);
@@ -46,29 +45,32 @@ export const Header = () => {
             </StyledSearchWrap>
           </StyledHeaderWrap>
           <StyledSignMenu>
-            <StyledLoginTab>
-              <StyledLoginSpan
+            {localStorage.getItem("memberId") ? (
+              <StyledAddProductButton
                 onClick={() => {
-                  navigate("/login");
+                  navigate("/addProduct");
                 }}
               >
-                로그인
-              </StyledLoginSpan>
-              <StyledLoginSpan
-                onClick={() => {
-                  navigate("/join");
-                }}
-              >
-                회원가입
-              </StyledLoginSpan>
-            </StyledLoginTab>
-            <StyledAddProductButton
-              onClick={() => {
-                navigate("/addProduct");
-              }}
-            >
-              글쓰기
-            </StyledAddProductButton>
+                글쓰기
+              </StyledAddProductButton>
+            ) : (
+              <StyledLoginTab>
+                <StyledLoginSpan
+                  onClick={() => {
+                    navigate("/login");
+                  }}
+                >
+                  로그인
+                </StyledLoginSpan>
+                <StyledLoginSpan
+                  onClick={() => {
+                    navigate("/join");
+                  }}
+                >
+                  회원가입
+                </StyledLoginSpan>
+              </StyledLoginTab>
+            )}
           </StyledSignMenu>
           <StyledSideMenu
             onClick={() => dispatch(openNav())}
@@ -92,7 +94,7 @@ export const Header = () => {
                 maxLength={35}
               />
             </StyledMobileSearchWrap>
-            {isLogin === true ? (
+            {localStorage.getItem("memberId") ? (
               <StyledMobileAddProductButton
                 onClick={() => {
                   navigate("/addProduct");
