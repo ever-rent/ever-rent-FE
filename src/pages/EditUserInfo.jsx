@@ -203,6 +203,7 @@ export const EditUserInfo = () => {
 
 const StyledEditInfoContainer = styled.section`
   margin-top: 100px;
+  margin-bottom:100px;
   display: flex;
   justify-content: center;
 `;

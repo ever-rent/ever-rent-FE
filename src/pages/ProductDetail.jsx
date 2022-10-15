@@ -50,7 +50,6 @@ export const ProductDetail = () => {
 
   const firstUrl = imgFirstString;
 
-
   // 유저 프로필 없을 시 기본이미지
   const defaultUserImg =
     "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNF5TD%2FbtrMyfbzuN7%2FJZiKO75eVNPNAGHIPtrAnK%2Fimg.png";
@@ -166,7 +165,13 @@ export const ProductDetail = () => {
                 </StyledProductImagetWrap>
               </StyledPostHeadWrap>
               <StyledPostBodyWrap>
-                <StyledPostSubItems>
+                <StyledPostSubItems
+                  style={
+                    detailData?.imgUrlArray.length < 7
+                      ? { marginTop: "-100px" }
+                      : null
+                  }
+                >
                   <StyledImagesWrap>
                     <StyledChatImage
                       src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
@@ -284,7 +289,13 @@ export const ProductDetail = () => {
                 </StyledMobileProductImagetWrap>
               </StyledMobilePostHeadWrap>
               <StyledMobilePostBodyWrap>
-                <StyledMobilePostSubItems>
+                <StyledMobilePostSubItems
+                  style={
+                    detailData?.imgUrlArray.length < 7
+                      ? { marginTop: "-100px" }
+                      : null
+                  }
+                >
                   <StyledMobileImagesWrap>
                     <StyledChatImage
                       src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
@@ -370,6 +381,7 @@ export const ProductDetail = () => {
 
 const StyledDetailProductContainer = styled.div`
   margin-top: 100px;
+  margin-bottom: 100px;
   display: flex;
   justify-content: center;
 
@@ -439,7 +451,7 @@ const StyledPostSubItems = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-top:50px;
+  margin-top: 50px;
   margin-bottom: 50px;
 `;
 
@@ -555,6 +567,7 @@ const StyledPostDescription = styled.div`
 
 const StyledMobileDetailContainer = styled.div`
   margin-top: 100px;
+  margin-bottom: 100px;
   display: flex;
   justify-content: center;
 
