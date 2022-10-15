@@ -27,7 +27,6 @@ export const ChatRoomItem = ({ item }) => {
 
   return (
     <StyledChatRoomItem
-      className="chattingRoomCard_wrap"
       onClick={() => navigate(`/chat/room/${item.productId}/${item.roomId}`)}
     >
       <div className="chattingRoomCard_container">

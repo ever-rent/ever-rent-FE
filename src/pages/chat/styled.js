@@ -1,12 +1,10 @@
 import styled from "styled-components";
 
 export const StyledChatRoomList = styled.div`
-  .chattingroom_wrap {
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    gap: 1rem;
-  }
+  width: 50%;
+  min-width: 350px;
+  margin: 0 auto;
+  padding: ${({isSideNav})=> isSideNav ? 0 : "2rem"};
 `;
 
 export const StyledChatRoom = styled.div`

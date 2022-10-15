@@ -1,16 +1,18 @@
 import styled from "styled-components";
 
 export const StyledChatRoomItem = styled.div`
-  .chattingRoomCard_wrap {
-    display: flex;
-    flex-direction: row;
-    border-bottom: 1px solid $color-sub;
-    margin-bottom: 20px;
-    height: 80px;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 15px;
+  border-bottom: 1px solid #e5e5e5;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f5f5f5;
   }
   .chattingRoomCard_container {
     display: flex;
-    flex-direction: row;
     width: 100%;
     height: 55px;
   }

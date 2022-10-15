@@ -5,28 +5,42 @@ import { ChatRoomItem } from "../../components/chat/ChatRoomItem";
 import { StyledChatRoomList } from "./styled";
 import { Layout } from "../../components/layout/Layout";
 
-export const ChatRoomList = () => {
+export const ChatRoomList = ({ isSideNav }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getMyChatRoom());
-  }, []);
+  }, [dispatch]);
 
   const myChatList = useSelector((state) => state.chat.chatRoomList);
 
   return (
-      <StyledChatRoomList>
-        <div className="chattingroom_wrap">
+    <>
+      {isSideNav ? (
+        <StyledChatRoomList isSideNav={isSideNav}>
           {myChatList === undefined ? (
-            <div className="search_empty_text">
-              거래를 위해 채팅을 시작해보세요!
-            </div>
+            <div className="search_empty_text">대화중인 채팅방이 없습니다.</div>
           ) : (
             myChatList.map((item, index) => {
               return <ChatRoomItem item={item} key={index} />;
             })
           )}
-        </div>
-      </StyledChatRoomList>
+        </StyledChatRoomList>
+      ) : (
+        <Layout>
+          <StyledChatRoomList isSideNav={isSideNav}>
+            {myChatList === undefined ? (
+              <div className="search_empty_text">
+                대화중인 채팅방이 없습니다.
+              </div>
+            ) : (
+              myChatList.map((item, index) => {
+                return <ChatRoomItem item={item} key={index} />;
+              })
+            )}
+          </StyledChatRoomList>
+        </Layout>
+      )}
+    </>
   );
 };

@@ -282,15 +282,15 @@ export const ChatRoom = () => {
                 </div>
               </div>
             </div>
-            {chatList
-              ? chatList[0]?.memberId !== Number(PK) && (
+            {/* {chatList
+              ? chatList[0]?.memberId !== Number(PK) && ( */}
                   <button onClick={() => setShowDateInput(true)}>
                     렌탈 신청하기
                   </button>
-                )
+                {/* )
               : chatList[0]?.memberId !== Number(PK) && (
                   <button disabled>렌탈 신청하기</button>
-                )}
+                )} */}
             {showDateInput && (
               <div>
                 <RangeCalrendar startEndDays={startEndDays} />
