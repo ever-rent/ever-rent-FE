@@ -4,38 +4,44 @@ export const StyledChatRoomList = styled.div`
   .chattingroom_wrap {
     display: flex;
     flex-direction: column;
-    padding: 0 1rem;
-    margin-bottom: 84px;
+    padding: 1rem;
+    gap: 1rem;
   }
 `;
 
 export const StyledChatRoom = styled.div`
   .chat_container {
-    width: 100%;
+    width: 50%;
+    min-width: 350px;
     height: 100%;
-    padding: 8.5rem 0.75rem 5.5rem;
+    margin: 0 auto;
+    padding: 8rem 1rem;
   }
   .chat_head_wrap {
     position: fixed;
+    top: 0;
     width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 2;
   }
   .chat_head_container {
-    padding: 0 1rem;
-    width: 100%;
-    max-width: 420px;
-    display: flex;
     position: fixed;
-    flex-direction: row;
-    background-color: $color-white;
-    z-index: 4;
-    height: 4.375rem;
+    width: 100%;
+    min-width: 350px;
+    border: 2px solid #e5e5e5;
+    border-radius: 10px;
+    background-color: #fff;
+    padding: 1rem 0;
+    z-index: 1;
   }
   .chat_head_box {
-    width: 100%;
-    border-bottom: 1px solid $color-sub;
     display: flex;
-    flex-direction: row;
-    gap: 0.75rem;
+    gap: 1rem;
   }
   .chat_head_img {
     width: 100%;
@@ -46,16 +52,11 @@ export const StyledChatRoom = styled.div`
     object-fit: cover;
   }
   .chat_head_text_box {
-    display: flex;
-    flex-direction: column;
-    height: 3.125rem;
-    justify-content: center;
-    gap: 3px;
+    height: 3rem;
     cursor: pointer;
   }
   .chat_head_title {
-    font-size: 0.9375rem;
-    color: $color-primary;
+    font-size: 1rem;
     font-weight: 600;
   }
   .chat_head_cost {
@@ -73,10 +74,8 @@ export const StyledChatRoom = styled.div`
     flex-direction: row;
     gap: 0.5rem;
   }
-
   .chat_other_name {
-    color: $color-medium;
-    font-size: 0.875rem;
+    font-size: 1rem;
   }
 
   .chat_me_container {
@@ -125,17 +124,20 @@ export const StyledChatRoom = styled.div`
   }
 
   .chat_other_box {
-    background-color: $color-light;
+    color: #fff;
+    background-color: rgb(71, 181, 255);
     border-bottom-right-radius: 0.75rem;
     border-bottom-left-radius: 0.75rem;
     border-top-right-radius: 0.75rem;
-    padding: 0.625rem 1rem;
+    padding: 0.5rem 1rem;
     max-width: 75%;
+    font-weight: 500;
   }
 
   .chat_input_box {
     display: flex;
-    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     height: 2.625rem;
     gap: 0.625rem;
     width: 100%;
@@ -144,48 +146,24 @@ export const StyledChatRoom = styled.div`
 
   .chat_input {
     width: 100%;
-    height: 2.625rem;
+    height: 3rem;
     border: none;
-    background-color: $color-light;
-    border-radius: 0.43rem;
-    padding: 0 0.9rem;
-    margin: auto;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    padding: 0 1rem;
     font-size: 1rem;
     &:focus {
       outline: none;
     }
   }
-
-  .chat_input_button_box {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100%;
-  }
-  .chat_input_button {
-    width: 1.5rem;
-    height: 1.5rem;
-    border: none;
-    background-color: $color-white;
-  }
-  .chat_button_icon {
-    width: 100%;
-    height: 100%;
-    background-color: none;
-  }
-
   .chat_input_container {
     position: fixed;
-    background-color: $color-white;
-    width: 100%;
-    max-width: 420px;
+    width: 50%;
+    min-width: 350px;
     left: 50%;
-    bottom: 0;
+    bottom: 1rem;
     padding-top: 10px;
-    transform: translateX(-50%);
-    height: 5.5rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+    transform: translateX(-52%);
+    height: 5rem;
   }
 `;

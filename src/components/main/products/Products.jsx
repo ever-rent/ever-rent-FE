@@ -57,7 +57,7 @@ export const Products = () => {
   return (
     <>
       <Desktop>
-        {/* <BestProducts /> */}
+        <BestProducts />
         <StyledProductsContainer>
           <StyledProductsGrid>
             {products?.map((product) => {

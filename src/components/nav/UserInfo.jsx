@@ -9,14 +9,14 @@ export const UserInfo = () => {
 
   const { data: userData } = useQuery("getUserInfo", mypageAPI.getMyInfo);
   const userInfo = userData?.data.data;
-console.log(userData)
+  
   return (
     <StyledContainer>
       {userInfo?.imgUrl ? (
         <img src={userInfo?.imgUrl} alt={userInfo?.memberName} />
       ) : (
         <img
-          src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+          src={`https://source.boringavatars.com/beam/110/${userInfo?.memberName}?colors=7965EE,6FE7F1,FFDD4C,46B5FF,2883E0`}
           alt={userInfo?.memberName}
         />
       )}
