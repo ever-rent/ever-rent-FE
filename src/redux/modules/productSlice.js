@@ -121,7 +121,11 @@ export const productSlice = createSlice({
       console.log(current(state));
       console.log(action);
       state.products = action.payload.data;
-      state.recent = state.recent.concat(action.payload.data);
+      const data = state.recent.concat(action.payload.data);
+      // console.log(data);
+      const uniqueData = [...new Set(data.map(JSON.stringify))].map(JSON.parse);
+      // console.log("uniqueData", uniqueData);
+      state.recent = uniqueData;
     },
     [addProducts.fulfilled]: (state, action) => {
       console.log(current(state));
