@@ -1,27 +1,21 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { getMyChatRoom } from "../../redux/modules/chatSlice";
 import { ChatRoomItem } from "../../components/chat/ChatRoomItem";
 import { StyledChatRoomList } from "./styled";
 import { Layout } from "../../components/layout/Layout";
+import { useQuery } from "react-query";
+import { chatAPI } from "../../server/api";
 
 export const ChatRoomList = ({ isSideNav }) => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getMyChatRoom());
-  }, [dispatch]);
-
-  const myChatList = useSelector((state) => state.chat.chatRoomList);
+  const { data } = useQuery("getChatRoomList", () => chatAPI.getChatRoomList());
+  const chatRoomList = data?.data.chatRoomResponseDtoList;
 
   return (
     <>
       {isSideNav ? (
         <StyledChatRoomList isSideNav={isSideNav}>
-          {myChatList === undefined ? (
-            <div className="search_empty_text">대화중인 채팅방이 없습니다.</div>
+          {!chatRoomList ? (
+            <h2>대화중인 채팅방이 없습니다.</h2>
           ) : (
-            myChatList.map((item, index) => {
+            chatRoomList.map((item, index) => {
               return <ChatRoomItem item={item} key={index} />;
             })
           )}
@@ -29,12 +23,10 @@ export const ChatRoomList = ({ isSideNav }) => {
       ) : (
         <Layout>
           <StyledChatRoomList isSideNav={isSideNav}>
-            {myChatList === undefined ? (
-              <div className="search_empty_text">
-                대화중인 채팅방이 없습니다.
-              </div>
+            {!chatRoomList ? (
+              <h2>대화중인 채팅방이 없습니다.</h2>
             ) : (
-              myChatList.map((item, index) => {
+              chatRoomList.map((item, index) => {
                 return <ChatRoomItem item={item} key={index} />;
               })
             )}

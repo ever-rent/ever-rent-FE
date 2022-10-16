@@ -11,54 +11,52 @@ export const StyledChatRoomItem = styled.div`
   &:hover {
     background-color: #f5f5f5;
   }
-  .chattingRoomCard_container {
+  .container {
     display: flex;
     width: 100%;
     height: 55px;
   }
-  .chattingRoomCard_1_box {
+  .profile-img-div {
     width: 55px;
     height: 55px;
     margin-right: 0.8rem;
   }
-  .chattingRoomCard_1_box_img {
+  .profile-img {
     width: 55px;
     aspect-ratio: 1/1;
     border-radius: 50%;
   }
-  .chattingRoomCard_2_box {
+  .info-div-1 {
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 4px;
     width: calc(100% - 122.8px);
   }
-  .chattingRoomCard_2_box_top {
+  .info-div-2 {
     display: flex;
     flex-direction: row;
     gap: 10px;
   }
-  .chattingRoomCard_2_box_top_1 {
+  .name-info {
     font-weight: 700;
   }
-  .chattingRoomCard_2_box_top_2 {
+  .time-info {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    font-size: 0.93rem;
-    color: $color-medium;
+    font-size: 0.8rem;
   }
-  .chattingRoomCard_2_box_bottom {
-    color: $color-medium;
+  .last-message {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .chattingRoomCard_3_box {
+  .product-img-div {
     width: 60px;
     height: 60px;
   }
-  .chattingRoomCard_3_box_img {
+  .product-img {
     width: 55px;
     aspect-ratio: 1/1;
     border-radius: 7px;
