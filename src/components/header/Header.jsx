@@ -46,13 +46,16 @@ export const Header = () => {
           </StyledHeaderWrap>
           <StyledSignMenu>
             {localStorage.getItem("memberId") ? (
-              <StyledAddProductButton
-                onClick={() => {
-                  navigate("/addProduct");
-                }}
-              >
-                글쓰기
-              </StyledAddProductButton>
+              <>
+                <span onClick={() => navigate("/chatRoomList")}>채팅목록</span>
+                <StyledAddProductButton
+                  onClick={() => {
+                    navigate("/addProduct");
+                  }}
+                >
+                  글쓰기
+                </StyledAddProductButton>
+              </>
             ) : (
               <StyledLoginTab>
                 <StyledLoginSpan
