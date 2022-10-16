@@ -32,12 +32,10 @@ export const DetailItem = ({
   const [togglelike, setTogglelike] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
 
-  const [write, setWrite] = useState("");
+  //글 작성 시간
   const [createdAt, setCreatedAt] = useState("");
 
   useEffect(() => {
-    let timeStatus = writeAt;
-    timeStatus !== undefined ? setWrite(timeStatus) : (timeStatus = "");
     setCreatedAt(timeToToday(writeAt));
   }, [writeAt]);
 

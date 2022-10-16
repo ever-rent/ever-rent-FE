@@ -77,13 +77,11 @@ export const BestProducts = () => {
                 alt="<"
               />
             </StyeldMoveButtonLeft>
-            <StyledContainer>
-              <StyledGridBox ref={productsRef}>
-                {products?.map((item) => {
-                  return <BestProductItem item={item} key={item.id} />;
-                })}
-              </StyledGridBox>
-            </StyledContainer>
+            <StyledGridBox ref={productsRef}>
+              {products?.map((item) => {
+                return <BestProductItem item={item} key={item.id} />;
+              })}
+            </StyledGridBox>
             <StyeldMoveButtonRight onClick={forward}>
               <img
                 src="https://img.icons8.com/ios/50/5923ff/forward--v1.png"
@@ -102,14 +100,14 @@ export const BestProducts = () => {
 };
 
 const StyledBestProductsContainer = styled.div`
-  max-width: 1013px;
+  width: 1013px;
   margin: auto;
 `;
 
 const StyledTitle = styled.span`
   font-size: 25px;
   font-weight: 500;
-  color: #5923ff;
+  /* color: #5923ff; */
 `;
 
 const StyledHotItem = styled.span`
@@ -159,19 +157,15 @@ const StyeldMoveButtonRight = styled.button`
   margin-left: 10px;
 `;
 
-const StyledContainer = styled.div`
-  /* border: 1px solid red; */
-  /* height: 180px; */
-  /* max-width: 1024px; */
-  margin: 25px 50px;
-  padding: 10px 0 10px 16px;
-  overflow: hidden;
-`;
-
 const StyledGridBox = styled.div`
+  /* border: 1px solid red; */
+
   display: grid;
   z-index: 1;
   gap: 32px;
   grid-template-columns: repeat(8, 180px);
   transition: 0.6s;
+  margin: 25px 50px;
+  padding: 10px 0 10px 16px;
+  overflow: hidden;
 `;

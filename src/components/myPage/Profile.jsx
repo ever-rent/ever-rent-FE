@@ -145,8 +145,8 @@ const StyledProfileBox = styled.div`
 
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 10px;
-  padding: 30px 0 0 0;
-  height: 380px;
+  padding: 15px 0 10px 0;
+  height: 340px;
   grid-row: 1/3;
   @media only screen and (max-width: 767px) {
     /* border: 1px solid yellow; */

@@ -90,9 +90,12 @@ const StyledRecentItemContainer = styled.div`
   height: 430px;
   background-color: #ffffffda;
   border: 1px solid gray;
+  position: absolute;
   position: fixed;
-  right: 2vw;
-  top: 30%;
+  /* right: 2vw; */
+  /* top: 30%; */
+  top: 300px;
+  right: calc(50% - 710px);
   transform: translate(-50%, -50%);
   z-index: 99;
 `;
