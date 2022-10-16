@@ -1,23 +1,24 @@
 import styled from "styled-components";
 
 export const StyledChatRoomList = styled.div`
-  .chattingroom_wrap {
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    gap: 1rem;
-  }
+  width: 50%;
+  min-width: 350px;
+  max-width: 650px;
+  margin: 0 auto;
+  padding: ${({ isSideNav }) => (isSideNav ? 0 : "2rem")};
 `;
 
 export const StyledChatRoom = styled.div`
-  .chat_container {
+  .container {
     width: 50%;
     min-width: 350px;
-    height: 100%;
-    margin: 0 auto;
+    max-width: 500px;
+    height: 650px;
+    margin: 5rem auto 0;
     padding: 8rem 1rem;
   }
-  .chat_head_wrap {
+
+  .head-wrap {
     position: fixed;
     top: 0;
     width: 100%;
@@ -29,7 +30,9 @@ export const StyledChatRoom = styled.div`
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     z-index: 2;
   }
-  .chat_head_container {
+  .head-container {
+    display: flex;
+    justify-content: space-around;
     position: fixed;
     width: 100%;
     min-width: 350px;
@@ -39,11 +42,11 @@ export const StyledChatRoom = styled.div`
     padding: 1rem 0;
     z-index: 1;
   }
-  .chat_head_box {
+  .head-box {
     display: flex;
     gap: 1rem;
   }
-  .chat_head_img {
+  .head-img {
     width: 100%;
     height: 100%;
     border-radius: 7px;
@@ -51,34 +54,64 @@ export const StyledChatRoom = styled.div`
     aspect-ratio: 1/1;
     object-fit: cover;
   }
-  .chat_head_text_box {
+  .head-text-box {
     height: 3rem;
     cursor: pointer;
   }
-  .chat_head_title {
+  .head-title {
     font-size: 1rem;
     font-weight: 600;
   }
-  .chat_head_cost {
+  .head-cost {
     display: flex;
     align-items: center;
     gap: 0.25rem;
   }
-  .chat_head_img_box {
+  .head-img-box {
     width: 3.125rem;
     height: 3.125rem;
   }
 
-  .chat_other_wrap {
+  .rent-button {
+    width: 200px;
+    height: 40px;
+    border: none;
+    border-radius: 7px;
+    background-color: #f5f5f5;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    &:hover {
+      background-color: #e5e5e5;
+    }
+  }
+  .flex-div {
+    display: flex;
+  }
+  .order-button {
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 7px;
+    margin-left: 130px;
+    color: #fff;
+    background-color: rgb(71, 181, 255);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .other-wrap {
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
   }
-  .chat_other_name {
+
+  .other-name {
     font-size: 1rem;
   }
 
-  .chat_me_container {
+  .me-container {
     display: flex;
     flex-direction: row;
     justify-content: end;
@@ -86,19 +119,20 @@ export const StyledChatRoom = styled.div`
     gap: 0.5rem;
   }
 
-  .chat_other_container {
+  .other-container {
     display: flex;
     flex-direction: column;
     margin: 0.625rem 0;
     gap: 3px;
   }
-  .chat_other_msg_clock {
+
+  .other-msg-clock {
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
   }
 
-  .chat_other_profile {
+  .other-profile {
     margin-top: 10px;
     width: 3rem;
     height: 3rem;
@@ -106,26 +140,26 @@ export const StyledChatRoom = styled.div`
     aspect-ratio: 1/1;
   }
 
-  .chat_clock_box {
-    color: $color-medium;
+  .clock-box {
     font-size: 0.75rem;
     display: flex;
     flex-direction: column;
     justify-content: end;
   }
 
-  .chat_me_box {
-    background-color: $color-message;
-    border-bottom-left-radius: 0.75rem;
+  .me-box {
+    color: #fff;
+    background-color: rgb(71, 181, 255);
     border-top-left-radius: 0.75rem;
-    border-top-right-radius: 0.75rem;
+    border-bottom-left-radius: 0.75rem;
+    border-bottom-right-radius: 0.75rem;
     padding: 0.625rem 1rem;
     max-width: 80%;
   }
 
-  .chat_other_box {
-    color: #fff;
-    background-color: rgb(71, 181, 255);
+  .other-box {
+    color: #000;
+    background-color: #f5f5f5;
     border-bottom-right-radius: 0.75rem;
     border-bottom-left-radius: 0.75rem;
     border-top-right-radius: 0.75rem;
@@ -134,17 +168,29 @@ export const StyledChatRoom = styled.div`
     font-weight: 500;
   }
 
-  .chat_input_box {
+  .input-container {
+    position: fixed;
+    width: 50%;
+    min-width: 350px;
+    max-width: 500px;
+    left: 50%;
+    bottom: 0;
+    padding: 20px 50px;
+    margin-bottom: 50px;
+    transform: translateX(-50%);
+    border: 2px solid #e5e5e5;
+    border-radius: 10px;
+    background-color: #fff;
+  }
+  .input-box {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 2.625rem;
     gap: 0.625rem;
     width: 100%;
-    padding: 0 1rem;
   }
-
-  .chat_input {
+  .input {
     width: 100%;
     height: 3rem;
     border: none;
@@ -155,15 +201,5 @@ export const StyledChatRoom = styled.div`
     &:focus {
       outline: none;
     }
-  }
-  .chat_input_container {
-    position: fixed;
-    width: 50%;
-    min-width: 350px;
-    left: 50%;
-    bottom: 1rem;
-    padding-top: 10px;
-    transform: translateX(-52%);
-    height: 5rem;
   }
 `;
