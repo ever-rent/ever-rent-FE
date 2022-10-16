@@ -37,10 +37,15 @@ export const RecentItem = () => {
         break;
       } else {
         pagingData.push(recentItem?.[pageIndex[i]]);
+        // pagingData.filter((v, i, self) => self.indexOf(v) === i);
       }
     }
+
+    // const filteredPagingData = [...new Set(pagingData)];
     setPageItem(pagingData);
   };
+
+  // const filteredItems = pageItem.filter((v, i, self) => self.indexOf(v) === i);
 
   useEffect(() => {
     pagingFetching();
