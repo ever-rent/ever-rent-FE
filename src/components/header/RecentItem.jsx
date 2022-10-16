@@ -42,8 +42,11 @@ export const RecentItem = () => {
     setPageItem(pagingData);
   };
 
+  const [pageAll, setPageAll] = useState(1);
+
   useEffect(() => {
     pagingFetching();
+    setPageAll(parseInt(recentData?.length / 3) + 1);
   }, [page, recentItem]);
   console.log(pageItem);
 
@@ -66,7 +69,9 @@ export const RecentItem = () => {
             );
           })}
         </StyledImgBox>
-        <StyledPage>{page} / 3</StyledPage>
+        <StyledPage>
+          {page} / {pageAll}
+        </StyledPage>
       </StyledContentBox>
       <StyledPagingBox>
         <RecentPaging
