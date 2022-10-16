@@ -116,7 +116,10 @@ export const LocationSearch = ({
                         return(
                           <StyledSubItem 
                           key={index}
-                          onClick={()=>{setSearchLocatoun(item)}}
+                          onClick={()=>{
+                            setSearchLocatoun(item)
+                            setSearchResult(item);
+                          }}
                           
                           >{item}</StyledSubItem>
                         )
