@@ -26,14 +26,20 @@ export const Products = () => {
   const fetch = useCallback(async () => {
     try {
       const { data } = await auth.get(`/products?page=${page.current}`);
-      if (data.data.length === 12) {
-        setIsLoading(true);
-        setProducts((prevPosts) => [...prevPosts, ...data.data]);
-        setHasNextPage(data.data.length === 12);
-        page.current += 1;
-      } else {
-        setProducts((prevPosts) => [...prevPosts, ...data.data]);
-      }
+        if (data.data.length === 12) {
+          setIsLoading(true);
+          setTimeout(() => {
+            setProducts((prevPosts) => [...prevPosts, ...data.data]);
+            setHasNextPage(data.data.length === 12);
+            page.current += 1;
+          }, 800);
+        } else {
+          setIsLoading(true);
+          setTimeout(() => {
+            setProducts((prevPosts) => [...prevPosts, ...data.data]);
+            setHasNextPage(false)
+          }, 800);
+        }
     } catch (err) {
       console.error(err);
     }
@@ -47,7 +53,7 @@ export const Products = () => {
     }
     setTimeout(() => {
       setIsLoading(false);
-    }, 800);
+    }, 1000);
   }, [fetch, hasNextPage, inView]);
 
   console.log(products);
