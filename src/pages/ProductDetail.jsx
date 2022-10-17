@@ -167,7 +167,13 @@ export const ProductDetail = () => {
                 </StyledProductImagetWrap>
               </StyledPostHeadWrap>
               <StyledPostBodyWrap>
-                <StyledPostSubItems>
+                <StyledPostSubItems
+                  style={
+                    detailData?.imgUrlArray.length < 7
+                      ? { marginTop: "-100px" }
+                      : null
+                  }
+                >
                   <StyledImagesWrap>
                     <StyledChatImage
                       src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
@@ -285,10 +291,16 @@ export const ProductDetail = () => {
                 </StyledMobileProductImagetWrap>
               </StyledMobilePostHeadWrap>
               <StyledMobilePostBodyWrap>
-                <StyledMobilePostSubItems>
+                <StyledMobilePostSubItems
+                  style={
+                    detailData?.imgUrlArray.length < 7
+                      ? { marginTop: "-100px" }
+                      : null
+                  }
+                >
                   <StyledMobileImagesWrap>
                     <StyledChatImage
-                      src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
+                      src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
                       alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
                     />
                     <StyledChatImgAlt onClick={onCreateChatRoom}>
@@ -301,7 +313,7 @@ export const ProductDetail = () => {
                     onClick={openModal}
                   >
                     <StyledMapImage
-                      src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FZoOUr%2FbtrMtG2s1YT%2FLwGap5AgYCUktPDgK0hCik%2Fimg.png"
+                      src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FZoOUr%2FbtrMtG2s1YT%2FLwGap5AgYCUktPDgK0hCik%2Fimg.png"
                       alt="https://icons8.com/icon/WbyzmoN1bnxR/map-marker Map Marker icon by https://icons8.com Icons8"
                     />
                     <StyledMapImgAlt>위치</StyledMapImgAlt>
@@ -371,6 +383,7 @@ export const ProductDetail = () => {
 
 const StyledDetailProductContainer = styled.div`
   margin-top: 100px;
+  margin-bottom: 100px;
   display: flex;
   justify-content: center;
 
@@ -556,6 +569,7 @@ const StyledPostDescription = styled.div`
 
 const StyledMobileDetailContainer = styled.div`
   margin-top: 100px;
+  margin-bottom: 100px;
   display: flex;
   justify-content: center;
 

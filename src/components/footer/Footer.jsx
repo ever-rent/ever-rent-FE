@@ -74,9 +74,7 @@ export const Footer = () => {
           {/* <div>플러스 동동</div> */}
         </StyledMobileFootNav>
         <StyledMobileFixedButton
-          onClick={() => {
-            navigate("/addproduct");
-          }}
+          onClick={goAddProduct}
           src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fdkpt6F%2FbtrN5GrRGLP%2FMYYQzLfy3eV8MSN5kY72K0%2Fimg.png"
           alt="fixed버튼"
         />
