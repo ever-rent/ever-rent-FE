@@ -82,7 +82,7 @@ export const RentalCommonItem = ({ item, index }) => {
     } else if (index === 2) {
       return (
         <>
-          <span className="period">
+          <span className="apply">
             <div>
               신청 기간 : {buyStart} ~ {buyEnd}
             </div>
@@ -104,7 +104,7 @@ export const RentalCommonItem = ({ item, index }) => {
 
   const reservation = (index) => {
     if (index !== 0) {
-      return <span>예약자 : {memberName}</span>;
+      return <span className="resevation">예약자 : {memberName}</span>;
     } else {
       return;
     }
@@ -179,7 +179,7 @@ const StyledItem = styled.div`
       /* margin-bottom: 5px; */
     }
     .date {
-      font-size: 13px;
+      font-size: 15px;
       color: red;
       font-weight: 500;
     }
@@ -197,6 +197,15 @@ const StyledItem = styled.div`
     }
     .day {
       font-size: 13px;
+    }
+    .resevation {
+      font-size: 15px;
+      margin-top: 9px;
+    }
+    .apply {
+      color: #999;
+      font-size: 13px;
+      margin-top: 9px;
     }
   }
 `;
