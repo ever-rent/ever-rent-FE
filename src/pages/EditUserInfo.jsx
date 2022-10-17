@@ -1,18 +1,46 @@
 import { Layout } from "../components/layout/Layout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
+import { SelectAddress } from "../components/selectAddress/SelectAddress";
+
 import Swal from "sweetalert2";
+
+
+
 
 export const EditUserInfo = () => {
   const defaultImg =
     "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png";
 
   // 회원정보 state
-  const [userNickName, setUserNickName] = useState("닉네임");
-  const [userLocation, setUserLocation] = useState("주소1");
-  const [userSubLocation, setUserSubLocation] = useState("주소2");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [userNickName, setUserNickName] = useState("");
+  // const [userLocation, setUserLocation] = useState("주소1");
+  // const [userSubLocation, setUserSubLocation] = useState("주소2");
+  const [mainAddress, setMainAddress] = useState("");
+  const [subAddress, setSubAddress] = useState("");
   const [categoryInput, setCategoryInput] = useState("");
+
+  const [confirmStatus, setConfirmStatus] = useState(null);
+
+  useEffect(() => {
+    if (password === passwordConfirm && password.length > 0) {
+      setConfirmStatus(true);
+    }
+    if (password !== passwordConfirm) {
+      setConfirmStatus(false);
+    }
+  }, [password, passwordConfirm]);
+
+  console.log("메인", mainAddress);
+  console.log("서브", subAddress);
+
+  console.log(password);
+  console.log(passwordConfirm);
+  console.log(confirmStatus);
 
   // 이미지 처리
   const [imgView, setImgView] = useState();
@@ -51,24 +79,45 @@ export const EditUserInfo = () => {
 
   // formData
   let sendData = {
-    testcode: "testcode",
+    email: email,
+    password: passwordConfirm,
+    memberName: userNickName,
   };
 
   // 회원정보 수정
   const editMyInfo = () => {
-    Swal.fire({
-      title: "변경 내용을 저장할까요?",
-      icon: "info",
-      showCancelButton: true,
-      confirmButtonColor: "rgb(71, 181, 255)",
-      cancelButtonColor: "rgb(184, 221, 247)",
-      confirmButtonText: "탈퇴하기",
-      cancelButtonText: "취소",
-    }).then((result) => {
-      if (result.value) {
-        // 회원정보 수정 예정
-      }
-    });
+    if (
+      password === "" ||
+      passwordConfirm === "" ||
+      userNickName === "" ||
+      mainAddress === "" ||
+      confirmStatus !== true
+    ) {
+      Swal.fire({
+        title: "회원 정보를 확인해주세요",
+        icon: "warning",
+        confirmButtonColor: "rgb(71, 181, 255)",
+        confirmButtonText: "확인",
+      }).then((result) => {
+        if (result.value) {
+          // 회원정보 수정 예정
+        }
+      });
+    } else {
+      Swal.fire({
+        title: "변경 내용을 저장할까요?",
+        icon: "info",
+        showCancelButton: true,
+        confirmButtonColor: "rgb(71, 181, 255)",
+        cancelButtonColor: "rgb(184, 221, 247)",
+        confirmButtonText: "수정하기",
+        cancelButtonText: "취소",
+      }).then((result) => {
+        if (result.value) {
+          // 회원정보 수정 예정
+        }
+      });
+    }
   };
 
   return (
@@ -94,50 +143,100 @@ export const EditUserInfo = () => {
             </StyledInfoSubWrap>
           </StyledInfoWrap>
           <StyledInfoWrap>
-            <StyledInfoName
-              defaultValue={userNickName}
-              onClick={(e) => {
-                setUserNickName(e.target.value);
-              }}
-            >
-              닉네임
-            </StyledInfoName>
+            <StyledInfoName>닉네임</StyledInfoName>
             <StyledInfoSubWrap>
-              <StyledEditInput type="text" />
+              <StyledEditInput
+                type="text"
+                defaultValue={userNickName}
+                onChange={(e) => {
+                  setUserNickName(e.target.value);
+                }}
+              />
               <StyledEditSubName>
-                * 닉네임은 두 글자 이상 적어주세요!
+                * 닉네임은 두 글자 이상 적어주세요! (최대 14자)
               </StyledEditSubName>
             </StyledInfoSubWrap>
           </StyledInfoWrap>
           <StyledInfoWrap>
+            <StyledInfoName>비밀번호 변경</StyledInfoName>
+            <StyledInfoSubWrap>
+              <StyledEditInput
+                type="password"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+              />
+              <StyledEditSubName>
+                * 비밀번호는 8자리 이상 입력해주세요!
+              </StyledEditSubName>
+            </StyledInfoSubWrap>
+          </StyledInfoWrap>
+          <StyledInfoWrap>
+            <StyledInfoName>비밀번호 확인</StyledInfoName>
+            <StyledInfoSubWrap>
+              <StyledEditInput
+                type="password"
+                onChange={(e) => {
+                  setPasswordConfirm(e.target.value);
+                }}
+              />
+              <StyledEditSubName
+                style={confirmStatus === null ? null : { display: "none" }}
+              >
+                * 변경할 비밀번호와 똑같이 입력해주세요
+              </StyledEditSubName>
+              <StyledEditSubName
+                style={
+                  confirmStatus === true
+                    ? { color: "#28d928" }
+                    : { display: "none" }
+                }
+              >
+                * 비밀번호가 일치합니다.
+              </StyledEditSubName>
+              <StyledEditSubName
+                style={
+                  confirmStatus === false
+                    ? { color: "red" }
+                    : { display: "none" }
+                }
+              >
+                * 비밀번호를 확인해주세요.
+              </StyledEditSubName>
+            </StyledInfoSubWrap>
+          </StyledInfoWrap>
+
+          <StyledInfoWrap>
             <StyledInfoName
-              defaultValue={userLocation}
-              onClick={(e) => {
-                setUserLocation(e.target.value);
-              }}
+            // defaultValue={userLocation}
+            // onClick={(e) => {
+            //   setUserLocation(e.target.value);
+            // }}
             >
               주소1
             </StyledInfoName>
+            <SelectAddress setAddress={setMainAddress} />
             <StyledInfoSubWrap>
-              <StyledEditInput type="text" />
+              {/* <StyledEditInput type="text" /> */}
               <StyledEditSubName>
-                * 주 거래지역을 입력해주세요!
+                * 주 거래지역을 입력해주세요! (필수)
               </StyledEditSubName>
             </StyledInfoSubWrap>
           </StyledInfoWrap>
           <StyledInfoWrap>
             <StyledInfoName
-              defaultValue={userSubLocation}
-              onClick={(e) => {
-                setUserSubLocation(e.target.value);
-              }}
+            // defaultValue={userSubLocation}
+            // onClick={(e) => {
+            //   setUserSubLocation(e.target.value);
+            // }}
             >
               주소2
             </StyledInfoName>
+            <SelectAddress setAddress={setSubAddress} />
             <StyledInfoSubWrap>
-              <StyledEditInput type="text" />
+              {/* <StyledEditInput type="text" /> */}
               <StyledEditSubName>
-                * 주 거래지역을 입력해주세요!
+                * 주 거래지역을 입력해주세요! (선택)
               </StyledEditSubName>
             </StyledInfoSubWrap>
           </StyledInfoWrap>
@@ -203,6 +302,7 @@ export const EditUserInfo = () => {
 
 const StyledEditInfoContainer = styled.section`
   margin-top: 100px;
+  margin-bottom: 100px;
   display: flex;
   justify-content: center;
 `;
@@ -240,6 +340,7 @@ const StyledInfoName = styled.span`
 const StyledEditSubName = styled.span`
   color: #a8a8a8;
   font-size: 12px;
+  margin-left: 10px;
 `;
 const StyledInfoSubWrap = styled.div`
   display: flex;

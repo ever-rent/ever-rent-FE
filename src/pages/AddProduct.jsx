@@ -169,7 +169,14 @@ export const AddProduct = () => {
 
   // 유효성 검사 추가 예정(이미지/주소 등)
   const addProductPost = () => {
-    if (title === "" || description === "" || categoryInput === "") {
+    if (
+      title === "" ||
+      description === "" ||
+      categoryInput === "" ||
+      priceInput === "" ||
+      tradeLocation === "" ||
+      endDateInput === ""
+    ) {
       alert("제목/내용을 적어주세요!");
     } else {
       Swal.fire({
@@ -274,53 +281,61 @@ export const AddProduct = () => {
                   Expand Arrow icon by https://icons8.com Icons8"
                 </StyledImageSource>
                 <StyledOptionInputs>
-                  <StyledCategorySelector
-                    defaultValue="noneData"
-                    onChange={(e) => {
-                      setCategoryInput(e.target.value);
-                    }}
-                  >
-                    <StyledCategoryOptions value="noneData" disabled>
-                      상품 종류를 골라주세요!
-                    </StyledCategoryOptions>
-                    <StyledCategoryOptions value="1">
-                      디지털기기
-                    </StyledCategoryOptions>
-                    <StyledCategoryOptions value="2">
-                      공구
-                    </StyledCategoryOptions>
-                    <StyledCategoryOptions value="3">
-                      생활가전
-                    </StyledCategoryOptions>
-                    <StyledCategoryOptions value="4">
-                      잡화
-                    </StyledCategoryOptions>
-                    <StyledCategoryOptions value="5">
-                      스포츠/레저
-                    </StyledCategoryOptions>
-                    <StyledCategoryOptions value="6">
-                      취미/게임/음반
-                    </StyledCategoryOptions>
-                    <StyledCategoryOptions value="7">
-                      도서
-                    </StyledCategoryOptions>
-                    <StyledCategoryOptions value="8">
-                      기타
-                    </StyledCategoryOptions>
-                  </StyledCategorySelector>
-                  <StyledPriceWrap>
-                    <StyledPriceInput
-                      id="itemPrice"
-                      type="text"
-                      placeholder="가격"
-                      maxlength="8"
+                  <div>
+                    <StyledCategorySelector
+                      defaultValue="noneData"
                       onChange={(e) => {
-                        setPriceInput(e.target.value);
+                        setCategoryInput(e.target.value);
                       }}
-                    />
-                    <StyledPriceLabel htmlFor="itemPrice">원</StyledPriceLabel>
-                    <StyledPriceData> / 일</StyledPriceData>
-                  </StyledPriceWrap>
+                    >
+                      <StyledCategoryOptions value="noneData" disabled>
+                        상품 종류를 골라주세요!
+                      </StyledCategoryOptions>
+                      <StyledCategoryOptions value="1">
+                        디지털기기
+                      </StyledCategoryOptions>
+                      <StyledCategoryOptions value="2">
+                        공구
+                      </StyledCategoryOptions>
+                      <StyledCategoryOptions value="3">
+                        생활가전
+                      </StyledCategoryOptions>
+                      <StyledCategoryOptions value="4">
+                        잡화
+                      </StyledCategoryOptions>
+                      <StyledCategoryOptions value="5">
+                        스포츠/레저
+                      </StyledCategoryOptions>
+                      <StyledCategoryOptions value="6">
+                        취미/게임/음반
+                      </StyledCategoryOptions>
+                      <StyledCategoryOptions value="7">
+                        도서
+                      </StyledCategoryOptions>
+                      <StyledCategoryOptions value="8">
+                        기타
+                      </StyledCategoryOptions>
+                    </StyledCategorySelector>
+                    <StyledWriteOnly>*</StyledWriteOnly>
+                  </div>
+                  <div>
+                    <StyledPriceWrap>
+                      <StyledPriceInput
+                        id="itemPrice"
+                        type="text"
+                        placeholder="가격"
+                        maxlength="8"
+                        onChange={(e) => {
+                          setPriceInput(e.target.value);
+                        }}
+                      />
+                      <StyledPriceLabel htmlFor="itemPrice">
+                        원
+                      </StyledPriceLabel>
+                      <StyledPriceData> / 일</StyledPriceData>
+                      <StyledWriteOnly>*</StyledWriteOnly>
+                    </StyledPriceWrap>
+                  </div>
                   <StyledDateWrap>
                     <RangeCalrendar startEndDays={startEndDays} />
                   </StyledDateWrap>
@@ -329,7 +344,7 @@ export const AddProduct = () => {
 
               <StyledPostLocation
                 type="text"
-                placeholder="거래 장소를 입력해주세요!"
+                placeholder="거래 장소를 입력해주세요! (필수!)"
                 onClick={() => setShowMapSearch(true)}
                 onChange={(e) => {
                   setTradeLocation(e.target.value);
@@ -456,32 +471,43 @@ export const AddProduct = () => {
                 </StyledMobileImageSource>
               </StyledMobilePostHeadWrap>
               <StyledMobileOptionInputs>
-                <StyledMobileCategorySelector
-                  defaultValue="noneData"
-                  onChange={(e) => {
-                    setCategoryInput(e.target.value);
-                  }}
-                >
-                  <StyledCategoryOptions value="noneData" disabled>
-                    상품 종류를 골라주세요!
-                  </StyledCategoryOptions>
-                  <StyledCategoryOptions value="1">
-                    디지털기기
-                  </StyledCategoryOptions>
-                  <StyledCategoryOptions value="2">공구</StyledCategoryOptions>
-                  <StyledCategoryOptions value="3">
-                    생활가전
-                  </StyledCategoryOptions>
-                  <StyledCategoryOptions value="4">잡화</StyledCategoryOptions>
-                  <StyledCategoryOptions value="5">
-                    스포츠/레저
-                  </StyledCategoryOptions>
-                  <StyledCategoryOptions value="6">
-                    취미/게임/음반
-                  </StyledCategoryOptions>
-                  <StyledCategoryOptions value="7">도서</StyledCategoryOptions>
-                  <StyledCategoryOptions value="8">기타</StyledCategoryOptions>
-                </StyledMobileCategorySelector>
+                <div>
+                  <StyledMobileCategorySelector
+                    defaultValue="noneData"
+                    onChange={(e) => {
+                      setCategoryInput(e.target.value);
+                    }}
+                  >
+                    <StyledCategoryOptions value="noneData" disabled>
+                      상품 종류를 골라주세요!
+                    </StyledCategoryOptions>
+                    <StyledCategoryOptions value="1">
+                      디지털기기
+                    </StyledCategoryOptions>
+                    <StyledCategoryOptions value="2">
+                      공구
+                    </StyledCategoryOptions>
+                    <StyledCategoryOptions value="3">
+                      생활가전
+                    </StyledCategoryOptions>
+                    <StyledCategoryOptions value="4">
+                      잡화
+                    </StyledCategoryOptions>
+                    <StyledCategoryOptions value="5">
+                      스포츠/레저
+                    </StyledCategoryOptions>
+                    <StyledCategoryOptions value="6">
+                      취미/게임/음반
+                    </StyledCategoryOptions>
+                    <StyledCategoryOptions value="7">
+                      도서
+                    </StyledCategoryOptions>
+                    <StyledCategoryOptions value="8">
+                      기타
+                    </StyledCategoryOptions>
+                  </StyledMobileCategorySelector>
+                  <StyledWriteOnly>*</StyledWriteOnly>
+                </div>
                 <StyledPriceWrap>
                   <StyledMobilePriceInput
                     id="itemPrice"
@@ -496,6 +522,7 @@ export const AddProduct = () => {
                     원
                   </StyledMobilePriceLabel>
                   <StyledMobilePriceData> / 일</StyledMobilePriceData>
+                  <StyledWriteOnly>*</StyledWriteOnly>
                 </StyledPriceWrap>
                 <StyledDateWrap>
                   <RangeCalrendar startEndDays={startEndDays} />
@@ -504,7 +531,7 @@ export const AddProduct = () => {
 
               <StyledMobilePostLocation
                 type="text"
-                placeholder="거래 장소를 적어주세요!"
+                placeholder="거래 장소를 적어주세요! (필수!)"
                 onClick={() => setShowMapSearch(true)}
                 onChange={(e) => {
                   setTradeLocation(e.target.value);
@@ -580,6 +607,7 @@ export const AddProduct = () => {
 
 const StyledAddProductContainer = styled.div`
   margin-top: 100px;
+  margin-bottom: 100px;
   display: flex;
   justify-content: center;
 
@@ -840,10 +868,16 @@ const StyledFormButton = styled.button`
   }
 `;
 
+const StyledWriteOnly = styled.span`
+  margin-left: 10px;
+  color: red;
+`;
+
 // for Mobile
 
 const StyledMobileContainer = styled.div`
   margin-top: 100px;
+  margin-bottom: 100px;
   display: flex;
   justify-content: center;
 
