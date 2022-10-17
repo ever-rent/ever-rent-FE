@@ -13,9 +13,11 @@ export const StyledChatRoom = styled.div`
     width: 50%;
     min-width: 350px;
     max-width: 500px;
-    height: 650px;
-    margin: 5rem auto 0;
-    padding: 8rem 1rem;
+    height: 65vh;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    padding: 0 10px;
+    margin: 10rem auto 0;
   }
 
   .head-wrap {
@@ -169,15 +171,11 @@ export const StyledChatRoom = styled.div`
   }
 
   .input-container {
-    position: fixed;
     width: 50%;
     min-width: 350px;
     max-width: 500px;
-    left: 50%;
-    bottom: 0;
-    padding: 20px 50px;
-    margin-bottom: 50px;
-    transform: translateX(-50%);
+    padding: 20px 10px;
+    margin: 0 auto;
     border: 2px solid #e5e5e5;
     border-radius: 10px;
     background-color: #fff;

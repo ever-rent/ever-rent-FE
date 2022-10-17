@@ -12,8 +12,8 @@ export const ChatRoomItem = ({ item }) => {
   );
 
   const productData = data?.data.data;
-  console.log("request id:", item.productId);
-  console.log("response id:", productData?.id);
+
+  console.log(item);
 
   const detailDate = (lastTime) => {
     const seconds = (new Date() - lastTime) / 1000 - 32400;
@@ -56,9 +56,7 @@ export const ChatRoomItem = ({ item }) => {
             </div>
             <div className="time-info">{nowDate}</div>
           </div>
-          <div className="last-message">
-            {item.lastMessage}
-          </div>
+          <div className="last-message">{item.lastMessage}</div>
         </div>
         <div className="product-img-div">
           <img

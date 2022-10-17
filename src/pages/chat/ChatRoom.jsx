@@ -112,7 +112,7 @@ export const ChatRoom = () => {
       JSON.stringify(otherChatMessage)
     );
   };
-  
+
   const queryClient = useQueryClient();
 
   const updateChatMessage = () => {
@@ -247,7 +247,7 @@ export const ChatRoom = () => {
   return (
     <StyledChatRoom>
       <div className="head-wrap">
-        <ChatHeader quitRoom={quitRoom} />
+        <ChatHeader isChatRoom={true} quitRoom={quitRoom} />
         <div className="head-container">
           <div className="head-box">
             <div
@@ -261,9 +261,7 @@ export const ChatRoom = () => {
               />
             </div>
             <div className="head-text-box">
-              <div className="head-title">
-                {productDetail?.productName}
-              </div>
+              <div className="head-title">{productDetail?.productName}</div>
               <div className="head-cost">
                 <FaMoneyBillAlt />
                 {postPrice}원
@@ -337,9 +335,7 @@ export const ChatRoom = () => {
                 ) : (
                   <div className="me-container">
                     <div className="clock-box">
-                      <div className="clock">
-                        {detailTime(chat.createdAt)}
-                      </div>
+                      <div className="clock">{detailTime(chat.createdAt)}</div>
                     </div>
                     <div className="me-box">{chat.message}</div>
                   </div>
@@ -350,10 +346,7 @@ export const ChatRoom = () => {
         </Scrollbars>
       </div>
       <div className="input-container">
-        <form
-          className="input-box"
-          onSubmit={(event) => onKeyPress(event)}
-        >
+        <form className="input-box" onSubmit={(event) => onKeyPress(event)}>
           <input
             className="input"
             type="text"
