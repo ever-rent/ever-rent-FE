@@ -26,7 +26,9 @@ export const MyWishItem = ({ item }) => {
     <>
       <Desktop>
         <StyledItem>
-          <img src={`${imgFirstString}${imgUrlArray[0]}`} alt="img" />
+          <StyledImgBox>
+            <img src={`${imgFirstString}${imgUrlArray[0]}`} alt="img" />
+          </StyledImgBox>
           {/* <img src={imgUrlArray[1]} alt="img" /> */}
           <div className="span-div">
             <span>
@@ -73,7 +75,7 @@ const StyledItem = styled.div`
   display: flex;
   width: 100%;
   position: relative;
-  padding: 10px;
+  /* padding: 10px; */
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   .like {
     position: absolute;
@@ -89,8 +91,9 @@ const StyledItem = styled.div`
   }
   .span-div {
     display: flex;
+    padding: 10px 0;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
     .title {
       font-size: 16px;
       font-weight: 500;
@@ -106,6 +109,15 @@ const StyledItem = styled.div`
   }
 `;
 
+const StyledImgBox = styled.div`
+  width: 100px;
+  height: 100px;
+  padding: 5px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+`;
 const StyledPay = styled.span`
   /* border: 1px solid red; */
   font-weight: 600;
