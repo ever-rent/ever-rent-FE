@@ -27,7 +27,12 @@ export const mypageAPI = {
   getWishList: () => auth.get(`/mypages/myWishs`),
 };
 
-export const chatAPI = {};
+export const chatAPI = {
+  getChatRoomList: () => auth.get("/chat/rooms"),
+  getChatMessage: (roomId) => auth.get(`/chat/message/${roomId}`),
+  createChatRoom: (productId) => auth.post(`/create/chat/${productId}`),
+  postOrderDate: (productId, data) => auth.post(`/orders/${productId}`, data),
+};
 
 // imgUrlArray firstString
 // env 설정 예정

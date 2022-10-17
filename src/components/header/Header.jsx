@@ -5,19 +5,19 @@ import { useDispatch } from "react-redux";
 import { openNav } from "../../redux/modules/navSlice";
 import { Desktop, Mobile } from "../../Hooks/MideaQuery";
 import Swal from "sweetalert2";
+import { RecentItem } from "./RecentItem";
 
 export const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [isLogin, setIsLogin] = useState(false);
-
   const [submitData, setSubmitData] = useState("");
-  const goSearch = (e)=>{
+
+  const goSearch = (e) => {
     e.preventDefault();
-    navigate(`/searchItems/${submitData}`)
-  }
-  
+    navigate(`/searchItems/${submitData}`);
+  };
+
   return (
     <>
       <Desktop>
@@ -31,50 +31,56 @@ export const Header = () => {
             />
           </StyledLogoImageWrap>
           <StyledHeaderWrap>
-            <StyledSearchWrap onSubmit={(e)=>goSearch(e)}>
+            <StyledSearchWrap onSubmit={(e) => goSearch(e)}>
               <StyledSearchButton
                 type="button"
                 alt="https://icons8.com/icon/59878/search https://icons8.com Icons8"
-                
               />
               <StyledSearchInput
                 type="text"
                 placeholder="지역, 물품명으로 찾아보세요"
                 maxLength={35}
-                onChange={(e)=>setSubmitData(e.target.value)}
+                onChange={(e) => setSubmitData(e.target.value)}
               />
             </StyledSearchWrap>
           </StyledHeaderWrap>
           <StyledSignMenu>
-            <StyledLoginTab>
-              <StyledLoginSpan
-                onClick={() => {
-                  navigate("/login");
-                }}
-              >
-                로그인
-              </StyledLoginSpan>
-              <StyledLoginSpan
-                onClick={() => {
-                  navigate("/join");
-                }}
-              >
-                회원가입
-              </StyledLoginSpan>
-            </StyledLoginTab>
-            <StyledAddProductButton
-              onClick={() => {
-                navigate("/addProduct");
-              }}
-            >
-              글쓰기
-            </StyledAddProductButton>
+            {localStorage.getItem("memberId") ? (
+              <>
+                <span onClick={() => navigate("/chatRoomList")}>채팅목록</span>
+                <StyledAddProductButton
+                  onClick={() => {
+                    navigate("/addProduct");
+                  }}
+                >
+                  글쓰기
+                </StyledAddProductButton>
+              </>
+            ) : (
+              <StyledLoginTab>
+                <StyledLoginSpan
+                  onClick={() => {
+                    navigate("/login");
+                  }}
+                >
+                  로그인
+                </StyledLoginSpan>
+                <StyledLoginSpan
+                  onClick={() => {
+                    navigate("/join");
+                  }}
+                >
+                  회원가입
+                </StyledLoginSpan>
+              </StyledLoginTab>
+            )}
           </StyledSignMenu>
           <StyledSideMenu
             onClick={() => dispatch(openNav())}
             alt="https://icons8.com/icon/36389/menu-rounded Menu Rounded https://icons8.com"
           />
         </StyledHeaderTop>
+        <RecentItem />
       </Desktop>
       {/* ################ 모바일 ################ */}
       <Mobile>
@@ -91,7 +97,7 @@ export const Header = () => {
                 maxLength={35}
               />
             </StyledMobileSearchWrap>
-            {isLogin === true ? (
+            {localStorage.getItem("memberId") ? (
               <StyledMobileAddProductButton
                 onClick={() => {
                   navigate("/addProduct");

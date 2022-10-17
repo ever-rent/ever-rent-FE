@@ -19,6 +19,8 @@ export const BorrowCommonList = (props) => {
 };
 
 const StyledListContainer = styled.div`
+  margin-top: 20px;
+
   animation: fadein 0.8s;
   @keyframes fadein {
     from {

@@ -27,7 +27,7 @@ export const Profile = ({ like, setLike }) => {
 
   const profileImg =
     info?.imgUrl == null
-      ? `https://source.boringavatars.com/beam/110/${info?.memberName}?colors=7965EE,6FE7F1,FFDD4C,46B5FF,2883E0`
+      ? `https://source.boringavatars.com/beam/110/${info?.id}?colors=7965EE,6FE7F1,FFDD4C,46B5FF,2883E0`
       : info?.imgUrl;
 
   return (
@@ -145,8 +145,8 @@ const StyledProfileBox = styled.div`
 
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 10px;
-  padding: 30px 0 0 0;
-  height: 380px;
+  padding: 15px 0 10px 0;
+  height: 340px;
   grid-row: 1/3;
   @media only screen and (max-width: 767px) {
     /* border: 1px solid yellow; */

@@ -6,12 +6,11 @@ import { Desktop, Mobile } from "../../Hooks/MideaQuery";
 
 export const Footer = () => {
   const navigate = useNavigate();
+  const isLogin = localStorage.getItem("memberId") ? true : false;
 
-  const [isLogin, setIsLogin] = useState(false);
-
-  const goAddProduct = () => {
-    isLogin === true
-      ? navigate("/addproduct")
+  const goChatRoomList = () => {
+    isLogin
+      ? navigate("/chatRoomList")
       : Swal.fire({
           position: "middle",
           icon: "warning",
@@ -21,8 +20,9 @@ export const Footer = () => {
           width: "300px",
         });
   };
+
   const goMyPage = () => {
-    isLogin === true
+    isLogin
       ? navigate("/addproduct")
       : Swal.fire({
           position: "middle",
@@ -55,13 +55,15 @@ export const Footer = () => {
             />
             <StyledImgSpan>홈으로</StyledImgSpan>
           </StyledNavImgWrap>
-          <StyledNavImgWrap onClick={goAddProduct}>
+
+          <StyledNavImgWrap onClick={goChatRoomList}>
             <StyledMypageImg
               src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
               alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
             />
             <StyledImgSpan>채팅</StyledImgSpan>
           </StyledNavImgWrap>
+
           <StyledNavImgWrap onClick={goMyPage}>
             <StyledMypageImg
               src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdqldLh%2FbtrN4aOcYSX%2FGfQqgud8sKNpsj7fXcBTRK%2Fimg.png"

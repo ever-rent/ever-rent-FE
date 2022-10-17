@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef, useCallback } from "react";
 import styled from "styled-components";
 import { ProductsItem } from "./ProductsItem";
 import { Skeleton } from "../../skeleton/Skeleton";
-
 import { useInView } from "react-intersection-observer";
 import { base } from "../../../server/core/instance";
 import { auth } from "../../../server/core/instance";
@@ -45,6 +44,7 @@ export const Products = () => {
     }
   }, []);
 
+  // console.log(products);
   // ref / scroll 교차 시 데이터 패치
   useEffect(() => {
     console.log(inView, hasNextPage);
@@ -61,7 +61,7 @@ export const Products = () => {
   return (
     <>
       <Desktop>
-        {/* <BestProducts /> */}
+        <BestProducts />
         <StyledProductsContainer>
           <StyledProductsGrid>
             {products?.map((product) => {
@@ -106,6 +106,7 @@ export const Products = () => {
 const StyledProductsContainer = styled.div`
   max-width: 1024px;
   margin: 40px auto;
+  position: relative;
 `;
 
 const StyledProductsGrid = styled.div`

@@ -10,19 +10,16 @@ export const ChatHeader = ({ quitRoom }) => {
 
   return (
     <StyledChatHeader>
-      <div className="chat_header_container">
-        <div className="header_wrap">
-          <div className="header_content">
-            <HiOutlineChevronLeft
-              style={{ marginRight: "22px", cursor: "pointer" }}
-              color="#212121"
-              size="24px"
-              onClick={() => navigate(-1)}
-            />
-            <div className="header_title">&nbsp;</div>
-            <div className="header_done" onClick={() => quitRoom()}>
-              나가기
-            </div>
+      <div className="header_wrap">
+        <div className="header_content">
+          <HiOutlineChevronLeft
+            style={{ marginRight: "22px", cursor: "pointer" }}
+            color="#212121"
+            size="24px"
+            onClick={() => navigate(-1)}
+          />
+          <div className="header_done" onClick={() => quitRoom()}>
+            채팅방 나가기
           </div>
         </div>
       </div>

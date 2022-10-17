@@ -86,15 +86,17 @@ const StyledRentalBar = styled.a`
   width: 100px;
   height: 40px;
   line-height: 40px;
-  /* background: #000; */
-  /* color: #fff; */
   text-align: center;
   font-weight: bold;
   margin: 30px;
-  transition: 0.6s;
-
+  color: gray;
+  transition: 0.1s;
   cursor: pointer;
+  :hover {
+    transform: scale(1.1);
+  }
   .select {
+    color: black;
     ::after {
       content: "";
       width: 0px;

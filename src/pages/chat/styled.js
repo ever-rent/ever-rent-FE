@@ -1,43 +1,52 @@
 import styled from "styled-components";
 
 export const StyledChatRoomList = styled.div`
-  .chattingroom_wrap {
-    display: flex;
-    flex-direction: column;
-    padding: 0 1rem;
-    margin-bottom: 84px;
-  }
+  width: 50%;
+  min-width: 350px;
+  max-width: 650px;
+  margin: 0 auto;
+  padding: ${({ isSideNav }) => (isSideNav ? 0 : "2rem")};
 `;
 
 export const StyledChatRoom = styled.div`
-  .chat_container {
-    width: 100%;
-    height: 100%;
-    padding: 8.5rem 0.75rem 5.5rem;
+  .container {
+    width: 50%;
+    min-width: 350px;
+    max-width: 500px;
+    height: 650px;
+    margin: 5rem auto 0;
+    padding: 8rem 1rem;
   }
-  .chat_head_wrap {
+
+  .head-wrap {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+  }
+  .head-container {
+    display: flex;
+    justify-content: space-around;
     position: fixed;
     width: 100%;
+    min-width: 350px;
+    border: 2px solid #e5e5e5;
+    border-radius: 10px;
+    background-color: #fff;
+    padding: 1rem 0;
+    z-index: 1;
   }
-  .chat_head_container {
-    padding: 0 1rem;
-    width: 100%;
-    max-width: 420px;
+  .head-box {
     display: flex;
-    position: fixed;
-    flex-direction: row;
-    background-color: $color-white;
-    z-index: 4;
-    height: 4.375rem;
+    gap: 1rem;
   }
-  .chat_head_box {
-    width: 100%;
-    border-bottom: 1px solid $color-sub;
-    display: flex;
-    flex-direction: row;
-    gap: 0.75rem;
-  }
-  .chat_head_img {
+  .head-img {
     width: 100%;
     height: 100%;
     border-radius: 7px;
@@ -45,52 +54,64 @@ export const StyledChatRoom = styled.div`
     aspect-ratio: 1/1;
     object-fit: cover;
   }
-  .chat_head_text_box {
-    display: flex;
-    flex-direction: column;
-    height: 3.125rem;
-    justify-content: center;
-    gap: 3px;
+  .head-text-box {
+    height: 3rem;
     cursor: pointer;
   }
-  .chat_head_title {
-    font-size: 0.9375rem;
-    color: $color-primary;
+  .head-title {
+    font-size: 1rem;
     font-weight: 600;
   }
-  .chat_head_cost {
+  .head-cost {
     display: flex;
-    flex-direction: row;
-    gap: 5px;
-    font-size: 0.875rem;
+    align-items: center;
+    gap: 0.25rem;
   }
-  .chat_head_cost_icon_box {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .chat_head_cost_icon {
-    width: 13px;
-    height: 13px;
-  }
-
-  .chat_head_img_box {
+  .head-img-box {
     width: 3.125rem;
     height: 3.125rem;
   }
 
-  .chat_other_wrap {
+  .rent-button {
+    width: 200px;
+    height: 40px;
+    border: none;
+    border-radius: 7px;
+    background-color: #f5f5f5;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    &:hover {
+      background-color: #e5e5e5;
+    }
+  }
+  .flex-div {
+    display: flex;
+  }
+  .order-button {
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 7px;
+    margin-left: 130px;
+    color: #fff;
+    background-color: rgb(71, 181, 255);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .other-wrap {
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
   }
 
-  .chat_other_name {
-    color: $color-medium;
-    font-size: 0.875rem;
+  .other-name {
+    font-size: 1rem;
   }
 
-  .chat_me_container {
+  .me-container {
     display: flex;
     flex-direction: row;
     justify-content: end;
@@ -98,19 +119,20 @@ export const StyledChatRoom = styled.div`
     gap: 0.5rem;
   }
 
-  .chat_other_container {
+  .other-container {
     display: flex;
     flex-direction: column;
     margin: 0.625rem 0;
     gap: 3px;
   }
-  .chat_other_msg_clock {
+
+  .other-msg-clock {
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
   }
 
-  .chat_other_profile {
+  .other-profile {
     margin-top: 10px;
     width: 3rem;
     height: 3rem;
@@ -118,85 +140,66 @@ export const StyledChatRoom = styled.div`
     aspect-ratio: 1/1;
   }
 
-  .chat_clock_box {
-    color: $color-medium;
+  .clock-box {
     font-size: 0.75rem;
     display: flex;
     flex-direction: column;
     justify-content: end;
   }
 
-  .chat_me_box {
-    background-color: $color-message;
-    border-bottom-left-radius: 0.75rem;
+  .me-box {
+    color: #fff;
+    background-color: rgb(71, 181, 255);
     border-top-left-radius: 0.75rem;
-    border-top-right-radius: 0.75rem;
+    border-bottom-left-radius: 0.75rem;
+    border-bottom-right-radius: 0.75rem;
     padding: 0.625rem 1rem;
     max-width: 80%;
   }
 
-  .chat_other_box {
-    background-color: $color-light;
+  .other-box {
+    color: #000;
+    background-color: #f5f5f5;
     border-bottom-right-radius: 0.75rem;
     border-bottom-left-radius: 0.75rem;
     border-top-right-radius: 0.75rem;
-    padding: 0.625rem 1rem;
+    padding: 0.5rem 1rem;
     max-width: 75%;
+    font-weight: 500;
   }
 
-  .chat_input_box {
+  .input-container {
+    position: fixed;
+    width: 50%;
+    min-width: 350px;
+    max-width: 500px;
+    left: 50%;
+    bottom: 0;
+    padding: 20px 50px;
+    margin-bottom: 50px;
+    transform: translateX(-50%);
+    border: 2px solid #e5e5e5;
+    border-radius: 10px;
+    background-color: #fff;
+  }
+  .input-box {
     display: flex;
-    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     height: 2.625rem;
     gap: 0.625rem;
     width: 100%;
-    padding: 0 1rem;
   }
-
-  .chat_input {
+  .input {
     width: 100%;
-    height: 2.625rem;
+    height: 3rem;
     border: none;
-    background-color: $color-light;
-    border-radius: 0.43rem;
-    padding: 0 0.9rem;
-    margin: auto;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    padding: 0 1rem;
     font-size: 1rem;
     &:focus {
       outline: none;
     }
-  }
-
-  .chat_input_button_box {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100%;
-  }
-  .chat_input_button {
-    width: 1.5rem;
-    height: 1.5rem;
-    border: none;
-    background-color: $color-white;
-  }
-  .chat_button_icon {
-    width: 100%;
-    height: 100%;
-    background-color: none;
-  }
-
-  .chat_input_container {
-    position: fixed;
-    background-color: $color-white;
-    width: 100%;
-    max-width: 420px;
-    left: 50%;
-    bottom: 0;
-    padding-top: 10px;
-    transform: translateX(-50%);
-    height: 5.5rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
   }
 `;

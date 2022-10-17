@@ -9,8 +9,19 @@ import { dateToTime } from "../../util/timeToToday";
 
 export const RentalCommonItem = ({ item, index }) => {
   const dispatch = useDispatch();
-  const { id, price, imgUrlArray, productName, content, memberName, rentEnd } =
-    item;
+  const {
+    id,
+    price,
+    imgUrlArray,
+    productName,
+    content,
+    memberName,
+    rentStart,
+    rentEnd,
+    buyStart,
+    buyEnd,
+  } = item;
+  // console.log(item);
 
   console.log("RentalCommonItem", item);
 
@@ -30,14 +41,59 @@ export const RentalCommonItem = ({ item, index }) => {
     if (index === 1) {
       return (
         <div>
-          <button onClick={acceptHandler}>수락</button>
-          <button>거절</button>
+          <StyledReservationbutton onClick={acceptHandler}>
+            수락
+          </StyledReservationbutton>
+          <StyledReservationbutton>거절</StyledReservationbutton>
         </div>
       );
     } else {
       return;
     }
   };
+
+  const priceBox = (index) => {
+    if (index === 0 || index === 1) {
+      return (
+        <>
+          <span>
+            <span className="price">{price}원</span>
+            <span className="day">/ 일</span>
+          </span>
+        </>
+      );
+    } else {
+      return;
+    }
+  };
+
+  const period = (index) => {
+    if (index === 0 || index === 1) {
+      return (
+        <>
+          <span className="period">
+            {rentStart} ~ {rentEnd}
+          </span>
+          <span className="date">
+            <div>남은기간 : {rentStatus}</div>
+          </span>
+        </>
+      );
+    } else if (index === 2) {
+      return (
+        <>
+          <span className="period">
+            <div>
+              신청 기간 : {buyStart} ~ {buyEnd}
+            </div>
+          </span>
+        </>
+      );
+    } else {
+      return;
+    }
+  };
+
   const insertImg = (index) => {
     if (index === 0) {
       return <img src={`${imgFirstString}${imgUrlArray[0]}`} alt="img" />;
@@ -54,7 +110,6 @@ export const RentalCommonItem = ({ item, index }) => {
     }
   };
 
-  
   const [rentStatus, setRentStatus] = useState("");
   console.log("createdAt", rentStatus);
 
@@ -67,36 +122,27 @@ export const RentalCommonItem = ({ item, index }) => {
     <>
       <Desktop>
         <StyledItem>
-          {insertImg(index)}
-          <div className="span-div">
+          <div>{insertImg(index)}</div>
+          <StyledContentBox className="span-div">
             <span className="title">{productName}</span>
-            <span>{content}</span>
-            <span>
-              남은 기간 :{" "}
-              <span className="date">
-                {dateToTime(item?.rentEnd)}
-                {/* {createdAt !== undefined ? createdAt : createdAt} */}
-                <div>테스트(남은기간) : {rentStatus}</div>
-              </span>
-            </span>
+            {priceBox(index)}
+            {period(index)}
             {reservation(index)}
-          </div>
-          <div>{acceptAndReject(index)}</div>
+          </StyledContentBox>
+          {acceptAndReject(index)}
         </StyledItem>
       </Desktop>
 
       <Mobile>
         <StyledMobileItem>
           {insertImg(index)}
-          <div className="span-div">
+          <StyledContentBox className="span-div">
             <span className="title">{productName}</span>
-            <span>{content}</span>
-            <span>
-              {/* 남은 기간 : <span className="date">{createdAt}</span> */}
-            </span>
+            {priceBox(index)}
+            {period(index)}
             {reservation(index)}
-          </div>
-          <div>{acceptAndReject(index)}</div>
+          </StyledContentBox>
+          {acceptAndReject(index)}
         </StyledMobileItem>
       </Mobile>
     </>
@@ -109,6 +155,7 @@ const StyledItem = styled.div`
   display: flex;
   position: relative;
   padding: 10px;
+  margin-bottom: 5px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   .like {
     position: absolute;
@@ -126,14 +173,50 @@ const StyledItem = styled.div`
     display: flex;
     flex-direction: column;
     .title {
-      color: #999;
-      font-size: 12px;
+      /* color: #999; */
+      font-size: 17px;
+      font-weight: 600;
+      /* margin-bottom: 5px; */
     }
     .date {
+      font-size: 13px;
       color: red;
-      font-weight: bold;
+      font-weight: 500;
+    }
+    .content {
+      color: #999;
+    }
+    .price {
+      /* color: #0092f3; */
+      font-weight: 600;
+      /* font-size: 12px; */
+    }
+    .period {
+      color: #999;
+      font-size: 13px;
+    }
+    .day {
+      font-size: 13px;
     }
   }
+`;
+
+const StyledContentBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+const StyledReservationbutton = styled.button`
+  background-color: #47b5ff;
+  color: white;
+  /* position: absolute; */
+  /* top: 47px; */
+  border: transparent;
+  border-radius: 3px;
+  padding: 4px 5px;
+  cursor: pointer;
+  min-width: max-content;
 `;
 
 const StyledMobileItem = styled.div`
@@ -141,7 +224,7 @@ const StyledMobileItem = styled.div`
   display: flex;
   position: relative;
   padding: 10px;
-  margin-top: 10px;
+  /* margin-bottom: 7px; */
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   .like {
     position: absolute;
@@ -159,12 +242,28 @@ const StyledMobileItem = styled.div`
     display: flex;
     flex-direction: column;
     .title {
-      color: #999;
-      font-size: 12px;
+      font-size: 17px;
+      font-weight: 600;
     }
     .date {
+      font-size: 13px;
       color: red;
-      font-weight: bold;
+      font-weight: 500;
+    }
+    .content {
+      color: #999;
+    }
+    .price {
+      /* color: #0092f3; */
+      font-weight: 600;
+      /* font-size: 12px; */
+    }
+    .period {
+      color: #999;
+      font-size: 13px;
+    }
+    .day {
+      font-size: 13px;
     }
   }
 `;

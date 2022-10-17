@@ -1,11 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { imgFirstString } from "../../server/api";
 import { Desktop, Mobile } from "../../Hooks/MideaQuery";
+import { timeToToday } from "../../util/timeToToday";
 
 export const MyWishItem = ({ item }) => {
-  console.log(item);
-  const { imgUrlArray, price, productName } = item;
+  console.log("MyWishItem>>", item);
+  const {
+    imgUrlArray,
+    price,
+    productName,
+    mapLocation,
+    memberName,
+    productWriteAt,
+  } = item;
+
+  // 글 작성 시간
+  const [createdAt, setCreatedAt] = useState("");
+
+  useEffect(() => {
+    setCreatedAt(timeToToday(productWriteAt));
+  }, [productWriteAt]);
+
   return (
     <>
       <Desktop>
@@ -13,24 +29,39 @@ export const MyWishItem = ({ item }) => {
           <img src={`${imgFirstString}${imgUrlArray[0]}`} alt="img" />
           {/* <img src={imgUrlArray[1]} alt="img" /> */}
           <div className="span-div">
-            <span className="title"> 상품명 : {productName}</span>
-            <span> 가격 : {price}</span>
-            {/* <span>
-          남은 기간 : <span className="date">3일</span>
-        </span> */}
+            <span>
+              <span className="title">{productName}</span>
+              {/* <span className="writer">작성자 : {memberName}</span> */}
+              <br />
+              <span className="date">
+                {mapLocation} ∙ {createdAt}
+              </span>
+            </span>
+            <span>
+              <StyledPay>{price}</StyledPay>
+              <StyledDay> / 일</StyledDay>
+            </span>
           </div>
         </StyledItem>
       </Desktop>
+
       <Mobile>
         <StyledMobileItem>
           <img src={`${imgFirstString}${imgUrlArray[0]}`} alt="img" />
           {/* <img src={imgUrlArray[1]} alt="img" /> */}
           <div className="span-div">
-            <span className="title"> 상품명 : {productName}</span>
-            <span> 가격 : {price}</span>
-            {/* <span>
-          남은 기간 : <span className="date">3일</span>
-        </span> */}
+            <span>
+              <span className="title">{productName}</span>
+              {/* <span className="writer">작성자 : {memberName}</span> */}
+              <br />
+              <span className="date">
+                {mapLocation} ∙ {createdAt}
+              </span>
+            </span>
+            <span>
+              <StyledPay>{price}</StyledPay>
+              <StyledDay> / 일</StyledDay>
+            </span>
           </div>
         </StyledMobileItem>
       </Mobile>
@@ -40,7 +71,7 @@ export const MyWishItem = ({ item }) => {
 
 const StyledItem = styled.div`
   display: flex;
-  width: 680px;
+  width: 100%;
   position: relative;
   padding: 10px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -59,16 +90,36 @@ const StyledItem = styled.div`
   .span-div {
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
     .title {
-      color: #999;
-      font-size: 12px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .writer {
+      color: gray;
+      font-size: 13px;
     }
     .date {
-      color: red;
-      font-weight: bold;
+      color: gray;
+      font-size: 13px;
     }
   }
 `;
+
+const StyledPay = styled.span`
+  /* border: 1px solid red; */
+  font-weight: 600;
+`;
+
+const StyledDay = styled.span`
+  font-size: 13px;
+`;
+
+// const StyledContentBox = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-between;
+// `;
 
 const StyledMobileItem = styled.div`
   display: flex;
@@ -91,13 +142,18 @@ const StyledMobileItem = styled.div`
   .span-div {
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
     .title {
-      color: #999;
-      font-size: 12px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .writer {
+      color: gray;
+      font-size: 13px;
     }
     .date {
-      color: red;
-      font-weight: bold;
+      color: gray;
+      font-size: 13px;
     }
   }
 `;

@@ -20,6 +20,8 @@ export const RentalCommonList = (props) => {
 };
 
 const StyledListContainer = styled.div`
+  /* border: 1px solid red; */
+  margin-top: 20px;
   animation: fadein 0.8s;
   @keyframes fadein {
     from {

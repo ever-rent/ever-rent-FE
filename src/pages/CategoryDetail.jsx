@@ -8,6 +8,7 @@ import { Skeleton } from "../components/skeleton/Skeleton";
 
 import { useInView } from "react-intersection-observer";
 import { base } from "../server/core/instance";
+import { auth } from "../server/core/instance";
 
 export const CategoryDetail = () => {
   const navigate = useNavigate();

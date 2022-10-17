@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Layout } from "../components/layout/Layout";
 import { deleteProducts } from "../redux/modules/productSlice";
 import { useDispatch } from "react-redux";
+import { getProductsDetail } from "../redux/modules/productSlice";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { categoriNumber } from "../util/categoryNumber";
@@ -40,6 +41,8 @@ export const ProductDetail = () => {
   };
   useEffect(() => {
     fetchDetail();
+    // 최근 본 상품용 dispatch
+    dispatch(getProductsDetail(param.id));
   }, []);
 
   console.log(data);
@@ -108,7 +111,6 @@ export const ProductDetail = () => {
         console.log(e);
       }
     } else {
-      // modalTrue();
       alert("로그인이 필요한 서비스입니다.");
     }
   };
