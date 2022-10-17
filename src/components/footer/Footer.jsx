@@ -23,7 +23,7 @@ export const Footer = () => {
 
   const goMyPage = () => {
     isLogin
-      ? navigate("/addproduct")
+      ? navigate("/myPage")
       : Swal.fire({
           position: "middle",
           icon: "warning",
@@ -33,6 +33,19 @@ export const Footer = () => {
           width: "300px",
         });
   };
+
+  const goAddProduct = ()=>{
+    isLogin
+      ? navigate("/addproduct")
+      : Swal.fire({
+          position: "middle",
+          icon: "warning",
+          title: "로그인이 필요합니다.",
+          showConfirmButton: false,
+          timer: 1500,
+          width: "300px",
+        });
+  }
 
   return (
     <>
