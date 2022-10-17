@@ -12,11 +12,10 @@ import { BestProducts } from "../BestProduct/BestProducts";
 
 export const Products = () => {
   const [isLoading, setIsLoading] = useState(false);
-  console.log(isLoading);
   // infi scroll
   // 현재 state 데이터 , 다음페이지 이동 여부,
   // 현재페이지, observer 뷰 교차 여부
-  
+
   const [products, setProducts] = useState([]);
   const [hasNextPage, setHasNextPage] = useState(true);
   const page = useRef(1);
@@ -27,10 +26,13 @@ export const Products = () => {
   const fetch = useCallback(async () => {
     try {
       const { data } = await auth.get(`/products?page=${page.current}`);
-      setProducts((prevPosts) => [...prevPosts, ...data.data]);
-      setHasNextPage(data.data.length === 12);
-      if (data.data.length) {
+      if (data.data.length === 12) {
+        setIsLoading(true);
+        setProducts((prevPosts) => [...prevPosts, ...data.data]);
+        setHasNextPage(data.data.length === 12);
         page.current += 1;
+      } else {
+        setProducts((prevPosts) => [...prevPosts, ...data.data]);
       }
     } catch (err) {
       console.error(err);
@@ -39,16 +41,13 @@ export const Products = () => {
 
   // ref / scroll 교차 시 데이터 패치
   useEffect(() => {
-    setIsLoading(true);
     console.log(inView, hasNextPage);
     if (inView && hasNextPage) {
-      setTimeout(() => {
-        fetch();
-      }, 700);
+      fetch();
     }
     setTimeout(() => {
       setIsLoading(false);
-    }, 1000);
+    }, 800);
   }, [fetch, hasNextPage, inView]);
 
   console.log(products);

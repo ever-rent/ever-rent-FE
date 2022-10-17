@@ -92,12 +92,15 @@ export const CategoryDetail = () => {
   const fetch = useCallback(async (categoryId) => {
     try {
       const { data } = await base.get(
-        `http://13.209.8.18/categories/${categoryId}?page=${page.current}`
+        `${process.env.REACT_APP_SERVER_URL}/categories/${categoryId}?page=${page.current}`
       );
-      setCategoryItems((prevPosts) => [...prevPosts, ...data.data]);
-      setHasNextPage(data.data.length === 12);
-      if (data.data.length) {
+      if (data.data.length === 12) {
+        setIsLoading(true);
+        setCategoryItems((prevPosts) => [...prevPosts, ...data.data]);
+        setHasNextPage(data.data.length === 12);
         page.current += 1;
+      } else {
+        setCategoryItems((prevPosts) => [...prevPosts, ...data.data]);
       }
     } catch (err) {
       console.error(err);
@@ -118,16 +121,13 @@ export const CategoryDetail = () => {
 
   // 데이터 패치 처리
   useEffect(() => {
-    setIsLoading(true);
     console.log(inView, hasNextPage);
     if (inView && hasNextPage) {
-      setTimeout(() => {
-        fetch(categoryId);
-      }, 700);
+      fetch(categoryId);
     }
     setTimeout(() => {
       setIsLoading(false);
-    }, 1500);
+    }, 800);
   }, [fetch, hasNextPage, inView, page]);
 
   return (
