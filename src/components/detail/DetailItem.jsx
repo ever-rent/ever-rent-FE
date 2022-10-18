@@ -180,12 +180,6 @@ export const DetailItem = ({
   );
 };
 
-const StyledStatus = styled.span`
-  font-size: 14px;
-  font-weight: 600;
-  color: #1185d7;
-`;
-
 const StyledItemBox = styled.div`
   /* border: 1px solid red; */
   margin-bottom: 20px;
