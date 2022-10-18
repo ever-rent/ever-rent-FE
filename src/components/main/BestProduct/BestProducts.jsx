@@ -86,6 +86,7 @@ export const BestProducts = () => {
                 src="https://img.icons8.com/ios/50/5923ff/back--v1.png"
                 alt="<"
               />
+              {/* <span>{"<"}</span> */}
             </StyeldMoveButtonLeft>
             <StyledContainer>
               <StyledGridBox ref={productsRef}>
@@ -99,6 +100,7 @@ export const BestProducts = () => {
                 src="https://img.icons8.com/ios/50/5923ff/forward--v1.png"
                 alt=">"
               />
+              {/* <span>{"<"}</span> */}
             </StyeldMoveButtonRight>
           </StyledItemAndButtonContainer>
         </StyledBestProductsContainer>
@@ -112,7 +114,7 @@ export const BestProducts = () => {
 };
 
 const StyledBestProductsContainer = styled.div`
-  max-width: 1013px;
+  width: 1013px;
   margin: auto;
 `;
 
@@ -145,6 +147,7 @@ const StyledItemAndButtonContainer = styled.div`
 `;
 
 const StyeldMoveButtonLeft = styled.button`
+  /* border: 1px solid red; */
   border: transparent;
   position: absolute;
   z-index: 2;
@@ -155,6 +158,9 @@ const StyeldMoveButtonLeft = styled.button`
   background-color: transparent;
   cursor: pointer;
   /* margin-right: 20px; */
+  span {
+    font-size: 30px;
+  }
 `;
 
 const StyeldMoveButtonRight = styled.button`
