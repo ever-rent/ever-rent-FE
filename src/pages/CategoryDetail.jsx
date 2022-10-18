@@ -9,6 +9,7 @@ import { Skeleton } from "../components/skeleton/Skeleton";
 import { useInView } from "react-intersection-observer";
 import { base } from "../server/core/instance";
 import { auth } from "../server/core/instance";
+import { ProductsItem } from "../components/main/products/ProductsItem";
 
 export const CategoryDetail = () => {
   const navigate = useNavigate();
@@ -26,27 +27,6 @@ export const CategoryDetail = () => {
     { value: "8", name: "기타" },
   ];
 
-  const addressList = [
-    { value: "0", name: "지역을 선택하세요" },
-    { value: "1", name: "서울특별시" },
-    { value: "2", name: "부산광역시" },
-    { value: "3", name: "대구광역시" },
-    { value: "4", name: "인천광역시" },
-    { value: "5", name: "광주광역시" },
-    { value: "6", name: "대전광역시" },
-    { value: "7", name: "울산광역시" },
-    { value: "8", name: "세종특별자치시" },
-    { value: "9", name: "경기도" },
-    { value: "10", name: "강원도" },
-    { value: "11", name: "충청북도" },
-    { value: "12", name: "충청남도" },
-    { value: "13", name: "전라북도" },
-    { value: "14", name: "전라남도" },
-    { value: "15", name: "경상북도" },
-    { value: "16", name: "경상남도" },
-    { value: "17", name: "제주특별자치도" },
-  ];
-
   const priceList = [
     { value: 0, name: "가격을 선택하세요" },
     { value: 1, name: "~ 10,000원 미만" },
@@ -59,7 +39,6 @@ export const CategoryDetail = () => {
 
   const categoryHandler = (e) => {
     e.preventDefault();
-    // infi
     console.log(e.target.value);
     navigate(`/categoryDetail/${e.target.value}`);
   };
@@ -67,10 +46,6 @@ export const CategoryDetail = () => {
   useEffect(() => {
     setCategoryId(id);
   }, []);
-
-  const addressHandler = (e) => {
-    e.preventDefault();
-  };
 
   const priceHandler = (e) => {
     e.preventDefault();
@@ -93,12 +68,21 @@ export const CategoryDetail = () => {
   const fetch = useCallback(async (categoryId) => {
     try {
       const { data } = await base.get(
-        `http://13.209.8.18/categories/${categoryId}?page=${page.current}`
+        `${process.env.REACT_APP_SERVER_URL}/categories/${categoryId}?page=${page.current}`
       );
-      setCategoryItems((prevPosts) => [...prevPosts, ...data.data]);
-      setHasNextPage(data.data.length === 12);
-      if (data.data.length) {
+      if (data.data.length === 12) {
+        setIsLoading(true);
+        setTimeout(() => {
+          setCategoryItems((prevPosts) => [...prevPosts, ...data.data]);
+          setHasNextPage(data.data.length === 12);
+        }, 800);
         page.current += 1;
+      } else {
+        setIsLoading(true);
+        setTimeout(() => {
+          setCategoryItems((prevPosts) => [...prevPosts, ...data.data]);
+          setHasNextPage(false);
+        }, 800);
       }
     } catch (err) {
       console.error(err);
@@ -119,18 +103,16 @@ export const CategoryDetail = () => {
 
   // 데이터 패치 처리
   useEffect(() => {
-    setIsLoading(true);
     console.log(inView, hasNextPage);
     if (inView && hasNextPage) {
+      fetch(categoryId);
       setTimeout(() => {
-        fetch(categoryId);
-      }, 700);
+        setIsLoading(false);
+      }, 1000);
     }
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
   }, [fetch, hasNextPage, inView, page]);
 
+  console.log(categoryItems);
   return (
     <Layout>
       <StyledCategoryContainer>

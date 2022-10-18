@@ -29,7 +29,7 @@ export const RecentPaging = ({
       >
         {prevPageText}
       </li>
-      {pagingArray.map((i, index) => {
+      {/* {pagingArray.map((i, index) => {
         if (index + 1 === activePage) {
           return (
             <li key={i} id={index + 1} className="activePage">
@@ -37,20 +37,20 @@ export const RecentPaging = ({
             </li>
           );
         }
-        // else {
-        //   return (
-        //     <li
-        //       key={i}
-        //       id={index + 1}
-        //       onClick={() => {
-        //         handlePageChange(index + 1);
-        //       }}
-        //     >
-        //       {index + 1}
-        //     </li>
-        //   );
-        // }
-      })}
+        else {
+          return (
+            <li
+              key={i}
+              id={index + 1}
+              onClick={() => {
+                handlePageChange(index + 1);
+              }}
+            >
+              {index + 1}
+            </li>
+          );
+        }
+      })} */}
       <li
         onClick={() => {
           if (activePage !== pagingArray.length) {

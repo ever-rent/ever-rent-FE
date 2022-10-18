@@ -24,34 +24,38 @@ export const DetailItem = ({
   mapLocation,
   rentEnd,
   rentStart,
-  // like
+  heart,
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [togglelike, setTogglelike] = useState(false);
-  const [likeCount, setLikeCount] = useState(0);
-
-  const [write, setWrite] = useState("");
-  const [createdAt, setCreatedAt] = useState("");
-
-  useEffect(() => {
-    let timeStatus = writeAt;
-    timeStatus !== undefined ? setWrite(timeStatus) : (timeStatus = "");
-    setCreatedAt(timeToToday(writeAt));
-  }, [writeAt]);
+  // 찜하기
+  const [togglelike, setTogglelike] = useState(heart);
+  const [likeCount, setLikeCount] = useState(wishNum);
+  // console.log("heart 처음상태 >>", togglelike);
 
   const likeHandler = (e) => {
     e.preventDefault();
     setTogglelike(!togglelike);
-    if (!togglelike) {
-      setLikeCount(likeCount + 1);
-      dispatch(postLike(id));
-    } else if (togglelike) {
-      setLikeCount(likeCount - 1);
-      dispatch(postLike(id));
-    }
+    setLikeCount(likeCount + 1);
+    dispatch(postLike(id));
   };
+
+  const canceLikeHandler = (e) => {
+    e.preventDefault();
+    setTogglelike(!togglelike);
+    setLikeCount(likeCount - 1);
+
+    dispatch(postLike(id));
+  };
+
+  //글 작성 시간
+  const [createdAt, setCreatedAt] = useState("");
+
+  useEffect(() => {
+    setCreatedAt(timeToToday(writeAt));
+  }, [writeAt]);
+
   return (
     <>
       <Desktop>
@@ -67,7 +71,9 @@ export const DetailItem = ({
           </StyledImgBox>
           <StyledContentBox>
             <StyledTitle>{productName}</StyledTitle>
-            <StyledLocation>{location}</StyledLocation>
+            <StyledLocation>
+              {location ? location : "지역 선택 안함"}
+            </StyledLocation>
             <StyledPayBox>
               <StyledPay>{price}</StyledPay>
               <StyledDay> / 일</StyledDay>
@@ -79,11 +85,11 @@ export const DetailItem = ({
                 {togglelike ? (
                   <>
                     <StyledLike
-                      onClick={likeHandler}
+                      onClick={canceLikeHandler}
                       src="https://img.icons8.com/ios-filled/50/47b5ff/like--v1.png"
                       alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
                     />
-                    <span>찜 {wishNum + likeCount}</span>
+                    <span>찜 {likeCount}</span>
                   </>
                 ) : (
                   <>
@@ -92,17 +98,17 @@ export const DetailItem = ({
                       src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
                       alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
                     />
-                    <span>찜 {wishNum - likeCount}</span>
+                    <span>찜 {likeCount}</span>
                   </>
                 )}
               </StyledLikeWrap>
-              <StyledChatWrap>
+              {/* <StyledChatWrap>
                 <StyledChat
                   src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
                   alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
                 />
                 <span>채팅 </span>
-              </StyledChatWrap>
+              </StyledChatWrap> */}
               {/* <StyledChatWrap>
                 <button onClick={reservationHandler}>예약 신청</button>
               </StyledChatWrap> */}
@@ -142,7 +148,7 @@ export const DetailItem = ({
               <StyledMobileLikeWrap>
                 {togglelike ? (
                   <StyledLike
-                    onClick={likeHandler}
+                    onClick={canceLikeHandler}
                     src="https://img.icons8.com/ios-filled/50/47b5ff/like--v1.png"
                     alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
                   />
@@ -156,13 +162,13 @@ export const DetailItem = ({
                 <span>찜 {likeCount}</span>
               </StyledMobileLikeWrap>
 
-              <StyledMobileChatWrap>
+              {/* <StyledMobileChatWrap>
                 <StyledChat
                   src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
                   alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
                 />
                 <span>채팅 </span>
-              </StyledMobileChatWrap>
+              </StyledMobileChatWrap> */}
               {/* <StyledChatWrap>
             <button onClick={reservationHandler}>예약 신청</button>
           </StyledChatWrap> */}
@@ -173,12 +179,6 @@ export const DetailItem = ({
     </>
   );
 };
-
-const StyledStatus = styled.span`
-  font-size: 14px;
-  font-weight: 600;
-  color: #1185d7;
-`;
 
 const StyledItemBox = styled.div`
   /* border: 1px solid red; */

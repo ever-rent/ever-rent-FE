@@ -6,15 +6,15 @@ import { ko } from "date-fns/esm/locale";
 
 import styled from "styled-components";
 
-export const RangeCalrendar = ({startEndDays}) => {
+export const RangeCalrendar = ({ startEndDays }) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
   const [readOnly, setReadOnly] = useState(false);
-  
+
   const onChange = (dates) => {
     const [start, end] = dates;
-    startEndDays(start,end)
+    startEndDays(start, end);
     setStartDate(start);
     setEndDate(end);
   };
@@ -31,7 +31,9 @@ export const RangeCalrendar = ({startEndDays}) => {
 
   return (
     <StyledDatePickerWrapper>
-      <StyledDateSetting>예약 기간을 설정해주세요!</StyledDateSetting>
+      <StyledDateSetting>
+        예약 기간을 설정해주세요!<StyledWriteOnly>*</StyledWriteOnly>
+      </StyledDateSetting>
       <StyledDatePicker
         withPortal
         onChange={onChange}
@@ -42,14 +44,14 @@ export const RangeCalrendar = ({startEndDays}) => {
         dateFormat="yy년MM월dd일"
         minDate={new Date()}
         showDisabledMonthNavigation
-        
+        placeholderText="00년00월00일-년00월00일"
       />
       <StyledDaysWrap>
         <StyledRentDays>
-          렌탈시작일 : {startDay.length >14 ? "-" : startDay}
+          렌탈시작일 : {startDay.length > 14 ? "-" : startDay}
         </StyledRentDays>
         <StyledRentDays>
-          렌탈종료일 : {endDay.length >14 ? "-" : endDay}
+          렌탈종료일 : {endDay.length > 14 ? "-" : endDay}
         </StyledRentDays>
         <StyledRentDays>
           렌탈기간 : {endDate === null ? 1 : dateTime}일
@@ -64,26 +66,26 @@ export const RangeCalrendar = ({startEndDays}) => {
 };
 
 const StyledDatePickerWrapper = styled.section`
-  margin-top:50px;
+  margin-top: 50px;
+  
   .react-datepicker {
-    
   }
 
   .react-datepicker__navigation-icon--previous::before {
-    border-color: white;
+    border-color: #5d96ff;
   }
   .react-datepicker__navigation-icon--next::before {
-    border-color: white;
+    border-color: #5d96ff;
   }
-  .react-datepicker__input-container{
-    margin-top:10px;
+  .react-datepicker__input-container {
+    margin-top: 10px;
   }
-  .react-datepicker__input-container input{
-    width:220px;
-    height:40px;
-    text-align:center;
-    border-radius:20px;
-    border:none;
+  .react-datepicker__input-container input {
+    width: 220px;
+    height: 40px;
+    text-align: center;
+    border-radius: 20px;
+    border: none;
     border: 1px solid rgb(71, 181, 255);
     cursor: pointer;
   }
@@ -91,49 +93,55 @@ const StyledDatePickerWrapper = styled.section`
   .react-datepicker__header {
     font-size: 15px;
     font-weight: bold;
-    border-color: rgb(198, 232, 255);
-    background-color: rgb(71, 181, 255);
+    border-color: rgb(238, 238, 238);
+    /* background-color: rgb(71, 181, 255); */
+    background-color: white;
   }
   .react-datepicker__current-month {
-    color: white;
+    color: #5d96ff;
   }
-  .react-datepicker__day-name {
-    color: white;
-  }
+  /* .react-datepicker__day-name {
+    color: black;
+  } */
   .react-datepicker__month {
     margin: 0;
     padding: 0.4rem;
 
-    background-color: rgb(124, 203, 255);
+    /* background-color: rgb(124, 203, 255); */
+    background-color: white;
   }
 
   .react-datepicker__week {
-    color: white;
+    color: black;
   }
-  
+  .react-datepicker__day-name {
+    color: #5d96ff;
+  }
+
   .react-datepicker__day {
     font-size: 15px;
     font-weight: bold;
-    color: white;
-    border-radius:30px;
+    color: #5d96ff;
+    border-radius: 30px;
   }
-  .react-datepicker__day--keyboard-selected{
-    border-radius:50px;
+  .react-datepicker__day--keyboard-selected {
+    border-radius: 50px;
   }
-  .react-datepicker__day--disabled{
-    background-color:  #e2e2e2;
+  .react-datepicker__day--disabled {
+    color: #dbdbdb;
+    background-color: white;
   }
   .react-datepicker__day--weekend {
     font-size: 15px;
     font-weight: bold;
-    color: rgb(255, 100, 100);
+    color: rgb(255, 124, 124);
   }
   .react-datepicker__day:hover {
-    color: black;
+    color: white;
   }
   .react-datepicker__day--in-selecting-range {
     color: white;
-    background-color: rgb(49, 176, 255);
+    background-color: rgb(157, 217, 255);
   }
   .react-datepicker__day--selected {
     color: white;
@@ -141,9 +149,14 @@ const StyledDatePickerWrapper = styled.section`
   }
   .react-datepicker__day--in-range {
     color: white;
-    background-color: rgb(0, 157, 255);
+    background-color: rgb(140, 211, 255);
   }
-  
+  .react-datepicker__day--keyboard-selected{
+    background-color: rgb(49, 176, 255);
+    &:hover{
+      color:white;
+    }
+  }
 `;
 const StyledDateSetting = styled.div``;
 
@@ -152,8 +165,8 @@ const StyledDatePicker = styled(DatePicker)``;
 const StyledRentDays = styled.div``;
 
 const StyledDaysWrap = styled.div`
-  margin-top:30px;
-`
+  margin-top: 30px;
+`;
 
 const StyledSubmitButtonsWrap = styled.div`
   display: flex;
@@ -192,4 +205,9 @@ const StyledCancelButton = styled.button`
     transition: color 0.1s ease-in-out 0s;
     transition: background-color 0.1s ease-in-out 0s;
   }
+`;
+
+const StyledWriteOnly = styled.span`
+  margin-left: 10px;
+  color: red;
 `;

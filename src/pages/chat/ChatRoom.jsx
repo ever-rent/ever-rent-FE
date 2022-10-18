@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { getProductsDetail } from "../../redux/modules/chatSlice";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
 import { ChatHeader } from "../../components/header/ChatHeader";
 import { StyledChatRoom } from "./styled";
-import { auth } from "../../server/core/instance";
-import { Layout } from "../../components/layout/Layout";
-import { chatAPI, imgFirstString } from "../../server/api";
+import { chatAPI, imgFirstString, productAPI } from "../../server/api";
 import { RangeCalrendar } from "../../components/calrendar/RangeCalrendar";
 import { FaMoneyBillAlt } from "react-icons/fa";
 import { AiOutlineSend } from "react-icons/ai";
+import { FaRegWindowClose } from "react-icons/fa";
+import Scrollbars from "react-custom-scrollbars";
+import { useQuery, useQueryClient } from "react-query";
 
 let stompClient = null;
 
@@ -19,16 +18,26 @@ export const ChatRoom = () => {
   const { productId } = useParams();
   const { roomId } = useParams();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const scrollbarRef = useRef(null);
 
   const PK = localStorage.getItem("memberId");
   const myNickname = localStorage.getItem("memberName");
   const token = localStorage.getItem("accessToken").slice(7);
 
-  const roomData = useSelector((state) => state.chat.chatRoomDetail);
-  console.log(roomData);
+  const { data: productData } = useQuery("getProductDetail", () =>
+    productAPI.getProductDetail(productId)
+  );
 
-  const [chatList, setChatList] = useState([]);
+  const productDetail = productData?.data.data;
+
+  const { data: chatData, isLoading } = useQuery("getChatMessage", () =>
+    chatAPI.getChatMessage(roomId)
+  );
+
+  const chatList = useMemo(() => {
+    return chatData?.data;
+  }, [chatData]);
+
   const [userData, setUserData] = useState({
     type: "",
     roomId: roomId,
@@ -41,15 +50,13 @@ export const ChatRoom = () => {
     quitOwner: "",
   });
 
-  //ScrollY값 가장 하단으로 이동
-  const scrollToBottom = () => {
-    window.scrollTo(0, document.body.scrollHeight);
-  };
-
   useEffect(() => {
     registerUser();
-    scrollToBottom();
   }, []);
+
+  useEffect(() => {
+    scrollbarRef.current?.scrollToBottom();
+  }, [chatList]);
 
   const handleValue = (event) => {
     const { value } = event.target;
@@ -57,24 +64,21 @@ export const ChatRoom = () => {
   };
 
   const registerUser = () => {
-    let sockJS = new SockJS(`${process.env.REACT_APP_SERVER_URL}/wss/chat`);
+    const sockJS = new SockJS(`${process.env.REACT_APP_SERVER_URL}/wss/chat`);
     stompClient = Stomp.over(sockJS);
-    // stompClient.debug = null;
+    stompClient.debug = null;
     stompClient.connect({ Authorization: token }, onConnected, onError);
   };
 
   const onConnected = async () => {
-    const response = await dispatch(getProductsDetail(productId)).unwrap();
-    if (response) {
-      stompClient.subscribe(`/sub/chat/room/${roomId}`, onMessageReceived);
-      userJoin(response);
-      scrollToBottom();
+    if (productDetail) {
+      stompClient.subscribe(`/sub/chat/room/${roomId}`, updateChatMessage);
+      userJoin(productDetail);
+      scrollbarRef.current?.scrollToBottom();
     }
   };
 
-  const onError = (err) => {
-    console.log(err);
-  };
+  const onError = (err) => console.dir(err);
 
   const userJoin = (response) => {
     let chatMessage = {
@@ -109,21 +113,11 @@ export const ChatRoom = () => {
     );
   };
 
-  const onMessageReceived = (payload) => {
-    let payloadData = JSON.parse(payload.body);
+  const queryClient = useQueryClient();
 
-    if (payloadData.type === "ENTER" || payloadData.type === "TALK") {
-      // chatList.push(payloadData);
-      // setChatList([...chatList]);
-      auth.get(`/chat/message/${roomId}`).then((res) => {
-        return setChatList([...res.data]);
-      });
-    }
-
-    scrollToBottom();
+  const updateChatMessage = () => {
+    queryClient.invalidateQueries("getChatMessage");
   };
-
-  console.log(chatList);
 
   const sendMessage = () => {
     if (stompClient && userData.message) {
@@ -146,8 +140,6 @@ export const ChatRoom = () => {
       );
       setUserData({ ...userData, message: "" });
     }
-
-    scrollToBottom();
   };
 
   const quitRoom = () => {
@@ -165,19 +157,13 @@ export const ChatRoom = () => {
 
     stompClient.send("/pub/chat/message", { PK }, JSON.stringify(chatMessage));
     setUserData({ ...userData, message: "" });
-
     navigate("/");
   };
 
   const onKeyPress = (event) => {
     event.preventDefault();
-
     sendMessage();
   };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [chatList]);
 
   const detailTime = (createdAt) => {
     const time = new Date(createdAt);
@@ -219,7 +205,7 @@ export const ChatRoom = () => {
     }
   };
 
-  const postPrice = roomData.price
+  const postPrice = productDetail?.price
     ?.toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
@@ -244,7 +230,7 @@ export const ChatRoom = () => {
 
   const postOrderDate = async (startDate, endDate) => {
     await chatAPI
-      .postOrderDate(roomData.id, {
+      .postOrderDate(productDetail.id, {
         buyStart: startDate,
         buyEnd: endDate,
       })
@@ -259,101 +245,118 @@ export const ChatRoom = () => {
   };
 
   return (
-      <StyledChatRoom>
-        <div className="chat_head_wrap">
-          <ChatHeader quitRoom={quitRoom} />
-          <div className="chat_head_container">
-            <div className="chat_head_box">
-              <div
-                className="chat_head_text_box"
-                onClick={() => navigate(`/productDetail/${roomData.id}`)}
-              >
-                <img
-                  // src={`${imgFirstString}${roomData?.imgUrlArray[0]}`}
-                  className="chat_head_img"
-                  alt="img"
-                />
-              </div>
-              <div className="Chat_Head_Text_Box">
-                <div className="chat_head_title">{roomData.productName}</div>
-                <div className="chat_head_cost">
-                  <FaMoneyBillAlt />
-                  {postPrice}원
-                </div>
+    <StyledChatRoom>
+      <div className="head-wrap">
+        <ChatHeader isChatRoom={true} quitRoom={quitRoom} />
+        <div className="head-container">
+          <div className="head-box">
+            <div
+              className="head-text-box"
+              onClick={() => navigate(`/productDetail/${productDetail.id}`)}
+            >
+              <img
+                src={`${imgFirstString}${productDetail?.imgUrlArray[0]}`}
+                className="head-img"
+                alt="img"
+              />
+            </div>
+            <div className="head-text-box">
+              <div className="head-title">{productDetail?.productName}</div>
+              <div className="head-cost">
+                <FaMoneyBillAlt />
+                {postPrice}원
               </div>
             </div>
-            {chatList
-              ? chatList[0]?.memberId !== Number(PK) && (
-                  <button onClick={() => setShowDateInput(true)}>
-                    렌탈 신청하기
-                  </button>
-                )
-              : chatList[0]?.memberId !== Number(PK) && (
-                  <button disabled>렌탈 신청하기</button>
-                )}
-            {showDateInput && (
-              <div>
-                <RangeCalrendar startEndDays={startEndDays} />
-                <button
-                  onClick={() => postOrderDate(startDateInput, endDateInput)}
-                >
-                  신청하기
-                </button>
-                <button onClick={() => setShowDateInput(false)}>취소</button>
-              </div>
-            )}
           </div>
+          {chatList
+            ? productDetail?.memberName !== myNickname && (
+                <button
+                  className="rent-button"
+                  onClick={() => setShowDateInput(true)}
+                >
+                  렌탈 신청하기
+                </button>
+              )
+            : productDetail?.memberName !== myNickname && (
+                <button disabled>렌탈 신청하기</button>
+              )}
+          {showDateInput && (
+            <div>
+              <div className="flex-div">
+                <RangeCalrendar startEndDays={startEndDays} />
+                <FaRegWindowClose onClick={() => setShowDateInput(false)} />
+              </div>
+              <button
+                className="order-button"
+                onClick={() => postOrderDate(startDateInput, endDateInput)}
+              >
+                신청하기
+              </button>
+            </div>
+          )}
         </div>
-        
-        <div className="chat_container">
+      </div>
+
+      <div className="container">
+        {isLoading && <h2>채팅 메시지 불러오는중..</h2>}
+        <Scrollbars autoHide ref={scrollbarRef}>
           {chatList?.map((chat, idx) => {
             return (
               <div key={idx}>
-                {chat.message === "" ? (
-                  ""
-                ) : (
-                  <div className="chat_other_wrap">
-                    <img
-                      src={
-                        chat?.profileUrl === null
-                          ? `https://source.boringavatars.com/beam/110/${chat?.memberId}?colors=7965EE,6FE7F1,FFDD4C,46B5FF,2883E0`
-                          : chat?.profileUrl
-                      }
-                      className="chat_other_profile"
-                      alt="img"
-                    />
-                    <div className="chat_other_container">
-                      <div className="chat_other_name">{chat.sender}</div>
-                      <div className="chat_other_msg_clock">
-                        <div className="chat_other_box">{chat.message}</div>
-                        <div className="chat_clock_box">
-                          <div className="chat_clock">
-                            {detailTime(chat.createdAt)}
+                {chat.memberId !== Number(PK) ? (
+                  chat.message === "" ? (
+                    ""
+                  ) : (
+                    <div className="other-wrap">
+                      <img
+                        src={
+                          chat?.profileUrl === null
+                            ? `https://source.boringavatars.com/beam/110/${chat?.memberId}?colors=7965EE,6FE7F1,FFDD4C,46B5FF,2883E0`
+                            : chat?.profileUrl
+                        }
+                        className="other-profile"
+                        alt="img"
+                      />
+                      <div className="other-container">
+                        <div className="other-name">{chat.sender}</div>
+                        <div className="other-msg-clock">
+                          <div className="other-box">{chat.message}</div>
+                          <div className="clock-box">
+                            <div className="clock">
+                              {detailTime(chat.createdAt)}
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
+                  )
+                ) : chat.message === "" ? (
+                  ""
+                ) : (
+                  <div className="me-container">
+                    <div className="clock-box">
+                      <div className="clock">{detailTime(chat.createdAt)}</div>
+                    </div>
+                    <div className="me-box">{chat.message}</div>
                   </div>
                 )}
               </div>
             );
           })}
-          <div className="chat_input_container">
-            <form
-              className="chat_input_box"
-              onSubmit={(event) => onKeyPress(event)}
-            >
-              <input
-                className="chat_input"
-                type="text"
-                placeholder="메시지 보내기"
-                value={userData.message}
-                onChange={(event) => handleValue(event)}
-              />
-                <AiOutlineSend size="2rem" color="gray" cursor="pointer" />
-            </form>
-          </div>
-        </div>
-      </StyledChatRoom>
+        </Scrollbars>
+      </div>
+      <div className="input-container">
+        <form className="input-box" onSubmit={(event) => onKeyPress(event)}>
+          <input
+            className="input"
+            type="text"
+            placeholder="메시지 보내기"
+            value={userData.message}
+            onChange={(event) => handleValue(event)}
+          />
+          <AiOutlineSend size="2rem" color="gray" cursor="pointer" />
+        </form>
+      </div>
+    </StyledChatRoom>
   );
 };

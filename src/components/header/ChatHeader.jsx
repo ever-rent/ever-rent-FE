@@ -1,11 +1,9 @@
-// React import
 import React from "react";
 import { useNavigate } from "react-router-dom";
-// Style & Icon import
 import { HiOutlineChevronLeft } from "react-icons/hi";
 import { StyledChatHeader } from "./styled";
 
-export const ChatHeader = ({ quitRoom }) => {
+export const ChatHeader = ({ quitRoom, isChatRoom }) => {
   const navigate = useNavigate();
 
   return (
@@ -18,9 +16,11 @@ export const ChatHeader = ({ quitRoom }) => {
             size="24px"
             onClick={() => navigate(-1)}
           />
-          <div className="header_done" onClick={() => quitRoom()}>
-            채팅방 나가기
-          </div>
+          {isChatRoom && (
+            <div className="header_done" onClick={() => quitRoom()}>
+              채팅방 나가기
+            </div>
+          )}
         </div>
       </div>
     </StyledChatHeader>

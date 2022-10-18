@@ -31,17 +31,25 @@ export const BestProducts = () => {
     fetch();
   }, []);
 
+  //찜 많은 순으로 상품 나열하는 slide 구현
+
+  //상품 index 배열 만들기
   const makeArr = (bestProducts) => {
     let arr = [];
     bestProducts.map((_, idx) => arr.push(idx)); //map 요소(element, index, arr)
+    console.log("arr", arr);
     return arr;
   };
 
-  const idxArr = makeArr(products);
+  // cf) best 상품 개수: 8개
+  const idxArr = makeArr(products); //idxArr=[0,1,2,3,4,5,6,7]
+
   let idx = 0;
 
   const back = () => {
     const forwardIdx = idxArr[--idx];
+    console.log("back >> forwardIdx", forwardIdx);
+    console.log("back >> idx", idx);
     if (forwardIdx === undefined) {
       idx = 0;
       return;
@@ -50,13 +58,15 @@ export const BestProducts = () => {
   };
 
   const forward = () => {
-    // 한페이지에 보이는 아이템 수: 5
-    // if (idx > 4) {
-    //   return;
-    // } else {
-    let backIdx = idxArr[++idx];
-    move(backIdx);
-    // }
+    // 한페이지에 보이는 아이템 수: 4
+    if (idx === 4) {
+      return;
+    } else {
+      let backIdx = idxArr[++idx];
+      console.log("forward >> idx", idx);
+      console.log("forward >> backIdx", backIdx);
+      move(backIdx);
+    }
   };
 
   const move = (idx) => {
@@ -76,6 +86,7 @@ export const BestProducts = () => {
                 src="https://img.icons8.com/ios/50/5923ff/back--v1.png"
                 alt="<"
               />
+              {/* <span>{"<"}</span> */}
             </StyeldMoveButtonLeft>
             <StyledContainer>
               <StyledGridBox ref={productsRef}>
@@ -89,6 +100,7 @@ export const BestProducts = () => {
                 src="https://img.icons8.com/ios/50/5923ff/forward--v1.png"
                 alt=">"
               />
+              {/* <span>{"<"}</span> */}
             </StyeldMoveButtonRight>
           </StyledItemAndButtonContainer>
         </StyledBestProductsContainer>
@@ -102,14 +114,14 @@ export const BestProducts = () => {
 };
 
 const StyledBestProductsContainer = styled.div`
-  max-width: 1013px;
+  width: 1013px;
   margin: auto;
 `;
 
 const StyledTitle = styled.span`
   font-size: 25px;
   font-weight: 500;
-  color: #5923ff;
+  /* color: #5923ff; */
 `;
 
 const StyledHotItem = styled.span`
@@ -135,6 +147,7 @@ const StyledItemAndButtonContainer = styled.div`
 `;
 
 const StyeldMoveButtonLeft = styled.button`
+  /* border: 1px solid red; */
   border: transparent;
   position: absolute;
   z-index: 2;
@@ -145,6 +158,9 @@ const StyeldMoveButtonLeft = styled.button`
   background-color: transparent;
   cursor: pointer;
   /* margin-right: 20px; */
+  span {
+    font-size: 30px;
+  }
 `;
 
 const StyeldMoveButtonRight = styled.button`
@@ -162,7 +178,7 @@ const StyeldMoveButtonRight = styled.button`
 const StyledContainer = styled.div`
   /* border: 1px solid red; */
   /* height: 180px; */
-  /* max-width: 1024px; */
+  max-width: 1024px;
   margin: 25px 50px;
   padding: 10px 0 10px 16px;
   overflow: hidden;

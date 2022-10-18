@@ -72,44 +72,40 @@ export const ProductsItem = ({
 
   //글쓴 시간 표시.
 
-  const [write, setWrite] = useState("");
-  // console.log("writeAt", writeAt);
   const [createdAt, setCreatedAt] = useState("");
 
   useEffect(() => {
-    let timeStatus = writeAt;
-    timeStatus !== undefined ? setWrite(timeStatus) : (timeStatus = "");
     setCreatedAt(timeToToday(writeAt));
   }, [writeAt]);
 
-  const reservationHandler = (e) => {
-    e.preventDefault();
-    const productData = {
-      productId: id,
-      buyStart: rentStart,
-      buyEnd: rentEnd,
-    };
-    dispatch(postRent(productData));
-  };
+  // const reservationHandler = (e) => {
+  //   e.preventDefault();
+  //   const productData = {
+  //     productId: id,
+  //     buyStart: rentStart,
+  //     buyEnd: rentEnd,
+  //   };
+  //   dispatch(postRent(productData));
+  // };
 
   // navigate state 전달 데이터
-  const sendData = {
-    id: id,
-    imgUrl: imgUrl,
-    imgUrlArray: imgUrlArray,
-    productName: productName,
-    memberName: memberName,
-    price: price,
-    address: address,
-    wishNum: wishNum,
-    chat: chat,
-    content: content,
-    writeAt: writeAt,
-    cateId: cateId,
-    location: location,
-    rentEnd: rentEnd,
-    rentStart: rentStart,
-  };
+  // const sendData = {
+  //   id: id,
+  //   imgUrl: imgUrl,
+  //   imgUrlArray: imgUrlArray,
+  //   productName: productName,
+  //   memberName: memberName,
+  //   price: price,
+  //   address: address,
+  //   wishNum: wishNum,
+  //   chat: chat,
+  //   content: content,
+  //   writeAt: writeAt,
+  //   cateId: cateId,
+  //   location: location,
+  //   rentEnd: rentEnd,
+  //   rentStart: rentStart,
+  // };
 
   return (
     <>
@@ -159,13 +155,13 @@ export const ProductsItem = ({
                   </>
                 )}
               </StyledLikeWrap>
-              <StyledChatWrap>
+              {/* <StyledChatWrap>
                 <StyledChat
-                  src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
+                  src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
                   alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
                 />
-                <span>채팅 </span>
-              </StyledChatWrap>
+                <span>채팅</span>
+              </StyledChatWrap> */}
               {/* <StyledChatWrap>
                 <button onClick={reservationHandler}>예약 신청</button>
               </StyledChatWrap> */}
@@ -205,7 +201,7 @@ export const ProductsItem = ({
               <StyledMobileLikeWrap>
                 {togglelike ? (
                   <StyledLike
-                    onClick={likeHandler}
+                    onClick={canceLikeHandler}
                     src="https://img.icons8.com/ios-filled/50/47b5ff/like--v1.png"
                     alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
                   />
@@ -219,13 +215,13 @@ export const ProductsItem = ({
                 <span>찜 {likeCount}</span>
               </StyledMobileLikeWrap>
 
-              <StyledMobileChatWrap>
+              {/* <StyledMobileChatWrap>
                 <StyledChat
                   src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
                   alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
                 />
                 <span>채팅 </span>
-              </StyledMobileChatWrap>
+              </StyledMobileChatWrap> */}
               {/* <StyledChatWrap>
             <button onClick={reservationHandler}>예약 신청</button>
           </StyledChatWrap> */}
@@ -253,7 +249,7 @@ const StyledItemBox = styled.div`
 `;
 
 const StyledMobileItemBox = styled.div`
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
   border-bottom: 1px solid #c7c6c6bc;
   /* max-width: 480px; */
   padding: 10px 10px 0 10px;

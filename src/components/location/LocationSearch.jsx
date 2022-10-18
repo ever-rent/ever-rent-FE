@@ -19,6 +19,9 @@ export const LocationSearch = ({
   const [searchLocatoun, setSearchLocatoun] = useState("");
   const [searchResult, setSearchResult] = useState("");
 
+  const [recommandPlace, setRecommandPlace] = useState([]);
+  console.log(recommandPlace);
+
   useEffect(() => {
     if (!map) return;
     const places = new kakao.maps.services.Places();
@@ -41,14 +44,20 @@ export const LocationSearch = ({
         setMarkers(markers);
 
         map.setBounds(bounds);
+
+        // 추천장소
+        setRecommandPlace([
+          data[1].place_name,
+          data[2].place_name,
+          data[3].place_name,
+        ]);
       }
 
       // 법정주소 필터
       getAddr(data[0].y, data[0].x);
     });
-  }, [map, searchResult]);
+  }, [map, searchResult,searchLocatoun]);
 
-  console.log(searchLocatoun);
 
   const getAddr = (lat, lng) => {
     let geocoder = new kakao.maps.services.Geocoder();
@@ -83,13 +92,13 @@ export const LocationSearch = ({
                     type="text"
                     placeholder="주소나 특정 위치로 검색해보세요!"
                     onChange={(e) => setSearchLocatoun(e.target.value)}
+                    value={searchLocatoun}
                   />
                   <StyledSearchButton
                     type="submit"
                     onClick={(e) => {
                       e.preventDefault();
                       setSearchResult(searchLocatoun);
-                      console.log(searchLocatoun);
                     }}
                   />
                   <span style={{ display: "none" }}>
@@ -97,6 +106,28 @@ export const LocationSearch = ({
                     https://icons8.com Icons8
                   </span>
                 </StyledSearchForm>
+                <StyledSubPlace>
+                  <div style={{textAlign:"center"}}>이런 장소는 어떨까요?</div>
+                  <StyledSubItemBox>
+
+                  {
+                    recommandPlace.map((item,index)=>{
+                      if(item!==undefined){
+                        return(
+                          <StyledSubItem 
+                          key={index}
+                          onClick={()=>{
+                            setSearchLocatoun(item)
+                            setSearchResult(item);
+                          }}
+                          
+                          >{item}</StyledSubItem>
+                        )
+                      }
+                    })
+                  }
+                  </StyledSubItemBox>
+                </StyledSubPlace>
                 {
                   <Map
                     center={{
@@ -157,8 +188,8 @@ const StyledModalContainer = styled.div`
 `;
 
 const StyledSearch = styled.div`
-  width: 400px;
-  height: 600px;
+  width: 420px;
+  height: 700px;
   background-color: white;
   position: fixed;
   left: 50%;
@@ -217,6 +248,32 @@ const StyledSearchButton = styled.button`
     background-color: #f3f3f3;
   }
 `;
+
+const StyledSubPlace = styled.div`
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const StyledSubItemBox = styled.div`
+  display: flex;
+  
+  
+`
+const StyledSubItem = styled.div`
+  font-size:12px;
+  margin-top:15px;
+  margin-left:10px;
+  margin-right:10px;
+  text-align:center;
+  transition: 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    color:rgb(71, 181, 255);
+  }
+`
+
 
 const StyledSelectButton = styled.button`
   margin-top: 20px;

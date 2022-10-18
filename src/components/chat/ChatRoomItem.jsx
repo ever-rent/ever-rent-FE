@@ -1,5 +1,5 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
+import { imgFirstString } from "../../server/api";
 import { StyledChatRoomItem } from "./styled";
 
 export const ChatRoomItem = ({ item }) => {
@@ -27,34 +27,31 @@ export const ChatRoomItem = ({ item }) => {
 
   return (
     <StyledChatRoomItem
-      className="chattingRoomCard_wrap"
       onClick={() => navigate(`/chat/room/${item.productId}/${item.roomId}`)}
     >
-      <div className="chattingRoomCard_container">
-        <div className="chattingRoomCard_1_box">
+      <div className="container">
+        <div className="profile-img-div">
           <img
-            className="chattingRoomCard_1_box_img"
+            className="profile-img"
             src={`https://source.boringavatars.com/beam/110/${item?.otherMemberName}?colors=7965EE,6FE7F1,FFDD4C,46B5FF,2883E0`}
             alt="img"
           />
         </div>
-        <div className="chattingRoomCard_2_box">
-          <div className="chattingRoomCard_2_box_top">
-            <div className="chattingRoomCard_2_box_top_1">
+        <div className="info-div-1">
+          <div className="info-div-2">
+            <div className="name-info">
               {item.otherMemberName === null
                 ? "대화상대 없음"
                 : item.otherMemberName}
             </div>
-            <div className="chattingRoomCard_2_box_top_2">{nowDate}</div>
+            <div className="time-info">{nowDate}</div>
           </div>
-          <div className="chattingRoomCard_2_box_bottom">
-            {item.lastMessage}
-          </div>
+          <div className="last-message">{item.lastMessage}</div>
         </div>
-        <div className="chattingRoomCard_3_box">
+        <div className="product-img-div">
           <img
-            className="chattingRoomCard_3_box_img"
-            src={item.productImgUrl}
+            className="product-img"
+            src={`${imgFirstString}${item.productImgUrl}`}
             alt="img"
           />
         </div>

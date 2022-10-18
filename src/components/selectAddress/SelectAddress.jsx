@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { StyledSelectAddress } from "./styled";
 
 export const SelectAddress = ({ setAddress }) => {
   const addressList = [
@@ -368,7 +369,7 @@ export const SelectAddress = ({ setAddress }) => {
   };
 
   return (
-    <>
+    <StyledSelectAddress>
       <div>
         <select onChange={hendleSelect1} value={select1}>
           {addressList.map((item) => (
@@ -524,6 +525,6 @@ export const SelectAddress = ({ setAddress }) => {
         )}
       </div>
       <br />
-    </>
+    </StyledSelectAddress>
   );
 };

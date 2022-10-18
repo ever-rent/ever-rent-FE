@@ -35,11 +35,11 @@ export const BorrowStatus = () => {
     setTabIndex(0);
     dispatch(getBorrowList());
   };
-  const pastHandler = (e) => {
-    e.preventDefault();
-    setTabIndex(1);
-    dispatch(getPastList());
-  };
+  // const pastHandler = (e) => {
+  //   e.preventDefault();
+  //   setTabIndex(1);
+  //   dispatch(getPastList());
+  // };
 
   const tabArray = [
     {
@@ -54,17 +54,17 @@ export const BorrowStatus = () => {
       ),
     },
 
-    {
-      key: "past",
-      tab: (
-        <StyledTab
-          className={tabIndex === 1 ? "select" : ""}
-          onClick={pastHandler}
-        >
-          과거 렌트 내역
-        </StyledTab>
-      ),
-    },
+    // {
+    //   key: "past",
+    //   tab: (
+    //     <StyledTab
+    //       className={tabIndex === 1 ? "select" : ""}
+    //       onClick={pastHandler}
+    //     >
+    //       과거 렌트 내역
+    //     </StyledTab>
+    //   ),
+    // },
   ];
 
   return (
@@ -109,11 +109,12 @@ const StyledisStatusDetail = styled.div`
   margin: 10px 0;
   border-radius: 5px;
   transition: 0.1ms;
-  :hover {
-    transform: scale(1.1);
-  }
+
   cursor: pointer;
   .select {
+    :hover {
+      transform: scale(1.1);
+    }
     color: black;
     font-weight: bold;
     border-bottom: 3px solid #47b5ff;
@@ -126,27 +127,6 @@ const StyledisStatusDetail = styled.div`
         opacity: 1;
       }
     }
-  }
-`;
-
-const StyledMobileisStatusDetail = styled.div`
-  /* border: 1px solid red; */
-  display: flex;
-  flex-direction: column;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  max-width: max-content;
-  height: 45px;
-  align-items: center;
-  justify-content: space-between;
-  margin: auto;
-  margin-top: 10px;
-  /* padding: 0 20px 0 80px; */
-  border-radius: 5px;
-  gap: 0;
-  cursor: pointer;
-  .select {
-    font-weight: bold;
-    border-bottom: 3px solid #47b5ff;
   }
 `;
 
@@ -164,4 +144,36 @@ const StyledCommonListBox = styled.div`
   width: 100%;
   margin-top: 7px;
   /* border: 1px solid green; */
+`;
+
+const StyledMobileisStatusDetail = styled.div`
+  /* border: 1px solid red; */
+  color: gray;
+  display: flex;
+  flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  max-width: max-content;
+  height: 45px;
+  align-items: center;
+  justify-content: space-between;
+  margin: auto;
+  margin-top: 10px;
+  /* padding: 0 20px 0 80px; */
+  border-radius: 5px;
+  gap: 0;
+  cursor: pointer;
+  .select {
+    color: black;
+    font-weight: bold;
+    border-bottom: 3px solid #47b5ff;
+    animation: tabarray 0.8s;
+    @keyframes tabarray {
+      from {
+        opacity: 0.5;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  }
 `;

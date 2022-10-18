@@ -42,7 +42,7 @@ export const Tab = () => {
           채팅목록
         </div>
       ),
-      content: <ChatRoomList />,
+      content: <ChatRoomList isSideNav={true} />,
     },
   ];
   return (

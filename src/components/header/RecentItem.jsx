@@ -42,8 +42,11 @@ export const RecentItem = () => {
     setPageItem(pagingData);
   };
 
+  const [pageAll, setPageAll] = useState(1);
+
   useEffect(() => {
     pagingFetching();
+    setPageAll(parseInt(recentData?.length / 3) + 1);
   }, [page, recentItem]);
   console.log(pageItem);
 
@@ -66,7 +69,9 @@ export const RecentItem = () => {
             );
           })}
         </StyledImgBox>
-        <StyledPage>{page} / 3</StyledPage>
+        <StyledPage>
+          {page} / {pageAll}
+        </StyledPage>
       </StyledContentBox>
       <StyledPagingBox>
         <RecentPaging
@@ -90,9 +95,12 @@ const StyledRecentItemContainer = styled.div`
   height: 430px;
   background-color: #ffffffda;
   border: 1px solid gray;
+  position: absolute;
   position: fixed;
-  right: 2vw;
-  top: 30%;
+  /* right: 2vw; */
+  /* top: 30%; */
+  top: 300px;
+  right: calc(50% - 710px);
   transform: translate(-50%, -50%);
   z-index: 99;
 `;
@@ -126,6 +134,7 @@ const StyledImgBox = styled.div`
 const StyledImg = styled.img`
   width: 100%;
   height: 100%;
+  cursor: pointer;
 `;
 
 const StyledPage = styled.span`

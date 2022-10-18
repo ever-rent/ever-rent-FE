@@ -190,8 +190,15 @@ export const EditProduct = () => {
   // productId: param.id,
 
   const editProductData = () => {
-    if (title === "" || description === "" || categoryInput === "") {
-      alert("제목/내용을 적어주세요!");
+    if (
+      title === "" ||
+      description === "" ||
+      categoryInput === "" ||
+      priceInput === "" ||
+      tradeLocation === "" ||
+      endDateInput === ""
+    ) {
+      alert("게시글을 모두 작성해주세요!");
     } else {
       Swal.fire({
         title: "변경 내용을 저장할까요?",
@@ -294,40 +301,43 @@ export const EditProduct = () => {
                   Expand Arrow icon by https://icons8.com Icons8"
                 </StyledImageSource>
                 <StyledOptionInputs>
-                  <StyledCategorySelector
-                    defaultValue={categoryInput}
-                    onChange={(e) => {
-                      setCategoryInput(e.target.value);
-                    }}
-                  >
-                    <StyledCategoryOptions value="noneData" disabled>
-                      상품 종류를 골라주세요!
-                    </StyledCategoryOptions>
-                    <StyledCategoryOptions value="1">
-                      디지털기기
-                    </StyledCategoryOptions>
-                    <StyledCategoryOptions value="2">
-                      공구
-                    </StyledCategoryOptions>
-                    <StyledCategoryOptions value="3">
-                      생활가전
-                    </StyledCategoryOptions>
-                    <StyledCategoryOptions value="4">
-                      잡화
-                    </StyledCategoryOptions>
-                    <StyledCategoryOptions value="5">
-                      스포츠/레저
-                    </StyledCategoryOptions>
-                    <StyledCategoryOptions value="6">
-                      취미/게임/음반
-                    </StyledCategoryOptions>
-                    <StyledCategoryOptions value="7">
-                      도서
-                    </StyledCategoryOptions>
-                    <StyledCategoryOptions value="8">
-                      기타
-                    </StyledCategoryOptions>
-                  </StyledCategorySelector>
+                  <div>
+                    <StyledCategorySelector
+                      defaultValue={categoryInput}
+                      onChange={(e) => {
+                        setCategoryInput(e.target.value);
+                      }}
+                    >
+                      <StyledCategoryOptions value="noneData" disabled>
+                        상품 종류를 골라주세요!
+                      </StyledCategoryOptions>
+                      <StyledCategoryOptions value="1">
+                        디지털기기
+                      </StyledCategoryOptions>
+                      <StyledCategoryOptions value="2">
+                        공구
+                      </StyledCategoryOptions>
+                      <StyledCategoryOptions value="3">
+                        생활가전
+                      </StyledCategoryOptions>
+                      <StyledCategoryOptions value="4">
+                        잡화
+                      </StyledCategoryOptions>
+                      <StyledCategoryOptions value="5">
+                        스포츠/레저
+                      </StyledCategoryOptions>
+                      <StyledCategoryOptions value="6">
+                        취미/게임/음반
+                      </StyledCategoryOptions>
+                      <StyledCategoryOptions value="7">
+                        도서
+                      </StyledCategoryOptions>
+                      <StyledCategoryOptions value="8">
+                        기타
+                      </StyledCategoryOptions>
+                    </StyledCategorySelector>
+                    <StyledWriteOnly>*</StyledWriteOnly>
+                  </div>
                   <StyledPriceWrap>
                     <StyledPriceInput
                       id="itemPrice"
@@ -341,6 +351,7 @@ export const EditProduct = () => {
                     />
                     <StyledPriceLabel htmlFor="itemPrice">원</StyledPriceLabel>
                     <StyledPriceData> / 일</StyledPriceData>
+                    <StyledWriteOnly>*</StyledWriteOnly>
                   </StyledPriceWrap>
                   <StyledDateWrap>
                     <RangeCalrendar startEndDays={startEndDays} />
@@ -350,7 +361,7 @@ export const EditProduct = () => {
 
               <StyledPostLocation
                 type="text"
-                placeholder="거래 장소를 적어주세요!"
+                placeholder="거래 장소를 적어주세요! (필수!)"
                 defaultValue={tradeLocation}
                 onClick={() => setShowMapSearch(true)}
                 onChange={(e) => {
@@ -481,32 +492,43 @@ export const EditProduct = () => {
                 </StyledImageSource>
               </StyledMobilePostHeadWrap>
               <StyledMobileOptionInputs>
-                <StyledMobileCategorySelector
-                  defaultValue={categoryInput}
-                  onChange={(e) => {
-                    setCategoryInput(e.target.value);
-                  }}
-                >
-                  <StyledCategoryOptions value="noneData" disabled>
-                    상품 종류를 골라주세요!
-                  </StyledCategoryOptions>
-                  <StyledCategoryOptions value="1">
-                    디지털기기
-                  </StyledCategoryOptions>
-                  <StyledCategoryOptions value="2">공구</StyledCategoryOptions>
-                  <StyledCategoryOptions value="3">
-                    생활가전
-                  </StyledCategoryOptions>
-                  <StyledCategoryOptions value="4">잡화</StyledCategoryOptions>
-                  <StyledCategoryOptions value="5">
-                    스포츠/레저
-                  </StyledCategoryOptions>
-                  <StyledCategoryOptions value="6">
-                    취미/게임/음반
-                  </StyledCategoryOptions>
-                  <StyledCategoryOptions value="7">도서</StyledCategoryOptions>
-                  <StyledCategoryOptions value="8">기타</StyledCategoryOptions>
-                </StyledMobileCategorySelector>
+                <div>
+                  <StyledMobileCategorySelector
+                    defaultValue={categoryInput}
+                    onChange={(e) => {
+                      setCategoryInput(e.target.value);
+                    }}
+                  >
+                    <StyledCategoryOptions value="noneData" disabled>
+                      상품 종류를 골라주세요!
+                    </StyledCategoryOptions>
+                    <StyledCategoryOptions value="1">
+                      디지털기기
+                    </StyledCategoryOptions>
+                    <StyledCategoryOptions value="2">
+                      공구
+                    </StyledCategoryOptions>
+                    <StyledCategoryOptions value="3">
+                      생활가전
+                    </StyledCategoryOptions>
+                    <StyledCategoryOptions value="4">
+                      잡화
+                    </StyledCategoryOptions>
+                    <StyledCategoryOptions value="5">
+                      스포츠/레저
+                    </StyledCategoryOptions>
+                    <StyledCategoryOptions value="6">
+                      취미/게임/음반
+                    </StyledCategoryOptions>
+                    <StyledCategoryOptions value="7">
+                      도서
+                    </StyledCategoryOptions>
+                    <StyledCategoryOptions value="8">
+                      기타
+                    </StyledCategoryOptions>
+                  </StyledMobileCategorySelector>
+                  <StyledWriteOnly>*</StyledWriteOnly>
+                </div>
                 <StyledPriceWrap>
                   <StyledMobilePriceInput
                     id="itemPrice"
@@ -522,6 +544,7 @@ export const EditProduct = () => {
                     원
                   </StyledMobilePriceLabel>
                   <StyledMobilePriceData> / 일</StyledMobilePriceData>
+                  <StyledWriteOnly>*</StyledWriteOnly>
                 </StyledPriceWrap>
                 <StyledDateWrap>
                   <RangeCalrendar startEndDays={startEndDays} />
@@ -609,6 +632,7 @@ export const EditProduct = () => {
 
 const StyledEditProductContainer = styled.div`
   margin-top: 100px;
+  margin-bottom: 100px;
   display: flex;
   justify-content: center;
 
@@ -868,10 +892,16 @@ const StyledFormButton = styled.button`
   }
 `;
 
+const StyledWriteOnly = styled.span`
+  margin-left: 10px;
+  color: red;
+`;
+
 // for Mobile
 
 const StyledMobileContainer = styled.div`
   margin-top: 100px;
+  margin-bottom: 100px;
   display: flex;
   justify-content: center;
 

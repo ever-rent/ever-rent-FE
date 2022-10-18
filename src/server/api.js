@@ -28,10 +28,10 @@ export const mypageAPI = {
 };
 
 export const chatAPI = {
+  getChatRoomList: () => auth.get("/chat/rooms"),
+  getChatMessage: (roomId) => auth.get(`/chat/message/${roomId}`),
+  createChatRoom: (productId) => auth.post(`/create/chat/${productId}`),
   postOrderDate: (productId, data) => auth.post(`/orders/${productId}`, data),
 };
 
-// imgUrlArray firstString
-// env 설정 예정
-export const imgFirstString =
-  "https://davidsone.s3.ap-northeast-2.amazonaws.com/";
+export const imgFirstString = process.env.REACT_APP_IMG_URL;
