@@ -5,11 +5,14 @@ import { FcLikePlaceholder } from "react-icons/fc";
 import { useMutation } from "react-query";
 import { imgFirstString, productAPI } from "../../server/api";
 import { timeToToday } from "../../util/timeToToday";
+import { useNavigate } from "react-router-dom";
 
 export const WishItem = ({ item }) => {
   const [like, setLike] = useState(true);
   const [writeAt, setWriteAt] = useState("");
   const [createdAt, setCreatedAt] = useState("");
+
+  const navigate = useNavigate();
 
   console.log(item);
   const { mutate } = useMutation(productAPI.toggleWishProduct, {
@@ -28,7 +31,7 @@ export const WishItem = ({ item }) => {
   }, [writeAt, item.productWriteAt]);
 
   return (
-    <StyledItem>
+    <StyledItem onClick={() => navigate(`/productDetail/${item.id}`)}>
       {like ? (
         <FcLike
           className="like"
