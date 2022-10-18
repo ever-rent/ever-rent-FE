@@ -25,10 +25,10 @@ export const Join = () => {
   const passwordRegExp = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,32}$/;
 
   const checkValidation = () => {
-    // if (!mailAuth) {
-    //   alert("이메일을 인증해주세요.");
-    //   return;
-    // }
+    if (!mailAuth) {
+      alert("이메일을 인증해주세요.");
+      return;
+    }
     console.log(mainAddress, subAddress);
     if (!emailRegExp.test(email.current.value)) {
       alert("이메일 형식이 올바르지 않습니다.");
@@ -115,6 +115,7 @@ export const Join = () => {
         <div>
           <input type="text" placeholder="인증코드 8자리 입력" ref={code} />
           <button
+            className="email-auth-button"
             onClick={() => {
               if (authCode === code.current.value) {
                 alert("인증되었습니다.");
@@ -133,7 +134,7 @@ export const Join = () => {
       <input
         type="password"
         ref={password}
-        placeholder="8자 이상 32자 이하의 영문, 숫자 조합으로 입력"
+        placeholder="8자 이상 32자 이하의 영문, 숫자 조합"
         required
       />
       <label>비밀번호 확인</label>
@@ -144,7 +145,12 @@ export const Join = () => {
         required
       />
       <label>닉네임</label>
-      <input type="text" ref={nickname} placeholder="닉네임 입력" required />
+      <input
+        type="text"
+        ref={nickname}
+        placeholder="2자 이상 14자 이하"
+        required
+      />
       <label>지역 선택 (1)</label>
       <SelectAddress setAddress={setMainAddress} />
       <label>지역 선택 (2)</label>

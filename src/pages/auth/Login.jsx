@@ -20,7 +20,6 @@ export const Login = () => {
   const { mutate } = useMutation(handleLogin, {
     onSuccess: (data) => {
       if (data.status === 200) {
-        console.log(data);
         localStorage.setItem("email", data.data.data.email);
         localStorage.setItem("memberId", data.data.data.id);
         localStorage.setItem("memberName", data.data.data.memberName);
@@ -28,10 +27,11 @@ export const Login = () => {
         localStorage.setItem("refreshToken", data.headers["refresh-token"]);
         alert("로그인 성공!!");
         navigate("/");
-      } else {
-        password.current.value = "";
-        alert("로그인 실패!!");
       }
+    },
+    onError: (error) => {
+      alert("일치하는 계정이 없습니다. 이메일 또는 비밀번호를 확인해주세요.");
+      console.dir(error);
     },
   });
 
