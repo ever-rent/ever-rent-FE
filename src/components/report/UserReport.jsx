@@ -2,8 +2,10 @@ import styled from "styled-components";
 import Swal from "sweetalert2";
 
 import { useState, useEffect } from "react";
+import { auth } from "../../server/core/instance";
 
-export const UserReport = ({ targetNicename }) => {
+
+export const UserReport = ({ targetUserId }) => {
   // userId (PK) 로 props 전달 예정
 
   // 신고창 모달 오픈 여부
@@ -14,12 +16,11 @@ export const UserReport = ({ targetNicename }) => {
 
   const [isLogedIn, setIsLogedIn] = useState(true);
 
-  // 로그인 처리 예정
-  // useEffect(() => {
-  //  if(localStorage.getItem("accessToken")!==null){
-  //   setIsLogedIn(true);
-  //  }
-  // }, []);
+  useEffect(() => {
+    localStorage.getItem("accessToken") !== null
+      ? setIsLogedIn(true)
+      : setIsLogedIn(false);
+  }, []);
 
   // 로그인 여부 확인
   const loginCheck = () => {
@@ -48,6 +49,7 @@ export const UserReport = ({ targetNicename }) => {
         icon: "warning",
       });
     } else {
+      // auth.post(`/report/user/${targetUserId}`)
       Swal.fire({
         title: "해당 유저의 신고 접수가 완료되었습니다.",
         icon: "success",

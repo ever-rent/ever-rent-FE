@@ -71,6 +71,8 @@ export const ProductDetail = () => {
   const [editabled, setEditabled] = useState(true);
   const [userImage, setUserImage] = useState(defaultUserImg);
 
+  
+
   // 게시글 삭제
   const deletePost = () => {
     Swal.fire({
@@ -132,7 +134,7 @@ export const ProductDetail = () => {
         <Layout>
           <StyledDetailProductContainer>
             <StyledDetailProductWrap>
-              <PostReport />
+              <PostReport targetProductId={param.id}/>
               {/* 게시글 리포트자리 */}
               <StyledPostHeadWrap>
                 <ImageModal
@@ -226,10 +228,15 @@ export const ProductDetail = () => {
                       <span onClick={deletePost}>글 삭제</span>
                       <StyledNoPointer>·</StyledNoPointer>
                     </StyledMyPostOption>
-                    <UserReport />
+                    <UserReport targetUserId={detailData?.memberId} />
                     {/* 유저 리포트 자리 */}
                   </StyledPostOptionWrap>
                 </StyledUserInfo>
+                <StyledPostHr />
+                <div>
+                  <div>뱃지자리</div>
+                  <div>매너온도</div>
+                </div>
                 <StyledPostHr />
                 <StyledPostMain>
                   <StyledPostTitle>{detailData?.productName}</StyledPostTitle>

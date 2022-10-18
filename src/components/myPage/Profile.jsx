@@ -5,6 +5,8 @@ import styled from "styled-components";
 import { MyPage } from "../../pages/MyPage";
 import { getMyInfo } from "../../redux/modules/mypageSlice";
 import { Desktop, Mobile } from "../../Hooks/MideaQuery";
+import { ProfileImg } from "../../image/ProfileImg";
+import { MyCallenge } from "./MyChallenge";
 
 export const Profile = ({ like, setLike }) => {
   const navigate = useNavigate();
@@ -30,21 +32,46 @@ export const Profile = ({ like, setLike }) => {
       ? `https://source.boringavatars.com/beam/110/${info?.id}?colors=7965EE,6FE7F1,FFDD4C,46B5FF,2883E0`
       : info?.imgUrl;
 
+  const [showProfile, setShowProfile] = useState(false);
+  const openProfileimgFix = () => {
+    setShowProfile(true);
+  };
+  const closeProfileimgFix = () => {
+    setShowProfile(false);
+  };
+
+  const [showChallenge, setShowChallenge] = useState(false);
+  const openChallenge = () => {
+    setShowChallenge(true);
+  };
+  const closeChallenge = () => {
+    setShowChallenge(false);
+  };
+
   return (
     <>
       <Desktop>
         <StyledProfileBox>
           <StyledImgFlexBox>
-            <StyledImgBox>
+            <StyledImgBox onClick={openProfileimgFix}>
               <StyledImg src={profileImg} alt="이미지 없음" />
             </StyledImgBox>
+              <StyledImageEdit
+                src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FUjHeg%2FbtrN27EGh2c%2FFUAuCglKKcKdPLOx1zjVK1%2Fimg.png"
+                alt="alt=https://icons8.com/icon/kx4uQexsQTUC/write Write icon by https://icons8.com Icons8"
+              />
             <StyledNickname>{info?.memberName}</StyledNickname>
             <StyledProfileEdit
-              onClick={() => navigate(`/editUserInfo/${info?.memberName}`)}
+              onClick={() => navigate(`/editUserInfo/${info?.id}`)}
             >
-              프로필 수정
+              회원정보 수정
             </StyledProfileEdit>
           </StyledImgFlexBox>
+          <ProfileImg
+            showProfile={showProfile}
+            closeProfileimgFix={closeProfileimgFix}
+            defaultImg={`https://source.boringavatars.com/beam/110/${info?.id}?colors=7965EE,6FE7F1,FFDD4C,46B5FF,2883E0`}
+          />
           <StyledIcon>
             <StyledLikeAndChatBox>
               <StyledEachWrap>
@@ -75,6 +102,18 @@ export const Profile = ({ like, setLike }) => {
                 />
                 <span>채팅목록</span>
               </StyledEachWrap>
+              <StyledEachWrap onClick={openChallenge}>
+                <StyledLikeAndChat
+                  
+                  src={require("../../image/challengeLogo.png")}
+                  alt="https://icons8.com/icon/pM35dYPfUtO5/crown-trophy-for-online-gaming-permium-membership Crown trophy for online gaming permium membership https://icons8.com Icons8"
+                />
+                <span>도전과제</span>
+              </StyledEachWrap>
+              <MyCallenge
+                showChallenge={showChallenge}
+                closeChallenge={closeChallenge}
+              />
             </StyledLikeAndChatBox>
           </StyledIcon>
         </StyledProfileBox>
@@ -83,19 +122,28 @@ export const Profile = ({ like, setLike }) => {
       {/* ################ 모바일 ################ */}
       <Mobile>
         <StyledMobileProfileContainer>
-          <StyledMobileImgBox>
+          <StyledMobileImgBox onClick={openProfileimgFix}>
             <StyledMobileImg
               src="https://image.ajunews.com/content/image/2019/12/25/20191225170826943516.jpg"
               alt="이미지 없음"
             />
           </StyledMobileImgBox>
+          <StyledMobileImageEdit
+            src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FUjHeg%2FbtrN27EGh2c%2FFUAuCglKKcKdPLOx1zjVK1%2Fimg.png"
+            alt="alt=https://icons8.com/icon/kx4uQexsQTUC/write Write icon by https://icons8.com Icons8"
+          />
+          <ProfileImg
+            showProfile={showProfile}
+            closeProfileimgFix={closeProfileimgFix}
+            defaultImg={`https://source.boringavatars.com/beam/110/${info?.id}?colors=7965EE,6FE7F1,FFDD4C,46B5FF,2883E0`}
+          />
           <StyledMobileFlexBox>
             <StyledMobileNickname>{info?.memberName}</StyledMobileNickname>
 
             <StyledMobileEditButton
-              onClick={() => navigate(`/editUserInfo/${info?.memberName}`)}
+              onClick={() => navigate(`/editUserInfo/${info?.id}`)}
             >
-              프로필 수정
+              회원정보 수정
             </StyledMobileEditButton>
           </StyledMobileFlexBox>
 
@@ -129,6 +177,13 @@ export const Profile = ({ like, setLike }) => {
                 />
                 <span>채팅목록</span>
               </StyledMobileEachWrap>
+              <StyledEachWrap>
+                <StyledLikeAndChat
+                  src={require("../../image/challengeLogo.png")}
+                  alt="https://icons8.com/icon/pM35dYPfUtO5/crown-trophy-for-online-gaming-permium-membership Crown trophy for online gaming permium membership https://icons8.com Icons8"
+                />
+                <span>도전과제</span>
+              </StyledEachWrap>
             </StyledMobileIcon>
           </div>
         </StyledMobileProfileContainer>
@@ -184,6 +239,7 @@ const StyledImgBox = styled.div`
   width: 110px;
   height: 110px;
   border-radius: 70%;
+  cursor: pointer;
   overflow: hidden;
   ::after {
     content: "";
@@ -199,6 +255,16 @@ const StyledImg = styled.img`
   @media only screen and (max-width: 767px) {
     position: absolute;
   }
+`;
+const StyledImageEdit = styled.img`
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  margin-top:10px;
+  margin-left:30px;
+  background-color: #f0f0f0;
+  border-radius: 20px;
+  z-index:99;
 `;
 
 const StyledNickname = styled.div`
@@ -310,6 +376,16 @@ const StyledMobileImg = styled.img`
   @media only screen and (max-width: 767px) {
     position: absolute;
   }
+`;
+const StyledMobileImageEdit = styled.img`
+  width: 20px;
+  height: 20px;
+  position: relative;
+  background-color: #f0f0f0;
+  border-radius: 20px;
+  left: -60px;
+    top: 40px;
+  z-index: 5;
 `;
 
 const StyledMobileEditButton = styled.button`
