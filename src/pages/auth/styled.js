@@ -16,6 +16,11 @@ export const StyledJoin = styled.div`
       justify-content: center;
       align-items: center;
       gap: 10px;
+      margin-top: 20px;
+      button {
+        padding: 5px 10px;
+        border-radius: 5px;
+      }
     }
   }
 
