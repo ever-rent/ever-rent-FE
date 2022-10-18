@@ -9,6 +9,7 @@ import { Skeleton } from "../components/skeleton/Skeleton";
 import { useInView } from "react-intersection-observer";
 import { base } from "../server/core/instance";
 import { auth } from "../server/core/instance";
+import { ProductsItem } from "../components/main/products/ProductsItem";
 
 export const CategoryDetail = () => {
   const navigate = useNavigate();
@@ -38,7 +39,6 @@ export const CategoryDetail = () => {
 
   const categoryHandler = (e) => {
     e.preventDefault();
-    // infi
     console.log(e.target.value);
     navigate(`/categoryDetail/${e.target.value}`);
   };
@@ -112,6 +112,7 @@ export const CategoryDetail = () => {
     }
   }, [fetch, hasNextPage, inView, page]);
 
+  console.log(categoryItems);
   return (
     <Layout>
       <StyledCategoryContainer>
