@@ -22,6 +22,7 @@ import axios from "axios";
 
 import { WishButton } from "../components/button/WishButton";
 import { createChatRoom } from "../redux/modules/chatSlice";
+import { UsersBadge } from "../components/detail/UsersBadge";
 
 // 게시글 상세 페이지 컴포넌트
 export const ProductDetail = () => {
@@ -70,8 +71,6 @@ export const ProductDetail = () => {
 
   const [editabled, setEditabled] = useState(true);
   const [userImage, setUserImage] = useState(defaultUserImg);
-
-  
 
   // 게시글 삭제
   const deletePost = () => {
@@ -134,7 +133,7 @@ export const ProductDetail = () => {
         <Layout>
           <StyledDetailProductContainer>
             <StyledDetailProductWrap>
-              <PostReport targetProductId={param.id}/>
+              <PostReport targetProductId={param.id} />
               {/* 게시글 리포트자리 */}
               <StyledPostHeadWrap>
                 <ImageModal
@@ -233,10 +232,16 @@ export const ProductDetail = () => {
                   </StyledPostOptionWrap>
                 </StyledUserInfo>
                 <StyledPostHr />
-                <div>
-                  <div>뱃지자리</div>
-                  <div>매너온도</div>
-                </div>
+                <StyledUserSubItem>
+                <UsersBadge />
+                  <StyledMannerOndoWrap>
+                    <StyledMannerOndo
+                      src={require("../image/mannerNumber.png")}
+                      alt="매너온도"
+                    />
+                    <StyledMannerSpan>36.5</StyledMannerSpan>
+                  </StyledMannerOndoWrap>
+                </StyledUserSubItem>
                 <StyledPostHr />
                 <StyledPostMain>
                   <StyledPostTitle>{detailData?.productName}</StyledPostTitle>
@@ -509,6 +514,28 @@ const StyledUserInfo = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+`;
+
+const StyledUserSubItem = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const StyledMannerOndoWrap = styled.div`
+  margin-left:20px;
+`
+
+const StyledMannerOndo = styled.img`
+  width: 80px;
+  height: 60px;
+`;
+const StyledMannerSpan = styled.span`
+  position: relative;
+  right: 60px;
+  top: -20px;
+  font-size: 15px;
+  font-weight: bold;
+  color: rgb(253,138,105);
 `;
 
 const StyledInfoWrap = styled.div`

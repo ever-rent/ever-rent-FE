@@ -19,6 +19,7 @@ export const MyCallenge = ({ showChallenge, closeChallenge }) => {
                   src={require("../../image/firstPost.png")}
                   alt="첫게시글"
                 />
+                <StyledAltHover>첫게시글 등록</StyledAltHover>
                 <span>첫 게시글</span>
               </StyleditemWrap>
               <StyleditemWrap>
@@ -26,6 +27,7 @@ export const MyCallenge = ({ showChallenge, closeChallenge }) => {
                   src={require("../../image/localMerchant.png")}
                   alt="게시글5개이상"
                 />
+                <StyledAltHover>게시글5개이상</StyledAltHover>
                 <span>우리동네 렌탈업자</span>
               </StyleditemWrap>
               <StyleditemWrap>
@@ -33,6 +35,7 @@ export const MyCallenge = ({ showChallenge, closeChallenge }) => {
                   src={require("../../image/firstTrade.png")}
                   alt="렌트예약 첫 등록"
                 />
+                <StyledAltHover>렌트예약 첫 등록</StyledAltHover>
                 <span>첫 거래</span>
               </StyleditemWrap>
               <StyleditemWrap>
@@ -40,6 +43,7 @@ export const MyCallenge = ({ showChallenge, closeChallenge }) => {
                   src={require("../../image/manyTrader.png")}
                   alt="빌린 물건 5회"
                 />
+                <StyledAltHover>빌린 물건 5회</StyledAltHover>
                 <span>빌려볼리티</span>
               </StyleditemWrap>
               <StyleditemWrap>
@@ -47,6 +51,7 @@ export const MyCallenge = ({ showChallenge, closeChallenge }) => {
                   src={require("../../image/manners.png")}
                   alt="매너온도 37도 이상"
                 />
+                <StyledAltHover>매너온도 37.5도 이상</StyledAltHover>
                 <span>매너러블</span>
               </StyleditemWrap>
               <StyleditemWrap>
@@ -54,6 +59,7 @@ export const MyCallenge = ({ showChallenge, closeChallenge }) => {
                   src={require("../../image/hardTalker.png")}
                   alt="채팅50회 이상"
                 />
+                 <StyledAltHover>채팅50회 이상</StyledAltHover>
                 <span>달변가</span>
               </StyleditemWrap>
               <StyleditemWrap>
@@ -61,6 +67,7 @@ export const MyCallenge = ({ showChallenge, closeChallenge }) => {
                   src={require("../../image/rentOrNot.png")}
                   alt=""
                 />
+                <StyledAltHover>찜 10개 이상</StyledAltHover>
                 <span>빌릴까말까</span>
               </StyleditemWrap>
               <StyleditemWrap>
@@ -68,6 +75,7 @@ export const MyCallenge = ({ showChallenge, closeChallenge }) => {
                   src={require("../../image/reporter.png")}
                   alt=""
                 />
+                <StyledAltHover>신고 1회</StyledAltHover>
                 <span>투철한 신고정신</span>
               </StyleditemWrap>
               <StyleditemWrap>
@@ -75,6 +83,7 @@ export const MyCallenge = ({ showChallenge, closeChallenge }) => {
                   src={require("../../image/photographer.png")}
                   alt=""
                 />
+                <StyledAltHover>한 게시물에 10개 이상의 사진</StyledAltHover>
                 <span>열정사진사</span>
               </StyleditemWrap>
             </StyledGridBox>
@@ -139,4 +148,28 @@ const StyleditemWrap = styled.div`
 const StyledBadgeImage = styled.img`
   width: 100px;
   height: 100px;
+  cursor: pointer;
+`;
+
+
+const StyledAltHover = styled.span`
+  width:100px;
+  height: 80px;
+  position: absolute;
+  color:transparent;
+  border:1px solid transparent;
+  border-radius:3px;
+  background-color:transparent;
+  z-index:1;
+  transition:0.4s;
+  
+  
+  &:hover {
+    
+      color:gray;
+      font-size:15px;
+      font-weight:bold;
+      border:1px solid gray;
+      background-color:white;
+  }
 `;
