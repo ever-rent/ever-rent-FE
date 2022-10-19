@@ -19,13 +19,7 @@ export const BestProducts = () => {
     }
   }, []);
 
-  // const bestProducts = useSelector((store) => store.product.bestProducts);
-  // console.log(bestProducts);
   const productsRef = useRef();
-  // const productsBox = useRef();
-
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
 
   useEffect(() => {
     fetch();
@@ -78,7 +72,7 @@ export const BestProducts = () => {
     <>
       <Desktop>
         <StyledBestProductsContainer>
-          <StyledTitle>우리 동네 </StyledTitle>
+          {/* <StyledTitle>우리 동네 </StyledTitle> */}
           <StyledHotItem>Hot Item</StyledHotItem>
           <StyledItemAndButtonContainer>
             <StyeldMoveButtonLeft onClick={back}>
@@ -138,9 +132,6 @@ const StyledItemAndButtonContainer = styled.div`
   border-radius: 10px;
   display: flex;
   position: relative;
-  /* max-width: 1024px; */
-  /* margin: auto; */
-  /* overflow: hidden; */
   padding: 0 30px;
   margin: 40px 0 100px 0;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -151,13 +142,11 @@ const StyeldMoveButtonLeft = styled.button`
   border: transparent;
   position: absolute;
   z-index: 2;
-  /* font-size: 20px; */
   left: 0;
   top: 40%;
   max-width: max-content;
   background-color: transparent;
   cursor: pointer;
-  /* margin-right: 20px; */
   span {
     font-size: 30px;
   }
@@ -177,8 +166,8 @@ const StyeldMoveButtonRight = styled.button`
 
 const StyledContainer = styled.div`
   /* border: 1px solid red; */
-  /* height: 180px; */
   max-width: 1024px;
+  height: 280px;
   margin: 25px 50px;
   padding: 10px 0 10px 16px;
   overflow: hidden;
