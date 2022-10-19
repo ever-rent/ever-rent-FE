@@ -70,6 +70,19 @@ export const ProductsItem = ({
     dispatch(postLike(id));
   };
 
+  // 비회원이 찜하기 클릭할 때
+  const nonMemberLike = (e) => {
+    e.preventDefault();
+    const answer = window.confirm(
+      "찜하기 기능은 로그인 시에만 이용가능합니다.\n로그인 페이지로 이동하시겠습니까?"
+    );
+    if (answer === true) {
+      navigate("/login");
+    } else {
+      return;
+    }
+  };
+
   //글쓴 시간 표시.
 
   const [createdAt, setCreatedAt] = useState("");
@@ -135,19 +148,32 @@ export const ProductsItem = ({
             {presentStatus(status)}
             <StyledLikeAndChatBox>
               <StyledLikeWrap>
-                {togglelike ? (
+                {localStorage.getItem("memberId") ? (
                   <>
-                    <StyledLike
-                      onClick={canceLikeHandler}
-                      src="https://img.icons8.com/ios-filled/50/47b5ff/like--v1.png"
-                      alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
-                    />
-                    <span>찜 {likeCount}</span>
+                    {togglelike ? (
+                      <>
+                        <StyledLike
+                          onClick={canceLikeHandler}
+                          src="https://img.icons8.com/ios-filled/50/47b5ff/like--v1.png"
+                          alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
+                        />
+                        <span>찜 {likeCount}</span>
+                      </>
+                    ) : (
+                      <>
+                        <StyledLike
+                          onClick={likeHandler}
+                          src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
+                          alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
+                        />
+                        <span>찜 {likeCount}</span>
+                      </>
+                    )}
                   </>
                 ) : (
                   <>
                     <StyledLike
-                      onClick={likeHandler}
+                      onClick={nonMemberLike}
                       src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
                       alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
                     />
@@ -199,20 +225,38 @@ export const ProductsItem = ({
             <StyledAddress>{address}</StyledAddress>
             <StyledMobileLikeAndChatBox>
               <StyledMobileLikeWrap>
-                {togglelike ? (
-                  <StyledLike
-                    onClick={canceLikeHandler}
-                    src="https://img.icons8.com/ios-filled/50/47b5ff/like--v1.png"
-                    alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
-                  />
+                {localStorage.getItem("memberId") ? (
+                  <>
+                    {togglelike ? (
+                      <>
+                        <StyledLike
+                          onClick={canceLikeHandler}
+                          src="https://img.icons8.com/ios-filled/50/47b5ff/like--v1.png"
+                          alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
+                        />
+                        <span>찜 {likeCount}</span>
+                      </>
+                    ) : (
+                      <>
+                        <StyledLike
+                          onClick={likeHandler}
+                          src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
+                          alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
+                        />
+                        <span>찜 {likeCount}</span>
+                      </>
+                    )}
+                  </>
                 ) : (
-                  <StyledLike
-                    onClick={likeHandler}
-                    src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
-                    alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
-                  />
+                  <>
+                    <StyledLike
+                      onClick={nonMemberLike}
+                      src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
+                      alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
+                    />
+                    <span>찜 {likeCount}</span>
+                  </>
                 )}
-                <span>찜 {likeCount}</span>
               </StyledMobileLikeWrap>
 
               {/* <StyledMobileChatWrap>
@@ -275,7 +319,7 @@ const StyledImgBox = styled.div`
 const StyledMobileImgBox = styled.div`
   /* border: 1px solid red; */
   padding: 2px;
-  width: 200px;
+  width: 150px;
   height: 140px;
   margin: 5px 15px 5px 3px;
 `;

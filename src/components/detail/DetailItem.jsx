@@ -216,7 +216,7 @@ const StyledImgBox = styled.div`
 const StyledMobileImgBox = styled.div`
   /* border: 1px solid red; */
   padding: 2px;
-  width: 200px;
+  width: 150px;
   height: 140px;
   margin: 5px 15px 5px 3px;
 `;
