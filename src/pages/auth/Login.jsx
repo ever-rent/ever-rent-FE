@@ -1,9 +1,9 @@
 import React, { useRef } from "react";
-import logo from "../image/logo.png";
-import styled from "styled-components";
+import logo from "../../image/logo.png";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
 import axios from "axios";
+import { StyledLogin } from "./styled";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -20,7 +20,6 @@ export const Login = () => {
   const { mutate } = useMutation(handleLogin, {
     onSuccess: (data) => {
       if (data.status === 200) {
-        console.log(data);
         localStorage.setItem("email", data.data.data.email);
         localStorage.setItem("memberId", data.data.data.id);
         localStorage.setItem("memberName", data.data.data.memberName);
@@ -28,27 +27,38 @@ export const Login = () => {
         localStorage.setItem("refreshToken", data.headers["refresh-token"]);
         alert("로그인 성공!!");
         navigate("/");
-      } else {
-        password.current.value = "";
-        alert("로그인 실패!!");
       }
+    },
+    onError: (error) => {
+      alert("일치하는 계정이 없습니다. 이메일 또는 비밀번호를 확인해주세요.");
+      console.dir(error);
     },
   });
 
   return (
-    <StyledContainer>
+    <StyledLogin>
       <img src={logo} alt="logo" />
       <label>이메일</label>
-      <input type="email" ref={email} />
+      <input type="email" ref={email} placeholder="이메일 입력" />
       <label>비밀번호</label>
-      <input type="password" ref={password} />
+      <input type="password" ref={password} placeholder="비밀번호 입력" />
       <button
-        onClick={() =>
+        onClick={() => {
+          if (email.current.value === "") {
+            alert("이메일을 입력해주세요.");
+            email.current.focus();
+            return;
+          }
+          if (password.current.value === "") {
+            alert("비밀번호를 입력해주세요.");
+            password.current.focus();
+            return;
+          }
           mutate({
             email: email.current.value,
             password: password.current.value,
-          })
-        }
+          });
+        }}
       >
         로그인
       </button>
@@ -56,46 +66,6 @@ export const Login = () => {
         <span>비밀번호 재설정</span>
         <span onClick={() => navigate("/join")}>회원가입</span>
       </div>
-    </StyledContainer>
+    </StyledLogin>
   );
 };
-
-const StyledContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 300px;
-  margin: 100px auto;
-  padding: 20px;
-  img {
-    width: 200px;
-    margin-bottom: 40px;
-  }
-  label {
-    margin-bottom: 10px;
-    font-weight: bold;
-  }
-  input {
-    height: 30px;
-    margin-bottom: 30px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  button {
-    height: 50px;
-    border: none;
-    border-radius: 5px;
-    color: #fff;
-    font-size: large;
-    font-weight: bold;
-    background-color: rgb(71, 181, 255);
-    cursor: pointer;
-  }
-  .span-box {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
-    span {
-      cursor: pointer;
-    }
-  }
-`;

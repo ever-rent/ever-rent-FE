@@ -26,9 +26,13 @@ auth.interceptors.response.use((response) => {
   if (response.headers["authorization"]) {
     localStorage.removeItem("accessToken");
     localStorage.setItem("accessToken", response.headers["authorization"]);
-  } else if (response.data.error === "INVALID_TOKEN") {
+  } else if (
+    response.headers["message"] &&
+    localStorage.getItem("accessToken")
+  ) {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
+    alert("토큰이 만료되었습니다. 다시 로그인해주세요.");
     window.location.href = "/login";
   }
   return response;

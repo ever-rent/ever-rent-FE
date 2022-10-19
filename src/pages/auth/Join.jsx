@@ -1,21 +1,66 @@
 import React, { useRef, useState } from "react";
-import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
 import axios from "axios";
-import { SelectAddress } from "../components/selectAddress/SelectAddress";
+import { SelectAddress } from "../../components/selectAddress/SelectAddress";
+import { StyledJoin } from "./styled";
 
 export const Join = () => {
-  const navigate = useNavigate();
+  const [authCode, setAuthCode] = useState("");
+  const [mailAuth, setMailAuth] = useState(false);
+  const [mainAddress, setMainAddress] = useState("");
+  const [subAddress, setSubAddress] = useState("");
+
   const email = useRef(null);
   const password = useRef(null);
   const passwordConfirm = useRef(null);
   const nickname = useRef(null);
   const code = useRef(null);
-  const [authCode, setAuthCode] = useState("");
-  const [mailAuth, setMailAuth] = useState(false);
-  const [mainAddress, setMainAddress] = useState("");
-  const [subAddress, setSubAddress] = useState("");
+
+  const navigate = useNavigate();
+
+  const emailRegExp =
+    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+
+  const passwordRegExp = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,32}$/;
+
+  const checkValidation = () => {
+    if (!mailAuth) {
+      alert("이메일을 인증해주세요.");
+      return;
+    }
+    console.log(mainAddress, subAddress);
+    if (!emailRegExp.test(email.current.value)) {
+      alert("이메일 형식이 올바르지 않습니다.");
+      email.current.focus();
+      return;
+    }
+    if (!passwordRegExp.test(password.current.value)) {
+      alert(
+        "비밀번호는 8자 이상 32자 이하의 영문, 숫자 조합으로 입력해주세요."
+      );
+      password.current.focus();
+      return;
+    }
+    if (
+      nickname.current.value.length < 2 ||
+      nickname.current.value.length > 14
+    ) {
+      alert("닉네임은 2자 이상 14자 이하로 입력해주세요.");
+      nickname.current.focus();
+      return;
+    }
+    if (mainAddress === "" || subAddress === "") {
+      alert("지역을 선택해주세요.");
+      return;
+    }
+    if (password.current.value !== passwordConfirm.current.value) {
+      alert("비밀번호가 일치하지 않습니다.");
+      passwordConfirm.current.focus();
+      return;
+    }
+    return true;
+  };
 
   const handleEmailAuth = async (email) => {
     return await axios.post(
@@ -58,10 +103,10 @@ export const Join = () => {
   });
 
   return (
-    <StyledContainer>
+    <StyledJoin>
       <h2>회원가입</h2>
       <label>이메일</label>
-      <input type="email" ref={email} />
+      <input type="email" ref={email} placeholder="이메일 입력" required />
       <button onClick={() => emailAuth.mutate(email.current.value)}>
         이메일 인증하기
       </button>
@@ -70,6 +115,7 @@ export const Join = () => {
         <div>
           <input type="text" placeholder="인증코드 8자리 입력" ref={code} />
           <button
+            className="email-auth-button"
             onClick={() => {
               if (authCode === code.current.value) {
                 alert("인증되었습니다.");
@@ -85,30 +131,33 @@ export const Join = () => {
         </div>
       </div>
       <label>비밀번호</label>
-      {/* 8자리 이상 32자리 이하 */}
-      <input type="password" ref={password} />
+      <input
+        type="password"
+        ref={password}
+        placeholder="8자 이상 32자 이하의 영문, 숫자 조합"
+        required
+      />
       <label>비밀번호 확인</label>
-      <input type="password" ref={passwordConfirm} />
+      <input
+        type="password"
+        ref={passwordConfirm}
+        placeholder="비밀번호 재입력"
+        required
+      />
       <label>닉네임</label>
-      {/* 2자 이상 14자 이하 */}
-      <input type="text" ref={nickname} />
-      <label>
-        지역 선택 <span style={{ color: "red" }}>(필수)</span>
-      </label>
+      <input
+        type="text"
+        ref={nickname}
+        placeholder="2자 이상 14자 이하"
+        required
+      />
+      <label>지역 선택 (1)</label>
       <SelectAddress setAddress={setMainAddress} />
-      <label>지역 선택 (선택)</label>
+      <label>지역 선택 (2)</label>
       <SelectAddress setAddress={setSubAddress} />
       <button
         onClick={() => {
-          if (!mailAuth) {
-            alert("이메일을 인증해주세요.");
-            return;
-          }
-          if (mainAddress === "지역 선택" || subAddress === "지역 선택") {
-            alert("주소를 선택해주세요.");
-            return;
-          }
-          if (password.current.value === passwordConfirm.current.value) {
+          if (checkValidation()) {
             mutate({
               email: email.current.value,
               password: password.current.value,
@@ -116,9 +165,6 @@ export const Join = () => {
               mainAddress: mainAddress,
               subAddress: subAddress,
             });
-          } else {
-            alert("비밀번호를 확인해주세요.");
-            password.current.focus();
           }
         }}
       >
@@ -128,57 +174,6 @@ export const Join = () => {
         <span>이미 계정이 있으신가요?</span>
         <span onClick={() => navigate("/login")}>로그인하기</span>
       </div>
-    </StyledContainer>
+    </StyledJoin>
   );
 };
-
-const StyledContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 400px;
-  margin: 100px auto;
-  padding: 20px;
-  .auth-box {
-    display: none;
-    background-color: aliceblue;
-    padding: 10px;
-    margin: 10px 0;
-    div {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-    }
-  }
-
-  label {
-    margin-bottom: 10px;
-    font-weight: bold;
-  }
-  input {
-    height: 30px;
-    margin-bottom: 30px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  button {
-    height: 50px;
-    border: none;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    color: #fff;
-    font-size: large;
-    font-weight: bold;
-    background-color: rgb(71, 181, 255);
-    cursor: pointer;
-  }
-  .span-box {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    span:nth-child(2) {
-      font-weight: bold;
-      cursor: pointer;
-    }
-  }
-`;

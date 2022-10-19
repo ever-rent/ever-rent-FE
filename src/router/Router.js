@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { Main } from "../pages/Main";
-import { Login } from "../pages/Login";
-import { Join } from "../pages/Join";
+import { Login } from "../pages/auth/Login";
+import { Join } from "../pages/auth/Join";
 import { AddProduct } from "../pages/AddProduct";
 import { ProductDetail } from "../pages/ProductDetail";
 import { EditProduct } from "../pages/EditProduct";

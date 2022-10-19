@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { BestProductItem } from "./BestProductItem";
 import { Desktop, Mobile } from "../../../Hooks/MideaQuery";
 import { auth } from "../../../server/core/instance";
-import { useSelector } from "react-redux";
 
 export const BestProducts = () => {
   const [products, setProducts] = useState([]);
@@ -30,7 +29,7 @@ export const BestProducts = () => {
   //상품 index 배열 만들기
   const makeArr = (bestProducts) => {
     let arr = [];
-    bestProducts.map((_, idx) => arr.push(idx)); //map 요소(element, index, arr)
+    bestProducts?.map((_, idx) => arr.push(idx)); //map 요소(element, index, arr)
     console.log("arr", arr);
     return arr;
   };
