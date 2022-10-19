@@ -9,20 +9,35 @@ import { Desktop, Mobile } from "../Hooks/MideaQuery";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../server/core/instance";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 
 export const EditUserInfo = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const defaultImg =
     "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png";
 
   // 회원정보 state
-  const [email, setEmail] = useState("대충이메일");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [userNickName, setUserNickName] = useState("");
   const [mainAddress, setMainAddress] = useState("");
   const [subAddress, setSubAddress] = useState("");
   const [categoryInput, setCategoryInput] = useState("");
+
+  const { state } = useLocation();
+
+  console.log(state);
+  useEffect(() => {
+    console.log(state)
+    setEmail(state.email);
+    setUserNickName(state.memberName);
+    setMainAddress(state.mainAddress);
+    setSubAddress(state.subAddress);
+    // setCategoryInput(state.cateId);
+  }, [state]);
 
   const [confirmStatus, setConfirmStatus] = useState(null);
   useEffect(() => {
@@ -47,7 +62,7 @@ export const EditUserInfo = () => {
       cancelButtonText: "취소",
     }).then((result) => {
       if (result.value) {
-        // 탈퇴처리api 적용 예쩡
+        // auth.delete("/auth/deletes");
         Swal.fire({
           title: "회원탈퇴가 완료되었습니다.",
           icon: "success",
@@ -75,10 +90,11 @@ export const EditUserInfo = () => {
   // 회원정보 수정
   const editMyInfo = () => {
     if (
-      password === "" ||
-      passwordConfirm === "" ||
+      // password === "" ||
+      // passwordConfirm === "" ||
       userNickName === "" ||
       mainAddress === "" ||
+      categoryInput === "" ||
       confirmStatus === false
     ) {
       Swal.fire({
@@ -102,16 +118,15 @@ export const EditUserInfo = () => {
         cancelButtonText: "취소",
       }).then((result) => {
         if (result.value) {
-          let formData = new FormData()
-          formData.append(sendData)
+          // let formData = new FormData()
+          // formData.append("requestDto",sendData)
           // auth.put("/updateInfo",sendData)
           Swal.fire({
             title: "저장완료!",
             icon: "success",
-            showCancelButton: true,
             confirmButtonColor: "rgb(71, 181, 255)",
             confirmButtonText: "확인",
-          })
+          });
         }
       });
     }
@@ -140,7 +155,7 @@ export const EditUserInfo = () => {
               <StyledInfoSubWrap>
                 <StyledEditInput
                   type="text"
-                  defaultValue="이메일디폴트자리"
+                  defaultValue={email}
                   disabled
                 />
                 <StyledEditSubName>
@@ -300,7 +315,7 @@ export const EditUserInfo = () => {
               <StyledInfoSubWrap>
                 <StyledMobileEditInput
                   type="text"
-                  defaultValue="이메일디폴트자리"
+                  defaultValue={email}
                   disabled
                 />
                 <StyledEditSubName>
@@ -573,8 +588,8 @@ const StyledButtons = styled.div`
 const StyledCancelButton = styled.button`
   width: 150px;
   height: 40px;
-  margin-left:25px;
-  margin-right:25px;
+  margin-left: 25px;
+  margin-right: 25px;
   background-color: white;
   border: 1px solid rgb(71, 181, 255);
   border-radius: 10px;
@@ -593,8 +608,8 @@ const StyledCancelButton = styled.button`
 const StyledSubmitButton = styled.button`
   width: 150px;
   height: 40px;
-  margin-left:25px;
-  margin-right:25px;
+  margin-left: 25px;
+  margin-right: 25px;
   background-color: rgb(71, 181, 255);
   border: none;
   border-radius: 10px;
@@ -608,8 +623,6 @@ const StyledSubmitButton = styled.button`
     cursor: default;
   }
 `;
-
-
 
 // for Mobile
 
@@ -626,7 +639,7 @@ const StyledMobileInfoTop = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom:50px;
+  margin-bottom: 50px;
 `;
 
 const StyledMobileInfoWrap = styled.div`
@@ -635,7 +648,6 @@ const StyledMobileInfoWrap = styled.div`
   align-items: flex-start;
   margin-bottom: 50px;
 `;
-
 
 const StyledMobileEditInput = styled.input`
   width: 200px;
@@ -651,7 +663,6 @@ const StyledMobileEditInput = styled.input`
     outline: 1px solid rgb(71, 181, 255);
   }
 `;
-
 
 const StyledMobileAdressSelect = styled.div`
   & select {

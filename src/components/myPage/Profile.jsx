@@ -62,7 +62,7 @@ export const Profile = ({ like, setLike }) => {
               />
             <StyledNickname>{info?.memberName}</StyledNickname>
             <StyledProfileEdit
-              onClick={() => navigate(`/editUserInfo/${info?.id}`)}
+              onClick={() => navigate(`/editUserInfo/${info?.id}`,{state:info})}
             >
               회원정보 수정
             </StyledProfileEdit>
@@ -141,7 +141,7 @@ export const Profile = ({ like, setLike }) => {
             <StyledMobileNickname>{info?.memberName}</StyledMobileNickname>
 
             <StyledMobileEditButton
-              onClick={() => navigate(`/editUserInfo/${info?.id}`)}
+              onClick={() => navigate(`/editUserInfo/${info?.id}`,{state:info})}
             >
               회원정보 수정
             </StyledMobileEditButton>
