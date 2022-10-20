@@ -134,6 +134,7 @@ const StyledImgBox = styled.div`
 const StyledImg = styled.img`
   width: 100%;
   height: 100%;
+  cursor: pointer;
 `;
 
 const StyledPage = styled.span`

@@ -1,10 +1,12 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { imgFirstString } from "../../server/api";
 
 export const RentItem = ({ item }) => {
+  const navigate = useNavigate();
+  
   return (
-    <StyledItem>
+    <StyledItem onClick={() => navigate(`/productDetail/${item.id}`)}>
       <img src={`${imgFirstString}${item.imgUrlArray[0]}`} alt="상품이미지" />
       <div className="span-div">
         <span className="title">{item.productName}</span>

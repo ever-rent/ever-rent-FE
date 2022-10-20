@@ -1,19 +1,9 @@
-import React from "react";
-import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { imgFirstString, productAPI } from "../../server/api";
+import { imgFirstString } from "../../server/api";
 import { StyledChatRoomItem } from "./styled";
 
 export const ChatRoomItem = ({ item }) => {
   const navigate = useNavigate();
-
-  const { data } = useQuery("getProductDetail", () =>
-    productAPI.getProductDetail(item.productId)
-  );
-
-  const productData = data?.data.data;
-  console.log("request id:", item.productId);
-  console.log("response id:", productData?.id);
 
   const detailDate = (lastTime) => {
     const seconds = (new Date() - lastTime) / 1000 - 32400;
@@ -56,14 +46,12 @@ export const ChatRoomItem = ({ item }) => {
             </div>
             <div className="time-info">{nowDate}</div>
           </div>
-          <div className="last-message">
-            {item.lastMessage}
-          </div>
+          <div className="last-message">{item.lastMessage}</div>
         </div>
         <div className="product-img-div">
           <img
             className="product-img"
-            src={`${imgFirstString}${productData?.imgUrlArray[0]}`}
+            src={`${imgFirstString}${item.productImgUrl}`}
             alt="img"
           />
         </div>
