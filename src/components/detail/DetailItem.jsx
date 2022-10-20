@@ -9,15 +9,13 @@ import { postLike } from "../../redux/modules/mypageSlice";
 
 export const DetailItem = ({
   id,
-  imgUrl,
-  imgUrlArray,
+  thumbimgUrl,
   productName,
   memberName,
   price,
   address,
   wishNum,
   chat,
-  content,
   writeAt,
   cateId,
   location,
@@ -65,7 +63,7 @@ export const DetailItem = ({
               onClick={() => {
                 navigate(`/productDetail/${id}`);
               }}
-              src={`${imgFirstString}${imgUrlArray[0]}`}
+              src={`${imgFirstString}${thumbimgUrl}`}
               alt="이미지 없음"
             />
           </StyledImgBox>
@@ -124,14 +122,16 @@ export const DetailItem = ({
               onClick={() => {
                 navigate(`/productDetail/${id}`);
               }}
-              src={`${imgFirstString}${imgUrlArray[0]}`}
+              src={`${imgFirstString}${thumbimgUrl}`}
               alt="이미지 없음"
             />
           </StyledMobileImgBox>
           <StyledContentBox>
             <StyledTitle>{productName}</StyledTitle>
             {/* <StyledCateId>{categoriNumber(cateId)}</StyledCateId> */}
-            <StyledLocation>{location}</StyledLocation>
+            <StyledLocation>
+              {location ? location : "지역 선택 안함"}
+            </StyledLocation>
             <br />
             {/* <StyledPeriod>
               {rentEnd}~{rentStart}
@@ -142,8 +142,6 @@ export const DetailItem = ({
               <br />
               <StyledTimeForToday>{createdAt}</StyledTimeForToday>
             </StyledPayBox>
-
-            <StyledAddress>{address}</StyledAddress>
             <StyledMobileLikeAndChatBox>
               <StyledMobileLikeWrap>
                 {togglelike ? (
@@ -226,7 +224,7 @@ const StyledImg = styled.img`
   border-radius: 8px;
   width: 100%;
   height: 100%;
-  /* object-fit: cover; */
+  object-fit: cover;
   cursor: pointer;
 `;
 

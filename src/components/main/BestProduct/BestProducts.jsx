@@ -63,7 +63,7 @@ export const BestProducts = () => {
   };
 
   const move = (idx) => {
-    productsRef.current.style.transform = `translateX(${-idx * 212}px)`; // 180(card width)+32(gap)
+    productsRef.current.style.transform = `translateX(${-idx * 182}px)`; // 180(card width)+32(gap)
   };
   console.log("BestProducts", products);
 
@@ -75,11 +75,17 @@ export const BestProducts = () => {
           <StyledHotItem>Hot Item</StyledHotItem>
           <StyledItemAndButtonContainer>
             <StyeldMoveButtonLeft onClick={back}>
-              <img
-                src="https://img.icons8.com/ios/50/5923ff/back--v1.png"
+              {/* <img
+                className="originImg"
+                src="https://img.icons8.com/ios/50/000000/back--v1.png"
                 alt="<"
               />
-              {/* <span>{"<"}</span> */}
+              <img
+                className="hoverImg"
+                src="https://img.icons8.com/ios/50/5923ff/back--v1.png"
+                alt="<"
+              /> */}
+              <span>{"<"}</span>
             </StyeldMoveButtonLeft>
             <StyledContainer>
               <StyledGridBox ref={productsRef}>
@@ -89,11 +95,11 @@ export const BestProducts = () => {
               </StyledGridBox>
             </StyledContainer>
             <StyeldMoveButtonRight onClick={forward}>
-              <img
+              {/* <img
                 src="https://img.icons8.com/ios/50/5923ff/forward--v1.png"
                 alt=">"
-              />
-              {/* <span>{"<"}</span> */}
+              /> */}
+              <span>{">"}</span>
             </StyeldMoveButtonRight>
           </StyledItemAndButtonContainer>
         </StyledBestProductsContainer>
@@ -107,8 +113,14 @@ export const BestProducts = () => {
 };
 
 const StyledBestProductsContainer = styled.div`
-  width: 1013px;
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 850px;
+  height: 100%;
   margin: auto;
+  padding: 0 10px 30px 10px;
 `;
 
 const StyledTitle = styled.span`
@@ -118,6 +130,7 @@ const StyledTitle = styled.span`
 `;
 
 const StyledHotItem = styled.span`
+  padding-bottom: 15px;
   font-size: 25px;
   font-weight: 500;
   color: white;
@@ -127,12 +140,14 @@ const StyledHotItem = styled.span`
 `;
 
 const StyledItemAndButtonContainer = styled.div`
-  /* border: 1px solid black; */
+  /* border: 1px solid blue; */
+  display: flex;
   border-radius: 10px;
   display: flex;
+  justify-content: center;
   position: relative;
-  padding: 0 30px;
-  margin: 40px 0 100px 0;
+  /* padding: 0 30px; */
+  /* margin: 40px 0 70px 0; */
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 `;
 
@@ -140,14 +155,22 @@ const StyeldMoveButtonLeft = styled.button`
   /* border: 1px solid red; */
   border: transparent;
   position: absolute;
-  z-index: 2;
-  left: 0;
+  z-index: 3;
+  left: 0px;
   top: 40%;
   max-width: max-content;
   background-color: transparent;
   cursor: pointer;
   span {
-    font-size: 30px;
+    font-size: 45px;
+    font-weight: 400;
+  }
+  .originImg {
+    opacity: 0;
+    transition: opacity 0.5s linear;
+  }
+  .hoverImg:hover {
+    opacity: 1;
   }
 `;
 
@@ -155,27 +178,33 @@ const StyeldMoveButtonRight = styled.button`
   border: transparent;
   position: absolute;
   z-index: 2;
-  right: 0;
+  right: 0px;
   top: 40%;
   max-width: max-content;
   background-color: transparent;
   cursor: pointer;
   margin-left: 10px;
+  span {
+    font-size: 45px;
+  }
 `;
 
 const StyledContainer = styled.div`
-  /* border: 1px solid red; */
-  max-width: 1024px;
-  height: 280px;
-  margin: 25px 50px;
-  padding: 10px 0 10px 16px;
+  /* border: 1px solid black; */
+  /* max-width: 1024px; */
+  width: 712px;
+  /* height: 240px; */
+  /* margin: 25px 30px; */
+  padding: 15px 0 15px 16px;
   overflow: hidden;
 `;
 
 const StyledGridBox = styled.div`
+  /* border: 1px solid blue; */
   display: grid;
   z-index: 1;
   gap: 32px;
-  grid-template-columns: repeat(8, 180px);
+  grid-template-columns: repeat(8, 150px);
+  height: 230px;
   transition: 0.6s;
 `;

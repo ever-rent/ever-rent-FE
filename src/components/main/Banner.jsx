@@ -20,7 +20,7 @@ export const Banner = () => {
 
 const StyledBanner = styled.img`
   display: flex;
-  width: 1024px;
+  width: 920px;
   /* width: 90%; */
   height: 200px;
   margin: auto;

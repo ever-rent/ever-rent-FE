@@ -104,14 +104,15 @@ export const Products = () => {
 };
 
 const StyledProductsContainer = styled.div`
-  max-width: 1024px;
+  max-width: 920px;
   margin: 40px auto;
   position: relative;
 `;
 
 const StyledProductsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 226px);
+  grid-template-columns: repeat(4, 200px);
+  /* grid-template-rows: minmax(auto 300px); */
   margin-top: 30px;
   gap: 50px 40px;
 `;

@@ -49,7 +49,7 @@ export const ProductsItem = ({
       return <StyledStatus></StyledStatus>;
     }
   };
-
+  //TODO: 찜하기 기능은 빼고 숫자만 보여주는 것으로 바꿀 예정.chat 개수도
   // 찜하기
   const [togglelike, setTogglelike] = useState(heart);
   const [likeCount, setLikeCount] = useState(wishNum);
@@ -135,7 +135,13 @@ export const ProductsItem = ({
             />
           </StyledImgBox>
           <StyledContentBox>
-            <StyledTitle>{productName}</StyledTitle>
+            <StyledTitle
+              onClick={() => {
+                navigate(`/productDetail/${id}`);
+              }}
+            >
+              {productName}
+            </StyledTitle>
             <StyledLocation>
               {location ? location : "지역 선택 안함"}
             </StyledLocation>
@@ -207,8 +213,14 @@ export const ProductsItem = ({
               alt="이미지 없음"
             />
           </StyledMobileImgBox>
-          <StyledContentBox>
-            <StyledTitle>{productName}</StyledTitle>
+          <StyledMobileContentBox>
+            <StyledMobileTitle
+              onClick={() => {
+                navigate(`/productDetail/${id}`);
+              }}
+            >
+              {productName}
+            </StyledMobileTitle>
             {/* <StyledCateId>{categoriNumber(cateId)}</StyledCateId> */}
             <StyledLocation>{location}</StyledLocation>
             <br />
@@ -270,7 +282,7 @@ export const ProductsItem = ({
             <button onClick={reservationHandler}>예약 신청</button>
           </StyledChatWrap> */}
             </StyledMobileLikeAndChatBox>
-          </StyledContentBox>
+          </StyledMobileContentBox>
         </StyledMobileItemBox>
       </Mobile>
     </>
@@ -285,6 +297,9 @@ const StyledStatus = styled.span`
 
 const StyledItemBox = styled.div`
   /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 10px 10px 0 10px;
   position: relative;
   border-radius: 10px;
@@ -311,7 +326,7 @@ const StyledMobileItemBox = styled.div`
 const StyledImgBox = styled.div`
   /* border: 1px solid red; */
   padding: 2px;
-  width: 200px;
+  width: 180px;
   height: 140px;
   margin-bottom: 3px;
 `;
@@ -329,17 +344,44 @@ const StyledImg = styled.img`
   border-radius: 8px;
   width: 100%;
   height: 100%;
-  /* object-fit: cover; */
+  object-fit: cover;
   cursor: pointer;
 `;
 
 const StyledContentBox = styled.div`
+  height: 130px;
+  margin: 12px 0;
+`;
+
+const StyledMobileContentBox = styled.div`
+  width: 200px;
   margin: 12px 0;
 `;
 
 const StyledTitle = styled.div`
+  /* border: 1px solid red; */
   margin-bottom: 5px;
   font-weight: 600;
+  overflow: hidden; // 을 사용해 영역을 감출 것
+  text-overflow: ellipsis; // 로 ... 을 만들기
+  white-space: nowrap; // 아래줄로 내려가는 것을 막기위해
+  word-break: break-all;
+  width: 180px;
+  height: 20px;
+  cursor: pointer;
+`;
+
+const StyledMobileTitle = styled.div`
+  /* border: 1px solid red; */
+  margin-bottom: 5px;
+  font-weight: 600;
+  overflow: hidden; // 을 사용해 영역을 감출 것
+  text-overflow: ellipsis; // 로 ... 을 만들기
+  white-space: nowrap; // 아래줄로 내려가는 것을 막기위해
+  word-break: break-all;
+  width: 210px;
+  height: 20px;
+  cursor: pointer;
 `;
 
 const StyledCateId = styled.span`
