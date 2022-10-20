@@ -98,6 +98,7 @@ export const CategoryDetail = () => {
     setCategoryId(id);
     const init = [];
     setCategoryItems(init);
+    setHasNextPage(true)
     page.current = 1;
   }, [id]);
 

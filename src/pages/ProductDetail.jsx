@@ -22,6 +22,7 @@ import axios from "axios";
 
 import { WishButton } from "../components/button/WishButton";
 import { createChatRoom } from "../redux/modules/chatSlice";
+import { UsersBadge } from "../components/detail/UsersBadge";
 
 // 게시글 상세 페이지 컴포넌트
 export const ProductDetail = () => {
@@ -34,7 +35,7 @@ export const ProductDetail = () => {
   const fetchDetail = async () => {
     console.log("패치데이터", param);
     await axios
-      .get(`http://13.209.8.18/products/${param.id}`)
+      .get(`${process.env.REACT_APP_SERVER_URL}/products/${param.id}`)
       .then((response) => {
         setData(response);
       });
@@ -68,8 +69,17 @@ export const ProductDetail = () => {
     setCreatedAt(timeToToday(writeAt));
   }, [writeAt, detailData]);
 
-  const [editabled, setEditabled] = useState(true);
+  //수정가능여부
+  const [editabled, setEditabled] = useState(false);
   const [userImage, setUserImage] = useState(defaultUserImg);
+
+  useEffect(() => {
+    if (detailData !== undefined) {
+      detailData?.memberId === localStorage.memberId
+        ? setEditabled(true)
+        : setEditabled(false);
+    }
+  }, [detailData]);
 
   // 게시글 삭제
   const deletePost = () => {
@@ -132,7 +142,7 @@ export const ProductDetail = () => {
         <Layout>
           <StyledDetailProductContainer>
             <StyledDetailProductWrap>
-              <PostReport />
+              <PostReport targetProductId={param.id} />
               {/* 게시글 리포트자리 */}
               <StyledPostHeadWrap>
                 <ImageModal
@@ -214,7 +224,7 @@ export const ProductDetail = () => {
                     </StyledUserSubInfo>
                   </StyledInfoWrap>
                   <StyledPostOptionWrap>
-                    <StyledMyPostOption>
+                    <StyledMyPostOption style={editabled?null:{display:"none"}}>
                       <span
                         onClick={() => {
                           navigate(`/editProduct/${param.id}`);
@@ -226,10 +236,21 @@ export const ProductDetail = () => {
                       <span onClick={deletePost}>글 삭제</span>
                       <StyledNoPointer>·</StyledNoPointer>
                     </StyledMyPostOption>
-                    <UserReport />
+                    <UserReport targetUserId={detailData?.memberId} />
                     {/* 유저 리포트 자리 */}
                   </StyledPostOptionWrap>
                 </StyledUserInfo>
+                <StyledPostHr />
+                <StyledUserSubItem>
+                  <UsersBadge />
+                  <StyledMannerOndoWrap>
+                    <StyledMannerOndo
+                      src={require("../image/mannerNumber.png")}
+                      alt="매너온도"
+                    />
+                    <StyledMannerSpan>36.5</StyledMannerSpan>
+                  </StyledMannerOndoWrap>
+                </StyledUserSubItem>
                 <StyledPostHr />
                 <StyledPostMain>
                   <StyledPostTitle>{detailData?.productName}</StyledPostTitle>
@@ -502,6 +523,28 @@ const StyledUserInfo = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+`;
+
+const StyledUserSubItem = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const StyledMannerOndoWrap = styled.div`
+  margin-left: 20px;
+`;
+
+const StyledMannerOndo = styled.img`
+  width: 80px;
+  height: 60px;
+`;
+const StyledMannerSpan = styled.span`
+  position: relative;
+  right: 60px;
+  top: -20px;
+  font-size: 15px;
+  font-weight: bold;
+  color: rgb(253, 138, 105);
 `;
 
 const StyledInfoWrap = styled.div`

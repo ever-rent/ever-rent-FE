@@ -251,7 +251,7 @@ export const mypageSlice = createSlice({
       // console.log("state", state);
       state.like = action.payload;
     },
-    [getMyInfo.fulfilled]: (state, action) => {
+    [getMyInfo.fulfilled]: (state, action) => {      
       state.myinfo = action.payload;
     },
     [getWishList.fulfilled]: (state, action) => {
