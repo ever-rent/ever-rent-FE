@@ -56,6 +56,7 @@ export const SearchItems = () => {
 
   // 렌더링시 데이터 패치
   useEffect(() => {
+    initOptions()
     setIsLoading(true);
     fetchData();
     setTimeout(() => {
@@ -78,7 +79,7 @@ export const SearchItems = () => {
     setProducts(searchData);
   };
 
-  // 카테고리, 가격 필터 예정
+  // 카테고리, 가격 필터
   useEffect(() => {
     setIsLoading(true);
     let cateFilter = searchData?.filter((element) =>
@@ -90,14 +91,17 @@ export const SearchItems = () => {
         return element;
         // === 값으로 조건 설정시 5만원 이상 데이터 비정상 동기화
         // == 조건 값으로 대체
-      } else if (priceNumber == 1) {
-        return Number(element.price) < 10000;
-      } else if (priceNumber == 6) {
-        return Number(element.price) >= 50000;
-      } else {
+      } 
+      if (priceNumber == 1) {
+        return element.price < 10000;
+      } 
+      if (priceNumber == 6) {
+        return element.price >= 50000;
+      } 
+      if(priceNumber!==0||priceNumber!==1||priceNumber!==6) {
         return (
-          (Number(element.price) < priceNumber * 10000) &
-          (Number(element.price) >= priceNumber * 10000 - 10000)
+          (element.price < priceNumber * 10000) &
+          (element.price >= priceNumber * 10000 - 10000)
         );
       }
     });
@@ -105,7 +109,7 @@ export const SearchItems = () => {
     setTimeout(() => {
       setIsLoading(false);
     }, 1000);
-  }, [categoryNumber, priceNumber]);
+  }, [categoryNumber, priceNumber,searchData]);
 
   // pagination
   const [page, setPage] = useState(1);

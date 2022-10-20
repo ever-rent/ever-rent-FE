@@ -201,7 +201,7 @@ export const AddProduct = () => {
           }
 
           dispatch(addProducts(formData));
-          // navigate("/");
+          navigate("/");
         }
       });
     }
@@ -378,7 +378,8 @@ export const AddProduct = () => {
               />
               <StyledPostTitle
                 type="text"
-                placeholder="제목은 4글자 이상 적어주세요!"
+                placeholder="제목은 4글자 이상 적어주세요! (최대20자)"
+                maxlength={20}
                 onChange={(e) => {
                   setTitle(e.target.value);
                 }}
@@ -387,7 +388,7 @@ export const AddProduct = () => {
                 id=""
                 cols="30"
                 rows="10"
-                placeholder="내용을 입력해주세요!"
+                placeholder="내용을 입력해주세요! (최대500자)"
                 maxLength={500}
                 onChange={(e) => {
                   setDescription(e.target.value);
@@ -565,7 +566,8 @@ export const AddProduct = () => {
               />
               <StyledMobilePostTitle
                 type="text"
-                placeholder="제목은 4글자 이상 적어주세요!"
+                placeholder="제목은 4글자 이상 적어주세요! (최대20자)"
+                maxlength={20}
                 onChange={(e) => {
                   setTitle(e.target.value);
                 }}
@@ -574,7 +576,7 @@ export const AddProduct = () => {
                 id=""
                 cols="30"
                 rows="10"
-                placeholder="내용을 입력해주세요!"
+                placeholder="내용을 입력해주세요! (최대500자)"
                 maxLength={500}
                 onChange={(e) => {
                   setDescription(e.target.value);
@@ -833,7 +835,8 @@ const StyledButtonBox = styled.div`
 const StyledGoBackButton = styled.button`
   width: 150px;
   height: 40px;
-  margin-right: 50px;
+  margin-left: 25px;
+  margin-right: 25px;
   background-color: white;
   border: 1px solid rgb(71, 181, 255);
   border-radius: 10px;
@@ -853,7 +856,8 @@ const StyledGoBackButton = styled.button`
 const StyledFormButton = styled.button`
   width: 150px;
   height: 40px;
-  margin-right: 50px;
+  margin-left: 25px;
+  margin-right: 25px;
   background-color: rgb(71, 181, 255);
   border: none;
   border-radius: 10px;

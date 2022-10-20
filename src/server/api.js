@@ -34,4 +34,5 @@ export const chatAPI = {
   postOrderDate: (productId, data) => auth.post(`/orders/${productId}`, data),
 };
 
+
 export const imgFirstString = process.env.REACT_APP_IMG_URL;

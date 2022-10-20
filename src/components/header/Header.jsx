@@ -15,7 +15,21 @@ export const Header = () => {
 
   const goSearch = (e) => {
     e.preventDefault();
-    navigate(`/searchItems/${submitData}`);
+    if(submitData===""){
+      Swal.fire({
+        title: "검색 키워드를 입력해주세요!",
+        icon: "warning",
+        confirmButtonColor: "rgb(71, 181, 255)",
+        confirmButtonText: "확인",
+      }).then((result) => {
+        if (result.value) {
+
+        }
+      });
+    }else{
+
+      navigate(`/searchItems/${submitData}`);
+    }
   };
 
   return (
