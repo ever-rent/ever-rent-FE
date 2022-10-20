@@ -22,10 +22,7 @@ export const DetailItem = ({
   mapLocation,
   rentEnd,
   rentStart,
-  thumbimgUrl,
-  // like
   heart,
-
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
