@@ -35,7 +35,7 @@ export const ProductDetail = () => {
   const fetchDetail = async () => {
     console.log("패치데이터", param);
     await axios
-      .get(`http://13.209.8.18/products/${param.id}`)
+      .get(`${process.env.REACT_APP_SERVER_URL}/products/${param.id}`)
       .then((response) => {
         setData(response);
       });
@@ -69,8 +69,17 @@ export const ProductDetail = () => {
     setCreatedAt(timeToToday(writeAt));
   }, [writeAt, detailData]);
 
-  const [editabled, setEditabled] = useState(true);
+  //수정가능여부
+  const [editabled, setEditabled] = useState(false);
   const [userImage, setUserImage] = useState(defaultUserImg);
+
+  useEffect(() => {
+    if (detailData !== undefined) {
+      detailData?.memberId === localStorage.memberId
+        ? setEditabled(true)
+        : setEditabled(false);
+    }
+  }, [detailData]);
 
   // 게시글 삭제
   const deletePost = () => {
@@ -215,7 +224,7 @@ export const ProductDetail = () => {
                     </StyledUserSubInfo>
                   </StyledInfoWrap>
                   <StyledPostOptionWrap>
-                    <StyledMyPostOption>
+                    <StyledMyPostOption style={editabled?null:{display:"none"}}>
                       <span
                         onClick={() => {
                           navigate(`/editProduct/${param.id}`);
@@ -233,7 +242,7 @@ export const ProductDetail = () => {
                 </StyledUserInfo>
                 <StyledPostHr />
                 <StyledUserSubItem>
-                <UsersBadge />
+                  <UsersBadge />
                   <StyledMannerOndoWrap>
                     <StyledMannerOndo
                       src={require("../image/mannerNumber.png")}
@@ -522,8 +531,8 @@ const StyledUserSubItem = styled.div`
 `;
 
 const StyledMannerOndoWrap = styled.div`
-  margin-left:20px;
-`
+  margin-left: 20px;
+`;
 
 const StyledMannerOndo = styled.img`
   width: 80px;
@@ -535,7 +544,7 @@ const StyledMannerSpan = styled.span`
   top: -20px;
   font-size: 15px;
   font-weight: bold;
-  color: rgb(253,138,105);
+  color: rgb(253, 138, 105);
 `;
 
 const StyledInfoWrap = styled.div`

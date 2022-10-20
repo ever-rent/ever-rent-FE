@@ -24,6 +24,7 @@ export const DetailItem = ({
   mapLocation,
   rentEnd,
   rentStart,
+  thumbimgUrl,
   // like
 }) => {
   const navigate = useNavigate();
@@ -59,7 +60,7 @@ export const DetailItem = ({
               onClick={() => {
                 navigate(`/productDetail/${id}`);
               }}
-              src={`${imgFirstString}${imgUrlArray[0]}`}
+              src={`${imgFirstString}${thumbimgUrl}`}
               alt="이미지 없음"
             />
           </StyledImgBox>
@@ -116,7 +117,7 @@ export const DetailItem = ({
               onClick={() => {
                 navigate(`/productDetail/${id}`);
               }}
-              src={`${imgFirstString}${imgUrlArray[0]}`}
+              src={`${imgFirstString}${thumbimgUrl}`}
               alt="이미지 없음"
             />
           </StyledMobileImgBox>

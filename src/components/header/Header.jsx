@@ -23,7 +23,7 @@ export const Header = () => {
         confirmButtonText: "확인",
       }).then((result) => {
         if (result.value) {
-          // 회원정보 수정 예정
+
         }
       });
     }else{

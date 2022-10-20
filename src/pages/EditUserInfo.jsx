@@ -118,9 +118,9 @@ export const EditUserInfo = () => {
         cancelButtonText: "취소",
       }).then((result) => {
         if (result.value) {
-          // let formData = new FormData()
-          // formData.append("requestDto",sendData)
-          // auth.put("/updateInfo",sendData)
+          let formData = new FormData()
+          formData.append("requestDto",sendData)
+          auth.put("/updateInfo",sendData)
           Swal.fire({
             title: "저장완료!",
             icon: "success",

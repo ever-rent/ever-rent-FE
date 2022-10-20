@@ -144,6 +144,16 @@ export const EditProduct = () => {
   const [description, setDescription] = useState("");
 
   const [disabled, setDisabled] = useState(false);
+  
+
+  useEffect(() => {
+    if (editData !== undefined) {
+      setCategoryInput(editData?.cateId);
+      setPriceInput(editData?.price);
+      setTitle(editData?.productName);
+      setDescription(editData?.content);
+    }
+  }, [editData]);
 
   const startEndDays = (start, end) => {
     let startDay = start;
@@ -222,6 +232,7 @@ export const EditProduct = () => {
           }
 
           dispatch(updateProducts([formData, { productId: param.id }]));
+          navigate("/");
         }
       });
     }
@@ -242,6 +253,9 @@ export const EditProduct = () => {
   const searchMapInput = (value) => {
     setTradeLocation(value);
   };
+
+  
+  
 
   return (
     <>
@@ -343,7 +357,7 @@ export const EditProduct = () => {
                       id="itemPrice"
                       type="text"
                       placeholder="가격"
-                      defaultValue={priceInput}
+                      defaultValue={editData?.price}
                       maxlength="8"
                       onChange={(e) => {
                         setPriceInput(e.target.value);
@@ -396,8 +410,9 @@ export const EditProduct = () => {
               />
               <StyledPostTitle
                 type="text"
-                placeholder="제목은 4글자 이상 적어주세요!"
-                defaultValue={title}
+                placeholder="제목은 4글자 이상 적어주세요! (최대20자)"
+                maxlength={20}
+                defaultValue={editData?.productName}
                 onChange={(e) => {
                   setTitle(e.target.value);
                 }}
@@ -406,8 +421,8 @@ export const EditProduct = () => {
                 id=""
                 cols="30"
                 rows="10"
-                placeholder="내용을 입력해주세요!"
-                defaultValue={description}
+                placeholder="내용을 입력해주세요! (최대20자)"
+                defaultValue={editData?.content}
                 maxLength={500}
                 onChange={(e) => {
                   setDescription(e.target.value);
@@ -494,7 +509,7 @@ export const EditProduct = () => {
               <StyledMobileOptionInputs>
                 <div>
                   <StyledMobileCategorySelector
-                    defaultValue={categoryInput}
+                    defaultValue={editData?.cateId}
                     onChange={(e) => {
                       setCategoryInput(e.target.value);
                     }}
@@ -534,7 +549,7 @@ export const EditProduct = () => {
                     id="itemPrice"
                     type="text"
                     placeholder="가격"
-                    defaultValue={priceInput}
+                    defaultValue={editData?.price}
                     maxlength="8"
                     onChange={(e) => {
                       setPriceInput(e.target.value);
@@ -588,8 +603,9 @@ export const EditProduct = () => {
               />
               <StyledMobilePostTitle
                 type="text"
-                placeholder="제목은 4글자 이상 적어주세요!"
-                defaultValue={title}
+                placeholder="제목은 4글자 이상 적어주세요! (최대20자)"
+                maxLength={20}
+                defaultValue={editData?.productName}
                 onChange={(e) => {
                   setTitle(e.target.value);
                 }}
@@ -598,8 +614,8 @@ export const EditProduct = () => {
                 id=""
                 cols="30"
                 rows="10"
-                placeholder="내용을 입력해주세요!"
-                defaultValue={description}
+                placeholder="내용을 입력해주세요! (최대500자)"
+                defaultValue={editData?.content}
                 maxLength={500}
                 onChange={(e) => {
                   setDescription(e.target.value);
@@ -857,7 +873,7 @@ const StyledButtonBox = styled.div`
 const StyledGoBackButton = styled.button`
   width: 150px;
   height: 40px;
-  margin-left:25px;
+  margin-left: 25px;
   margin-right: 25px;
   background-color: white;
   border: 1px solid rgb(71, 181, 255);
@@ -878,7 +894,7 @@ const StyledGoBackButton = styled.button`
 const StyledFormButton = styled.button`
   width: 150px;
   height: 40px;
-  margin-left:25px;
+  margin-left: 25px;
   margin-right: 25px;
   background-color: rgb(71, 181, 255);
   border: none;

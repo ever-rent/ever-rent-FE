@@ -17,7 +17,7 @@ export const UserReport = ({ targetUserId }) => {
   const [isLogedIn, setIsLogedIn] = useState(true);
 
   useEffect(() => {
-    localStorage.getItem("accessToken") !== null
+    localStorage.accessToken !== undefined
       ? setIsLogedIn(true)
       : setIsLogedIn(false);
   }, []);
@@ -49,7 +49,7 @@ export const UserReport = ({ targetUserId }) => {
         icon: "warning",
       });
     } else {
-      // auth.post(`/report/user/${targetUserId}`)
+      auth.post(`/report/user/${targetUserId}`)
       Swal.fire({
         title: "해당 유저의 신고 접수가 완료되었습니다.",
         icon: "success",

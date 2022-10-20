@@ -19,72 +19,72 @@ export const MyCallenge = ({ showChallenge, closeChallenge }) => {
                   src={require("../../image/firstPost.png")}
                   alt="첫게시글"
                 />
+                <div>첫 게시글</div>
                 <StyledAltHover>첫게시글 등록</StyledAltHover>
-                <span>첫 게시글</span>
               </StyleditemWrap>
               <StyleditemWrap>
                 <StyledBadgeImage
                   src={require("../../image/localMerchant.png")}
                   alt="게시글5개이상"
                 />
+                <div>우리동네 렌탈업자</div>
                 <StyledAltHover>게시글5개이상</StyledAltHover>
-                <span>우리동네 렌탈업자</span>
               </StyleditemWrap>
               <StyleditemWrap>
                 <StyledBadgeImage
                   src={require("../../image/firstTrade.png")}
                   alt="렌트예약 첫 등록"
                 />
+                <div>첫 거래</div>
                 <StyledAltHover>렌트예약 첫 등록</StyledAltHover>
-                <span>첫 거래</span>
               </StyleditemWrap>
               <StyleditemWrap>
                 <StyledBadgeImage
                   src={require("../../image/manyTrader.png")}
                   alt="빌린 물건 5회"
                 />
+                <div>빌려볼리티</div>
                 <StyledAltHover>빌린 물건 5회</StyledAltHover>
-                <span>빌려볼리티</span>
               </StyleditemWrap>
               <StyleditemWrap>
                 <StyledBadgeImage
                   src={require("../../image/manners.png")}
                   alt="매너온도 37도 이상"
                 />
+                <div>매너러블</div>
                 <StyledAltHover>매너온도 37.5도 이상</StyledAltHover>
-                <span>매너러블</span>
               </StyleditemWrap>
               <StyleditemWrap>
                 <StyledBadgeImage
                   src={require("../../image/hardTalker.png")}
                   alt="채팅50회 이상"
                 />
+                <div>달변가</div>
                  <StyledAltHover>채팅50회 이상</StyledAltHover>
-                <span>달변가</span>
               </StyleditemWrap>
               <StyleditemWrap>
                 <StyledBadgeImage
                   src={require("../../image/rentOrNot.png")}
                   alt=""
                 />
+                <div>빌릴까말까</div>
                 <StyledAltHover>찜 10개 이상</StyledAltHover>
-                <span>빌릴까말까</span>
               </StyleditemWrap>
               <StyleditemWrap>
                 <StyledBadgeImage
                   src={require("../../image/reporter.png")}
                   alt=""
                 />
+                <div>투철한 신고정신</div>
                 <StyledAltHover>신고 1회</StyledAltHover>
-                <span>투철한 신고정신</span>
               </StyleditemWrap>
               <StyleditemWrap>
                 <StyledBadgeImage
                   src={require("../../image/photographer.png")}
                   alt=""
                 />
+                <div>열정사진사</div>
                 <StyledAltHover>한 게시물에 10개 이상의 사진</StyledAltHover>
-                <span>열정사진사</span>
               </StyleditemWrap>
             </StyledGridBox>
           </StyledMyBadges>
@@ -126,7 +126,7 @@ const StyledModalBackground = styled.div`
 
 const StyledModal = styled.div`
   width: 400px;
-  height: 500px;
+  height: 550px;
   background-color: white;
   border-radius: 20px;
   padding: 20px;
@@ -144,6 +144,7 @@ const StyleditemWrap = styled.div`
     font-size:12px;
     text-align: center;
 
+
 `;
 const StyledBadgeImage = styled.img`
   width: 100px;
@@ -154,22 +155,23 @@ const StyledBadgeImage = styled.img`
 
 const StyledAltHover = styled.span`
   width:100px;
-  height: 80px;
-  position: absolute;
+  height: 100px;
+  position: relative;
   color:transparent;
   border:1px solid transparent;
   border-radius:3px;
   background-color:transparent;
   z-index:1;
-  transition:0.4s;
-  
+  transition:0.2s;
+  top:-75px;
+  cursor: pointer;
   
   &:hover {
+    color:gray;
+    font-size:15px;
+    font-weight:bold;
+    border:1px solid gray;
+    background-color:white;
     
-      color:gray;
-      font-size:15px;
-      font-weight:bold;
-      border:1px solid gray;
-      background-color:white;
   }
 `;

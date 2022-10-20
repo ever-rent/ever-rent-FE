@@ -11,10 +11,11 @@ export const PostReport = ({ targetProductId }) => {
   const [sendReason, setSendReason] = useState("도배/광고성 게시글");
   const [etcDisabled, setEtcDisabled] = useState(true);
 
-  const [isLogedIn, setIsLogedIn] = useState(true);
+  const [isLogedIn, setIsLogedIn] = useState(false);
+
 
   useEffect(() => {
-    localStorage.getItem("accessToken") !== null
+    localStorage.accessToken !== undefined
       ? setIsLogedIn(true)
       : setIsLogedIn(false);
   }, []);
@@ -44,7 +45,7 @@ export const PostReport = ({ targetProductId }) => {
         icon: "warning",
       });
     } else {
-      // auth.post(`/report/product/${targetProductId}`)
+      auth.post(`/report/product/${targetProductId}`)
       Swal.fire({
         title: "해당 유저의 신고 접수가 완료되었습니다.",
         icon: "success",
