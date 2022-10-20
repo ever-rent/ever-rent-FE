@@ -15,7 +15,7 @@ export const Header = () => {
 
   const goSearch = (e) => {
     e.preventDefault();
-    if(submitData===""){
+    if (submitData === "") {
       Swal.fire({
         title: "검색 키워드를 입력해주세요!",
         icon: "warning",
@@ -23,11 +23,9 @@ export const Header = () => {
         confirmButtonText: "확인",
       }).then((result) => {
         if (result.value) {
-
         }
       });
-    }else{
-
+    } else {
       navigate(`/searchItems/${submitData}`);
     }
   };

@@ -27,7 +27,6 @@ export const DetailItem = ({
   thumbimgUrl,
   // like
   heart,
-
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();

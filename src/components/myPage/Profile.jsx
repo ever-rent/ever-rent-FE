@@ -32,6 +32,7 @@ export const Profile = ({ like, setLike }) => {
       ? `https://source.boringavatars.com/beam/110/${info?.id}?colors=7965EE,6FE7F1,FFDD4C,46B5FF,2883E0`
       : info?.imgUrl;
 
+  // 프로필 모달
   const [showProfile, setShowProfile] = useState(false);
   const openProfileimgFix = () => {
     setShowProfile(true);
@@ -40,6 +41,7 @@ export const Profile = ({ like, setLike }) => {
     setShowProfile(false);
   };
 
+  // 도전과제 모달
   const [showChallenge, setShowChallenge] = useState(false);
   const openChallenge = () => {
     setShowChallenge(true);
@@ -47,6 +49,9 @@ export const Profile = ({ like, setLike }) => {
   const closeChallenge = () => {
     setShowChallenge(false);
   };
+
+  // 임시 뱃지 배열
+  let badgeArray = [true, true, true, false, false, false, true, true, true];
 
   return (
     <>
@@ -56,13 +61,15 @@ export const Profile = ({ like, setLike }) => {
             <StyledImgBox onClick={openProfileimgFix}>
               <StyledImg src={profileImg} alt="이미지 없음" />
             </StyledImgBox>
-              <StyledImageEdit
-                src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FUjHeg%2FbtrN27EGh2c%2FFUAuCglKKcKdPLOx1zjVK1%2Fimg.png"
-                alt="alt=https://icons8.com/icon/kx4uQexsQTUC/write Write icon by https://icons8.com Icons8"
-              />
+            <StyledImageEdit
+              src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FUjHeg%2FbtrN27EGh2c%2FFUAuCglKKcKdPLOx1zjVK1%2Fimg.png"
+              alt="alt=https://icons8.com/icon/kx4uQexsQTUC/write Write icon by https://icons8.com Icons8"
+            />
             <StyledNickname>{info?.memberName}</StyledNickname>
             <StyledProfileEdit
-              onClick={() => navigate(`/editUserInfo/${info?.id}`,{state:info})}
+              onClick={() =>
+                navigate(`/editUserInfo/${info?.id}`, { state: info })
+              }
             >
               회원정보 수정
             </StyledProfileEdit>
@@ -104,7 +111,6 @@ export const Profile = ({ like, setLike }) => {
               </StyledEachWrap>
               <StyledEachWrap onClick={openChallenge}>
                 <StyledLikeAndChat
-                  
                   src={require("../../image/challengeLogo.png")}
                   alt="https://icons8.com/icon/pM35dYPfUtO5/crown-trophy-for-online-gaming-permium-membership Crown trophy for online gaming permium membership https://icons8.com Icons8"
                 />
@@ -113,6 +119,7 @@ export const Profile = ({ like, setLike }) => {
               <MyCallenge
                 showChallenge={showChallenge}
                 closeChallenge={closeChallenge}
+                badgeArray={badgeArray}
               />
             </StyledLikeAndChatBox>
           </StyledIcon>
@@ -141,7 +148,9 @@ export const Profile = ({ like, setLike }) => {
             <StyledMobileNickname>{info?.memberName}</StyledMobileNickname>
 
             <StyledMobileEditButton
-              onClick={() => navigate(`/editUserInfo/${info?.id}`,{state:info})}
+              onClick={() =>
+                navigate(`/editUserInfo/${info?.id}`, { state: info })
+              }
             >
               회원정보 수정
             </StyledMobileEditButton>
@@ -260,11 +269,11 @@ const StyledImageEdit = styled.img`
   width: 20px;
   height: 20px;
   position: absolute;
-  margin-top:10px;
-  margin-left:30px;
+  margin-top: 10px;
+  margin-left: 30px;
   background-color: #f0f0f0;
   border-radius: 20px;
-  z-index:99;
+  z-index: 99;
 `;
 
 const StyledNickname = styled.div`
@@ -384,7 +393,7 @@ const StyledMobileImageEdit = styled.img`
   background-color: #f0f0f0;
   border-radius: 20px;
   left: -60px;
-    top: 40px;
+  top: 40px;
   z-index: 5;
 `;
 

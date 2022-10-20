@@ -144,7 +144,6 @@ export const EditProduct = () => {
   const [description, setDescription] = useState("");
 
   const [disabled, setDisabled] = useState(false);
-  
 
   useEffect(() => {
     if (editData !== undefined) {
@@ -253,9 +252,6 @@ export const EditProduct = () => {
   const searchMapInput = (value) => {
     setTradeLocation(value);
   };
-
-  
-  
 
   return (
     <>
