@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
 import axios from "axios";
 import { StyledJoin } from "./styled";
+import { Toast } from "../../util/toast";
+import Swal from "sweetalert2";
 
 export const ForgotPw = () => {
   const [mailAuth, setMailAuth] = useState(false);
@@ -22,24 +24,34 @@ export const ForgotPw = () => {
 
   const checkValidation = () => {
     if (!mailAuth) {
-      alert("이메일을 인증해주세요.");
+      Toast.fire({
+        icon: "error",
+        title: "이메일을 인증 해주세요.",
+      });
       return;
     }
-
     if (!emailRegExp.test(email.current.value)) {
-      alert("이메일 형식이 올바르지 않습니다.");
+      Toast.fire({
+        icon: "error",
+        title: "이메일 형식이 올바르지 않습니다.",
+      });
       email.current.focus();
       return;
     }
     if (!passwordRegExp.test(password.current.value)) {
-      alert(
-        "비밀번호는 8자 이상 32자 이하의 영문, 숫자 조합으로 입력해주세요."
-      );
+      Toast.fire({
+        icon: "error",
+        title:
+          "비밀번호는 8자 이상 32자 이하의 영문, 숫자 조합으로 입력해주세요.",
+      });
       password.current.focus();
       return;
     }
     if (password.current.value !== passwordConfirm.current.value) {
-      alert("비밀번호가 일치하지 않습니다.");
+      Toast.fire({
+        icon: "error",
+        title: "비밀번호가 일치하지 않습니다.",
+      });
       passwordConfirm.current.focus();
       return;
     }
@@ -48,19 +60,33 @@ export const ForgotPw = () => {
 
   const handleEmailAuth = async (email) => {
     return await axios.post(
-      `${process.env.REACT_APP_SERVER_URL}/mailConfirms?email=${email}`
+      `${process.env.REACT_APP_SERVER_URL}/pwMailConfirms?email=${email}`
     );
   };
 
   const emailAuth = useMutation(handleEmailAuth, {
-    onSuccess: (data) => {
-      console.log(data);
-      if (data.status === 200) {
+    onSuccess: ({ data }) => {
+      if (data.data) {
+        Toast.fire({
+          icon: "success",
+          title: "인증코드가 발송되었습니다.",
+        });
         document.querySelector(".auth-box").style.display = "block";
         setAuthCode(data.data);
+        console.log(data.data);
       } else {
-        alert("이미 가입된 이메일입니다.");
+        Toast.fire({
+          icon: "error",
+          title: "가입되지 않은 이메일입니다.",
+        });
       }
+    },
+    onError: (error) => {
+      console.dir(error);
+      Toast.fire({
+        icon: "error",
+        title: "이메일 인증에 실패했습니다.",
+      });
     },
   });
 
@@ -73,22 +99,31 @@ export const ForgotPw = () => {
 
   const { mutate } = useMutation(handleChangePassword, {
     onSuccess: (data) => {
-      console.log(data);
       if (data.status === 200) {
-        alert("비밀번호 변경이 완료되었습니다.");
-        navigate("/login");
-      } else {
-        alert("비밀번호 변경에 실패했습니다.");
+        Swal.fire({
+          icon: "success",
+          title: "비밀번호가 변경되었습니다.",
+          text: "로그인 페이지로 이동합니다.",
+          confirmButtonText: "확인",
+        }).then(() => {
+          navigate("/login");
+        });
       }
     },
     onError: (error) => {
-      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "비밀번호 변경에 실패했습니다.",
+        text: "인터넷 연결을 확인해주세요.",
+        confirmButtonText: "확인",
+      });
+      console.dir(error);
     },
   });
 
   return (
     <StyledJoin>
-      <h2>회원가입</h2>
+      <h2>비밀번호 변경</h2>
       <label>이메일</label>
       <input type="email" ref={email} placeholder="이메일 입력" required />
       <button onClick={() => emailAuth.mutate(email.current.value)}>
@@ -102,11 +137,17 @@ export const ForgotPw = () => {
             className="email-auth-button"
             onClick={() => {
               if (authCode === code.current.value) {
-                alert("인증되었습니다.");
+                Toast.fire({
+                  icon: "success",
+                  title: "이메일 인증 성공!",
+                });
                 setMailAuth(true);
                 document.querySelector(".auth-box").style.display = "none";
               } else {
-                alert("인증코드가 일치하지 않습니다.");
+                Toast.fire({
+                  icon: "error",
+                  title: "인증코드가 일치하지 않습니다.",
+                });
               }
             }}
           >

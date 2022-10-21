@@ -4,6 +4,8 @@ import { useMutation } from "react-query";
 import axios from "axios";
 import { SelectAddress } from "../../components/selectAddress/SelectAddress";
 import { StyledJoin } from "./styled";
+import Swal from "sweetalert2";
+import { Toast } from "../../util/toast";
 
 export const Join = () => {
   const [authCode, setAuthCode] = useState("");
@@ -26,37 +28,53 @@ export const Join = () => {
 
   const checkValidation = () => {
     if (!mailAuth) {
-      alert("이메일을 인증해주세요.");
+      Toast.fire({
+        icon: "error",
+        title: "이메일을 인증 해주세요.",
+      });
       return;
     }
-    console.log(mainAddress, subAddress);
     if (!emailRegExp.test(email.current.value)) {
-      alert("이메일 형식이 올바르지 않습니다.");
+      Toast.fire({
+        icon: "error",
+        title: "이메일 형식이 올바르지 않습니다.",
+      });
       email.current.focus();
       return;
     }
     if (!passwordRegExp.test(password.current.value)) {
-      alert(
-        "비밀번호는 8자 이상 32자 이하의 영문, 숫자 조합으로 입력해주세요."
-      );
+      Toast.fire({
+        icon: "error",
+        title:
+          "비밀번호는 8자 이상 32자 이하의 영문, 숫자 조합으로 입력해주세요.",
+      });
       password.current.focus();
+      return;
+    }
+    if (password.current.value !== passwordConfirm.current.value) {
+      Toast.fire({
+        icon: "error",
+        title: "비밀번호가 일치하지 않습니다.",
+      });
+      passwordConfirm.current.focus();
       return;
     }
     if (
       nickname.current.value.length < 2 ||
       nickname.current.value.length > 14
     ) {
-      alert("닉네임은 2자 이상 14자 이하로 입력해주세요.");
+      Toast.fire({
+        icon: "error",
+        title: "닉네임은 2자 이상 14자 이하로 입력해주세요.",
+      });
       nickname.current.focus();
       return;
     }
     if (mainAddress === "" || subAddress === "") {
-      alert("지역을 선택해주세요.");
-      return;
-    }
-    if (password.current.value !== passwordConfirm.current.value) {
-      alert("비밀번호가 일치하지 않습니다.");
-      passwordConfirm.current.focus();
+      Toast.fire({
+        icon: "error",
+        title: "지역을 선택해주세요.",
+      });
       return;
     }
     return true;
@@ -69,14 +87,28 @@ export const Join = () => {
   };
 
   const emailAuth = useMutation(handleEmailAuth, {
-    onSuccess: (data) => {
-      console.log(data);
-      if (data.status === 200) {
+    onSuccess: ({ data }) => {
+      if (data.data) {
+        Toast.fire({
+          icon: "success",
+          title: "인증코드가 발송되었습니다.",
+        });
         document.querySelector(".auth-box").style.display = "block";
         setAuthCode(data.data);
+        console.log(data.data);
       } else {
-        alert("이미 가입된 이메일입니다.");
+        Toast.fire({
+          icon: "error",
+          title: "이미 가입된 이메일입니다.",
+        });
       }
+    },
+    onError: (error) => {
+      console.dir(error);
+      Toast.fire({
+        icon: "error",
+        title: "이메일 인증에 실패했습니다.",
+      });
     },
   });
 
@@ -92,13 +124,27 @@ export const Join = () => {
 
   const { mutate } = useMutation(handleJoin, {
     onSuccess: (data) => {
-      console.log(data);
       if (data.status === 200) {
-        alert("회원가입이 완료되었습니다.");
-        navigate("/login");
-      } else {
-        alert("회원가입 실패!!");
+        Swal.fire({
+          icon: "success",
+          title: "회원가입이 완료되었습니다.",
+          text: "로그인 페이지로 이동합니다.",
+          confirmButtonText: "확인",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate("/login");
+          }
+        });
       }
+    },
+    onError: (error) => {
+      Swal.fire({
+        icon: "error",
+        title: "회원가입에 실패했습니다.",
+        text: "다시 시도해주세요.",
+        confirmButtonText: "확인",
+      });
+      console.dir(error);
     },
   });
 
@@ -118,11 +164,17 @@ export const Join = () => {
             className="email-auth-button"
             onClick={() => {
               if (authCode === code.current.value) {
-                alert("인증되었습니다.");
+                Toast.fire({
+                  icon: "success",
+                  title: "이메일 인증 성공!",
+                });
                 setMailAuth(true);
                 document.querySelector(".auth-box").style.display = "none";
               } else {
-                alert("인증코드가 일치하지 않습니다.");
+                Toast.fire({
+                  icon: "error",
+                  title: "인증코드가 일치하지 않습니다.",
+                });
               }
             }}
           >
