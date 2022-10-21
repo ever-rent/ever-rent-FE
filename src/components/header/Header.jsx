@@ -15,7 +15,7 @@ export const Header = () => {
 
   const goSearch = (e) => {
     e.preventDefault();
-    if(submitData===""){
+    if (submitData === "") {
       Swal.fire({
         title: "검색 키워드를 입력해주세요!",
         icon: "warning",
@@ -23,11 +23,9 @@ export const Header = () => {
         confirmButtonText: "확인",
       }).then((result) => {
         if (result.value) {
-
         }
       });
-    }else{
-
+    } else {
       navigate(`/searchItems/${submitData}`);
     }
   };
@@ -100,7 +98,7 @@ export const Header = () => {
       <Mobile>
         <StyledMobileHeader>
           <StyledMobileHeaderWrap>
-            <StyledMobileSearchWrap>
+            <StyledMobileSearchWrap onSubmit={(e) => goSearch(e)}>
               <StyledSearchButton
                 type="button"
                 alt="https://icons8.com/icon/59878/search https://icons8.com Icons8"
@@ -109,6 +107,7 @@ export const Header = () => {
                 type="text"
                 placeholder="지역, 물품명으로 찾아보세요"
                 maxLength={35}
+                onChange={(e) => setSubmitData(e.target.value)}
               />
             </StyledMobileSearchWrap>
             {localStorage.getItem("memberId") ? (
@@ -263,7 +262,7 @@ const StyledSideMenu = styled.span`
 // for Mobile
 
 const StyledMobileHeader = styled.div`
-  width: 450px;
+  width: 480px;
   height: 80px;
   display: flex;
   background-color: white;

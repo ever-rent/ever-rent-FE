@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { MyPage } from "../../pages/MyPage";
 import { getMyInfo } from "../../redux/modules/mypageSlice";
 import { Desktop, Mobile } from "../../Hooks/MideaQuery";
-import { ProfileImg } from "../../image/ProfileImg";
+import { ProfileImg } from "./ProfileImg";
 import { MyCallenge } from "./MyChallenge";
 
 export const Profile = ({ like, setLike }) => {
@@ -32,6 +32,7 @@ export const Profile = ({ like, setLike }) => {
       ? `https://source.boringavatars.com/beam/110/${info?.id}?colors=7965EE,6FE7F1,FFDD4C,46B5FF,2883E0`
       : info?.imgUrl;
 
+  // 프로필 모달
   const [showProfile, setShowProfile] = useState(false);
   const openProfileimgFix = () => {
     setShowProfile(true);
@@ -40,6 +41,7 @@ export const Profile = ({ like, setLike }) => {
     setShowProfile(false);
   };
 
+  // 도전과제 모달
   const [showChallenge, setShowChallenge] = useState(false);
   const openChallenge = () => {
     setShowChallenge(true);
@@ -47,6 +49,9 @@ export const Profile = ({ like, setLike }) => {
   const closeChallenge = () => {
     setShowChallenge(false);
   };
+
+  // 임시 뱃지 배열
+  let badgeArray = [true, true, true, false, false, false, true, true, true];
 
   return (
     <>
@@ -97,7 +102,7 @@ export const Profile = ({ like, setLike }) => {
                   </>
                 )}
               </StyledEachWrap>
-              <StyledEachWrap>
+              <StyledEachWrap onClick={() => navigate("/chatRoomList")}>
                 <StyledLikeAndChat
                   src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
                   alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
@@ -114,6 +119,7 @@ export const Profile = ({ like, setLike }) => {
               <MyCallenge
                 showChallenge={showChallenge}
                 closeChallenge={closeChallenge}
+                badgeArray={badgeArray}
               />
             </StyledLikeAndChatBox>
           </StyledIcon>
@@ -173,20 +179,25 @@ export const Profile = ({ like, setLike }) => {
                   </>
                 )}
               </StyledMobileEachWrap>
-              <StyledMobileEachWrap>
+              <StyledMobileEachWrap onClick={() => navigate("/chatRoomList")}>
                 <StyleMobileLikeAndChat
                   src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
                   alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
                 />
                 <span>채팅목록</span>
               </StyledMobileEachWrap>
-              <StyledEachWrap>
+              <StyledEachWrap onClick={openChallenge}>
                 <StyledLikeAndChat
                   src={require("../../image/challengeLogo.png")}
                   alt="https://icons8.com/icon/pM35dYPfUtO5/crown-trophy-for-online-gaming-permium-membership Crown trophy for online gaming permium membership https://icons8.com Icons8"
                 />
                 <span>도전과제</span>
               </StyledEachWrap>
+              <MyCallenge
+                showChallenge={showChallenge}
+                closeChallenge={closeChallenge}
+                badgeArray={badgeArray}
+              />
             </StyledMobileIcon>
           </div>
         </StyledMobileProfileContainer>

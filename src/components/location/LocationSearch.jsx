@@ -56,8 +56,7 @@ export const LocationSearch = ({
       // 법정주소 필터
       getAddr(data[0].y, data[0].x);
     });
-  }, [map, searchResult,searchLocatoun]);
-
+  }, [map, searchResult, searchLocatoun]);
 
   const getAddr = (lat, lng) => {
     let geocoder = new kakao.maps.services.Geocoder();
@@ -107,25 +106,25 @@ export const LocationSearch = ({
                   </span>
                 </StyledSearchForm>
                 <StyledSubPlace>
-                  <div style={{textAlign:"center"}}>이런 장소는 어떨까요?</div>
+                  <div style={{ textAlign: "center" }}>
+                    이런 장소는 어떨까요?
+                  </div>
                   <StyledSubItemBox>
-
-                  {
-                    recommandPlace.map((item,index)=>{
-                      if(item!==undefined){
-                        return(
-                          <StyledSubItem 
-                          key={index}
-                          onClick={()=>{
-                            setSearchLocatoun(item)
-                            setSearchResult(item);
-                          }}
-                          
-                          >{item}</StyledSubItem>
-                        )
+                    {recommandPlace.map((item, index) => {
+                      if (item !== undefined) {
+                        return (
+                          <StyledSubItem
+                            key={index}
+                            onClick={() => {
+                              setSearchLocatoun(item);
+                              setSearchResult(item);
+                            }}
+                          >
+                            {item}
+                          </StyledSubItem>
+                        );
                       }
-                    })
-                  }
+                    })}
                   </StyledSubItemBox>
                 </StyledSubPlace>
                 {
@@ -257,23 +256,20 @@ const StyledSubPlace = styled.div`
 
 const StyledSubItemBox = styled.div`
   display: flex;
-  
-  
-`
+`;
 const StyledSubItem = styled.div`
-  font-size:12px;
-  margin-top:15px;
-  margin-left:10px;
-  margin-right:10px;
-  text-align:center;
+  font-size: 12px;
+  margin-top: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+  text-align: center;
   transition: 0.3s;
   cursor: pointer;
 
   &:hover {
-    color:rgb(71, 181, 255);
+    color: rgb(71, 181, 255);
   }
-`
-
+`;
 
 const StyledSelectButton = styled.button`
   margin-top: 20px;

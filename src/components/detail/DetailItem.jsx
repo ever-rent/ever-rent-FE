@@ -25,6 +25,7 @@ export const DetailItem = ({
   rentStart,
   heart,
   status,
+
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();

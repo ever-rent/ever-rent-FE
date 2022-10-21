@@ -31,7 +31,7 @@ export const EditUserInfo = () => {
 
   console.log(state);
   useEffect(() => {
-    console.log(state)
+    console.log(state);
     setEmail(state.email);
     setUserNickName(state.memberName);
     setMainAddress(state.mainAddress);
@@ -118,9 +118,9 @@ export const EditUserInfo = () => {
         cancelButtonText: "취소",
       }).then((result) => {
         if (result.value) {
-          let formData = new FormData()
-          formData.append("requestDto",sendData)
-          auth.put("/updateInfo",sendData)
+          let formData = new FormData();
+          formData.append("requestDto", sendData);
+          auth.put("/updateInfo", sendData);
           Swal.fire({
             title: "저장완료!",
             icon: "success",
@@ -153,11 +153,7 @@ export const EditUserInfo = () => {
             <StyledInfoWrap>
               <StyledInfoName>이메일</StyledInfoName>
               <StyledInfoSubWrap>
-                <StyledEditInput
-                  type="text"
-                  defaultValue={email}
-                  disabled
-                />
+                <StyledEditInput type="text" defaultValue={email} disabled />
                 <StyledEditSubName>
                   {" "}
                   * 이메일을 변경하시려면 운영자에게 이메일을 보내주세요.
@@ -540,6 +536,7 @@ const StyledNonPassword = styled.label`
 const StyledAdressSelect = styled.div`
   & select {
     width: 200px;
+    height:50px;
 
     appearance: none;
     background: url("https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FDVyUU%2FbtrMqr4wuGA%2FezDgk3FguiKztDPowbkwB0%2Fimg.png")
@@ -667,6 +664,7 @@ const StyledMobileEditInput = styled.input`
 const StyledMobileAdressSelect = styled.div`
   & select {
     width: 120px;
+    height:40px;
 
     appearance: none;
     background: url("https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FDVyUU%2FbtrMqr4wuGA%2FezDgk3FguiKztDPowbkwB0%2Fimg.png")

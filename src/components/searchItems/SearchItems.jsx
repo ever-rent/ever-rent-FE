@@ -56,7 +56,7 @@ export const SearchItems = () => {
 
   // 렌더링시 데이터 패치
   useEffect(() => {
-    initOptions()
+    initOptions();
     setIsLoading(true);
     fetchData();
     setTimeout(() => {
@@ -91,14 +91,14 @@ export const SearchItems = () => {
         return element;
         // === 값으로 조건 설정시 5만원 이상 데이터 비정상 동기화
         // == 조건 값으로 대체
-      } 
+      }
       if (priceNumber == 1) {
         return element.price < 10000;
-      } 
+      }
       if (priceNumber == 6) {
         return element.price >= 50000;
-      } 
-      if(priceNumber!==0||priceNumber!==1||priceNumber!==6) {
+      }
+      if (priceNumber !== 0 || priceNumber !== 1 || priceNumber !== 6) {
         return (
           (element.price < priceNumber * 10000) &
           (element.price >= priceNumber * 10000 - 10000)
@@ -109,7 +109,7 @@ export const SearchItems = () => {
     setTimeout(() => {
       setIsLoading(false);
     }, 1000);
-  }, [categoryNumber, priceNumber,searchData]);
+  }, [categoryNumber, priceNumber, searchData]);
 
   // pagination
   const [page, setPage] = useState(1);
@@ -137,7 +137,7 @@ export const SearchItems = () => {
   };
 
   useEffect(() => {
-      pagingFetching();
+    pagingFetching();
   }, [page, searchData, filterData]);
 
   return (
@@ -199,7 +199,9 @@ export const SearchItems = () => {
                   }
                 })}
               </StyledSelect>
-              <StyledInitSpan onClick={initOptions}>검색조건 초기화</StyledInitSpan>
+              <StyledInitSpan onClick={initOptions}>
+                검색조건 초기화
+              </StyledInitSpan>
             </StyledSelectBox>
             <span>다음으로 검색된 목록 : {param.id}</span>
             {isLoading ? (
@@ -227,7 +229,92 @@ export const SearchItems = () => {
         </Layout>
       </Desktop>
       {/* ################ 모바일 ################ */}
-      <Mobile></Mobile>
+      <Mobile>
+      <Layout>
+          <StyledMobileContainer>
+            <StyledSelectBox>
+              <StyledSelect
+                onChange={(e) => categoryHandler(e)}
+                defaultChecked={0}
+                value={categoryNumber}
+              >
+                {categoryList?.map((option, index) => {
+                  if (index === 0) {
+                    return (
+                      <option
+                        key={option.value}
+                        value={option.value}
+                        disabled={true}
+                      >
+                        {option.name}
+                      </option>
+                    );
+                  } else {
+                    return (
+                      <option key={option.value} value={option.value}>
+                        {option.name}
+                      </option>
+                    );
+                  }
+                })}
+              </StyledSelect>
+              <StyledSelect
+                onChange={(e) => priceHandler(e)}
+                defaultChecked={0}
+                value={`${priceNumber}`}
+                // 가격 필터 임시 제거
+                //###############################
+                // style={{ display: "none" }}
+              >
+                {priceList?.map((option) => {
+                  if (option.value === 0) {
+                    return (
+                      <option
+                        key={option.value}
+                        value={option.value}
+                        disabled={true}
+                      >
+                        {option.name}
+                      </option>
+                    );
+                  } else {
+                    return (
+                      <option key={option.value} value={option.value}>
+                        {option.name}
+                      </option>
+                    );
+                  }
+                })}
+              </StyledSelect>
+              <StyledInitSpan onClick={initOptions}>
+                검색조건 초기화
+              </StyledInitSpan>
+            </StyledSelectBox>
+            <span>다음으로 검색된 목록 : {param.id}</span>
+            {isLoading ? (
+              <>
+                <Skeleton />
+              </>
+            ) : (
+              <StyledMobileProducts>
+                {products?.map((product) => {
+                  return <ProductsItem {...product} key={product.id} />;
+                })}
+              </StyledMobileProducts>
+            )}
+            <Pagination
+              activePage={page}
+              itemsCountPerPage={12}
+              totalItemsCount={
+                filterData?.length === undefined ? 1 : filterData?.length
+              }
+              prevPageText={"<"}
+              nextPageText={">"}
+              handlePageChange={handlePageChange}
+            />
+          </StyledMobileContainer>
+        </Layout>
+      </Mobile>
     </>
   );
 };
@@ -262,9 +349,9 @@ const StyledSelect = styled.select`
 
 const StyledInitSpan = styled.span`
   color: gray;
-  font-size:16px;
+  font-size: 16px;
   cursor: pointer;
-`
+`;
 
 // for Mobile
 const StyledMobileContainer = styled.div`

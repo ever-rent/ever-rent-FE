@@ -10,14 +10,13 @@ export const ImageModal = ({
   imageIndex,
   closeImage,
 }) => {
-
   // 가짜 이미지를 포함한 전체 배열 길이
   // 좌우로 이동할 길이
   let idxIndex = imageArray?.length + 2;
   let idxRight = 620;
 
   // 현재 이미지 number
-  // 현재 idx(x축 위치) 
+  // 현재 idx(x축 위치)
   // transition 시간 초기화
   const [imageNum, setImageNum] = useState(imageIndex);
   const [idxPx, setIdxPx] = useState(0);

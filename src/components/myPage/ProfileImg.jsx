@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { auth } from "../server/core/instance";
+import { auth } from "../../server/core/instance";
 import { useDispatch } from "react-redux";
-import { getMyInfo } from "../redux/modules/mypageSlice";
+import { getMyInfo } from "../../redux/modules/mypageSlice";
 
 export const ProfileImg = ({ showProfile, closeProfileimgFix, defaultImg }) => {
   const dispatch = useDispatch();
@@ -135,7 +135,7 @@ const StyledModalBackground = styled.div`
   bottom: 0;
   right: 0;
   background-color: rgba(0, 0, 0, 0.4);
-  z-index: 0;
+  z-index: 1;
   cursor: auto;
 `;
 
