@@ -136,8 +136,6 @@ export const AddProduct = () => {
     setStartDateInput(`${sYaer}-${sMonth}-${sDay}`);
     setEndDateInput(`${eYaer}-${eMonth}-${eDay}`);
   };
-  console.log(startDateInput);
-  console.log(endDateInput);
 
   // 게시글 작성 유효성 검사 추가 예정(이미지/주소 등)
   const checkPost = () => {
@@ -155,6 +153,8 @@ export const AddProduct = () => {
     setLocation(value);
   };
 
+  console.log(location);
+
   // formData
   let sendData = {
     productName: title,
@@ -167,7 +167,7 @@ export const AddProduct = () => {
     rentEnd: endDateInput,
   };
 
-  // 유효성 검사 추가 예정(이미지/주소 등)
+  
   const addProductPost = () => {
     if (
       title === "" ||
@@ -177,7 +177,12 @@ export const AddProduct = () => {
       tradeLocation === "" ||
       endDateInput === ""
     ) {
-      alert("제목/내용을 적어주세요!");
+      Swal.fire({
+        title: "내용을 적어주세요!",
+        icon: "warning",
+        confirmButtonColor: "rgb(71, 181, 255)",
+        confirmButtonText: "확인",
+      })
     } else {
       Swal.fire({
         title: "저장할까요?",
@@ -194,14 +199,21 @@ export const AddProduct = () => {
             "requestDto",
             new Blob([JSON.stringify(sendData)], { type: "application/json" })
           );
-
           for (let i = 0; i < sendImage.length; i++) {
             console.log(sendImage[i]);
             formData.append("multipartFiles", sendImage[i]);
           }
-
           dispatch(addProducts(formData));
-          navigate("/");
+          Swal.fire({
+            title: "저장완료!",
+            icon: "success",
+            confirmButtonColor: "rgb(71, 181, 255)",
+            confirmButtonText: "확인",
+          }).then((result) => {
+            if (result.value) {
+              navigate("/");
+            }
+          });
         }
       });
     }

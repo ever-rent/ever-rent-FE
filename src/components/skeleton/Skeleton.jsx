@@ -46,7 +46,8 @@ export const Skeleton = () => {
 };
 
 const StyledSkeletonContainer = styled.div`
-  max-width: 1024px;
+  /* max-width: 1024px; */
+  max-width: 920px;
   margin: 40px auto;
 
   & {
@@ -64,7 +65,7 @@ const StyledSkeletonContainer = styled.div`
 
 const StyledSkeletonGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 226px);
+  grid-template-columns: repeat(4, 200px);
   margin-top: 30px;
   gap: 50px 40px;
 `;
@@ -72,10 +73,10 @@ const StyledSkeletonGrid = styled.div`
 // Mobile
 
 const StyledMobileContainer = styled.div`
-  max-width: 400px;
+  max-width: 480px;
   margin: auto;
   margin-bottom: 90px;
-  padding: 20px;
+  /* padding: 20px; */
 
   animation: skeletonfadein 0.6s;
 
