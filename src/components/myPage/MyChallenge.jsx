@@ -18,8 +18,8 @@ export const MyCallenge = ({ showChallenge, closeChallenge, badgeArray }) => {
                     style={badgeArray[index] ? null : { display: "none" }}
                   >
                     <StyledBadgeImage src={item.src} alt={item.alt} />
-                    <div>첫 게시글</div>
-                    <StyledAltHover>첫게시글 등록</StyledAltHover>
+                    <div>{item.content}</div>
+                    <StyledAltHover>{item.alt}</StyledAltHover>
                   </StyleditemWrap>
                 );
               })}
@@ -36,7 +36,7 @@ const StyledModalContainer = styled.div`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-
+  
   animation: badge 0.6s;
   & {
     @keyframes badge {
@@ -57,8 +57,8 @@ const StyledModalBackground = styled.div`
   bottom: 0;
   right: 0;
   background-color: rgba(0, 0, 0, 0.4);
-  z-index: 0;
   cursor: auto;
+  z-index: 2;
 `;
 
 const StyledModal = styled.div`
