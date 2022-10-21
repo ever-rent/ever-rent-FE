@@ -57,6 +57,11 @@ export const Products = () => {
   }, [fetch, hasNextPage, inView]);
 
   console.log(products);
+  const filteredProducts = products.filter(
+    (item) => item.status !== "EXPIRATION"
+  );
+
+  console.log("filteredProducts", filteredProducts);
 
   return (
     <>
@@ -112,7 +117,6 @@ const StyledProductsContainer = styled.div`
 const StyledProductsGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 200px);
-  /* grid-template-rows: minmax(auto 300px); */
   margin-top: 30px;
   gap: 50px 40px;
 `;

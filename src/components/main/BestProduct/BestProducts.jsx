@@ -12,7 +12,10 @@ export const BestProducts = () => {
     try {
       const { data } = await auth.get(`/products?page=1`);
       console.log("data.best", data.best);
-      setProducts(data.best);
+      const filteredProducts = data.best.filter(
+        (item) => item.status !== "EXPIRATION"
+      );
+      setProducts(filteredProducts);
     } catch (err) {
       console.error(err);
     }
@@ -71,7 +74,6 @@ export const BestProducts = () => {
     <>
       <Desktop>
         <StyledBestProductsContainer>
-          {/* <StyledTitle>우리 동네 </StyledTitle> */}
           <StyledHotItem>Hot Item</StyledHotItem>
           <StyledItemAndButtonContainer>
             <StyeldMoveButtonLeft onClick={back}>
@@ -85,7 +87,7 @@ export const BestProducts = () => {
                 src="https://img.icons8.com/ios/50/5923ff/back--v1.png"
                 alt="<"
               /> */}
-              <span>{"<"}</span>
+              <span className="sign">{"<"}</span>
             </StyeldMoveButtonLeft>
             <StyledContainer>
               <StyledGridBox ref={productsRef}>
@@ -99,7 +101,7 @@ export const BestProducts = () => {
                 src="https://img.icons8.com/ios/50/5923ff/forward--v1.png"
                 alt=">"
               /> */}
-              <span>{">"}</span>
+              <span className="sign">{">"}</span>
             </StyeldMoveButtonRight>
           </StyledItemAndButtonContainer>
         </StyledBestProductsContainer>
@@ -123,12 +125,6 @@ const StyledBestProductsContainer = styled.div`
   padding: 0 10px 30px 10px;
 `;
 
-const StyledTitle = styled.span`
-  font-size: 25px;
-  font-weight: 500;
-  /* color: #5923ff; */
-`;
-
 const StyledHotItem = styled.span`
   padding-bottom: 15px;
   font-size: 25px;
@@ -146,8 +142,6 @@ const StyledItemAndButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   position: relative;
-  /* padding: 0 30px; */
-  /* margin: 40px 0 70px 0; */
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 `;
 
@@ -157,44 +151,46 @@ const StyeldMoveButtonLeft = styled.button`
   position: absolute;
   z-index: 3;
   left: 0px;
-  top: 40%;
+  top: 35%;
   max-width: max-content;
   background-color: transparent;
   cursor: pointer;
   span {
+    color: #47b5ff;
     font-size: 45px;
     font-weight: 400;
-  }
-  .originImg {
-    opacity: 0;
-    transition: opacity 0.5s linear;
-  }
-  .hoverImg:hover {
-    opacity: 1;
+    transition: 0.1s;
+    &:hover {
+      font-size: 50px;
+    }
   }
 `;
 
 const StyeldMoveButtonRight = styled.button`
   border: transparent;
+  /* border: 1px solid red; */
   position: absolute;
   z-index: 2;
   right: 0px;
-  top: 40%;
+  top: 35%;
   max-width: max-content;
   background-color: transparent;
   cursor: pointer;
   margin-left: 10px;
   span {
+    color: #47b5ff;
     font-size: 45px;
+    font-weight: 400;
+    transition: 0.1s;
+    &:hover {
+      font-size: 50px;
+    }
   }
 `;
 
 const StyledContainer = styled.div`
   /* border: 1px solid black; */
-  /* max-width: 1024px; */
   width: 712px;
-  /* height: 240px; */
-  /* margin: 25px 30px; */
   padding: 15px 0 15px 16px;
   overflow: hidden;
 `;

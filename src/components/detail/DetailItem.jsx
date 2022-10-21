@@ -6,6 +6,7 @@ import { Desktop, Mobile } from "../../Hooks/MideaQuery";
 import { imgFirstString } from "../../server/api";
 import { timeToToday } from "../../util/timeToToday";
 import { postLike } from "../../redux/modules/mypageSlice";
+import { Layout } from "../layout/Layout";
 
 export const DetailItem = ({
   id,
@@ -23,6 +24,7 @@ export const DetailItem = ({
   rentEnd,
   rentStart,
   heart,
+  status,
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -54,10 +56,25 @@ export const DetailItem = ({
     setCreatedAt(timeToToday(writeAt));
   }, [writeAt]);
 
+  //상품 status
+  const presentStatus = (status) => {
+    if (status === "WAITING") {
+      return <StyledWaiting></StyledWaiting>;
+    } else if (status === "CONFIRMATION") {
+      return <StyledStatus>렌탈확정</StyledStatus>;
+    } else if (status === "EXPIRATION") {
+      return <StyledStatus>기한만료</StyledStatus>;
+    }
+  };
+
   return (
     <>
       <Desktop>
-        <StyledItemBox>
+        <StyledItemBox
+          style={
+            status === "EXPIRATION" ? { backgroundColor: "#a5a1a3" } : null
+          }
+        >
           <StyledImgBox>
             <StyledImg
               onClick={() => {
@@ -72,6 +89,8 @@ export const DetailItem = ({
             <StyledLocation>
               {location ? location : "지역 선택 안함"}
             </StyledLocation>
+            {presentStatus(status)}
+
             <StyledPayBox>
               <StyledPay>{price}</StyledPay>
               <StyledDay> / 일</StyledDay>
@@ -116,7 +135,11 @@ export const DetailItem = ({
       </Desktop>
 
       <Mobile>
-        <StyledMobileItemBox>
+        <StyledMobileItemBox
+          style={
+            status === "EXPIRATION" ? { backgroundColor: "#a5a1a3" } : null
+          }
+        >
           <StyledMobileImgBox>
             <StyledImg
               onClick={() => {
@@ -127,11 +150,12 @@ export const DetailItem = ({
             />
           </StyledMobileImgBox>
           <StyledContentBox>
-            <StyledTitle>{productName}</StyledTitle>
+            <StyledMobileTitle>{productName}</StyledMobileTitle>
             {/* <StyledCateId>{categoriNumber(cateId)}</StyledCateId> */}
             <StyledLocation>
               {location ? location : "지역 선택 안함"}
             </StyledLocation>
+            {presentStatus(status)}
             <br />
             {/* <StyledPeriod>
               {rentEnd}~{rentStart}
@@ -178,9 +202,30 @@ export const DetailItem = ({
   );
 };
 
+const StyledWaiting = styled.span`
+  position: absolute;
+  right: 5%;
+  bottom: 5%;
+  padding: 2px;
+`;
+
+const StyledStatus = styled.span`
+  position: absolute;
+  right: 5%;
+  bottom: 8%;
+  background-color: #2b8fd6;
+  border-radius: 5px;
+  padding: 2px 3px;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+`;
+
 const StyledItemBox = styled.div`
   /* border: 1px solid red; */
-  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 10px 10px 0 10px;
   position: relative;
   border-radius: 10px;
@@ -190,13 +235,9 @@ const StyledItemBox = styled.div`
 
 const StyledMobileItemBox = styled.div`
   border-bottom: 1px solid #c7c6c6bc;
-  /* max-width: 480px; */
   padding: 10px 10px 0 10px;
   position: relative;
-  /* border-radius: 5px; */
   background-image: linear-gradient(120deg, #ffffff 0%, #ebedee6e 100%);
-  /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
-  /* margin: auto; */
   display: flex;
   background-color: white;
   padding: 0;
@@ -206,7 +247,7 @@ const StyledMobileItemBox = styled.div`
 const StyledImgBox = styled.div`
   /* border: 1px solid red; */
   padding: 2px;
-  width: 200px;
+  width: 180px;
   height: 140px;
   margin-bottom: 3px;
 `;
@@ -229,14 +270,36 @@ const StyledImg = styled.img`
 `;
 
 const StyledContentBox = styled.div`
-  margin: 12px 0;
+  display: relative;
+  height: 130px;
+  margin-top: 12px;
 `;
 
 const StyledTitle = styled.div`
+  /* border: 1px solid red; */
   margin-bottom: 5px;
   font-weight: 600;
+  overflow: hidden; // 을 사용해 영역을 감출 것
+  text-overflow: ellipsis; // 로 ... 을 만들기
+  white-space: nowrap; // 아래줄로 내려가는 것을 막기위해
+  word-break: break-all;
+  width: 180px;
+  height: 20px;
+  cursor: pointer;
 `;
 
+const StyledMobileTitle = styled.div`
+  /* border: 1px solid red; */
+  margin-bottom: 5px;
+  font-weight: 600;
+  overflow: hidden; // 을 사용해 영역을 감출 것
+  text-overflow: ellipsis; // 로 ... 을 만들기
+  white-space: nowrap; // 아래줄로 내려가는 것을 막기위해
+  word-break: break-all;
+  width: 210px;
+  height: 20px;
+  cursor: pointer;
+`;
 const StyledCateId = styled.span`
   font-size: 13px;
 `;

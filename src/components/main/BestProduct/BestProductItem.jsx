@@ -46,7 +46,13 @@ export const BestProductItem = (item) => {
         </StyledImgBox>
         <StyledContentBox>
           {/* <StyledPayBox> */}
-          <StyledTitle>{productName}</StyledTitle>
+          <StyledTitle
+            onClick={() => {
+              navigate(`/productDetail/${id}`);
+            }}
+          >
+            {productName}
+          </StyledTitle>
           <StyledLocation>
             {location ? location : "지역 선택 안함"}
           </StyledLocation>
@@ -113,6 +119,7 @@ const StyledTitle = styled.div`
   word-break: break-all;
   width: 150px;
   height: 20px;
+  cursor: pointer;
 `;
 
 const StyledLocation = styled.span`
