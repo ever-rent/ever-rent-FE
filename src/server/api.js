@@ -25,6 +25,7 @@ export const mypageAPI = {
   postLike: (productId) => auth.post(`/products/wishlists/${productId}`),
   getMyInfo: () => auth.get(`/mypages/myinfos`),
   getWishList: () => auth.get(`/mypages/myWishs`),
+  deleteMember: () => auth.delete(`/deleteMembers`),
 };
 
 export const chatAPI = {
