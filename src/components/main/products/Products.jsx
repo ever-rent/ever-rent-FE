@@ -123,10 +123,10 @@ const StyledProductsGrid = styled.div`
 
 const StyledMobileContainer = styled.div`
   /* border: 1px solid red; */
-  max-width: 400px;
+  max-width: 480px;
   margin: auto;
   margin-bottom: 90px;
-  padding: 20px;
+  /* padding: 20px; */
 `;
 
 const StyledMobileProducts = styled.div`

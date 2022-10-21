@@ -133,7 +133,13 @@ export const ProductsItem = ({
             </StyledPayBox>
             <StyledLikeAndChatBox>
               <StyledLikeWrap>
-                {localStorage.getItem("memberId") ? (
+                <StyledLike
+                  src="https://img.icons8.com/ios/50/737373/like--v1.png"
+                  alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
+                />
+                <span>{wishNum}</span>
+
+                {/* {localStorage.getItem("memberId") ? (
                   <>
                     {togglelike ? (
                       <>
@@ -164,15 +170,15 @@ export const ProductsItem = ({
                     />
                     <span>찜 {likeCount}</span>
                   </>
-                )}
+                )} */}
               </StyledLikeWrap>
-              {/* <StyledChatWrap>
+              <StyledChatWrap>
                 <StyledChat
                   src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
                   alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
                 />
                 <span>채팅</span>
-              </StyledChatWrap> */}
+              </StyledChatWrap>
             </StyledLikeAndChatBox>
           </StyledContentBox>
         </StyledItemBox>
@@ -218,7 +224,12 @@ export const ProductsItem = ({
             <StyledAddress>{address}</StyledAddress>
             <StyledMobileLikeAndChatBox>
               <StyledMobileLikeWrap>
-                {localStorage.getItem("memberId") ? (
+                <StyledLike
+                  src="https://img.icons8.com/ios/50/737373/like--v1.png"
+                  alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
+                />
+                <span>{wishNum}</span>
+                {/* {localStorage.getItem("memberId") ? (
                   <>
                     {togglelike ? (
                       <>
@@ -249,16 +260,16 @@ export const ProductsItem = ({
                     />
                     <span>찜 {likeCount}</span>
                   </>
-                )}
+                )} */}
               </StyledMobileLikeWrap>
 
-              {/* <StyledMobileChatWrap>
+              <StyledMobileChatWrap>
                 <StyledChat
                   src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
                   alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
                 />
                 <span>채팅 </span>
-              </StyledMobileChatWrap> */}
+              </StyledMobileChatWrap>
             </StyledMobileLikeAndChatBox>
           </StyledMobileContentBox>
         </StyledMobileItemBox>
@@ -321,7 +332,7 @@ const StyledMobileImgBox = styled.div`
   padding: 2px;
   width: 150px;
   height: 140px;
-  margin: 5px 15px 5px 3px;
+  margin: 5px 15px 5px 10px;
 `;
 
 const StyledImg = styled.img`

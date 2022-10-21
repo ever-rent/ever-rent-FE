@@ -85,7 +85,13 @@ export const DetailItem = ({
             />
           </StyledImgBox>
           <StyledContentBox>
-            <StyledTitle>{productName}</StyledTitle>
+            <StyledTitle
+              onClick={() => {
+                navigate(`/productDetail/${id}`);
+              }}
+            >
+              {productName}
+            </StyledTitle>
             <StyledLocation>
               {location ? location : "지역 선택 안함"}
             </StyledLocation>
@@ -99,7 +105,12 @@ export const DetailItem = ({
             </StyledPayBox>
             <StyledLikeAndChatBox>
               <StyledLikeWrap>
-                {togglelike ? (
+                <StyledLike
+                  src="https://img.icons8.com/ios/50/737373/like--v1.png"
+                  alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
+                />
+                <span>{wishNum}</span>
+                {/* {togglelike ? (
                   <>
                     <StyledLike
                       onClick={canceLikeHandler}
@@ -117,18 +128,15 @@ export const DetailItem = ({
                     />
                     <span>찜 {likeCount}</span>
                   </>
-                )}
+                )} */}
               </StyledLikeWrap>
-              {/* <StyledChatWrap>
+              <StyledChatWrap>
                 <StyledChat
                   src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
                   alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
                 />
-                <span>채팅 </span>
-              </StyledChatWrap> */}
-              {/* <StyledChatWrap>
-                <button onClick={reservationHandler}>예약 신청</button>
-              </StyledChatWrap> */}
+                {/* <span>채팅 </span> */}
+              </StyledChatWrap>
             </StyledLikeAndChatBox>
           </StyledContentBox>
         </StyledItemBox>
@@ -150,7 +158,13 @@ export const DetailItem = ({
             />
           </StyledMobileImgBox>
           <StyledContentBox>
-            <StyledMobileTitle>{productName}</StyledMobileTitle>
+            <StyledMobileTitle
+              onClick={() => {
+                navigate(`/productDetail/${id}`);
+              }}
+            >
+              {productName}
+            </StyledMobileTitle>
             {/* <StyledCateId>{categoriNumber(cateId)}</StyledCateId> */}
             <StyledLocation>
               {location ? location : "지역 선택 안함"}
@@ -168,7 +182,12 @@ export const DetailItem = ({
             </StyledPayBox>
             <StyledMobileLikeAndChatBox>
               <StyledMobileLikeWrap>
-                {togglelike ? (
+                <StyledLike
+                  src="https://img.icons8.com/ios/50/737373/like--v1.png"
+                  alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
+                />
+                <span>{wishNum}</span>
+                {/* {togglelike ? (
                   <StyledLike
                     onClick={canceLikeHandler}
                     src="https://img.icons8.com/ios-filled/50/47b5ff/like--v1.png"
@@ -181,19 +200,16 @@ export const DetailItem = ({
                     alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
                   />
                 )}
-                <span>찜 {likeCount}</span>
+                <span>찜 {likeCount}</span> */}
               </StyledMobileLikeWrap>
 
-              {/* <StyledMobileChatWrap>
+              <StyledMobileChatWrap>
                 <StyledChat
                   src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
                   alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
                 />
-                <span>채팅 </span>
-              </StyledMobileChatWrap> */}
-              {/* <StyledChatWrap>
-            <button onClick={reservationHandler}>예약 신청</button>
-          </StyledChatWrap> */}
+                {/* <span>채팅 </span> */}
+              </StyledMobileChatWrap>
             </StyledMobileLikeAndChatBox>
           </StyledContentBox>
         </StyledMobileItemBox>
@@ -212,7 +228,7 @@ const StyledWaiting = styled.span`
 const StyledStatus = styled.span`
   position: absolute;
   right: 5%;
-  bottom: 8%;
+  bottom: 3%;
   background-color: #2b8fd6;
   border-radius: 5px;
   padding: 2px 3px;
@@ -257,7 +273,7 @@ const StyledMobileImgBox = styled.div`
   padding: 2px;
   width: 150px;
   height: 140px;
-  margin: 5px 15px 5px 3px;
+  margin: 5px 15px 5px 10px;
 `;
 
 const StyledImg = styled.img`
@@ -296,7 +312,7 @@ const StyledMobileTitle = styled.div`
   text-overflow: ellipsis; // 로 ... 을 만들기
   white-space: nowrap; // 아래줄로 내려가는 것을 막기위해
   word-break: break-all;
-  width: 210px;
+  width: 290px;
   height: 20px;
   cursor: pointer;
 `;
