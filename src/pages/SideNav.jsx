@@ -70,7 +70,7 @@ const Login = styled.div`
     font-size: 16px;
     font-weight: bold;
     color: #fff;
-    background-color: #47b5ff;
+    background-color: #5902ff;
     cursor: pointer;
   }
 `;

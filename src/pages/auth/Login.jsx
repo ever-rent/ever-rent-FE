@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
 import axios from "axios";
 import { StyledLogin } from "./styled";
+import { Toast } from "../../util/toast";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -25,13 +26,26 @@ export const Login = () => {
         localStorage.setItem("memberName", data.data.data.memberName);
         localStorage.setItem("accessToken", data.headers["authorization"]);
         localStorage.setItem("refreshToken", data.headers["refresh-token"]);
-        alert("로그인 성공!!");
+        Toast.fire({
+          icon: "success",
+          title: "로그인 성공! 환영합니다!",
+        });
         navigate("/");
       }
     },
-    onError: (error) => {
-      alert("일치하는 계정이 없습니다. 이메일 또는 비밀번호를 확인해주세요.");
-      console.dir(error);
+    onError: ({ response }) => {
+      if (response.status === 400) {
+        Toast.fire({
+          icon: "error",
+          title:
+            "일치하는 계정이 없습니다. 이메일 또는 비밀번호를 확인해주세요.",
+        });
+      } else {
+        Toast.fire({
+          icon: "error",
+          title: "로그인에 실패했습니다. 다시 시도해주세요.",
+        });
+      }
     },
   });
 
@@ -45,12 +59,18 @@ export const Login = () => {
       <button
         onClick={() => {
           if (email.current.value === "") {
-            alert("이메일을 입력해주세요.");
+            Toast.fire({
+              icon: "error",
+              title: "이메일을 입력해주세요.",
+            });
             email.current.focus();
             return;
           }
           if (password.current.value === "") {
-            alert("비밀번호를 입력해주세요.");
+            Toast.fire({
+              icon: "error",
+              title: "비밀번호를 입력해주세요.",
+            });
             password.current.focus();
             return;
           }
@@ -63,7 +83,7 @@ export const Login = () => {
         로그인
       </button>
       <div className="span-box">
-        <span>비밀번호 재설정</span>
+        <span onClick={() => navigate("/forgotPw")}>비밀번호 찾기</span>
         <span onClick={() => navigate("/join")}>회원가입</span>
       </div>
     </StyledLogin>
