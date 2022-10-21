@@ -30,7 +30,7 @@ const StyledBanner = styled.img`
 
 const StyledMobileBanner = styled.img`
   display: flex;
-  width: 480px;
+  width: 100vw;
   height: 128px;
   margin: auto;
   margin-top: 120px;
