@@ -48,12 +48,12 @@ export const MyPage = () => {
 
 const StyledGridBox = styled.div`
   /* border: 1px solid blue; */
-  width: 1024px;
+  width: 1000px;
   height: 100%;
   margin: 60px auto;
   display: grid;
   /* position: relative; */
-  grid-template-columns: 250px 700px;
+  grid-template-columns: 250px 660px;
   justify-content: space-between;
   /* align-items: center; */
   animation: fadein 0.6s;
@@ -79,7 +79,8 @@ const StyledFlexBox = styled.div`
 
 const StyledLikeList = styled.div`
   grid-row: 1/4;
-  width: 600px;
+  width: 430px;
+  height: 100%;
   box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
   animation: fadein 0.6s;
   @keyframes fadein {

@@ -207,6 +207,7 @@ export const Profile = ({ like, setLike }) => {
 };
 
 const StyledProfileBox = styled.div`
+  /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -216,16 +217,8 @@ const StyledProfileBox = styled.div`
   border-radius: 10px;
   padding: 15px 0 10px 0;
   height: 340px;
+  width: 250px;
   grid-row: 1/3;
-  @media only screen and (max-width: 767px) {
-    /* border: 1px solid yellow; */
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    /* width: 100vw; */
-    height: 100%;
-    padding: 10px 0;
-  }
 `;
 
 const StyledImgFlexBox = styled.div`
@@ -234,18 +227,6 @@ const StyledImgFlexBox = styled.div`
   align-items: center;
   justify-content: space-around;
   height: 200px;
-  @media only screen and (max-width: 767px) {
-    /* border: 1px solid red; */
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    position: relative;
-    /* width: 100%; */
-    /* display: flex; */
-    height: 100%;
-    /* width: 30rem; */
-    /* padding: 10px 0; */
-  }
 `;
 
 const StyledImgBox = styled.div`
@@ -266,9 +247,6 @@ const StyledImg = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  @media only screen and (max-width: 767px) {
-    position: absolute;
-  }
 `;
 const StyledImageEdit = styled.img`
   width: 20px;
@@ -285,10 +263,6 @@ const StyledNickname = styled.div`
   margin: 10px 0;
   font-size: 25px;
   font-weight: 600;
-  /* margin-right: 15px; */
-  @media only screen and (max-width: 767px) {
-    font-size: 5vw;
-  }
 `;
 const StyledProfileEdit = styled.button`
   background-color: #47b5ff;
@@ -312,9 +286,6 @@ const StyledIcon = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 20px 0 0 0;
-  @media only screen and (max-width: 767px) {
-    height: 100%;
-  }
 `;
 
 const StyledLikeAndChatBox = styled.div`
@@ -355,10 +326,6 @@ const StyledMobileProfileContainer = styled.div`
   align-items: center;
   justify-content: space-around;
   padding: 10px 0;
-  /* margin-bottom: 30px; */
-  /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
-  /* border-radius: 10px; */
-  /* padding: 30px 0 0 0; */
   height: 100%;
 `;
 
@@ -368,14 +335,7 @@ const StyledMobileImgBox = styled.div`
   height: 110px;
   border-radius: 70%;
   overflow: hidden;
-  @media only screen and (max-width: 767px) {
-    /* border: 2px solid green; */
-    height: 100px;
-    width: 100px;
-    /* padding: 10px 0; */
-    margin-right: 20px;
-    position: relative;
-  }
+
   ::after {
     content: "";
     display: block;
@@ -387,9 +347,6 @@ const StyledMobileImg = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  @media only screen and (max-width: 767px) {
-    position: absolute;
-  }
 `;
 const StyledMobileImageEdit = styled.img`
   width: 20px;
@@ -444,9 +401,6 @@ const StyledMobileIcon = styled.div`
   justify-content: space-around;
   align-items: center;
   margin: 20px 0 0 0;
-  @media only screen and (max-width: 767px) {
-    height: 100%;
-  }
 `;
 
 const StyledMobileEachWrap = styled.span`

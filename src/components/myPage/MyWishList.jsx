@@ -49,6 +49,8 @@ export const MyWishList = () => {
 // const StyledTitle = styled.div``;
 
 const StyledItem = styled.div`
+  /* border: 1px solid red; */
+
   display: flex;
   flex-direction: column;
   padding-top: 10px;

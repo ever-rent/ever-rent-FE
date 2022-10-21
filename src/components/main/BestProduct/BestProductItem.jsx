@@ -45,17 +45,23 @@ export const BestProductItem = (item) => {
           />
         </StyledImgBox>
         <StyledContentBox>
-          <StyledPayBox>
-            <StyledTitle>{productName}</StyledTitle>
-            <StyledLocation>
-              {location ? location : "지역 선택 안함"}
-            </StyledLocation>
-            <br />
+          {/* <StyledPayBox> */}
+          <StyledTitle
+            onClick={() => {
+              navigate(`/productDetail/${id}`);
+            }}
+          >
+            {productName}
+          </StyledTitle>
+          <StyledLocation>
+            {location ? location : "지역 선택 안함"}
+          </StyledLocation>
+          <div>
             <StyledPay>{price}</StyledPay>
             <StyledDay> / 일</StyledDay>
-            <br />
-            <StyledTimeForToday> {createdAt}</StyledTimeForToday>
-          </StyledPayBox>
+          </div>
+          <StyledTimeForToday> {createdAt}</StyledTimeForToday>
+          {/* </StyledPayBox> */}
         </StyledContentBox>
       </StyledItemBox>
     </>
@@ -63,11 +69,13 @@ export const BestProductItem = (item) => {
 };
 
 const StyledItemBox = styled.div`
-  /* border: 1px solid red; */
+  /* border: 1px solid green; */
   display: flex;
   align-items: center;
+  justify-content: space-between;
   flex-direction: column;
-  padding: 10px 10px 0 10px;
+  height: 230px;
+  /* padding: 10px 10px 0 10px; */
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 `;
 
@@ -76,26 +84,43 @@ const StyledImgBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 2px;
-  width: 150px;
-  height: 150px;
+  /* padding: 2px; */
+  margin-top: 10px;
+  width: 130px;
+  height: 120px;
+  object-fit: cover;
 `;
 
 const StyledImg = styled.img`
   border-radius: 8px;
   width: 100%;
   height: 100%;
-
   /* padding-bottom: 10px; */
   cursor: pointer;
 `;
 
 const StyledContentBox = styled.div`
   width: 100%;
-  margin: 12px 0;
+  /* margin: 12px 0; */
+  margin: 5px 5px 7px 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* position: absolute;
+  bottom: 0; */
 `;
 
-const StyledTitle = styled.div``;
+const StyledTitle = styled.div`
+  /* border: 1px solid red; */
+  margin-bottom: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis; // ... 만들기
+  white-space: nowrap; // 아래줄로 내려가는 것을 막기위해
+  word-break: break-all;
+  width: 150px;
+  height: 20px;
+  cursor: pointer;
+`;
 
 const StyledLocation = styled.span`
   color: gray;
@@ -103,11 +128,7 @@ const StyledLocation = styled.span`
   /* font-weight: 600; */
 `;
 
-const StyledPayBox = styled.div`
-  margin: 5px 0 5px 0;
-  /* position: absolute;
-  bottom: 0; */
-`;
+const StyledPayBox = styled.div``;
 
 const StyledPay = styled.span`
   font-weight: 600;
