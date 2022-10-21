@@ -558,6 +558,7 @@ const StyledNonPassword = styled.label`
 const StyledAdressSelect = styled.div`
   & select {
     width: 200px;
+    height:50px;
 
     appearance: none;
     background: url("https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FDVyUU%2FbtrMqr4wuGA%2FezDgk3FguiKztDPowbkwB0%2Fimg.png")
@@ -685,6 +686,7 @@ const StyledMobileEditInput = styled.input`
 const StyledMobileAdressSelect = styled.div`
   & select {
     width: 120px;
+    height:40px;
 
     appearance: none;
     background: url("https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FDVyUU%2FbtrMqr4wuGA%2FezDgk3FguiKztDPowbkwB0%2Fimg.png")

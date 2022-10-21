@@ -40,16 +40,19 @@ export const ProductsItem = ({
   // console.log("data", id, data);
   // console.log(id, like);
 
+  //상품 status
   const presentStatus = (status) => {
     if (status === "WAITING") {
-      return <StyledStatus></StyledStatus>;
+      return <StyledWaiting></StyledWaiting>;
     } else if (status === "CONFIRMATION") {
-      return <StyledStatus></StyledStatus>;
+      return <StyledStatus>렌탈확정</StyledStatus>;
     } else if (status === "EXPIRATION") {
-      return <StyledStatus></StyledStatus>;
+      return <StyledStatus>기한만료</StyledStatus>;
     }
   };
-  //TODO: 찜하기 기능은 빼고 숫자만 보여주는 것으로 바꿀 예정.chat 개수도
+
+  //TODO: 찜하기 기능은 빼고 숫자만 보여주는 것으로 바꿀 예정.
+
   // 찜하기
   const [togglelike, setTogglelike] = useState(heart);
   const [likeCount, setLikeCount] = useState(wishNum);
@@ -91,39 +94,14 @@ export const ProductsItem = ({
     setCreatedAt(timeToToday(writeAt));
   }, [writeAt]);
 
-  // const reservationHandler = (e) => {
-  //   e.preventDefault();
-  //   const productData = {
-  //     productId: id,
-  //     buyStart: rentStart,
-  //     buyEnd: rentEnd,
-  //   };
-  //   dispatch(postRent(productData));
-  // };
-
-  // navigate state 전달 데이터
-  // const sendData = {
-  //   id: id,
-  //   imgUrl: imgUrl,
-  //   imgUrlArray: imgUrlArray,
-  //   productName: productName,
-  //   memberName: memberName,
-  //   price: price,
-  //   address: address,
-  //   wishNum: wishNum,
-  //   chat: chat,
-  //   content: content,
-  //   writeAt: writeAt,
-  //   cateId: cateId,
-  //   location: location,
-  //   rentEnd: rentEnd,
-  //   rentStart: rentStart,
-  // };
-
   return (
     <>
       <Desktop>
-        <StyledItemBox>
+        <StyledItemBox
+          style={
+            status === "EXPIRATION" ? { backgroundColor: "#a5a1a3" } : null
+          }
+        >
           <StyledImgBox
             onClick={() => {
               navigate(`/productDetail/${id}`);
@@ -142,19 +120,26 @@ export const ProductsItem = ({
             >
               {productName}
             </StyledTitle>
+
             <StyledLocation>
               {location ? location : "지역 선택 안함"}
             </StyledLocation>
+            {presentStatus(status)}
             <StyledPayBox>
               <StyledPay>{price}</StyledPay>
               <StyledDay> / 일</StyledDay>
               <br />
               <StyledTimeForToday> {createdAt}</StyledTimeForToday>
             </StyledPayBox>
-            {presentStatus(status)}
             <StyledLikeAndChatBox>
               <StyledLikeWrap>
-                {localStorage.getItem("memberId") ? (
+                <StyledLike
+                  src="https://img.icons8.com/ios/50/737373/like--v1.png"
+                  alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
+                />
+                <span>{wishNum}</span>
+
+                {/* {localStorage.getItem("memberId") ? (
                   <>
                     {togglelike ? (
                       <>
@@ -185,25 +170,26 @@ export const ProductsItem = ({
                     />
                     <span>찜 {likeCount}</span>
                   </>
-                )}
+                )} */}
               </StyledLikeWrap>
-              {/* <StyledChatWrap>
+              <StyledChatWrap>
                 <StyledChat
                   src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
                   alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
                 />
                 <span>채팅</span>
-              </StyledChatWrap> */}
-              {/* <StyledChatWrap>
-                <button onClick={reservationHandler}>예약 신청</button>
-              </StyledChatWrap> */}
+              </StyledChatWrap>
             </StyledLikeAndChatBox>
           </StyledContentBox>
         </StyledItemBox>
       </Desktop>
 
       <Mobile>
-        <StyledMobileItemBox>
+        <StyledMobileItemBox
+          style={
+            status === "EXPIRATION" ? { backgroundColor: "#a5a1a3" } : null
+          }
+        >
           <StyledMobileImgBox>
             <StyledImg
               onClick={() => {
@@ -223,6 +209,7 @@ export const ProductsItem = ({
             </StyledMobileTitle>
             {/* <StyledCateId>{categoriNumber(cateId)}</StyledCateId> */}
             <StyledLocation>{location}</StyledLocation>
+            {presentStatus(status)}
             <br />
             {/* <StyledPeriod>
               {rentEnd}~{rentStart}
@@ -237,7 +224,12 @@ export const ProductsItem = ({
             <StyledAddress>{address}</StyledAddress>
             <StyledMobileLikeAndChatBox>
               <StyledMobileLikeWrap>
-                {localStorage.getItem("memberId") ? (
+                <StyledLike
+                  src="https://img.icons8.com/ios/50/737373/like--v1.png"
+                  alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
+                />
+                <span>{wishNum}</span>
+                {/* {localStorage.getItem("memberId") ? (
                   <>
                     {togglelike ? (
                       <>
@@ -268,19 +260,16 @@ export const ProductsItem = ({
                     />
                     <span>찜 {likeCount}</span>
                   </>
-                )}
+                )} */}
               </StyledMobileLikeWrap>
 
-              {/* <StyledMobileChatWrap>
+              <StyledMobileChatWrap>
                 <StyledChat
                   src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
                   alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
                 />
                 <span>채팅 </span>
-              </StyledMobileChatWrap> */}
-              {/* <StyledChatWrap>
-            <button onClick={reservationHandler}>예약 신청</button>
-          </StyledChatWrap> */}
+              </StyledMobileChatWrap>
             </StyledMobileLikeAndChatBox>
           </StyledMobileContentBox>
         </StyledMobileItemBox>
@@ -289,10 +278,22 @@ export const ProductsItem = ({
   );
 };
 
+const StyledWaiting = styled.span`
+  position: absolute;
+  right: 5%;
+  bottom: 5%;
+  padding: 2px;
+`;
 const StyledStatus = styled.span`
+  position: absolute;
+  right: 5%;
+  bottom: 8%;
+  background-color: #2b8fd6;
+  border-radius: 5px;
+  padding: 2px 3px;
   font-size: 14px;
   font-weight: 600;
-  color: #1185d7;
+  color: white;
 `;
 
 const StyledItemBox = styled.div`
@@ -308,15 +309,10 @@ const StyledItemBox = styled.div`
 `;
 
 const StyledMobileItemBox = styled.div`
-  /* margin-bottom: 20px; */
   border-bottom: 1px solid #c7c6c6bc;
-  /* max-width: 480px; */
   padding: 10px 10px 0 10px;
   position: relative;
-  /* border-radius: 5px; */
   background-image: linear-gradient(120deg, #ffffff 0%, #ebedee6e 100%);
-  /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
-  /* margin: auto; */
   display: flex;
   background-color: white;
   padding: 0;
@@ -336,7 +332,7 @@ const StyledMobileImgBox = styled.div`
   padding: 2px;
   width: 150px;
   height: 140px;
-  margin: 5px 15px 5px 3px;
+  margin: 5px 15px 5px 10px;
 `;
 
 const StyledImg = styled.img`
@@ -349,13 +345,14 @@ const StyledImg = styled.img`
 `;
 
 const StyledContentBox = styled.div`
+  position: relative;
   height: 130px;
-  margin: 12px 0;
+  margin-top: 12px;
 `;
 
 const StyledMobileContentBox = styled.div`
   width: 200px;
-  margin: 12px 0;
+  margin-top: 12px;
 `;
 
 const StyledTitle = styled.div`
@@ -447,8 +444,6 @@ const StyledLikeWrap = styled.span`
 const StyledMobileLikeWrap = styled.span`
   /* border: 1px solid red; */
   display: flex;
-  /* flex-direction: column; */
-  /* margin: 5px 12px 0 0; */
   align-items: center;
   width: max-content;
   bottom: 0;
@@ -464,7 +459,6 @@ const StyledLike = styled.img`
 const StyledChatWrap = styled.span`
   /* border: 1px solid red; */
   display: flex;
-  /* flex-direction: column; */
   margin: 5px 5px 0 0;
   align-items: center;
   width: max-content;

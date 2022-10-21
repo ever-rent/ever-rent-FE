@@ -23,6 +23,7 @@ import axios from "axios";
 import { WishButton } from "../components/button/WishButton";
 import { createChatRoom } from "../redux/modules/chatSlice";
 import { UsersBadge } from "../components/detail/UsersBadge";
+import { OtherProfile } from "../components/detail/OtherProfile";
 
 // 게시글 상세 페이지 컴포넌트
 export const ProductDetail = () => {
@@ -55,8 +56,7 @@ export const ProductDetail = () => {
   const firstUrl = imgFirstString;
 
   // 유저 프로필 없을 시 기본이미지
-  const defaultUserImg =
-    "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbNF5TD%2FbtrMyfbzuN7%2FJZiKO75eVNPNAGHIPtrAnK%2Fimg.png";
+  const defaultUserImg = `https://source.boringavatars.com/beam/110/${detailData?.memberId}?colors=7965EE,6FE7F1,FFDD4C,46B5FF,2883E0`;
 
   const [writeAt, setWriteAt] = useState("");
   const [createdAt, setCreatedAt] = useState("");
@@ -73,13 +73,27 @@ export const ProductDetail = () => {
   const [editabled, setEditabled] = useState(false);
   const [userImage, setUserImage] = useState(defaultUserImg);
 
+  //프로필 정보
+  const [userInfoData, setUserInfoData] = useState();
+  const fetchProfile = async (memberId) => {
+    console.log("패치데이터", param);
+    await axios
+      .get(`${process.env.REACT_APP_SERVER_URL}/updateInfo/${memberId}`)
+      .then((response) => {
+        setUserInfoData(response.data.data);
+      });
+  };
+
   useEffect(() => {
     if (detailData !== undefined) {
       detailData?.memberId === localStorage.memberId
         ? setEditabled(true)
         : setEditabled(false);
+      fetchProfile(detailData?.memberId);
     }
   }, [detailData]);
+
+  console.log(userInfoData);
 
   // 게시글 삭제
   const deletePost = () => {
@@ -135,6 +149,18 @@ export const ProductDetail = () => {
   const closeImage = () => {
     setShowImages(false);
   };
+
+  // 프로필 이미지 모달
+  const [showProfile, setShowProfile] = useState(false);
+  const openProfile = () => {
+    setShowProfile(true);
+  };
+  const closeProfile = () => {
+    setShowProfile(false);
+  };
+
+  // 임시 뱃지 배열
+  let badgeArray = [true, true, true, true, true, true, true, true, true];
 
   return (
     <>
@@ -213,7 +239,15 @@ export const ProductDetail = () => {
                 <StyledPostHr />
                 <StyledUserInfo>
                   <StyledInfoWrap>
-                    <StyledUserimage src={userImage} />
+                    <StyledUserimage src={userImage} onClick={openProfile} />
+                    {/* 프로필 모달 */}
+                    <OtherProfile
+                      showProfile={showProfile}
+                      closeProfile={closeProfile}
+                      detailData={detailData}
+                      userImage={userImage}
+                      badgeArray={badgeArray}
+                    />
                     <StyledUserSubInfo>
                       <StyledUserNickname>
                         {detailData?.memberName}
@@ -224,7 +258,9 @@ export const ProductDetail = () => {
                     </StyledUserSubInfo>
                   </StyledInfoWrap>
                   <StyledPostOptionWrap>
-                    <StyledMyPostOption style={editabled?null:{display:"none"}}>
+                    <StyledMyPostOption
+                      style={editabled ? null : { display: "none" }}
+                    >
                       <span
                         onClick={() => {
                           navigate(`/editProduct/${param.id}`);
@@ -242,13 +278,18 @@ export const ProductDetail = () => {
                 </StyledUserInfo>
                 <StyledPostHr />
                 <StyledUserSubItem>
-                  <UsersBadge />
+                  {/* 게시글 작성 유저 뱃지 */}
+                  <div style={{ display: "flex" }}>
+                    <UsersBadge badgeArray={badgeArray} />
+                  </div>
                   <StyledMannerOndoWrap>
                     <StyledMannerOndo
                       src={require("../image/mannerNumber.png")}
                       alt="매너온도"
                     />
-                    <StyledMannerSpan>36.5</StyledMannerSpan>
+                    <StyledMannerSpan>
+                      36.5<StyledMannerHover>매너온도</StyledMannerHover>
+                    </StyledMannerSpan>
                   </StyledMannerOndoWrap>
                 </StyledUserSubItem>
                 <StyledPostHr />
@@ -277,7 +318,7 @@ export const ProductDetail = () => {
         <Layout>
           <StyledMobileDetailContainer>
             <StyledMobileDetailWrap>
-              <PostReport />
+              <PostReport targetProductId={param.id} />
               {/* 게시글 리포트자리 */}
               <ImageModal
                 showImages={showImages}
@@ -348,7 +389,18 @@ export const ProductDetail = () => {
                 <StyledMobilePostHr />
                 <StyledMobileUserInfo>
                   <StyledMobileInfoWrap>
-                    <StyledMobileUserimage src={userImage} />
+                    <StyledMobileUserimage
+                      src={userImage}
+                      onClick={openProfile}
+                    />
+                    {/* 프로필 모달 */}
+                    <OtherProfile
+                      showProfile={showProfile}
+                      closeProfile={closeProfile}
+                      detailData={detailData}
+                      userImage={userImage}
+                      badgeArray={badgeArray}
+                    />
                     <StyledMobileUserSubInfo>
                       <StyledMobileUserNickname>
                         {detailData?.memberName}
@@ -359,7 +411,9 @@ export const ProductDetail = () => {
                     </StyledMobileUserSubInfo>
                   </StyledMobileInfoWrap>
                   <StyledMobilePostOptionWrap>
-                    <StyledMobileMyPostOption>
+                    <StyledMobileMyPostOption
+                      style={editabled ? null : { display: "none" }}
+                    >
                       <span
                         onClick={() => {
                           navigate(`/editProduct/${param.id}`);
@@ -371,10 +425,24 @@ export const ProductDetail = () => {
                       <span onClick={deletePost}>글 삭제</span>
                       <StyledNoPointer>·</StyledNoPointer>
                     </StyledMobileMyPostOption>
-                    <UserReport />
+                    <UserReport targetUserId={detailData?.memberId} />
                     {/* 유저 리포트 자리 */}
                   </StyledMobilePostOptionWrap>
                 </StyledMobileUserInfo>
+                <StyledPostHr />
+                <StyledUserSubItem>
+                  {/* 게시글 작성 유저 뱃지 */}
+                  <div style={{ display: "flex" }}>
+                    <UsersBadge badgeArray={badgeArray} />
+                  </div>
+                  <StyledMannerOndoWrap>
+                    <StyledMannerOndo
+                      src={require("../image/mannerNumber.png")}
+                      alt="매너온도"
+                    />
+                    <StyledMannerSpan>36.5</StyledMannerSpan>
+                  </StyledMannerOndoWrap>
+                </StyledUserSubItem>
                 <StyledPostHr />
                 <StyledMobilePostMain>
                   <StyledMobilePostTitle>
@@ -528,6 +596,7 @@ const StyledUserInfo = styled.div`
 const StyledUserSubItem = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const StyledMannerOndoWrap = styled.div`
@@ -556,7 +625,6 @@ const StyledUserimage = styled.img`
   height: 50px;
   cursor: pointer;
 `;
-
 const StyledUserSubInfo = styled.div``;
 const StyledUserNickname = styled.div`
   padding: 5px;
@@ -568,6 +636,23 @@ const StyledUserLocation = styled.div`
 const StyledPostOptionWrap = styled.div`
   display: flex;
 `;
+const StyledMannerHover = styled.span`
+  position: absolute;
+  bottom: 0;
+  left: -15px;
+  color: transparent;
+  background-color: transparent;
+  cursor: pointer;
+  transition: 0.3s;
+  &:hover {
+    width: 60px;
+    color: rgb(253, 138, 105);
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 5px;
+  }
+`;
+
 const StyledMyPostOption = styled.div`
   display: flex;
 

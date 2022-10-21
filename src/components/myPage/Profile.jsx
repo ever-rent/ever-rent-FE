@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { MyPage } from "../../pages/MyPage";
 import { getMyInfo } from "../../redux/modules/mypageSlice";
 import { Desktop, Mobile } from "../../Hooks/MideaQuery";
-import { ProfileImg } from "../../image/ProfileImg";
+import { ProfileImg } from "./ProfileImg";
 import { MyCallenge } from "./MyChallenge";
 
 export const Profile = ({ like, setLike }) => {
@@ -32,6 +32,7 @@ export const Profile = ({ like, setLike }) => {
       ? `https://source.boringavatars.com/beam/110/${info?.id}?colors=7965EE,6FE7F1,FFDD4C,46B5FF,2883E0`
       : info?.imgUrl;
 
+  // 프로필 모달
   const [showProfile, setShowProfile] = useState(false);
   const openProfileimgFix = () => {
     setShowProfile(true);
@@ -40,6 +41,7 @@ export const Profile = ({ like, setLike }) => {
     setShowProfile(false);
   };
 
+  // 도전과제 모달
   const [showChallenge, setShowChallenge] = useState(false);
   const openChallenge = () => {
     setShowChallenge(true);
@@ -47,6 +49,9 @@ export const Profile = ({ like, setLike }) => {
   const closeChallenge = () => {
     setShowChallenge(false);
   };
+
+  // 임시 뱃지 배열
+  let badgeArray = [true, true, true, false, false, false, true, true, true];
 
   return (
     <>
@@ -56,13 +61,15 @@ export const Profile = ({ like, setLike }) => {
             <StyledImgBox onClick={openProfileimgFix}>
               <StyledImg src={profileImg} alt="이미지 없음" />
             </StyledImgBox>
-              <StyledImageEdit
-                src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FUjHeg%2FbtrN27EGh2c%2FFUAuCglKKcKdPLOx1zjVK1%2Fimg.png"
-                alt="alt=https://icons8.com/icon/kx4uQexsQTUC/write Write icon by https://icons8.com Icons8"
-              />
+            <StyledImageEdit
+              src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FUjHeg%2FbtrN27EGh2c%2FFUAuCglKKcKdPLOx1zjVK1%2Fimg.png"
+              alt="alt=https://icons8.com/icon/kx4uQexsQTUC/write Write icon by https://icons8.com Icons8"
+            />
             <StyledNickname>{info?.memberName}</StyledNickname>
             <StyledProfileEdit
-              onClick={() => navigate(`/editUserInfo/${info?.id}`,{state:info})}
+              onClick={() =>
+                navigate(`/editUserInfo/${info?.id}`, { state: info })
+              }
             >
               회원정보 수정
             </StyledProfileEdit>
@@ -95,7 +102,7 @@ export const Profile = ({ like, setLike }) => {
                   </>
                 )}
               </StyledEachWrap>
-              <StyledEachWrap>
+              <StyledEachWrap onClick={() => navigate("/chatRoomList")}>
                 <StyledLikeAndChat
                   src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
                   alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
@@ -104,7 +111,6 @@ export const Profile = ({ like, setLike }) => {
               </StyledEachWrap>
               <StyledEachWrap onClick={openChallenge}>
                 <StyledLikeAndChat
-                  
                   src={require("../../image/challengeLogo.png")}
                   alt="https://icons8.com/icon/pM35dYPfUtO5/crown-trophy-for-online-gaming-permium-membership Crown trophy for online gaming permium membership https://icons8.com Icons8"
                 />
@@ -113,6 +119,7 @@ export const Profile = ({ like, setLike }) => {
               <MyCallenge
                 showChallenge={showChallenge}
                 closeChallenge={closeChallenge}
+                badgeArray={badgeArray}
               />
             </StyledLikeAndChatBox>
           </StyledIcon>
@@ -141,7 +148,9 @@ export const Profile = ({ like, setLike }) => {
             <StyledMobileNickname>{info?.memberName}</StyledMobileNickname>
 
             <StyledMobileEditButton
-              onClick={() => navigate(`/editUserInfo/${info?.id}`,{state:info})}
+              onClick={() =>
+                navigate(`/editUserInfo/${info?.id}`, { state: info })
+              }
             >
               회원정보 수정
             </StyledMobileEditButton>
@@ -170,20 +179,25 @@ export const Profile = ({ like, setLike }) => {
                   </>
                 )}
               </StyledMobileEachWrap>
-              <StyledMobileEachWrap>
+              <StyledMobileEachWrap onClick={() => navigate("/chatRoomList")}>
                 <StyleMobileLikeAndChat
                   src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
                   alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
                 />
                 <span>채팅목록</span>
               </StyledMobileEachWrap>
-              <StyledEachWrap>
+              <StyledEachWrap onClick={openChallenge}>
                 <StyledLikeAndChat
                   src={require("../../image/challengeLogo.png")}
                   alt="https://icons8.com/icon/pM35dYPfUtO5/crown-trophy-for-online-gaming-permium-membership Crown trophy for online gaming permium membership https://icons8.com Icons8"
                 />
                 <span>도전과제</span>
               </StyledEachWrap>
+              <MyCallenge
+                showChallenge={showChallenge}
+                closeChallenge={closeChallenge}
+                badgeArray={badgeArray}
+              />
             </StyledMobileIcon>
           </div>
         </StyledMobileProfileContainer>
@@ -193,6 +207,7 @@ export const Profile = ({ like, setLike }) => {
 };
 
 const StyledProfileBox = styled.div`
+  /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -202,16 +217,8 @@ const StyledProfileBox = styled.div`
   border-radius: 10px;
   padding: 15px 0 10px 0;
   height: 340px;
+  width: 250px;
   grid-row: 1/3;
-  @media only screen and (max-width: 767px) {
-    /* border: 1px solid yellow; */
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    /* width: 100vw; */
-    height: 100%;
-    padding: 10px 0;
-  }
 `;
 
 const StyledImgFlexBox = styled.div`
@@ -220,18 +227,6 @@ const StyledImgFlexBox = styled.div`
   align-items: center;
   justify-content: space-around;
   height: 200px;
-  @media only screen and (max-width: 767px) {
-    /* border: 1px solid red; */
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    position: relative;
-    /* width: 100%; */
-    /* display: flex; */
-    height: 100%;
-    /* width: 30rem; */
-    /* padding: 10px 0; */
-  }
 `;
 
 const StyledImgBox = styled.div`
@@ -252,29 +247,22 @@ const StyledImg = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  @media only screen and (max-width: 767px) {
-    position: absolute;
-  }
 `;
 const StyledImageEdit = styled.img`
   width: 20px;
   height: 20px;
   position: absolute;
-  margin-top:10px;
-  margin-left:30px;
+  margin-top: 10px;
+  margin-left: 30px;
   background-color: #f0f0f0;
   border-radius: 20px;
-  z-index:99;
+  z-index: 99;
 `;
 
 const StyledNickname = styled.div`
   margin: 10px 0;
   font-size: 25px;
   font-weight: 600;
-  /* margin-right: 15px; */
-  @media only screen and (max-width: 767px) {
-    font-size: 5vw;
-  }
 `;
 const StyledProfileEdit = styled.button`
   background-color: #47b5ff;
@@ -298,9 +286,6 @@ const StyledIcon = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 20px 0 0 0;
-  @media only screen and (max-width: 767px) {
-    height: 100%;
-  }
 `;
 
 const StyledLikeAndChatBox = styled.div`
@@ -341,10 +326,6 @@ const StyledMobileProfileContainer = styled.div`
   align-items: center;
   justify-content: space-around;
   padding: 10px 0;
-  /* margin-bottom: 30px; */
-  /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
-  /* border-radius: 10px; */
-  /* padding: 30px 0 0 0; */
   height: 100%;
 `;
 
@@ -354,14 +335,7 @@ const StyledMobileImgBox = styled.div`
   height: 110px;
   border-radius: 70%;
   overflow: hidden;
-  @media only screen and (max-width: 767px) {
-    /* border: 2px solid green; */
-    height: 100px;
-    width: 100px;
-    /* padding: 10px 0; */
-    margin-right: 20px;
-    position: relative;
-  }
+
   ::after {
     content: "";
     display: block;
@@ -373,9 +347,6 @@ const StyledMobileImg = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  @media only screen and (max-width: 767px) {
-    position: absolute;
-  }
 `;
 const StyledMobileImageEdit = styled.img`
   width: 20px;
@@ -384,7 +355,7 @@ const StyledMobileImageEdit = styled.img`
   background-color: #f0f0f0;
   border-radius: 20px;
   left: -60px;
-    top: 40px;
+  top: 40px;
   z-index: 5;
 `;
 
@@ -430,9 +401,6 @@ const StyledMobileIcon = styled.div`
   justify-content: space-around;
   align-items: center;
   margin: 20px 0 0 0;
-  @media only screen and (max-width: 767px) {
-    height: 100%;
-  }
 `;
 
 const StyledMobileEachWrap = styled.span`

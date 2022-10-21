@@ -6,6 +6,7 @@ import { Desktop, Mobile } from "../../Hooks/MideaQuery";
 import { imgFirstString } from "../../server/api";
 import { timeToToday } from "../../util/timeToToday";
 import { postLike } from "../../redux/modules/mypageSlice";
+import { Layout } from "../layout/Layout";
 
 export const DetailItem = ({
   id,
@@ -23,6 +24,8 @@ export const DetailItem = ({
   rentEnd,
   rentStart,
   heart,
+  status,
+
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -54,10 +57,25 @@ export const DetailItem = ({
     setCreatedAt(timeToToday(writeAt));
   }, [writeAt]);
 
+  //상품 status
+  const presentStatus = (status) => {
+    if (status === "WAITING") {
+      return <StyledWaiting></StyledWaiting>;
+    } else if (status === "CONFIRMATION") {
+      return <StyledStatus>렌탈확정</StyledStatus>;
+    } else if (status === "EXPIRATION") {
+      return <StyledStatus>기한만료</StyledStatus>;
+    }
+  };
+
   return (
     <>
       <Desktop>
-        <StyledItemBox>
+        <StyledItemBox
+          style={
+            status === "EXPIRATION" ? { backgroundColor: "#a5a1a3" } : null
+          }
+        >
           <StyledImgBox>
             <StyledImg
               onClick={() => {
@@ -68,10 +86,18 @@ export const DetailItem = ({
             />
           </StyledImgBox>
           <StyledContentBox>
-            <StyledTitle>{productName}</StyledTitle>
+            <StyledTitle
+              onClick={() => {
+                navigate(`/productDetail/${id}`);
+              }}
+            >
+              {productName}
+            </StyledTitle>
             <StyledLocation>
               {location ? location : "지역 선택 안함"}
             </StyledLocation>
+            {presentStatus(status)}
+
             <StyledPayBox>
               <StyledPay>{price}</StyledPay>
               <StyledDay> / 일</StyledDay>
@@ -80,7 +106,12 @@ export const DetailItem = ({
             </StyledPayBox>
             <StyledLikeAndChatBox>
               <StyledLikeWrap>
-                {togglelike ? (
+                <StyledLike
+                  src="https://img.icons8.com/ios/50/737373/like--v1.png"
+                  alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
+                />
+                <span>{wishNum}</span>
+                {/* {togglelike ? (
                   <>
                     <StyledLike
                       onClick={canceLikeHandler}
@@ -98,25 +129,26 @@ export const DetailItem = ({
                     />
                     <span>찜 {likeCount}</span>
                   </>
-                )}
+                )} */}
               </StyledLikeWrap>
-              {/* <StyledChatWrap>
+              <StyledChatWrap>
                 <StyledChat
                   src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
                   alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
                 />
-                <span>채팅 </span>
-              </StyledChatWrap> */}
-              {/* <StyledChatWrap>
-                <button onClick={reservationHandler}>예약 신청</button>
-              </StyledChatWrap> */}
+                {/* <span>채팅 </span> */}
+              </StyledChatWrap>
             </StyledLikeAndChatBox>
           </StyledContentBox>
         </StyledItemBox>
       </Desktop>
 
       <Mobile>
-        <StyledMobileItemBox>
+        <StyledMobileItemBox
+          style={
+            status === "EXPIRATION" ? { backgroundColor: "#a5a1a3" } : null
+          }
+        >
           <StyledMobileImgBox>
             <StyledImg
               onClick={() => {
@@ -127,11 +159,18 @@ export const DetailItem = ({
             />
           </StyledMobileImgBox>
           <StyledContentBox>
-            <StyledTitle>{productName}</StyledTitle>
+            <StyledMobileTitle
+              onClick={() => {
+                navigate(`/productDetail/${id}`);
+              }}
+            >
+              {productName}
+            </StyledMobileTitle>
             {/* <StyledCateId>{categoriNumber(cateId)}</StyledCateId> */}
             <StyledLocation>
               {location ? location : "지역 선택 안함"}
             </StyledLocation>
+            {presentStatus(status)}
             <br />
             {/* <StyledPeriod>
               {rentEnd}~{rentStart}
@@ -144,7 +183,12 @@ export const DetailItem = ({
             </StyledPayBox>
             <StyledMobileLikeAndChatBox>
               <StyledMobileLikeWrap>
-                {togglelike ? (
+                <StyledLike
+                  src="https://img.icons8.com/ios/50/737373/like--v1.png"
+                  alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
+                />
+                <span>{wishNum}</span>
+                {/* {togglelike ? (
                   <StyledLike
                     onClick={canceLikeHandler}
                     src="https://img.icons8.com/ios-filled/50/47b5ff/like--v1.png"
@@ -157,19 +201,16 @@ export const DetailItem = ({
                     alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
                   />
                 )}
-                <span>찜 {likeCount}</span>
+                <span>찜 {likeCount}</span> */}
               </StyledMobileLikeWrap>
 
-              {/* <StyledMobileChatWrap>
+              <StyledMobileChatWrap>
                 <StyledChat
                   src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
                   alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
                 />
-                <span>채팅 </span>
-              </StyledMobileChatWrap> */}
-              {/* <StyledChatWrap>
-            <button onClick={reservationHandler}>예약 신청</button>
-          </StyledChatWrap> */}
+                {/* <span>채팅 </span> */}
+              </StyledMobileChatWrap>
             </StyledMobileLikeAndChatBox>
           </StyledContentBox>
         </StyledMobileItemBox>
@@ -178,9 +219,30 @@ export const DetailItem = ({
   );
 };
 
+const StyledWaiting = styled.span`
+  position: absolute;
+  right: 5%;
+  bottom: 5%;
+  padding: 2px;
+`;
+
+const StyledStatus = styled.span`
+  position: absolute;
+  right: 5%;
+  bottom: 3%;
+  background-color: #2b8fd6;
+  border-radius: 5px;
+  padding: 2px 3px;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+`;
+
 const StyledItemBox = styled.div`
   /* border: 1px solid red; */
-  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 10px 10px 0 10px;
   position: relative;
   border-radius: 10px;
@@ -190,13 +252,9 @@ const StyledItemBox = styled.div`
 
 const StyledMobileItemBox = styled.div`
   border-bottom: 1px solid #c7c6c6bc;
-  /* max-width: 480px; */
   padding: 10px 10px 0 10px;
   position: relative;
-  /* border-radius: 5px; */
   background-image: linear-gradient(120deg, #ffffff 0%, #ebedee6e 100%);
-  /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
-  /* margin: auto; */
   display: flex;
   background-color: white;
   padding: 0;
@@ -206,7 +264,7 @@ const StyledMobileItemBox = styled.div`
 const StyledImgBox = styled.div`
   /* border: 1px solid red; */
   padding: 2px;
-  width: 200px;
+  width: 180px;
   height: 140px;
   margin-bottom: 3px;
 `;
@@ -216,7 +274,7 @@ const StyledMobileImgBox = styled.div`
   padding: 2px;
   width: 150px;
   height: 140px;
-  margin: 5px 15px 5px 3px;
+  margin: 5px 15px 5px 10px;
 `;
 
 const StyledImg = styled.img`
@@ -229,14 +287,36 @@ const StyledImg = styled.img`
 `;
 
 const StyledContentBox = styled.div`
-  margin: 12px 0;
+  display: relative;
+  height: 130px;
+  margin-top: 12px;
 `;
 
 const StyledTitle = styled.div`
+  /* border: 1px solid red; */
   margin-bottom: 5px;
   font-weight: 600;
+  overflow: hidden; // 을 사용해 영역을 감출 것
+  text-overflow: ellipsis; // 로 ... 을 만들기
+  white-space: nowrap; // 아래줄로 내려가는 것을 막기위해
+  word-break: break-all;
+  width: 180px;
+  height: 20px;
+  cursor: pointer;
 `;
 
+const StyledMobileTitle = styled.div`
+  /* border: 1px solid red; */
+  margin-bottom: 5px;
+  font-weight: 600;
+  overflow: hidden; // 을 사용해 영역을 감출 것
+  text-overflow: ellipsis; // 로 ... 을 만들기
+  white-space: nowrap; // 아래줄로 내려가는 것을 막기위해
+  word-break: break-all;
+  width: 290px;
+  height: 20px;
+  cursor: pointer;
+`;
 const StyledCateId = styled.span`
   font-size: 13px;
 `;
