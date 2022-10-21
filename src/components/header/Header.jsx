@@ -98,7 +98,7 @@ export const Header = () => {
       <Mobile>
         <StyledMobileHeader>
           <StyledMobileHeaderWrap>
-            <StyledMobileSearchWrap>
+            <StyledMobileSearchWrap onSubmit={(e) => goSearch(e)}>
               <StyledSearchButton
                 type="button"
                 alt="https://icons8.com/icon/59878/search https://icons8.com Icons8"
@@ -107,6 +107,7 @@ export const Header = () => {
                 type="text"
                 placeholder="지역, 물품명으로 찾아보세요"
                 maxLength={35}
+                onChange={(e) => setSubmitData(e.target.value)}
               />
             </StyledMobileSearchWrap>
             {localStorage.getItem("memberId") ? (

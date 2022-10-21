@@ -229,7 +229,92 @@ export const SearchItems = () => {
         </Layout>
       </Desktop>
       {/* ################ 모바일 ################ */}
-      <Mobile></Mobile>
+      <Mobile>
+      <Layout>
+          <StyledMobileContainer>
+            <StyledSelectBox>
+              <StyledSelect
+                onChange={(e) => categoryHandler(e)}
+                defaultChecked={0}
+                value={categoryNumber}
+              >
+                {categoryList?.map((option, index) => {
+                  if (index === 0) {
+                    return (
+                      <option
+                        key={option.value}
+                        value={option.value}
+                        disabled={true}
+                      >
+                        {option.name}
+                      </option>
+                    );
+                  } else {
+                    return (
+                      <option key={option.value} value={option.value}>
+                        {option.name}
+                      </option>
+                    );
+                  }
+                })}
+              </StyledSelect>
+              <StyledSelect
+                onChange={(e) => priceHandler(e)}
+                defaultChecked={0}
+                value={`${priceNumber}`}
+                // 가격 필터 임시 제거
+                //###############################
+                // style={{ display: "none" }}
+              >
+                {priceList?.map((option) => {
+                  if (option.value === 0) {
+                    return (
+                      <option
+                        key={option.value}
+                        value={option.value}
+                        disabled={true}
+                      >
+                        {option.name}
+                      </option>
+                    );
+                  } else {
+                    return (
+                      <option key={option.value} value={option.value}>
+                        {option.name}
+                      </option>
+                    );
+                  }
+                })}
+              </StyledSelect>
+              <StyledInitSpan onClick={initOptions}>
+                검색조건 초기화
+              </StyledInitSpan>
+            </StyledSelectBox>
+            <span>다음으로 검색된 목록 : {param.id}</span>
+            {isLoading ? (
+              <>
+                <Skeleton />
+              </>
+            ) : (
+              <StyledMobileProducts>
+                {products?.map((product) => {
+                  return <ProductsItem {...product} key={product.id} />;
+                })}
+              </StyledMobileProducts>
+            )}
+            <Pagination
+              activePage={page}
+              itemsCountPerPage={12}
+              totalItemsCount={
+                filterData?.length === undefined ? 1 : filterData?.length
+              }
+              prevPageText={"<"}
+              nextPageText={">"}
+              handlePageChange={handlePageChange}
+            />
+          </StyledMobileContainer>
+        </Layout>
+      </Mobile>
     </>
   );
 };
