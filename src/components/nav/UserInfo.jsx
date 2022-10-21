@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import { mypageAPI } from "../../server/api";
+import { Toast } from "../../util/toast";
 
 export const UserInfo = () => {
   const navigate = useNavigate();
@@ -32,7 +33,11 @@ export const UserInfo = () => {
           localStorage.removeItem("memberName");
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
-          window.location.reload();
+          Toast.fire({
+            icon: "success",
+            title: "로그아웃 되었습니다.",
+          });
+          navigate("/");
         }}
       >
         로그아웃
