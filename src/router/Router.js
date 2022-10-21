@@ -11,6 +11,7 @@ import { MyPage } from "../pages/MyPage";
 import { SearchItems } from "../components/searchItems/SearchItems";
 import { ChatRoomList } from "../pages/chat/ChatRoomList";
 import { ChatRoom } from "../pages/chat/ChatRoom";
+import { ForgotPw } from "../pages/auth/ForgotPw";
 
 export const Router = () => {
   return (
@@ -18,6 +19,7 @@ export const Router = () => {
       <Route path="/" element={<Main />} />
       <Route path="/login" element={<Login />} />
       <Route path="/join" element={<Join />} />
+      <Route path="/forgotPw" element={<ForgotPw />} />
       <Route path="/addProduct" element={<AddProduct />} />
       <Route path="/editProduct/:id" element={<EditProduct />} />
       <Route path="/productDetail/:id" element={<ProductDetail />} />

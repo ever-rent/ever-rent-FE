@@ -25,7 +25,6 @@ export const Login = () => {
         localStorage.setItem("memberName", data.data.data.memberName);
         localStorage.setItem("accessToken", data.headers["authorization"]);
         localStorage.setItem("refreshToken", data.headers["refresh-token"]);
-        alert("로그인 성공!!");
         navigate("/");
       }
     },
@@ -63,7 +62,7 @@ export const Login = () => {
         로그인
       </button>
       <div className="span-box">
-        <span>비밀번호 재설정</span>
+        <span onClick={()=> navigate("/forgotPw")}>비밀번호 찾기</span>
         <span onClick={() => navigate("/join")}>회원가입</span>
       </div>
     </StyledLogin>
