@@ -167,7 +167,6 @@ export const AddProduct = () => {
     rentEnd: endDateInput,
   };
 
-  
   const addProductPost = () => {
     if (
       title === "" ||
@@ -182,7 +181,7 @@ export const AddProduct = () => {
         icon: "warning",
         confirmButtonColor: "rgb(71, 181, 255)",
         confirmButtonText: "확인",
-      })
+      });
     } else {
       Swal.fire({
         title: "저장할까요?",

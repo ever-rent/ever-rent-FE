@@ -207,7 +207,12 @@ export const EditProduct = () => {
       tradeLocation === "" ||
       endDateInput === ""
     ) {
-      alert("게시글을 모두 작성해주세요!");
+      Swal.fire({
+        title: "내용을 적어주세요!",
+        icon: "warning",
+        confirmButtonColor: "rgb(71, 181, 255)",
+        confirmButtonText: "확인",
+      });
     } else {
       Swal.fire({
         title: "변경 내용을 저장할까요?",
@@ -231,7 +236,16 @@ export const EditProduct = () => {
           }
 
           dispatch(updateProducts([formData, { productId: param.id }]));
-          navigate("/");
+          Swal.fire({
+            title: "저장완료!",
+            icon: "success",
+            confirmButtonColor: "rgb(71, 181, 255)",
+            confirmButtonText: "확인",
+          }).then((result) => {
+            if (result.value) {
+              navigate("/");
+            }
+          });
         }
       });
     }

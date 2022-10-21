@@ -33,10 +33,10 @@ export const Products = () => {
           page.current += 1;
         }, 800);
       } else {
+        setHasNextPage(false);
         setIsLoading(true);
         setTimeout(() => {
           setProducts((prevPosts) => [...prevPosts, ...data.data]);
-          setHasNextPage(false);
         }, 800);
       }
     } catch (err) {
@@ -82,8 +82,8 @@ export const Products = () => {
               </StyledSpinner>
             </>
           ) : null}
-          <div ref={ref} style={{ position: "relative" }} />
         </StyledProductsContainer>
+        <div ref={ref} style={{ position: "relative" }} />
       </Desktop>
       {/* ################ 모바일 ################ */}
       <Mobile>
@@ -93,7 +93,6 @@ export const Products = () => {
               return <ProductsItem {...product} key={product.id} />;
             })}
           </StyledMobileProducts>
-          <div ref={ref} style={{ position: "relative" }} />
           {isLoading === true ? (
             <>
               <Skeleton />
@@ -103,6 +102,7 @@ export const Products = () => {
             </>
           ) : null}
         </StyledMobileContainer>
+        <div ref={ref} style={{ position: "relative" }} />
       </Mobile>
     </>
   );
