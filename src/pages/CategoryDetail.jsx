@@ -11,6 +11,8 @@ import { base } from "../server/core/instance";
 import { auth } from "../server/core/instance";
 import { ProductsItem } from "../components/main/products/ProductsItem";
 
+import { Desktop, Mobile } from "../Hooks/MideaQuery";
+
 export const CategoryDetail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -98,6 +100,7 @@ export const CategoryDetail = () => {
     setCategoryId(id);
     const init = [];
     setCategoryItems(init);
+    setHasNextPage(true);
     page.current = 1;
   }, [id]);
 
@@ -114,74 +117,130 @@ export const CategoryDetail = () => {
 
   console.log(categoryItems);
   return (
-    <Layout>
-      <StyledCategoryContainer>
-        <StyledSelectBox>
-          <StyledSelect onChange={categoryHandler} defaultValue={id}>
-            {categoryList?.map((option, index) => {
-              if (index === 0) {
-                return (
-                  <option
-                    key={option.value}
-                    value={option.value}
-                    disabled={true}
-                  >
-                    {option.name}
-                  </option>
-                );
-              } else {
-                return (
+    <>
+      <Desktop>
+        <Layout>
+          <StyledCategoryContainer>
+            <StyledSelectBox>
+              <StyledSelect onChange={categoryHandler} defaultValue={id}>
+                {categoryList?.map((option, index) => {
+                  if (index === 0) {
+                    return (
+                      <option
+                        key={option.value}
+                        value={option.value}
+                        disabled={true}
+                      >
+                        {option.name}
+                      </option>
+                    );
+                  } else {
+                    return (
+                      <option key={option.value} value={option.value}>
+                        {option.name}
+                      </option>
+                    );
+                  }
+                })}
+              </StyledSelect>
+              <StyledSelect onChange={priceHandler}>
+                {priceList?.map((option) => (
                   <option key={option.value} value={option.value}>
                     {option.name}
                   </option>
-                );
-              }
-            })}
-          </StyledSelect>
-          <StyledSelect onChange={priceHandler}>
-            {priceList?.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.name}
-              </option>
-            ))}
-          </StyledSelect>
-        </StyledSelectBox>
+                ))}
+              </StyledSelect>
+            </StyledSelectBox>
 
-        <StyledDetailContainer>
-          {categoryItems?.map((item) => {
-            return <DetailItem {...item} key={item.id} />;
-          })}
-        </StyledDetailContainer>
-      </StyledCategoryContainer>
-      {isLoading === true ? (
-        <>
-          <Skeleton />
-          <StyledSpinner>
-            <span className="spinner"></span>
-          </StyledSpinner>
-        </>
-      ) : null}
-      <div ref={ref} style={{ position: "relative" }} />
-    </Layout>
+            <StyledDetailContainer>
+              {categoryItems?.map((item) => {
+                return <DetailItem {...item} key={item.id} />;
+              })}
+            </StyledDetailContainer>
+          </StyledCategoryContainer>
+          {isLoading === true ? (
+            <>
+              <Skeleton />
+              <StyledSpinner>
+                <span className="spinner"></span>
+              </StyledSpinner>
+            </>
+          ) : null}
+          <div ref={ref} style={{ position: "relative" }} />
+        </Layout>
+      </Desktop>
+      {/* ################ 모바일 ################ */}
+      <Mobile>
+        <Layout>
+          <StyledMobileContainer>
+            <StyledMobileSelectBox>
+              <StyledMobileSelect onChange={categoryHandler} defaultValue={id}>
+                {categoryList?.map((option, index) => {
+                  if (index === 0) {
+                    return (
+                      <option
+                        key={option.value}
+                        value={option.value}
+                        disabled={true}
+                      >
+                        {option.name}
+                      </option>
+                    );
+                  } else {
+                    return (
+                      <option key={option.value} value={option.value}>
+                        {option.name}
+                      </option>
+                    );
+                  }
+                })}
+              </StyledMobileSelect>
+              <StyledMobileSelect onChange={priceHandler}>
+                {priceList?.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.name}
+                  </option>
+                ))}
+              </StyledMobileSelect>
+            </StyledMobileSelectBox>
+            <StyledMobileProducts>
+              {categoryItems?.map((item) => {
+                return <DetailItem {...item} key={item.id} />;
+              })}
+            </StyledMobileProducts>
+          </StyledMobileContainer>
+          {isLoading === true ? (
+            <>
+              <Skeleton />
+              <StyledSpinner>
+                <span className="spinner"></span>
+              </StyledSpinner>
+            </>
+          ) : null}
+          <div ref={ref} style={{ position: "relative" }} />
+        </Layout>
+      </Mobile>
+    </>
   );
 };
 
 const StyledCategoryContainer = styled.div`
-  max-width: 1024px;
+  max-width: 920px;
   margin: 40px auto;
+  position: relative;
 `;
 
 const StyledDetailContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 226px);
+  grid-template-columns: repeat(4, 200px);
   margin-top: 30px;
   gap: 50px 40px;
-  @media only screen and (max-width: 480px) {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    width: 100%;
-  }
+  /* @media only screen and (max-width: 480px) { */
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* gap: 0; */
+  /* width: 100%; */
+  /* } */
 `;
 const StyledSelectBox = styled.div`
   margin: 10px 0;
@@ -231,4 +290,45 @@ const StyledSpinner = styled.div`
       }
     }
   }
+`;
+
+const StyledMobileContainer = styled.div`
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  /* position: relative; */
+  /* max-width: 400px; */
+  margin: auto;
+  margin-bottom: 90px;
+  /* padding: 20px; */
+`;
+
+const StyledMobileSelectBox = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 480px;
+  margin: auto;
+  margin: 100px 0 10px 0;
+  /* position: absolute; */
+  /* right: 50%; */
+  /* margin: 10px 0; */
+`;
+
+const StyledMobileSelect = styled.select`
+  border: 2px solid #5fafe4;
+  width: 200px;
+  padding: 7px;
+  /* margin: 15px 30px 30px 0; */
+  border-radius: 10px;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0 0 3px 0 rgb(71, 181, 255);
+    transition: box-shadow 0.1s ease-in-out 0s;
+  }
+`;
+const StyledMobileProducts = styled.div`
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
 `;

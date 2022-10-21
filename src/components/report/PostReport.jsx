@@ -2,22 +2,22 @@ import styled from "styled-components";
 import Swal from "sweetalert2";
 
 import { useState, useEffect } from "react";
+import { auth } from "../../server/core/instance";
 
-export const PostReport = ({ prodictId }) => {
+export const PostReport = ({ targetProductId }) => {
   // props 전달 예정
   const [showModal, setShowModal] = useState(false);
 
   const [sendReason, setSendReason] = useState("도배/광고성 게시글");
   const [etcDisabled, setEtcDisabled] = useState(true);
 
-  const [isLogedIn, setIsLogedIn] = useState(true);
+  const [isLogedIn, setIsLogedIn] = useState(false);
 
-  // 로그인 처리 예정
-  // useEffect(() => {
-  //  if(localStorage.getItem("accessToken")!==null){
-  //   setIsLogedIn(true);
-  //  }
-  // }, []);
+  useEffect(() => {
+    localStorage.accessToken !== undefined
+      ? setIsLogedIn(true)
+      : setIsLogedIn(false);
+  }, []);
 
   const loginCheck = () => {
     isLogedIn !== true
@@ -44,6 +44,7 @@ export const PostReport = ({ prodictId }) => {
         icon: "warning",
       });
     } else {
+      auth.post(`/report/product/${targetProductId}`);
       Swal.fire({
         title: "해당 유저의 신고 접수가 완료되었습니다.",
         icon: "success",
@@ -181,8 +182,6 @@ const StyledReportAlert = styled.span`
   font-size: 14px;
   color: gray;
   cursor: pointer;
-
-  
 `;
 
 const StyledReportTitle = styled.div`
@@ -218,13 +217,13 @@ const StyledModalContainer = styled.div`
   text-align: center;
 
   animation: reportFadein 0.5s;
-  &{
+  & {
     @keyframes reportFadein {
-      from{
-        opacity:0;
+      from {
+        opacity: 0;
       }
-      to{
-        opacity:1;
+      to {
+        opacity: 1;
       }
     }
   }
@@ -247,7 +246,6 @@ const StyledRadioLabel = styled.label`
   justify-content: flex-start;
   margin-top: 15px;
 
-
   & input[type="radio"],
   input[type="radio"]:checked {
     appearance: none;
@@ -262,18 +260,18 @@ const StyledRadioLabel = styled.label`
   & input[type="radio"]:checked {
     background-color: rgb(71, 181, 255);
   }
-  & span{
-    margin-right:10px;
+  & span {
+    margin-right: 10px;
   }
 `;
 
 const StyledEtcInput = styled.input`
-  border-radius:5px;
-  border:1px solid rgb(71, 181, 255);
-  &:focus{
-    outline-color:rgb(71, 181, 255);
+  border-radius: 5px;
+  border: 1px solid rgb(71, 181, 255);
+  &:focus {
+    outline-color: rgb(71, 181, 255);
   }
-`
+`;
 
 const StyledButtonWrap = styled.div`
   display: flex;

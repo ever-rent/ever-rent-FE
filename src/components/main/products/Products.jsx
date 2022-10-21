@@ -57,6 +57,11 @@ export const Products = () => {
   }, [fetch, hasNextPage, inView]);
 
   console.log(products);
+  const filteredProducts = products.filter(
+    (item) => item.status !== "EXPIRATION"
+  );
+
+  console.log("filteredProducts", filteredProducts);
 
   return (
     <>
@@ -104,24 +109,24 @@ export const Products = () => {
 };
 
 const StyledProductsContainer = styled.div`
-  max-width: 1024px;
+  max-width: 920px;
   margin: 40px auto;
   position: relative;
 `;
 
 const StyledProductsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 226px);
+  grid-template-columns: repeat(4, 200px);
   margin-top: 30px;
   gap: 50px 40px;
 `;
 
 const StyledMobileContainer = styled.div`
   /* border: 1px solid red; */
-  max-width: 400px;
+  max-width: 480px;
   margin: auto;
   margin-bottom: 90px;
-  padding: 20px;
+  /* padding: 20px; */
 `;
 
 const StyledMobileProducts = styled.div`
