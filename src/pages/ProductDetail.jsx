@@ -302,6 +302,7 @@ export const ProductDetail = () => {
                   <StyledProductPrice>
                     {detailData?.price}(원) / 일
                   </StyledProductPrice>
+                  <StyledRentDate>렌트 가능기간 : {detailData?.rentStart} ~ {detailData?.rentEnd}</StyledRentDate>
                   <StyledPostDescription>
                     {detailData?.content}
                   </StyledPostDescription>
@@ -450,6 +451,7 @@ export const ProductDetail = () => {
                   <StyledMobileProductPrice>
                     {detailData?.price}(원) / 일
                   </StyledMobileProductPrice>
+                  <StyledRentDate>렌트 가능기간 : {detailData?.rentStart} ~ {detailData?.rentEnd}</StyledRentDate>
                   <StyledMobilePostDescription>
                     {detailData?.content}
                   </StyledMobilePostDescription>
@@ -664,11 +666,18 @@ const StyledProductPrice = styled.div`
 
   padding: 5px;
 `;
+const StyledRentDate = styled.div`
+padding: 5px;
+  color:gray;
+  font-size:12px;
+`
 
 const StyledPostDescription = styled.div`
   padding: 5px;
   margin-top: 30px;
 `;
+
+
 
 // for Mobile
 
