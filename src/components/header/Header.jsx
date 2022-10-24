@@ -6,6 +6,7 @@ import { openNav } from "../../redux/modules/navSlice";
 import { Desktop, Mobile } from "../../Hooks/MideaQuery";
 import Swal from "sweetalert2";
 import { RecentItem } from "./RecentItem";
+import { Toast } from "../../util/toast";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -112,11 +113,21 @@ export const Header = () => {
             </StyledMobileSearchWrap>
             {localStorage.getItem("memberId") ? (
               <StyledMobileAddProductButton
+                logout={true}
                 onClick={() => {
-                  navigate("/addProduct");
+                  localStorage.removeItem("email");
+                  localStorage.removeItem("memberId");
+                  localStorage.removeItem("memberName");
+                  localStorage.removeItem("accessToken");
+                  localStorage.removeItem("refreshToken");
+                  Toast.fire({
+                    icon: "success",
+                    title: "로그아웃 되었습니다.",
+                  });
+                  navigate("/");
                 }}
               >
-                글쓰기
+                로그아웃
               </StyledMobileAddProductButton>
             ) : (
               <StyledMobileAddProductButton
@@ -127,10 +138,6 @@ export const Header = () => {
                 로그인
               </StyledMobileAddProductButton>
             )}
-            <StyledSideMenu
-              onClick={() => dispatch(openNav())}
-              alt="https://icons8.com/icon/36389/menu-rounded Menu Rounded https://icons8.com"
-            />
           </StyledMobileHeaderWrap>
         </StyledMobileHeader>
       </Mobile>
@@ -206,8 +213,10 @@ const StyledSearchInput = styled.input`
 const StyledSignMenu = styled.div`
   display: flex;
   align-items: center;
-
   margin-left: 40px;
+  span {
+    cursor: pointer;
+  }
 `;
 
 const StyledLoginTab = styled.div`
@@ -225,20 +234,13 @@ const StyledAddProductButton = styled.button`
   width: 100px;
   height: 40px;
   margin-left: 10px;
-
+  color: white;
   background-color: rgb(71, 181, 255);
   border: none;
   border-radius: 10px;
-  color: white;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  &:hover {
-    font-size: 16px;
-    box-shadow: 1px 1px 4px 1px rgb(71, 181, 255);
-    transition: box-shadow 0.3s ease-in-out 0s;
-    transition: font-size 0.1s ease-in-out 0s;
-  }
 `;
 
 const StyledSideMenu = styled.span`
@@ -262,9 +264,10 @@ const StyledSideMenu = styled.span`
 // for Mobile
 
 const StyledMobileHeader = styled.div`
-  width: 480px;
+  width: 100vw;
   height: 80px;
   display: flex;
+  border: 1px solid #ececec;
   background-color: white;
   position: fixed;
   top: 0;
@@ -283,9 +286,8 @@ const StyledMobileHeaderWrap = styled.div`
 const StyledMobileSearchWrap = styled.form`
   display: flex;
   align-items: center;
-  width: 250px;
-
-  margin-left: 20px;
+  width: 70vw;
+  margin: 0 5vw;
   border-radius: 20px;
   border-color: rgb(71, 181, 255);
   box-shadow: 1px 1px 4px 1px rgb(71, 181, 255);
@@ -295,7 +297,7 @@ const StyledMobileSearchWrap = styled.form`
 const StyledMobileSearchInput = styled.input`
   min-width: 100px;
   width: 300px;
-  height: 50px;
+  height: 35px;
   border: none;
   border-radius: 15px;
 
@@ -307,21 +309,19 @@ const StyledMobileSearchInput = styled.input`
 `;
 
 const StyledMobileAddProductButton = styled.button`
-  width: 80px;
+  width: 16vw;
   height: 35px;
-  margin-left: 25px;
-
-  background-color: rgb(71, 181, 255);
-  border: none;
+  border: ${(props) => (props.logout ? "1px solid #e6e6e6" : "none")};
   border-radius: 10px;
-  color: white;
+  color: ${(props) => (props.logout ? "#999" : "white")};
+  background-color: ${(props) => (props.logout ? "#fff" : "rgb(71, 181, 255)")};
   font-size: 12px;
   font-weight: bold;
   cursor: pointer;
-  &:hover {
+  /* &:hover {
     font-size: 16px;
     box-shadow: 1px 1px 4px 1px rgb(71, 181, 255);
     transition: box-shadow 0.3s ease-in-out 0s;
     transition: font-size 0.1s ease-in-out 0s;
-  }
+  } */
 `;

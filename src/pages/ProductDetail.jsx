@@ -11,7 +11,7 @@ import { categoriNumber } from "../util/categoryNumber";
 import { timeToToday } from "../util/timeToToday";
 import { LocationModal } from "../components/location/LocationModal";
 import { ImageModal } from "../components/imageModal/ImageModal";
-import { imgFirstString } from "../server/api";
+import { chatAPI, imgFirstString } from "../server/api";
 
 import Swal from "sweetalert2";
 import { Desktop, Mobile } from "../Hooks/MideaQuery";
@@ -21,7 +21,6 @@ import { PostReport } from "../components/report/PostReport";
 import axios from "axios";
 
 import { WishButton } from "../components/button/WishButton";
-import { createChatRoom } from "../redux/modules/chatSlice";
 import { UsersBadge } from "../components/detail/UsersBadge";
 import { OtherProfile } from "../components/detail/OtherProfile";
 
@@ -127,9 +126,9 @@ export const ProductDetail = () => {
   const onCreateChatRoom = async () => {
     if (localStorage.getItem("accessToken")) {
       try {
-        const data = await dispatch(createChatRoom(detailData?.id)).unwrap();
+        const { data } = await chatAPI.createChatRoom(detailData?.id);
         if (data) {
-          return navigate(`/chat/room/${detailData?.id}/${data}`);
+          return navigate(`/chat/room/${detailData?.id}/${data?.data}`);
         }
       } catch (e) {
         console.log(e);
@@ -210,14 +209,12 @@ export const ProductDetail = () => {
                       : null
                   }
                 >
-                  <StyledImagesWrap>
+                  <StyledImagesWrap onClick={onCreateChatRoom}>
                     <StyledChatImage
                       src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
                       alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
                     />
-                    <StyledChatImgAlt onClick={onCreateChatRoom}>
-                      채팅하기
-                    </StyledChatImgAlt>
+                    <StyledChatImgAlt>채팅하기</StyledChatImgAlt>
                   </StyledImagesWrap>
                   <WishButton productId={param.id} data={detailData} />
                   <StyledImagesWrap
@@ -287,7 +284,9 @@ export const ProductDetail = () => {
                       src={require("../image/mannerNumber.png")}
                       alt="매너온도"
                     />
-                    <StyledMannerSpan>36.5</StyledMannerSpan>
+                    <StyledMannerSpan>
+                      36.5<StyledMannerHover>매너온도</StyledMannerHover>
+                    </StyledMannerSpan>
                   </StyledMannerOndoWrap>
                 </StyledUserSubItem>
                 <StyledPostHr />
@@ -317,7 +316,7 @@ export const ProductDetail = () => {
         <Layout>
           <StyledMobileDetailContainer>
             <StyledMobileDetailWrap>
-              <PostReport targetProductId={param.id}/>
+              <PostReport targetProductId={param.id} />
               {/* 게시글 리포트자리 */}
               <ImageModal
                 showImages={showImages}
@@ -359,14 +358,12 @@ export const ProductDetail = () => {
                       : null
                   }
                 >
-                  <StyledMobileImagesWrap>
+                  <StyledMobileImagesWrap onClick={onCreateChatRoom}>
                     <StyledChatImage
                       src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
                       alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
                     />
-                    <StyledChatImgAlt onClick={onCreateChatRoom}>
-                      채팅하기
-                    </StyledChatImgAlt>
+                    <StyledChatImgAlt>채팅하기</StyledChatImgAlt>
                   </StyledMobileImagesWrap>
                   <WishButton productId={param.id} data={detailData} />
                   <StyledMobileImagesWrap
@@ -388,7 +385,10 @@ export const ProductDetail = () => {
                 <StyledMobilePostHr />
                 <StyledMobileUserInfo>
                   <StyledMobileInfoWrap>
-                    <StyledMobileUserimage src={userImage} onClick={openProfile}/>
+                    <StyledMobileUserimage
+                      src={userImage}
+                      onClick={openProfile}
+                    />
                     {/* 프로필 모달 */}
                     <OtherProfile
                       showProfile={showProfile}
@@ -407,7 +407,9 @@ export const ProductDetail = () => {
                     </StyledMobileUserSubInfo>
                   </StyledMobileInfoWrap>
                   <StyledMobilePostOptionWrap>
-                    <StyledMobileMyPostOption style={editabled ? null : { display: "none" }}>
+                    <StyledMobileMyPostOption
+                      style={editabled ? null : { display: "none" }}
+                    >
                       <span
                         onClick={() => {
                           navigate(`/editProduct/${param.id}`);
@@ -419,7 +421,7 @@ export const ProductDetail = () => {
                       <span onClick={deletePost}>글 삭제</span>
                       <StyledNoPointer>·</StyledNoPointer>
                     </StyledMobileMyPostOption>
-                    <UserReport targetUserId={detailData?.memberId}/>
+                    <UserReport targetUserId={detailData?.memberId} />
                     {/* 유저 리포트 자리 */}
                   </StyledMobilePostOptionWrap>
                 </StyledMobileUserInfo>
@@ -620,7 +622,6 @@ const StyledUserimage = styled.img`
   height: 50px;
   cursor: pointer;
 `;
-
 const StyledUserSubInfo = styled.div``;
 const StyledUserNickname = styled.div`
   padding: 5px;
@@ -632,6 +633,23 @@ const StyledUserLocation = styled.div`
 const StyledPostOptionWrap = styled.div`
   display: flex;
 `;
+const StyledMannerHover = styled.span`
+  position: absolute;
+  bottom: 0;
+  left: -15px;
+  color: transparent;
+  background-color: transparent;
+  cursor: pointer;
+  transition: 0.3s;
+  &:hover {
+    width: 60px;
+    color: rgb(253, 138, 105);
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 5px;
+  }
+`;
+
 const StyledMyPostOption = styled.div`
   display: flex;
 

@@ -20,8 +20,8 @@ export const Banner = () => {
 
 const StyledBanner = styled.img`
   display: flex;
-  width: 920px;
-  /* width: 90%; */
+  width: 90%;
+  min-width: 768px;
   height: 200px;
   margin: auto;
   margin-top: 60px;
@@ -30,9 +30,8 @@ const StyledBanner = styled.img`
 
 const StyledMobileBanner = styled.img`
   display: flex;
-  width: 480px;
+  width: 100vw;
   height: 128px;
   margin: auto;
   margin-top: 120px;
-  /* border-radius: 10px; */
 `;

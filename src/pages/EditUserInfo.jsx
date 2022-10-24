@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../server/core/instance";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { mypageAPI } from "../server/api";
 
 export const EditUserInfo = () => {
   const dispatch = useDispatch();
@@ -50,7 +51,7 @@ export const EditUserInfo = () => {
   }, [password, passwordConfirm]);
 
   // 회원탈퇴
-  const deleteUser = () => {
+  const handleDeleteMember = () => {
     Swal.fire({
       title: "정말 탈퇴하실건가요?",
       text: "탈퇴한 정보는 다시 복구시킬 수 없습니다.",
@@ -61,19 +62,36 @@ export const EditUserInfo = () => {
       confirmButtonText: "탈퇴하기",
       cancelButtonText: "취소",
     }).then((result) => {
-      if (result.value) {
-        // auth.delete("/auth/deletes");
-        Swal.fire({
-          title: "회원탈퇴가 완료되었습니다.",
-          icon: "success",
-          confirmButtonColor: "rgb(71, 181, 255)",
-          confirmButtonText: "확인",
-        }).then((result) => {
+      mypageAPI
+        .deleteMember()
+        .then(() => {
+          localStorage.removeItem("email");
+          localStorage.removeItem("memberId");
+          localStorage.removeItem("memberName");
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
           if (result.value) {
-            navigate("/");
+            Swal.fire({
+              title: "회원탈퇴가 완료되었습니다.",
+              icon: "success",
+              confirmButtonColor: "rgb(71, 181, 255)",
+              confirmButtonText: "확인",
+            }).then((result) => {
+              if (result.value) {
+                navigate("/");
+              }
+            });
           }
+        })
+        .catch((err) => {
+          console.dir(err);
+          Swal.fire({
+            title: "회원탈퇴에 실패하였습니다.",
+            icon: "error",
+            confirmButtonColor: "rgb(71, 181, 255)",
+            confirmButtonText: "확인",
+          });
         });
-      }
     });
   };
 
@@ -149,7 +167,9 @@ export const EditUserInfo = () => {
           <StyledAddProductForm>
             <StyledInfoTop>
               <StyledInfoEdit>회원정보수정</StyledInfoEdit>
-              <StyledDeleteUser onClick={deleteUser}>탈퇴하기</StyledDeleteUser>
+              <StyledDeleteUser onClick={handleDeleteMember}>
+                탈퇴하기
+              </StyledDeleteUser>
             </StyledInfoTop>
             <StyledInfoWrap>
               <StyledInfoName>이메일</StyledInfoName>
@@ -305,7 +325,9 @@ export const EditUserInfo = () => {
           <StyledMobileAddProductForm>
             <StyledMobileInfoTop>
               <StyledInfoEdit>회원정보수정</StyledInfoEdit>
-              <StyledDeleteUser onClick={deleteUser}>탈퇴하기</StyledDeleteUser>
+              <StyledDeleteUser onClick={handleDeleteMember}>
+                탈퇴하기
+              </StyledDeleteUser>
             </StyledMobileInfoTop>
             <StyledMobileInfoWrap>
               <StyledInfoName>이메일</StyledInfoName>

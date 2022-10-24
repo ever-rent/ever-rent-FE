@@ -2,22 +2,18 @@ import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
 import axios from "axios";
-import { SelectAddress } from "../../components/selectAddress/SelectAddress";
 import { StyledJoin } from "./styled";
-import Swal from "sweetalert2";
 import { Toast } from "../../util/toast";
+import Swal from "sweetalert2";
 
-export const Join = () => {
-  const [authCode, setAuthCode] = useState("");
+export const ForgotPw = () => {
   const [mailAuth, setMailAuth] = useState(false);
-  const [mainAddress, setMainAddress] = useState("");
-  const [subAddress, setSubAddress] = useState("");
+  const [authCode, setAuthCode] = useState("");
 
   const email = useRef(null);
+  const code = useRef(null);
   const password = useRef(null);
   const passwordConfirm = useRef(null);
-  const nickname = useRef(null);
-  const code = useRef(null);
 
   const navigate = useNavigate();
 
@@ -59,30 +55,12 @@ export const Join = () => {
       passwordConfirm.current.focus();
       return;
     }
-    if (
-      nickname.current.value.length < 2 ||
-      nickname.current.value.length > 14
-    ) {
-      Toast.fire({
-        icon: "error",
-        title: "닉네임은 2자 이상 14자 이하로 입력해주세요.",
-      });
-      nickname.current.focus();
-      return;
-    }
-    if (mainAddress === "" || subAddress === "") {
-      Toast.fire({
-        icon: "error",
-        title: "지역을 선택해주세요.",
-      });
-      return;
-    }
     return true;
   };
 
   const handleEmailAuth = async (email) => {
     return await axios.post(
-      `${process.env.REACT_APP_SERVER_URL}/mailConfirms?email=${email}`
+      `${process.env.REACT_APP_SERVER_URL}/pwMailConfirms?email=${email}`
     );
   };
 
@@ -99,7 +77,7 @@ export const Join = () => {
       } else {
         Toast.fire({
           icon: "error",
-          title: "이미 가입된 이메일입니다.",
+          title: "가입되지 않은 이메일입니다.",
         });
       }
     },
@@ -112,36 +90,31 @@ export const Join = () => {
     },
   });
 
-  const handleJoin = async (data) => {
-    return await axios.post(`${process.env.REACT_APP_SERVER_URL}/signups`, {
+  const handleChangePassword = async (data) => {
+    return await axios.put(`${process.env.REACT_APP_SERVER_URL}/pwChanges`, {
       email: data.email,
       password: data.password,
-      memberName: data.nickname,
-      mainAddress: data.mainAddress,
-      subAddress: data.subAddress,
     });
   };
 
-  const { mutate } = useMutation(handleJoin, {
+  const { mutate } = useMutation(handleChangePassword, {
     onSuccess: (data) => {
       if (data.status === 200) {
         Swal.fire({
           icon: "success",
-          title: "회원가입이 완료되었습니다.",
+          title: "비밀번호가 변경되었습니다.",
           text: "로그인 페이지로 이동합니다.",
           confirmButtonText: "확인",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            navigate("/login");
-          }
+        }).then(() => {
+          navigate("/login");
         });
       }
     },
     onError: (error) => {
       Swal.fire({
         icon: "error",
-        title: "회원가입에 실패했습니다.",
-        text: "다시 시도해주세요.",
+        title: "비밀번호 변경에 실패했습니다.",
+        text: "인터넷 연결을 확인해주세요.",
         confirmButtonText: "확인",
       });
       console.dir(error);
@@ -150,7 +123,7 @@ export const Join = () => {
 
   return (
     <StyledJoin>
-      <h2>회원가입</h2>
+      <h2>비밀번호 변경</h2>
       <label>이메일</label>
       <input type="email" ref={email} placeholder="이메일 입력" required />
       <button onClick={() => emailAuth.mutate(email.current.value)}>
@@ -182,49 +155,34 @@ export const Join = () => {
           </button>
         </div>
       </div>
-      <label>비밀번호</label>
+      <label>새 비밀번호</label>
       <input
         type="password"
         ref={password}
         placeholder="8자 이상 32자 이하의 영문, 숫자 조합"
         required
       />
-      <label>비밀번호 확인</label>
+      <label>새 비밀번호 확인</label>
       <input
         type="password"
         ref={passwordConfirm}
         placeholder="비밀번호 재입력"
         required
       />
-      <label>닉네임</label>
-      <input
-        type="text"
-        ref={nickname}
-        placeholder="2자 이상 14자 이하"
-        required
-      />
-      <label>지역 선택 (1)</label>
-      <SelectAddress setAddress={setMainAddress} />
-      <label>지역 선택 (2)</label>
-      <SelectAddress setAddress={setSubAddress} />
       <button
         onClick={() => {
           if (checkValidation()) {
             mutate({
               email: email.current.value,
               password: password.current.value,
-              nickname: nickname.current.value,
-              mainAddress: mainAddress,
-              subAddress: subAddress,
             });
           }
         }}
       >
-        가입하기
+        변경 완료
       </button>
       <div className="span-box">
-        <span>이미 계정이 있으신가요?</span>
-        <span onClick={() => navigate("/login")}>로그인하기</span>
+        <span onClick={() => navigate("/login")}>로그인으로 돌아가기</span>
       </div>
     </StyledJoin>
   );
