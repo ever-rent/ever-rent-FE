@@ -160,10 +160,10 @@ export const EditProduct = () => {
 
     let sYaer = startDay?.getFullYear();
     let sMonth = startDay?.getMonth() + 1;
-    let sDay = startDay?.getDate();
+    let sDay = "0" + `${startDay?.getDate()}`;
     let eYaer = endDay?.getFullYear();
     let eMonth = endDay?.getMonth() + 1;
-    let eDay = endDay?.getDate();
+    let eDay = "0" + `${endDay?.getDate()}`;
 
     setStartDateInput(`${sYaer}-${sMonth}-${sDay}`);
     setEndDateInput(`${eYaer}-${eMonth}-${eDay}`);
@@ -207,7 +207,12 @@ export const EditProduct = () => {
       tradeLocation === "" ||
       endDateInput === ""
     ) {
-      alert("게시글을 모두 작성해주세요!");
+      Swal.fire({
+        title: "내용을 적어주세요!",
+        icon: "warning",
+        confirmButtonColor: "rgb(71, 181, 255)",
+        confirmButtonText: "확인",
+      });
     } else {
       Swal.fire({
         title: "변경 내용을 저장할까요?",
@@ -231,7 +236,16 @@ export const EditProduct = () => {
           }
 
           dispatch(updateProducts([formData, { productId: param.id }]));
-          navigate("/");
+          Swal.fire({
+            title: "저장완료!",
+            icon: "success",
+            confirmButtonColor: "rgb(71, 181, 255)",
+            confirmButtonText: "확인",
+          }).then((result) => {
+            if (result.value) {
+              navigate("/");
+            }
+          });
         }
       });
     }

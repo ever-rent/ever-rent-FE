@@ -6,7 +6,12 @@ import { ko } from "date-fns/esm/locale";
 
 import styled from "styled-components";
 
-export const RangeCalrendar = ({ startEndDays }) => {
+export const RangeCalrendar = ({
+  startEndDays,
+  chat,
+  rentStartday,
+  rentEndday,
+}) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
@@ -29,45 +34,76 @@ export const RangeCalrendar = ({ startEndDays }) => {
   const endDay = `${endToYear}년 ${endToMonth}월 ${endToDay}일`;
   let dateTime = Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
 
-  return (
-    <StyledDatePickerWrapper>
-      <StyledDateSetting>
-        예약 기간을 설정해주세요!<StyledWriteOnly>*</StyledWriteOnly>
-      </StyledDateSetting>
-      <StyledDatePicker
-        withPortal
-        onChange={onChange}
-        startDate={startDate}
-        endDate={endDate}
-        locale={ko}
-        selectsRange
-        dateFormat="yy년MM월dd일"
-        minDate={new Date()}
-        showDisabledMonthNavigation
-        placeholderText="00년00월00일-년00월00일"
-      />
-      <StyledDaysWrap>
-        <StyledRentDays>
-          렌탈시작일 : {startDay.length > 14 ? "-" : startDay}
-        </StyledRentDays>
-        <StyledRentDays>
-          렌탈종료일 : {endDay.length > 14 ? "-" : endDay}
-        </StyledRentDays>
-        <StyledRentDays>
-          렌탈기간 : {endDate === null ? 1 : dateTime}일
-        </StyledRentDays>
-      </StyledDaysWrap>
-      {/* <StyledSubmitButtonsWrap>
-        <StyledSubmitButton>렌탈요청</StyledSubmitButton>
-        <StyledCancelButton>취소</StyledCancelButton>
-      </StyledSubmitButtonsWrap> */}
-    </StyledDatePickerWrapper>
-  );
+  if (chat===true) {
+    return (
+      <StyledDatePickerWrapper>
+        <StyledDateSetting>
+          예약 기간을 설정해주세요!<StyledWriteOnly>*</StyledWriteOnly>
+        </StyledDateSetting>
+        <div>예약 가능 날짜 : {`${rentStartday} ~ ${rentEndday}`}</div>
+        <StyledDatePicker
+          withPortal
+          onChange={onChange}
+          startDate={startDate}
+          endDate={endDate}
+          locale={ko}
+          selectsRange
+          dateFormat="yy년MM월dd일"
+          minDate={new Date(rentStartday)}
+          maxDate={new Date(rentEndday)}
+          showDisabledMonthNavigation
+          placeholderText="00년00월00일-년00월00일"
+        />
+        <StyledDaysWrap>
+          <StyledRentDays>
+            렌탈시작일 : {startDay.length > 14 ? "-" : startDay}
+          </StyledRentDays>
+          <StyledRentDays>
+            렌탈종료일 : {endDay.length > 14 ? "-" : endDay}
+          </StyledRentDays>
+          <StyledRentDays>
+            렌탈기간 : {endDate === null ? 1 : dateTime}일
+          </StyledRentDays>
+        </StyledDaysWrap>
+      </StyledDatePickerWrapper>
+    );
+  } else {
+    return (
+      <StyledDatePickerWrapper>
+        <StyledDateSetting>
+          예약 기간을 설정해주세요!<StyledWriteOnly>*</StyledWriteOnly>
+        </StyledDateSetting>
+        <StyledDatePicker
+          withPortal
+          onChange={onChange}
+          startDate={startDate}
+          endDate={endDate}
+          locale={ko}
+          selectsRange
+          dateFormat="yy년MM월dd일"
+          minDate={new Date()}
+          showDisabledMonthNavigation
+          placeholderText="00년00월00일-년00월00일"
+        />
+        <StyledDaysWrap>
+          <StyledRentDays>
+            렌탈시작일 : {startDay.length > 14 ? "-" : startDay}
+          </StyledRentDays>
+          <StyledRentDays>
+            렌탈종료일 : {endDay.length > 14 ? "-" : endDay}
+          </StyledRentDays>
+          <StyledRentDays>
+            렌탈기간 : {endDate === null ? 1 : dateTime}일
+          </StyledRentDays>
+        </StyledDaysWrap>
+      </StyledDatePickerWrapper>
+    );
+  }
 };
 
 const StyledDatePickerWrapper = styled.section`
   margin-top: 50px;
-  
+
   .react-datepicker {
   }
 
@@ -151,10 +187,10 @@ const StyledDatePickerWrapper = styled.section`
     color: white;
     background-color: rgb(140, 211, 255);
   }
-  .react-datepicker__day--keyboard-selected{
+  .react-datepicker__day--keyboard-selected {
     background-color: rgb(49, 176, 255);
-    &:hover{
-      color:white;
+    &:hover {
+      color: white;
     }
   }
 `;
