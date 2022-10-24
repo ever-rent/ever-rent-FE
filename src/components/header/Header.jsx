@@ -213,8 +213,10 @@ const StyledSearchInput = styled.input`
 const StyledSignMenu = styled.div`
   display: flex;
   align-items: center;
-
   margin-left: 40px;
+  span {
+    cursor: pointer;
+  }
 `;
 
 const StyledLoginTab = styled.div`
