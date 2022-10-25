@@ -124,13 +124,10 @@ const StyledRentStatusBox = styled.div`
   /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center;
   border-radius: 5px;
-  /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
   height: 100%;
   grid-row: 2/4;
-  /* transition: 0.6s; */
 `;
 
 const StyledMobileRentStatusBox = styled.div`
@@ -140,13 +137,5 @@ const StyledMobileRentStatusBox = styled.div`
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   height: 100%;
-  /* animation: rentalBarfadein 0.5s;
-  @keyframes rentalBarfadein {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  } */
+  margin-bottom: 100px;
 `;
