@@ -12,6 +12,8 @@ import { SearchItems } from "../components/searchItems/SearchItems";
 import { ChatRoomList } from "../pages/chat/ChatRoomList";
 import { ChatRoom } from "../pages/chat/ChatRoom";
 import { ForgotPw } from "../pages/auth/ForgotPw";
+import { FirstEvent } from "../pages/event/FirstEvent";
+import { SecondEvent } from "../pages/event/SecondEvent";
 
 export const Router = () => {
   return (
@@ -29,6 +31,8 @@ export const Router = () => {
       <Route path="/myPage" element={<MyPage />} />
       <Route path="/chatRoomList" element={<ChatRoomList />} />
       <Route path="/chat/room/:productId/:roomId" element={<ChatRoom />} />
+      <Route path="/event/0" element={<FirstEvent />} />
+      <Route path="/event/1" element={<SecondEvent />} />
     </Routes>
   );
 };
