@@ -160,10 +160,16 @@ export const EditProduct = () => {
 
     let sYaer = startDay?.getFullYear();
     let sMonth = startDay?.getMonth() + 1;
-    let sDay = "0" + `${startDay?.getDate()}`;
+    let sDay =
+      startDay?.getDate() < 10
+        ? "0" + `${startDay?.getDate()}`
+        : `${startDay?.getDate()}`;
     let eYaer = endDay?.getFullYear();
     let eMonth = endDay?.getMonth() + 1;
-    let eDay = "0" + `${endDay?.getDate()}`;
+    let eDay =
+      endDay?.getDate() < 10
+        ? "0" + `${endDay?.getDate()}`
+        : `${endDay?.getDate()}`;
 
     setStartDateInput(`${sYaer}-${sMonth}-${sDay}`);
     setEndDateInput(`${eYaer}-${eMonth}-${eDay}`);
