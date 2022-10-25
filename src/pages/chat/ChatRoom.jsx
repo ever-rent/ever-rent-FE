@@ -29,7 +29,7 @@ export const ChatRoom = () => {
   );
 
   const productDetail = productData?.data.data;
-
+  
   const { data: chatData, isLoading } = useQuery("getChatMessage", () =>
     chatAPI.getChatMessage(roomId)
   );
@@ -283,7 +283,12 @@ export const ChatRoom = () => {
           {showDateInput && (
             <div>
               <div className="flex-div">
-                <RangeCalrendar startEndDays={startEndDays} />
+                <RangeCalrendar
+                  startEndDays={startEndDays}
+                  chat={true}
+                  rentStartday={productDetail?.rentStart}
+                  rentEndday={productDetail?.rentEnd}
+                />
                 <FaRegWindowClose onClick={() => setShowDateInput(false)} />
               </div>
               <button
