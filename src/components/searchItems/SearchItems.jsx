@@ -63,7 +63,6 @@ export const SearchItems = () => {
       setIsLoading(false);
     }, 1000);
   }, [param.id]);
-  console.log("패치", searchData);
 
   const categoryHandler = (e) => {
     setCategoryNumber(e.target.value);
@@ -230,7 +229,7 @@ export const SearchItems = () => {
       </Desktop>
       {/* ################ 모바일 ################ */}
       <Mobile>
-      <Layout>
+        <Layout>
           <StyledMobileContainer>
             <StyledSelectBox>
               <StyledSelect
