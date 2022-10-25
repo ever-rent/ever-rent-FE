@@ -39,7 +39,6 @@ export const AddProduct = () => {
 
   // 업로드 압축 & state 데이터로 저장
   const fileChange = (fileBlob) => {
-    console.log(fileBlob);
     actionImgCompress(fileBlob[fileBlob.length - 1]);
     const reader = new FileReader();
     for (let i = 0; i < fileBlob.length; i++) {
@@ -53,9 +52,6 @@ export const AddProduct = () => {
 
   // 이미지 압축
   const actionImgCompress = async (fileSrc) => {
-    console.log("압축 시작");
-    console.log("압축전", fileSrc);
-
     const options = {
       maxSizeMB: 0.2,
       maxWidthOrHeight: 1920,
@@ -63,7 +59,6 @@ export const AddProduct = () => {
     };
     try {
       const compressedFile = await imageCompression(fileSrc, options);
-      console.log("압축후", compressedFile);
       const reader = new FileReader();
       reader.readAsDataURL(compressedFile);
       reader.onloadend = () => {
@@ -80,7 +75,6 @@ export const AddProduct = () => {
 
   // formData 생성함수 (Blob으로 보낼 이미지 state에 추가)
   const sendfileCompression = (listItem) => {
-    console.log(listItem);
     const byteString = atob(listItem.split(",")[1]);
 
     const arrayBuffer = new ArrayBuffer(byteString.length);
@@ -91,9 +85,7 @@ export const AddProduct = () => {
     const blob = new Blob([int8Array], {
       type: "image/jpeg",
     });
-    console.log(blob);
     const file = new File([blob], "image.jpg");
-    console.log(file);
     setSendImage([...sendImage].concat(file));
   };
 
@@ -159,8 +151,6 @@ export const AddProduct = () => {
     setLocation(value);
   };
 
-  console.log(location);
-
   // formData
   let sendData = {
     productName: title,
@@ -224,8 +214,6 @@ export const AddProduct = () => {
     }
   };
 
-  console.log(startDateInput);
-  console.log(endDateInput);
 
   // 위치정보 카카오 맵 모달창
   const [showModal, setShowModal] = useState(false);

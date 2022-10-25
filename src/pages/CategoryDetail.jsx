@@ -29,16 +29,6 @@ export const CategoryDetail = () => {
     { value: "8", name: "기타" },
   ];
 
-  const priceList = [
-    { value: 0, name: "가격을 선택하세요" },
-    { value: 1, name: "~ 10,000원 미만" },
-    { value: 2, name: "10,000원 ~ 20,000원 미만" },
-    { value: 3, name: "20,000원 ~ 30,000원 미만" },
-    { value: 4, name: "30,000원 ~ 40,000원 미만" },
-    { value: 5, name: "40,000원 ~ 50,000원 미만" },
-    { value: 6, name: "50,000원 이상" },
-  ];
-
   const categoryHandler = (e) => {
     e.preventDefault();
     console.log(e.target.value);
@@ -143,13 +133,6 @@ export const CategoryDetail = () => {
                   }
                 })}
               </StyledSelect>
-              <StyledSelect onChange={priceHandler}>
-                {priceList?.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.name}
-                  </option>
-                ))}
-              </StyledSelect>
             </StyledSelectBox>
 
             <StyledDetailContainer>
@@ -194,13 +177,6 @@ export const CategoryDetail = () => {
                     );
                   }
                 })}
-              </StyledMobileSelect>
-              <StyledMobileSelect onChange={priceHandler}>
-                {priceList?.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.name}
-                  </option>
-                ))}
               </StyledMobileSelect>
             </StyledMobileSelectBox>
             <StyledMobileProducts>

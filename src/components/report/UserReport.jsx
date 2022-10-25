@@ -5,8 +5,6 @@ import { useState, useEffect } from "react";
 import { auth } from "../../server/core/instance";
 
 export const UserReport = ({ targetUserId }) => {
-  // userId (PK) 로 props 전달 예정
-
   // 신고창 모달 오픈 여부
   const [showModal, setShowModal] = useState(false);
 
@@ -81,7 +79,7 @@ export const UserReport = ({ targetUserId }) => {
                   <input
                     onClick={etcCheck}
                     onChange={(e) => {
-                      console.log(setSendReason(e.target.value));
+                      setSendReason(e.target.value);
                     }}
                     id="report1"
                     type="radio"
@@ -97,7 +95,7 @@ export const UserReport = ({ targetUserId }) => {
                   <input
                     onClick={etcCheck}
                     onChange={(e) => {
-                      console.log(setSendReason(e.target.value));
+                      setSendReason(e.target.value);
                     }}
                     id="report2"
                     type="radio"
@@ -112,7 +110,7 @@ export const UserReport = ({ targetUserId }) => {
                   <input
                     onClick={etcCheck}
                     onChange={(e) => {
-                      console.log(setSendReason(e.target.value));
+                      setSendReason(e.target.value);
                     }}
                     id="report3"
                     type="radio"
@@ -127,7 +125,7 @@ export const UserReport = ({ targetUserId }) => {
                   <input
                     onClick={etcCheck}
                     onChange={(e) => {
-                      console.log(setSendReason(e.target.value));
+                      setSendReason(e.target.value);
                     }}
                     id="report4"
                     type="radio"
