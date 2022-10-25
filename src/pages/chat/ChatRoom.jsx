@@ -11,6 +11,7 @@ import { AiOutlineSend } from "react-icons/ai";
 import { FaRegWindowClose } from "react-icons/fa";
 import Scrollbars from "react-custom-scrollbars";
 import { useQuery, useQueryClient } from "react-query";
+import Swal from "sweetalert2";
 
 let stompClient = null;
 
@@ -236,6 +237,11 @@ export const ChatRoom = () => {
       })
       .then((res) => {
         console.log(res);
+        Swal.fire({
+          title: "렌탈 신청이 완료되었습니다.",
+          icon: "success",
+          confirmButtonText: "확인",
+        })
       })
       .catch((err) => {
         console.log(err);
