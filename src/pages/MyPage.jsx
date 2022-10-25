@@ -5,6 +5,7 @@ import { RentalBar } from "../components/myPage/RentalBar";
 import { Profile } from "../components/myPage/Profile";
 import { MyWishList } from "../components/myPage/MyWishList";
 import { Desktop, Mobile } from "../Hooks/MideaQuery";
+import { Footer } from "../components/footer/Footer";
 
 export const MyPage = () => {
   //찜목록, 렌탈목록 토글.
@@ -41,6 +42,7 @@ export const MyPage = () => {
             <RentalBar />
           )}
         </StyledFlexBox>
+        <Footer />
       </Mobile>
     </>
   );
