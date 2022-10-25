@@ -1,8 +1,15 @@
 import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import { Desktop, Mobile } from "../../../Hooks/MideaQuery";
+
 export const SlideShow = () => {
+  const navigate = useNavigate();
   const colors = ["#0088FE", "#00C49F", "#FFBB28"];
+  const eventImg = [
+    require("../../../image/eventOne1.png"),
+    require("../../../image/eventTwo1.png"),
+  ];
 
   const [index, setIndex] = useState(0);
   const timeoutRef = useRef(null);
@@ -19,7 +26,7 @@ export const SlideShow = () => {
     timeoutRef.current = setTimeout(
       () =>
         setIndex((prevIndex) =>
-          prevIndex === colors.length - 1 ? 0 : prevIndex + 1
+          prevIndex === eventImg.length - 1 ? 0 : prevIndex + 1
         ),
       delay
     );
@@ -36,16 +43,18 @@ export const SlideShow = () => {
             className="slideshowSlider"
             style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}
           >
-            {colors.map((backgroundColor, index) => (
+            {eventImg.map((eventImg, index) => (
               <StyledSlide
                 className="slide"
                 key={index}
-                style={{ backgroundColor }}
+                // style={{ backgroundColor }}
+                src={eventImg}
+                onClick={() => navigate(`/event/${index}`)}
               />
             ))}
           </StyledSlideShowSlider>
           <StyledSlideShowDots className="slideshowDots">
-            {colors.map((_, idx) => (
+            {eventImg.map((_, idx) => (
               <StyledSlideShowDot
                 key={idx}
                 className={index === idx ? "active" : ""}
@@ -64,16 +73,18 @@ export const SlideShow = () => {
             className="slideshowSlider"
             style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}
           >
-            {colors.map((backgroundColor, index) => (
+            {eventImg.map((eventImg, index) => (
               <StyledMobileSlide
                 className="slide"
                 key={index}
-                style={{ backgroundColor }}
+                // style={{ backgroundColor }}
+                src={eventImg}
+                onClick={() => navigate(`/event/${index}`)}
               />
             ))}
           </StyledSlideShowSlider>
           <StyledSlideShowDots className="slideshowDots">
-            {colors.map((_, idx) => (
+            {eventImg.map((_, idx) => (
               <StyledSlideShowDot
                 key={idx}
                 className={index === idx ? "active" : ""}
@@ -101,11 +112,12 @@ const StyledSlideShowSlider = styled.div`
   white-space: nowrap;
 `;
 
-const StyledSlide = styled.div`
+const StyledSlide = styled.img`
   display: inline-block;
   height: 300px;
   width: 100%;
   border-radius: 40px;
+  cursor: pointer;
 `;
 
 /* Buttons */
@@ -133,9 +145,10 @@ const StyledMobileSlideshow = styled.div`
   max-width: 480px;
 `;
 
-const StyledMobileSlide = styled.div`
+const StyledMobileSlide = styled.img`
   display: inline-block;
-  height: 190px;
+  height: 150px;
   width: 100%;
   border-radius: 40px;
+  cursor: pointer;
 `;

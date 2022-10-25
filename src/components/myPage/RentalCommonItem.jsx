@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { Mobile, Desktop } from "../../Hooks/MideaQuery";
 import { imgFirstString, mypageAPI } from "../../server/api";
 import { dateToTime } from "../../util/timeToToday";
+import { useNavigate } from "react-router-dom";
 
 export const RentalCommonItem = ({ item, index }) => {
   const dispatch = useDispatch();
@@ -117,9 +118,17 @@ export const RentalCommonItem = ({ item, index }) => {
     }
   };
 
+  const navigate = useNavigate();
+
   const insertImg = (index) => {
     if (index === 0) {
-      return <img src={`${imgFirstString}${imgUrlArray[0]}`} alt="img" />;
+      return (
+        <StyledImg
+          onClick={() => navigate(`/productDetail/${id}`)}
+          src={`${imgFirstString}${imgUrlArray[0]}`}
+          alt="img"
+        />
+      );
     } else {
       return;
     }
@@ -266,6 +275,10 @@ const StyledRejectdbutton = styled.button`
   margin-right: 7px;
   cursor: pointer;
   /* min-width: max-content; */
+`;
+
+const StyledImg = styled.img`
+  cursor: pointer;
 `;
 
 const StyledMobileItem = styled.div`
