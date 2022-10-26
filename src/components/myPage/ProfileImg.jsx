@@ -44,8 +44,8 @@ export const ProfileImg = ({ showProfile, closeProfileimgFix, defaultImg }) => {
       cancelButtonText: "취소",
     }).then((result) => {
       if (result.value) {
-        // formData.append("multipartFile", sendImage);
-        // auth.post("/updateInfo/image",formData)
+        formData.append("multipartFile", sendImage);
+        auth.put("/updateInfo/image",formData)
       }
       Swal.fire({
         title: "저장완료!",
