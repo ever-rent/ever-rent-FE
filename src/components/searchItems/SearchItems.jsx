@@ -174,9 +174,6 @@ export const SearchItems = () => {
                 onChange={(e) => priceHandler(e)}
                 defaultChecked={0}
                 value={`${priceNumber}`}
-                // 가격 필터 임시 제거
-                //###############################
-                // style={{ display: "none" }}
               >
                 {priceList?.map((option) => {
                   if (option.value === 0) {
@@ -231,8 +228,10 @@ export const SearchItems = () => {
       <Mobile>
         <Layout>
           <StyledMobileContainer>
-            <StyledSelectBox>
-              <StyledSelect
+            <StyledMobileSelectBox>
+              <StyledMobileSelectWrap>
+
+              <StyledMobileSelect
                 onChange={(e) => categoryHandler(e)}
                 defaultChecked={0}
                 value={categoryNumber}
@@ -256,14 +255,11 @@ export const SearchItems = () => {
                     );
                   }
                 })}
-              </StyledSelect>
-              <StyledSelect
+              </StyledMobileSelect>
+              <StyledMobileSelect
                 onChange={(e) => priceHandler(e)}
                 defaultChecked={0}
                 value={`${priceNumber}`}
-                // 가격 필터 임시 제거
-                //###############################
-                // style={{ display: "none" }}
               >
                 {priceList?.map((option) => {
                   if (option.value === 0) {
@@ -284,11 +280,12 @@ export const SearchItems = () => {
                     );
                   }
                 })}
-              </StyledSelect>
+              </StyledMobileSelect>
+              </StyledMobileSelectWrap>
               <StyledInitSpan onClick={initOptions}>
                 검색조건 초기화
               </StyledInitSpan>
-            </StyledSelectBox>
+            </StyledMobileSelectBox>
             <span>다음으로 검색된 목록 : {param.id}</span>
             {isLoading ? (
               <>
@@ -360,6 +357,31 @@ const StyledMobileContainer = styled.div`
   margin-bottom: 90px;
   padding: 20px;
 `;
+
+const StyledMobileSelectBox = styled.div`
+  display: flex;
+  flex-direction:column;
+  align-items: center;
+  margin-top:80px;
+`
+
+const StyledMobileSelectWrap = styled.div`
+  display: flex;
+`
+
+const StyledMobileSelect = styled.select`
+  border: 2px solid #5fafe4;
+  width: 180px;
+  padding: 7px;
+  margin: 15px 30px 30px 0;
+  border-radius: 10px;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0 0 3px 0 rgb(71, 181, 255);
+    transition: box-shadow 0.1s ease-in-out 0s;
+  }
+`
+
 
 const StyledMobileProducts = styled.div`
   /* border: 1px solid red; */

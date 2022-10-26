@@ -71,7 +71,7 @@ export const LocationModal = ({
                   lat: 37.566826,
                   lng: 126.9786567,
                 }}
-                style={{ width: "500px", height: "500px" }}
+                style={{ width: "400px", height: "400px" }}
                 level={3}
                 onCreate={setMap}
               >
