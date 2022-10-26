@@ -11,7 +11,7 @@ import { categoriNumber } from "../util/categoryNumber";
 import { timeToToday } from "../util/timeToToday";
 import { LocationModal } from "../components/location/LocationModal";
 import { ImageModal } from "../components/imageModal/ImageModal";
-import { imgFirstString } from "../server/api";
+import { chatAPI, imgFirstString } from "../server/api";
 
 import Swal from "sweetalert2";
 import { Desktop, Mobile } from "../Hooks/MideaQuery";
@@ -21,7 +21,6 @@ import { PostReport } from "../components/report/PostReport";
 import axios from "axios";
 
 import { WishButton } from "../components/button/WishButton";
-import { createChatRoom } from "../redux/modules/chatSlice";
 import { UsersBadge } from "../components/detail/UsersBadge";
 import { OtherProfile } from "../components/detail/OtherProfile";
 
@@ -86,7 +85,7 @@ export const ProductDetail = () => {
 
   useEffect(() => {
     if (detailData !== undefined) {
-      detailData?.memberId === localStorage.memberId
+      detailData?.memberId === Number(localStorage.memberId)
         ? setEditabled(true)
         : setEditabled(false);
       fetchProfile(detailData?.memberId);
@@ -109,8 +108,16 @@ export const ProductDetail = () => {
     }).then((result) => {
       if (result.value) {
         dispatch(deleteProducts(param.id));
-        alert("삭제완료");
-        navigate("/");
+        Swal.fire({
+          title: "삭제완료!",
+          icon: "success",
+          confirmButtonColor: "rgb(71, 181, 255)",
+          confirmButtonText: "확인",
+        }).then((result)=>{
+          if(result.value){
+            navigate("/");
+          }
+        })
       }
     });
   };
@@ -127,9 +134,9 @@ export const ProductDetail = () => {
   const onCreateChatRoom = async () => {
     if (localStorage.getItem("accessToken")) {
       try {
-        const data = await dispatch(createChatRoom(detailData?.id)).unwrap();
+        const { data } = await chatAPI.createChatRoom(detailData?.id);
         if (data) {
-          return navigate(`/chat/room/${detailData?.id}/${data}`);
+          return navigate(`/chat/room/${detailData?.id}/${data?.data}`);
         }
       } catch (e) {
         console.log(e);
@@ -210,14 +217,12 @@ export const ProductDetail = () => {
                       : null
                   }
                 >
-                  <StyledImagesWrap>
+                  <StyledImagesWrap onClick={onCreateChatRoom}>
                     <StyledChatImage
                       src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
                       alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
                     />
-                    <StyledChatImgAlt onClick={onCreateChatRoom}>
-                      채팅하기
-                    </StyledChatImgAlt>
+                    <StyledChatImgAlt>채팅하기</StyledChatImgAlt>
                   </StyledImagesWrap>
                   <WishButton productId={param.id} data={detailData} />
                   <StyledImagesWrap
@@ -304,6 +309,7 @@ export const ProductDetail = () => {
                   <StyledProductPrice>
                     {detailData?.price}(원) / 일
                   </StyledProductPrice>
+                  <StyledRentDate>렌트 가능기간 : {detailData?.rentStart} ~ {detailData?.rentEnd}</StyledRentDate>
                   <StyledPostDescription>
                     {detailData?.content}
                   </StyledPostDescription>
@@ -360,14 +366,12 @@ export const ProductDetail = () => {
                       : null
                   }
                 >
-                  <StyledMobileImagesWrap>
+                  <StyledMobileImagesWrap onClick={onCreateChatRoom}>
                     <StyledChatImage
                       src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
                       alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
                     />
-                    <StyledChatImgAlt onClick={onCreateChatRoom}>
-                      채팅하기
-                    </StyledChatImgAlt>
+                    <StyledChatImgAlt>채팅하기</StyledChatImgAlt>
                   </StyledMobileImagesWrap>
                   <WishButton productId={param.id} data={detailData} />
                   <StyledMobileImagesWrap
@@ -457,6 +461,7 @@ export const ProductDetail = () => {
                   <StyledMobileProductPrice>
                     {detailData?.price}(원) / 일
                   </StyledMobileProductPrice>
+                  <StyledRentDate>렌트 가능기간 : {detailData?.rentStart} ~ {detailData?.rentEnd}</StyledRentDate>
                   <StyledMobilePostDescription>
                     {detailData?.content}
                   </StyledMobilePostDescription>
@@ -687,11 +692,18 @@ const StyledProductPrice = styled.div`
 
   padding: 5px;
 `;
+const StyledRentDate = styled.div`
+padding: 5px;
+  color:gray;
+  font-size:12px;
+`
 
 const StyledPostDescription = styled.div`
   padding: 5px;
   margin-top: 30px;
 `;
+
+
 
 // for Mobile
 

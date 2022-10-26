@@ -104,6 +104,7 @@ export const EditUserInfo = () => {
     subAddress: subAddress,
     cateId: categoryInput,
   };
+  console.log(sendData)
 
   // 회원정보 수정
   const editMyInfo = () => {

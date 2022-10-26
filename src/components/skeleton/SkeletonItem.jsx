@@ -30,7 +30,9 @@ export const SkeletonItem = () => {
 };
 
 const StyledItemBox = styled.div`
-  height: 312px;
+  /* height: 312px; */
+  display: flex;
+  flex-direction: column;
   padding: 10px 10px 0 10px;
   position: relative;
   border-radius: 10px;
@@ -58,8 +60,8 @@ const StyledItemBox = styled.div`
 
 const StyledContentBox = styled.div`
   margin: 12px 0;
-  width: 100px;
-  height: 100px;
+  /* width: 100px; */
+  height: 130px;
   & {
     animation: skeletonSpan 1s ease-in-out infinite;
     @keyframes skeletonSpan {
@@ -86,9 +88,11 @@ const StyledSkeletonSpan = styled.div`
 
 const StyledImgBox = styled.div`
   padding: 2px;
-  width: 200px;
+  /* width: 200px; */
+  width: 180px;
   height: 140px;
   margin-bottom: 3px;
+  
 `;
 
 const StyledImg = styled.div`
@@ -132,7 +136,8 @@ const StyledMobileItemBox = styled.div`
 
 const StyledMobileImgBox = styled.div`
   padding: 2px;
-  width: 200px;
+  width: 150px;
   height: 140px;
   margin: 5px 15px 5px 3px;
+  /* margin-bottom: 3px; */
 `;

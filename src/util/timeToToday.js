@@ -31,5 +31,5 @@ export const dateToTime = (createdAt) => {
   const days = hours / 24;
 
   if (hours < 24) return `금일 마감`;
-  if (days < 7) return `${Math.floor(days)}일 전`;
+  if (days >= 1) return `${Math.floor(days)}일 전`;
 };

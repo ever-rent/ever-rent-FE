@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import { auth } from "../../server/core/instance";
 
 export const PostReport = ({ targetProductId }) => {
-  // props 전달 예정
   const [showModal, setShowModal] = useState(false);
 
   const [sendReason, setSendReason] = useState("도배/광고성 게시글");
@@ -77,7 +76,7 @@ export const PostReport = ({ targetProductId }) => {
                   <input
                     onClick={etcCheck}
                     onChange={(e) => {
-                      console.log(setSendReason(e.target.value));
+                      setSendReason(e.target.value);
                     }}
                     id="report1"
                     type="radio"
@@ -93,7 +92,7 @@ export const PostReport = ({ targetProductId }) => {
                   <input
                     onClick={etcCheck}
                     onChange={(e) => {
-                      console.log(setSendReason(e.target.value));
+                      setSendReason(e.target.value);
                     }}
                     id="report2"
                     type="radio"
@@ -108,7 +107,7 @@ export const PostReport = ({ targetProductId }) => {
                   <input
                     onClick={etcCheck}
                     onChange={(e) => {
-                      console.log(setSendReason(e.target.value));
+                      setSendReason(e.target.value);
                     }}
                     id="report3"
                     type="radio"
@@ -123,7 +122,7 @@ export const PostReport = ({ targetProductId }) => {
                   <input
                     onClick={etcCheck}
                     onChange={(e) => {
-                      console.log(setSendReason(e.target.value));
+                      setSendReason(e.target.value);
                     }}
                     id="report4"
                     type="radio"

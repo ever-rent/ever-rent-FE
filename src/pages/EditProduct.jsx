@@ -23,7 +23,7 @@ export const EditProduct = () => {
 
   const [data, setData] = useState();
   const fetchDetail = async () => {
-    console.log("패치데이터", param);
+    // console.log("패치데이터", param);
     await axios
       .get(`${process.env.REACT_APP_SERVER_URL}/products/${param.id}`)
       .then((response) => {
@@ -49,7 +49,7 @@ export const EditProduct = () => {
     for (let i = 0; i < editData?.imgUrlArray.length; i++) {
       urlArray.push(`${imgFirstString}${editData?.imgUrlArray[i]}`);
     }
-    console.log(urlArray);
+    // console.log(urlArray);
     setImgView(urlArray);
     setSendImage(urlArray);
   }, [editData]);
@@ -65,7 +65,7 @@ export const EditProduct = () => {
   };
 
   const fileChange = (fileBlob) => {
-    console.log(fileBlob);
+    // console.log(fileBlob);
     actionImgCompress(fileBlob[fileBlob.length - 1]);
     const reader = new FileReader();
     for (let i = 0; i < fileBlob.length; i++) {
@@ -78,8 +78,8 @@ export const EditProduct = () => {
   };
 
   const actionImgCompress = async (fileSrc) => {
-    console.log("압축 시작");
-    console.log("압축전", fileSrc);
+    // console.log("압축 시작");
+    // console.log("압축전", fileSrc);
 
     const options = {
       maxSizeMB: 0.2,
@@ -88,7 +88,7 @@ export const EditProduct = () => {
     };
     try {
       const compressedFile = await imageCompression(fileSrc, options);
-      console.log("압축후", compressedFile);
+      // console.log("압축후", compressedFile);
       const reader = new FileReader();
       reader.readAsDataURL(compressedFile);
       reader.onloadend = () => {
@@ -104,7 +104,7 @@ export const EditProduct = () => {
   };
 
   const sendfileCompression = (listItem) => {
-    console.log(listItem);
+    // console.log(listItem);
     const byteString = atob(listItem.split(",")[1]);
 
     const arrayBuffer = new ArrayBuffer(byteString.length);
@@ -116,7 +116,7 @@ export const EditProduct = () => {
       type: "image/jpeg",
     });
     const file = new File([blob], "image.jpg");
-    console.log(file);
+    // console.log(file);
     setSendImage([...sendImage].concat(file));
   };
 
@@ -160,16 +160,20 @@ export const EditProduct = () => {
 
     let sYaer = startDay?.getFullYear();
     let sMonth = startDay?.getMonth() + 1;
-    let sDay = startDay?.getDate();
+    let sDay =
+      startDay?.getDate() < 10
+        ? "0" + `${startDay?.getDate()}`
+        : `${startDay?.getDate()}`;
     let eYaer = endDay?.getFullYear();
     let eMonth = endDay?.getMonth() + 1;
-    let eDay = endDay?.getDate();
+    let eDay =
+      endDay?.getDate() < 10
+        ? "0" + `${endDay?.getDate()}`
+        : `${endDay?.getDate()}`;
 
     setStartDateInput(`${sYaer}-${sMonth}-${sDay}`);
     setEndDateInput(`${eYaer}-${eMonth}-${eDay}`);
   };
-  console.log(startDateInput);
-  console.log(endDateInput);
 
   const checkPost = () => {
     if (title.length > 3 && description.length > 0) {
@@ -207,7 +211,12 @@ export const EditProduct = () => {
       tradeLocation === "" ||
       endDateInput === ""
     ) {
-      alert("게시글을 모두 작성해주세요!");
+      Swal.fire({
+        title: "내용을 적어주세요!",
+        icon: "warning",
+        confirmButtonColor: "rgb(71, 181, 255)",
+        confirmButtonText: "확인",
+      });
     } else {
       Swal.fire({
         title: "변경 내용을 저장할까요?",
@@ -231,11 +240,20 @@ export const EditProduct = () => {
           }
 
           dispatch(updateProducts([formData, { productId: param.id }]));
-          navigate("/");
+          Swal.fire({
+            title: "저장완료!",
+            icon: "success",
+            confirmButtonColor: "rgb(71, 181, 255)",
+            confirmButtonText: "확인",
+          }).then((result) => {
+            if (result.value) {
+              navigate("/");
+            }
+          });
         }
       });
     }
-    console.log(sendData);
+    // console.log(sendData);
   };
 
   const [showModal, setShowModal] = useState(false);

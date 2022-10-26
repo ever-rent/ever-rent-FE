@@ -20,7 +20,6 @@ export const LocationSearch = ({
   const [searchResult, setSearchResult] = useState("");
 
   const [recommandPlace, setRecommandPlace] = useState([]);
-  console.log(recommandPlace);
 
   useEffect(() => {
     if (!map) return;
@@ -64,9 +63,7 @@ export const LocationSearch = ({
     let coord = new kakao.maps.LatLng(lat, lng);
     let callback = function (result, status) {
       if (status === kakao.maps.services.Status.OK) {
-        console.log(result);
         let data = result[0].road_address.address_name.split(" ");
-        console.log(data);
         locationCheck(`${data[0]} ${data[1]}`);
       }
     };
