@@ -5,11 +5,13 @@ import { useMutation } from "react-query";
 import axios from "axios";
 import { StyledLogin } from "./styled";
 import { Toast } from "../../util/toast";
+import styled from "styled-components";
+import { FcGoogle } from "react-icons/fc";
 
 export const Login = () => {
-  const navigate = useNavigate();
   const email = useRef(null);
   const password = useRef(null);
+  const navigate = useNavigate();
 
   const handleLogin = async (data) => {
     return await axios.post(`${process.env.REACT_APP_SERVER_URL}/logins`, {
@@ -82,6 +84,19 @@ export const Login = () => {
       >
         로그인
       </button>
+      {/* 구글 로그인 버튼 */}
+      <StyledButton
+        onClick={() => {
+          window.location.href = `${process.env.REACT_APP_GOOGLE_ACCOUNT}`;
+        }}
+      >
+        <div className="icon-box">
+          <div className="google-icon">
+            <FcGoogle size="1.2rem" />
+          </div>
+          <span>Google 계정으로 로그인</span>
+        </div>
+      </StyledButton>
       <div className="span-box">
         <span onClick={() => navigate("/forgotPw")}>비밀번호 찾기</span>
         <span onClick={() => navigate("/join")}>회원가입</span>
@@ -89,3 +104,29 @@ export const Login = () => {
     </StyledLogin>
   );
 };
+
+const StyledButton = styled.span`
+  border: none;
+  padding: 0px;
+  margin-top: 15px;
+  border-radius: 20px;
+  font-size: 15px;
+  font-weight: bold;
+  width: 300px;
+  height: 40px;
+  color: #000;
+  background-color: #fff;
+  z-index: 3;
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  .icon-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .google-icon {
+      margin: 5px 5px 0 0;
+    }
+  }
+`;

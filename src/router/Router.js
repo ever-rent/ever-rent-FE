@@ -12,6 +12,7 @@ import { SearchItems } from "../components/searchItems/SearchItems";
 import { ChatRoomList } from "../pages/chat/ChatRoomList";
 import { ChatRoom } from "../pages/chat/ChatRoom";
 import { ForgotPw } from "../pages/auth/ForgotPw";
+import { OAuth } from "../pages/auth/OAuth";
 import { FirstEvent } from "../pages/event/FirstEvent";
 import { SecondEvent } from "../pages/event/SecondEvent";
 
@@ -20,6 +21,7 @@ export const Router = () => {
     <Routes>
       <Route path="/" element={<Main />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/oauth/google/callback" element={<OAuth />} />
       <Route path="/join" element={<Join />} />
       <Route path="/forgotPw" element={<ForgotPw />} />
       <Route path="/addProduct" element={<AddProduct />} />
