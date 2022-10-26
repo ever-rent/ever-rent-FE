@@ -85,7 +85,7 @@ export const ProductDetail = () => {
 
   useEffect(() => {
     if (detailData !== undefined) {
-      detailData?.memberId === localStorage.memberId
+      detailData?.memberId === Number(localStorage.memberId)
         ? setEditabled(true)
         : setEditabled(false);
       fetchProfile(detailData?.memberId);
@@ -108,8 +108,16 @@ export const ProductDetail = () => {
     }).then((result) => {
       if (result.value) {
         dispatch(deleteProducts(param.id));
-        alert("삭제완료");
-        navigate("/");
+        Swal.fire({
+          title: "삭제완료!",
+          icon: "success",
+          confirmButtonColor: "rgb(71, 181, 255)",
+          confirmButtonText: "확인",
+        }).then((result)=>{
+          if(result.value){
+            navigate("/");
+          }
+        })
       }
     });
   };
