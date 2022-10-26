@@ -1,5 +1,5 @@
 # EVER-RENT
-![image](https://user-images.githubusercontent.com/73919235/194849672-73dae025-5eee-4056-ac78-433b60fdc08e.png)
+![ever-rent-intro](https://user-images.githubusercontent.com/73919235/197952862-5f082cab-95ca-4f11-bf0c-faec3f0e7693.png)
 
 
 ## 서비스 개요💻
