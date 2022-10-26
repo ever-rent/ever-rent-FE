@@ -49,7 +49,6 @@ export const EditProduct = () => {
     for (let i = 0; i < editData?.imgUrlArray.length; i++) {
       urlArray.push(`${imgFirstString}${editData?.imgUrlArray[i]}`);
     }
-    // console.log(urlArray);
     setImgView(urlArray);
     setSendImage(urlArray);
   }, [editData]);
