@@ -20,7 +20,6 @@ export const LocationSearch = ({
   const [searchResult, setSearchResult] = useState("");
 
   const [recommandPlace, setRecommandPlace] = useState([]);
-  console.log(recommandPlace);
 
   useEffect(() => {
     if (!map) return;

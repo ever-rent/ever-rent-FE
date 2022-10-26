@@ -46,10 +46,8 @@ export const getProductsDetail = createAsyncThunk(
 export const addProducts = createAsyncThunk(
   "POST_PRODUCTS",
   async (payload, thunkAPI) => {
-    // console.log(payload)
     try {
       const { data } = await productAPI.addProduct(payload);
-      console.log("data", data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (errer) {
       return thunkAPI.rejectWithValue(errer);
@@ -118,20 +116,14 @@ export const productSlice = createSlice({
     },
 
     [getProductsDetail.fulfilled]: (state, action) => {
-      console.log(current(state));
       console.log(action);
       state.products = action.payload.data;
       const data = state.recent.concat(action.payload.data);
-      // console.log(data);
       const uniqueData = [...new Set(data.map(JSON.stringify))].map(JSON.parse);
-      // console.log("uniqueData", uniqueData);
       state.recent = uniqueData;
     },
     [addProducts.fulfilled]: (state, action) => {
-      console.log(current(state));
-      console.log(action);
       state.isLoading = false;
-
       state.products = state.products.concat(action.payload);
       return state;
     },
@@ -145,9 +137,11 @@ export const productSlice = createSlice({
               content: action.payload.content,
               cateId: action.payload.cateId,
               price: action.payload.price,
+              location: action.payload.location,
+              mapLocation: action.payload.mapLocation,
               rentStart: action.payload.rentStart,
               rentEnd: action.payload.rentEnd,
-              imgUrl: action.payload.imgUrl,
+              imgUrlArray: action.payload.imgUrl,
             }
           : item
       );

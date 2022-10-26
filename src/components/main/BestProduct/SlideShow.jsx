@@ -1,7 +1,15 @@
 import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { Desktop, Mobile } from "../../../Hooks/MideaQuery";
+
 export const SlideShow = () => {
+  const navigate = useNavigate();
   const colors = ["#0088FE", "#00C49F", "#FFBB28"];
+  const eventImg = [
+    require("../../../image/eventOne1.png"),
+    require("../../../image/eventTwo1.png"),
+  ];
 
   const [index, setIndex] = useState(0);
   const timeoutRef = useRef(null);
@@ -18,7 +26,7 @@ export const SlideShow = () => {
     timeoutRef.current = setTimeout(
       () =>
         setIndex((prevIndex) =>
-          prevIndex === colors.length - 1 ? 0 : prevIndex + 1
+          prevIndex === eventImg.length - 1 ? 0 : prevIndex + 1
         ),
       delay
     );
@@ -28,31 +36,67 @@ export const SlideShow = () => {
   }, [index]);
 
   return (
-    <StyledSlideshow className="slideshow">
-      <StyledSlideShowSlider
-        className="slideshowSlider"
-        style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}
-      >
-        {colors.map((backgroundColor, index) => (
-          <StyledSlide
-            className="slide"
-            key={index}
-            style={{ backgroundColor }}
-          />
-        ))}
-      </StyledSlideShowSlider>
-      <StyledSlideShowDots className="slideshowDots">
-        {colors.map((_, idx) => (
-          <StyledSlideShowDot
-            key={idx}
-            className={index === idx ? "active" : ""}
-            onClick={() => {
-              setIndex(idx);
-            }}
-          ></StyledSlideShowDot>
-        ))}
-      </StyledSlideShowDots>
-    </StyledSlideshow>
+    <>
+      <Desktop>
+        <StyledSlideshow className="slideshow">
+          <StyledSlideShowSlider
+            className="slideshowSlider"
+            style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}
+          >
+            {eventImg.map((eventImg, index) => (
+              <StyledSlide
+                className="slide"
+                key={index}
+                // style={{ backgroundColor }}
+                src={eventImg}
+                onClick={() => navigate(`/event/${index}`)}
+              />
+            ))}
+          </StyledSlideShowSlider>
+          <StyledSlideShowDots className="slideshowDots">
+            {eventImg.map((_, idx) => (
+              <StyledSlideShowDot
+                key={idx}
+                className={index === idx ? "active" : ""}
+                onClick={() => {
+                  setIndex(idx);
+                }}
+              ></StyledSlideShowDot>
+            ))}
+          </StyledSlideShowDots>
+        </StyledSlideshow>
+      </Desktop>
+
+      <Mobile>
+        <StyledMobileSlideshow className="slideshow">
+          <StyledSlideShowSlider
+            className="slideshowSlider"
+            style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}
+          >
+            {eventImg.map((eventImg, index) => (
+              <StyledMobileSlide
+                className="slide"
+                key={index}
+                // style={{ backgroundColor }}
+                src={eventImg}
+                onClick={() => navigate(`/event/${index}`)}
+              />
+            ))}
+          </StyledSlideShowSlider>
+          <StyledSlideShowDots className="slideshowDots">
+            {eventImg.map((_, idx) => (
+              <StyledSlideShowDot
+                key={idx}
+                className={index === idx ? "active" : ""}
+                onClick={() => {
+                  setIndex(idx);
+                }}
+              ></StyledSlideShowDot>
+            ))}
+          </StyledSlideShowDots>
+        </StyledMobileSlideshow>
+      </Mobile>
+    </>
   );
 };
 
@@ -60,6 +104,7 @@ const StyledSlideshow = styled.div`
   margin: 0 auto;
   overflow: hidden;
   max-width: 1000px;
+  margin-bottom: 50px;
 `;
 
 const StyledSlideShowSlider = styled.div`
@@ -67,11 +112,12 @@ const StyledSlideShowSlider = styled.div`
   white-space: nowrap;
 `;
 
-const StyledSlide = styled.div`
+const StyledSlide = styled.img`
   display: inline-block;
-  height: 350px;
+  height: 300px;
   width: 100%;
   border-radius: 40px;
+  cursor: pointer;
 `;
 
 /* Buttons */
@@ -91,4 +137,18 @@ const StyledSlideShowDot = styled.div`
   &.active {
     background-color: #6a0dad;
   }
+`;
+
+const StyledMobileSlideshow = styled.div`
+  margin: 30px auto;
+  overflow: hidden;
+  max-width: 480px;
+`;
+
+const StyledMobileSlide = styled.img`
+  display: inline-block;
+  height: 150px;
+  width: 100%;
+  border-radius: 40px;
+  cursor: pointer;
 `;
