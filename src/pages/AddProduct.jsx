@@ -1,18 +1,18 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-
-import { addProducts } from "../redux/modules/productSlice";
 import { Layout } from "../components/layout/Layout";
 import { LocationModal } from "../components/location/LocationModal";
 import { RangeCalrendar } from "../components/calrendar/RangeCalrendar";
 import { LocationSearch } from "../components/location/LocationSearch";
 
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addProducts } from "../redux/modules/productSlice";
+
+import { Desktop, Mobile } from "../Hooks/MideaQuery";
 import imageCompression from "browser-image-compression";
 import Swal from "sweetalert2";
-import { Desktop, Mobile } from "../Hooks/MideaQuery";
 
 export const AddProduct = () => {
   const dispatch = useDispatch();
@@ -214,7 +214,6 @@ export const AddProduct = () => {
     }
   };
 
-
   // 위치정보 카카오 맵 모달창
   const [showModal, setShowModal] = useState(false);
   const closeModal = () => {
@@ -283,6 +282,7 @@ export const AddProduct = () => {
                       (사진 등록 최대 10장)
                     </StyledDeleteImg>
                   </StyledProductImagetWrap>
+                  <StyledThumnailMark>썸네일</StyledThumnailMark>
                 </StyledFormImageInputWrap>
                 <StyledImageSource>
                   imageSource: "https://icons8.com/icon/85123/expand-arrow
@@ -473,7 +473,9 @@ export const AddProduct = () => {
                       (사진 등록 최대 10장)
                     </StyledMobileDeleteImg>
                   </StyledMobileProductImagetWrap>
+                  <StyledThumnailMark>썸네일</StyledThumnailMark>
                 </StyledMobileFormImageInputWrap>
+
                 <StyledMobileImageSource>
                   imageSource: "https://icons8.com/icon/85123/expand-arrow
                   Expand Arrow icon by https://icons8.com Icons8"
@@ -655,6 +657,19 @@ const StyledFormImageInputWrap = styled.div`
   display: flex;
   flex-direction: column;
   height: 200px;
+`;
+
+const StyledThumnailMark = styled.div`
+  position: relative;
+  bottom: 350px;
+  left: 260px;
+  border: 1px solid rgb(71, 181, 255);
+  width: 65px;
+  border-radius: 5px;
+  text-align: center;
+  color: rgb(71, 181, 255);
+  font-weight: bold;
+  font-size: 15px;
 `;
 
 const StyledImageLabel = styled.label`

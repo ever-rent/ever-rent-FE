@@ -7,9 +7,8 @@ export const productAPI = {
   getSearch: (searchWord) => base.get(`/searchs?keyword=${searchWord}`),
   addProduct: (data) => auth.post(`/products`, data),
   getProductDetail: (productId) => base.get(`/products/${productId}`),
-  updateProduct: (data, productId) =>
-    auth.put(`/auth/products/${productId}`, data),
-  deleteProduct: (productId) => auth.delete(`/auth/products/${productId}`),
+  updateProduct: (data, productId) => auth.put(`/products/${productId}`, data),
+  deleteProduct: (productId) => auth.delete(`/products/${productId}`),
   toggleWishProduct: (productId) =>
     auth.post(`/products/wishlists/${productId}`),
 };
@@ -24,6 +23,7 @@ export const mypageAPI = {
   postRent: (data, productId) => auth.post(`/orders/${productId}`, data),
   postLike: (productId) => auth.post(`/products/wishlists/${productId}`),
   getMyInfo: () => auth.get(`/mypages/myinfos`),
+  putMyProfileImg: (formData) => auth.put("/updateInfo/image", formData),
   getWishList: () => auth.get(`/mypages/myWishs`),
   deleteMember: () => auth.delete(`/deleteMembers`),
 };

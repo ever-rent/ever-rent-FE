@@ -1,23 +1,16 @@
-import { Layout } from "../components/layout/Layout";
-import { useEffect, useState } from "react";
 import styled from "styled-components";
-
+import { useEffect, useState } from "react";
+import { Layout } from "../components/layout/Layout";
 import { SelectAddress } from "../components/selectAddress/SelectAddress";
-
-import { Desktop, Mobile } from "../Hooks/MideaQuery";
-
-import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
-import { auth } from "../server/core/instance";
-import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { mypageAPI } from "../server/api";
+import { Desktop, Mobile } from "../Hooks/MideaQuery";
+import { auth } from "../server/core/instance";
+import Swal from "sweetalert2";
 
 export const EditUserInfo = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const defaultImg =
-    "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcKDiD%2FbtrMtFuk9L9%2FkARIsatJxzfvNkf7H35QhK%2Fimg.png";
 
   // 회원정보 state
   const [email, setEmail] = useState("");
@@ -28,16 +21,13 @@ export const EditUserInfo = () => {
   const [subAddress, setSubAddress] = useState("");
   const [categoryInput, setCategoryInput] = useState("");
 
+  // location state
   const { state } = useLocation();
-
-  console.log(state);
   useEffect(() => {
-    console.log(state);
     setEmail(state.email);
     setUserNickName(state.memberName);
     setMainAddress(state.mainAddress);
     setSubAddress(state.subAddress);
-    // setCategoryInput(state.cateId);
   }, [state]);
 
   const [confirmStatus, setConfirmStatus] = useState(null);
@@ -98,19 +88,16 @@ export const EditUserInfo = () => {
   // formData
   let sendData = {
     email: email,
-    password: passwordConfirm,
+    password: passwordConfirm === "" ? "수정없음" : passwordConfirm,
     memberName: userNickName,
     mainAddress: mainAddress,
     subAddress: subAddress,
     cateId: categoryInput,
   };
-  console.log(sendData)
 
   // 회원정보 수정
   const editMyInfo = () => {
     if (
-      // password === "" ||
-      // passwordConfirm === "" ||
       userNickName === "" ||
       mainAddress === "" ||
       categoryInput === "" ||
@@ -123,7 +110,6 @@ export const EditUserInfo = () => {
         confirmButtonText: "확인",
       }).then((result) => {
         if (result.value) {
-          // 회원정보 수정 예정
         }
       });
     } else {
@@ -309,6 +295,11 @@ export const EditUserInfo = () => {
                 <StyledCategoryOptions value="7">도서</StyledCategoryOptions>
                 <StyledCategoryOptions value="8">기타</StyledCategoryOptions>
               </StyledCategorySelector>
+              <StyledInfoSubWrap>
+                <StyledEditSubName>
+                  * 원하는 상품을 노출시키는데 도움이 됩니다. (필수)
+                </StyledEditSubName>
+              </StyledInfoSubWrap>
             </StyledInfoWrap>
             <StyledButtons>
               <StyledCancelButton>홈으로</StyledCancelButton>
@@ -471,6 +462,11 @@ export const EditUserInfo = () => {
                 <StyledCategoryOptions value="7">도서</StyledCategoryOptions>
                 <StyledCategoryOptions value="8">기타</StyledCategoryOptions>
               </StyledCategorySelector>
+              <StyledInfoSubWrap>
+                <StyledEditSubName>
+                  * 원하는 상품을 노출시키는데 도움이 됩니다. (필수)
+                </StyledEditSubName>
+              </StyledInfoSubWrap>
             </StyledMobileInfoWrap>
             <StyledButtons>
               <StyledCancelButton>홈으로</StyledCancelButton>
@@ -559,7 +555,7 @@ const StyledNonPassword = styled.label`
 const StyledAdressSelect = styled.div`
   & select {
     width: 200px;
-    height:50px;
+    height: 50px;
 
     appearance: none;
     background: url("https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FDVyUU%2FbtrMqr4wuGA%2FezDgk3FguiKztDPowbkwB0%2Fimg.png")
@@ -687,7 +683,7 @@ const StyledMobileEditInput = styled.input`
 const StyledMobileAdressSelect = styled.div`
   & select {
     width: 120px;
-    height:40px;
+    height: 40px;
 
     appearance: none;
     background: url("https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FDVyUU%2FbtrMqr4wuGA%2FezDgk3FguiKztDPowbkwB0%2Fimg.png")
