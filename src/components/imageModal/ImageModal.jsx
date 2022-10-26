@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { imgFirstString } from "../../server/api";
-import { Desktop, Mobile } from "../../Hooks/MideaQuery";
+import { useEffect, useState } from "react";
 import { ImageMobileModal } from "./ImageMobileModal";
+import { Desktop, Mobile } from "../../Hooks/MideaQuery";
+import { imgFirstString } from "../../server/api";
 
 export const ImageModal = ({
   showImages,

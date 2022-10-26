@@ -13,7 +13,10 @@ export const SecondEvent = () => {
           src={require("../../image/eventTwo2.png")}
           alt="이벤트포스터"
         />
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSe6cqZrXCUhTOFmYXWtTtIfj1-JfI8qoCPIXlKG8nPCi7PCmA/viewform">
+        <a
+          href="https://docs.google.com/forms/d/e/1FAIpQLSe6cqZrXCUhTOFmYXWtTtIfj1-JfI8qoCPIXlKG8nPCi7PCmA/viewform"
+          target="_blank"
+        >
           <StyledButton>설문 참여하기</StyledButton>
         </a>
         <p>설문조사는 참여하실 수 있지만</p>

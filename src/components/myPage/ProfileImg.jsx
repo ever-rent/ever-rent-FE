@@ -1,11 +1,10 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import Swal from "sweetalert2";
-import { auth } from "../../server/core/instance";
 import { useDispatch } from "react-redux";
-import { getMyInfo } from "../../redux/modules/mypageSlice";
+import { putMyProfileImage } from "../../redux/modules/mypageSlice";
+import Swal from "sweetalert2";
 
-export const ProfileImg = ({ showProfile, closeProfileimgFix, defaultImg }) => {
+export const ProfileImg = ({ showProfile, closeProfileimgFix, profileImg }) => {
   const dispatch = useDispatch();
 
   // 이미지 처리
@@ -45,7 +44,7 @@ export const ProfileImg = ({ showProfile, closeProfileimgFix, defaultImg }) => {
     }).then((result) => {
       if (result.value) {
         formData.append("multipartFile", sendImage);
-        auth.put("/updateInfo/image",formData)
+        dispatch(putMyProfileImage(formData));
       }
       Swal.fire({
         title: "저장완료!",
@@ -54,7 +53,6 @@ export const ProfileImg = ({ showProfile, closeProfileimgFix, defaultImg }) => {
         confirmButtonText: "확인",
       }).then((result) => {
         if (result.value) {
-          // dispatch(getMyInfo());
           setSendImage();
           closeProfileimgFix();
         }
@@ -81,7 +79,7 @@ export const ProfileImg = ({ showProfile, closeProfileimgFix, defaultImg }) => {
               }}
             />
             <SyltedImageView
-              src={sendImage === undefined ? defaultImg : imgView}
+              src={sendImage === undefined ? profileImg : imgView}
               alt="이미지 미리보기"
             />
             <StyledImageLabel htmlFor="inputFile">이미지 선택</StyledImageLabel>
@@ -116,14 +114,14 @@ const StyledModalContainer = styled.div`
   transform: translate(-50%, -50%);
 
   animation: profileImgFadein 0.6s;
-  &{
+  & {
     @keyframes profileImgFadein {
-        from{
-            opacity:0;
-        }
-        to{
-            opacity:1;
-        }
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
     }
   }
 `;

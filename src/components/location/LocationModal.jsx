@@ -10,7 +10,6 @@ export const LocationModal = ({
 }) => {
   // 거래장소 props 추가 예정
   const { kakao } = window;
-
   const [info, setInfo] = useState();
   const [markers, setMarkers] = useState([]);
   const [map, setMap] = useState();

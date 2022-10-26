@@ -1,17 +1,14 @@
 import styled from "styled-components";
-
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { Layout } from "../layout/Layout";
 import { Skeleton } from "../skeleton/Skeleton";
 import { ProductsItem } from "../main/products/ProductsItem";
 import { Pagination } from "./Pagination";
-
 import { Desktop, Mobile } from "../../Hooks/MideaQuery";
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import { productAPI } from "../../server/api";
 
 export const SearchItems = () => {
-  const navigate = useNavigate();
   const param = useParams();
 
   const categoryList = [
@@ -220,6 +217,7 @@ export const SearchItems = () => {
               prevPageText={"<"}
               nextPageText={">"}
               handlePageChange={handlePageChange}
+              maxItems={5}
             />
           </StyledProductsContainer>
         </Layout>
@@ -230,61 +228,60 @@ export const SearchItems = () => {
           <StyledMobileContainer>
             <StyledMobileSelectBox>
               <StyledMobileSelectWrap>
-
-              <StyledMobileSelect
-                onChange={(e) => categoryHandler(e)}
-                defaultChecked={0}
-                value={categoryNumber}
-              >
-                {categoryList?.map((option, index) => {
-                  if (index === 0) {
-                    return (
-                      <option
-                        key={option.value}
-                        value={option.value}
-                        disabled={true}
-                      >
-                        {option.name}
-                      </option>
-                    );
-                  } else {
-                    return (
-                      <option key={option.value} value={option.value}>
-                        {option.name}
-                      </option>
-                    );
-                  }
-                })}
-              </StyledMobileSelect>
-              <StyledMobileSelect
-                onChange={(e) => priceHandler(e)}
-                defaultChecked={0}
-                value={`${priceNumber}`}
-              >
-                {priceList?.map((option) => {
-                  if (option.value === 0) {
-                    return (
-                      <option
-                        key={option.value}
-                        value={option.value}
-                        disabled={true}
-                      >
-                        {option.name}
-                      </option>
-                    );
-                  } else {
-                    return (
-                      <option key={option.value} value={option.value}>
-                        {option.name}
-                      </option>
-                    );
-                  }
-                })}
-              </StyledMobileSelect>
+                <StyledMobileSelect
+                  onChange={(e) => categoryHandler(e)}
+                  defaultChecked={0}
+                  value={categoryNumber}
+                >
+                  {categoryList?.map((option, index) => {
+                    if (index === 0) {
+                      return (
+                        <option
+                          key={option.value}
+                          value={option.value}
+                          disabled={true}
+                        >
+                          {option.name}
+                        </option>
+                      );
+                    } else {
+                      return (
+                        <option key={option.value} value={option.value}>
+                          {option.name}
+                        </option>
+                      );
+                    }
+                  })}
+                </StyledMobileSelect>
+                <StyledMobileSelect
+                  onChange={(e) => priceHandler(e)}
+                  defaultChecked={0}
+                  value={`${priceNumber}`}
+                >
+                  {priceList?.map((option) => {
+                    if (option.value === 0) {
+                      return (
+                        <option
+                          key={option.value}
+                          value={option.value}
+                          disabled={true}
+                        >
+                          {option.name}
+                        </option>
+                      );
+                    } else {
+                      return (
+                        <option key={option.value} value={option.value}>
+                          {option.name}
+                        </option>
+                      );
+                    }
+                  })}
+                </StyledMobileSelect>
               </StyledMobileSelectWrap>
-              <StyledInitSpan onClick={initOptions}>
+              <StyledMobileInitSpan onClick={initOptions}>
                 검색조건 초기화
-              </StyledInitSpan>
+              </StyledMobileInitSpan>
             </StyledMobileSelectBox>
             <span>다음으로 검색된 목록 : {param.id}</span>
             {isLoading ? (
@@ -307,6 +304,7 @@ export const SearchItems = () => {
               prevPageText={"<"}
               nextPageText={">"}
               handlePageChange={handlePageChange}
+              maxItems={5}
             />
           </StyledMobileContainer>
         </Layout>
@@ -360,14 +358,23 @@ const StyledMobileContainer = styled.div`
 
 const StyledMobileSelectBox = styled.div`
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
   align-items: center;
-  margin-top:80px;
-`
+  margin-top: 80px;
+`;
 
 const StyledMobileSelectWrap = styled.div`
   display: flex;
-`
+`;
+
+const StyledMobileInitSpan = styled.span`
+  color: gray;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  position: relative;
+  left: 85px;
+`;
 
 const StyledMobileSelect = styled.select`
   border: 2px solid #5fafe4;
@@ -380,8 +387,7 @@ const StyledMobileSelect = styled.select`
     box-shadow: 0 0 3px 0 rgb(71, 181, 255);
     transition: box-shadow 0.1s ease-in-out 0s;
   }
-`
-
+`;
 
 const StyledMobileProducts = styled.div`
   /* border: 1px solid red; */

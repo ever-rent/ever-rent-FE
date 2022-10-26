@@ -160,6 +160,20 @@ export const getMyInfo = createAsyncThunk(
   }
 );
 
+export const putMyProfileImage = createAsyncThunk(
+  "PUT_MY_PROFILE",
+  async (payload, thunkAPI) => {
+    console.log("putMyProfileImage 시작");
+    try {
+      const { data } = await mypageAPI.putMyProfileImg(payload);
+      console.log("getMyInfo 성공", data.data);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const getWishList = createAsyncThunk(
   "GET_LIKE_LIST",
   async (_, thunkAPI) => {
@@ -253,6 +267,11 @@ export const mypageSlice = createSlice({
     },
     [getMyInfo.fulfilled]: (state, action) => {
       state.myinfo = action.payload;
+    },
+    [putMyProfileImage.fulfilled]: (state, action) => {
+      console.log(current(state));
+      console.log(action.payload);
+      state.myinfo.imgUrl = action.payload.imgUrl;
     },
     [getWishList.fulfilled]: (state, action) => {
       state.MyWish = action.payload;

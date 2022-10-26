@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { imgFirstString } from "../../server/api";
 import { badgeObject } from "../../util/badgeObject";
 
 export const OtherProfile = ({
@@ -48,17 +47,16 @@ const StyledModalContainer = styled.div`
   transform: translate(-50%, -50%);
 
   animation: badgeFadein 0.6s;
-  &{
+  & {
     @keyframes badgeFadein {
       from {
-        opacity:0;
+        opacity: 0;
       }
       to {
-        opacity:1;
+        opacity: 1;
       }
     }
   }
-  
 `;
 
 const StyledModalBackground = styled.div`

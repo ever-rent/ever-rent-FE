@@ -1,18 +1,18 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-
-import { addProducts } from "../redux/modules/productSlice";
 import { Layout } from "../components/layout/Layout";
 import { LocationModal } from "../components/location/LocationModal";
 import { RangeCalrendar } from "../components/calrendar/RangeCalrendar";
 import { LocationSearch } from "../components/location/LocationSearch";
 
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addProducts } from "../redux/modules/productSlice";
+
+import { Desktop, Mobile } from "../Hooks/MideaQuery";
 import imageCompression from "browser-image-compression";
 import Swal from "sweetalert2";
-import { Desktop, Mobile } from "../Hooks/MideaQuery";
 
 export const AddProduct = () => {
   const dispatch = useDispatch();
