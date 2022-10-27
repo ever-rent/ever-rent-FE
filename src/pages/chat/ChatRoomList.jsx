@@ -15,7 +15,7 @@ export const ChatRoomList = ({ isSideNav }) => {
 
 	useEffect(() => {
 		dispatch(getMyChatRoom());
-	}, [dispatch]);
+	}, []);
 
 	const myChatList = useSelector((state) => state.chat.chatRoomList);
 
