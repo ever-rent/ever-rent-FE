@@ -112,20 +112,21 @@ export const ChatRoom = () => {
       { PK: response.memberId },
       JSON.stringify(otherChatMessage)
     );
+    updateChatMessage();
   };
 
   const queryClient = useQueryClient();
 
   const updateChatMessage = (payload) => {
-    const message = JSON.parse(payload.body);
+    // const message = JSON.parse(payload.body);
 
-    if (
-      message.type === "ENTER" ||
-      message.type === "TALK" ||
-      message.type === "QUIT"
-    ) {
+    // if (
+    //   message.type === "ENTER" ||
+    //   message.type === "TALK" ||
+    //   message.type === "QUIT"
+    // ) {
       queryClient.invalidateQueries("getChatMessage");
-    }
+    // }
   };
 
   const sendMessage = () => {
