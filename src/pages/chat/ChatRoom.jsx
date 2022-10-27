@@ -30,7 +30,7 @@ export const ChatRoom = () => {
   );
 
   const productDetail = productData?.data.data;
-  
+
   const { data: chatData, isLoading } = useQuery("getChatMessage", () =>
     chatAPI.getChatMessage(roomId)
   );
@@ -116,8 +116,16 @@ export const ChatRoom = () => {
 
   const queryClient = useQueryClient();
 
-  const updateChatMessage = () => {
-    queryClient.invalidateQueries("getChatMessage");
+  const updateChatMessage = (payload) => {
+    const message = JSON.parse(payload.body);
+
+    if (
+      message.type === "ENTER" ||
+      message.type === "TALK" ||
+      message.type === "QUIT"
+    ) {
+      queryClient.invalidateQueries("getChatMessage");
+    }
   };
 
   const sendMessage = () => {
@@ -241,7 +249,7 @@ export const ChatRoom = () => {
           title: "렌탈 신청이 완료되었습니다.",
           icon: "success",
           confirmButtonText: "확인",
-        })
+        });
       })
       .catch((err) => {
         console.log(err);

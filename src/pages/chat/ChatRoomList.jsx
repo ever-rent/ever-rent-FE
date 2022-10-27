@@ -1,21 +1,32 @@
 import { ChatRoomItem } from "../../components/chat/ChatRoomItem";
 import { StyledChatRoomList } from "./styled";
-import { useQuery } from "react-query";
-import { chatAPI } from "../../server/api";
+// import { useQuery } from "react-query";
+// import { chatAPI } from "../../server/api";
 import { ChatHeader } from "../../components/header/ChatHeader";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getMyChatRoom } from "../../redux/modules/chatSlice";
 
 export const ChatRoomList = ({ isSideNav }) => {
-  const { data } = useQuery("getChatRoomList", () => chatAPI.getChatRoomList());
-  const chatRoomList = data?.data.chatRoomResponseDtoList;
+  // const { data } = useQuery("getChatRoomList", () => chatAPI.getChatRoomList());
+  // const chatRoomList = data?.data.chatRoomResponseDtoList;
+
+  const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(getMyChatRoom());
+	}, [dispatch]);
+
+	const myChatList = useSelector((state) => state.chat.chatRoomList);
 
   return (
     <>
       {isSideNav ? (
         <StyledChatRoomList isSideNav={isSideNav}>
-          {!chatRoomList ? (
+          {!myChatList ? (
             <h2>대화중인 채팅방이 없습니다.</h2>
           ) : (
-            chatRoomList.map((item, index) => {
+            myChatList.map((item, index) => {
               return <ChatRoomItem item={item} key={index} />;
             })
           )}
@@ -23,10 +34,10 @@ export const ChatRoomList = ({ isSideNav }) => {
       ) : (
         <StyledChatRoomList isSideNav={isSideNav}>
           <ChatHeader />
-          {!chatRoomList ? (
+          {!myChatList ? (
             <h2>대화중인 채팅방이 없습니다.</h2>
           ) : (
-            chatRoomList.map((item, index) => {
+            myChatList.map((item, index) => {
               return <ChatRoomItem item={item} key={index} />;
             })
           )}
