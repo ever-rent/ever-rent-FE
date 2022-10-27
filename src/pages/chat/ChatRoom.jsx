@@ -107,26 +107,28 @@ export const ChatRoom = () => {
     };
 
     stompClient.send(`/pub/chat/message`, { PK }, JSON.stringify(chatMessage));
+    updateChatMessage(chatMessage);
+    
     stompClient.send(
       `/pub/chat/message`,
       { PK: response.memberId },
       JSON.stringify(otherChatMessage)
     );
-    updateChatMessage();
+    updateChatMessage(otherChatMessage);
   };
 
   const queryClient = useQueryClient();
 
   const updateChatMessage = (payload) => {
-    // const message = JSON.parse(payload.body);
+    const message = JSON.parse(payload.body);
 
-    // if (
-    //   message.type === "ENTER" ||
-    //   message.type === "TALK" ||
-    //   message.type === "QUIT"
-    // ) {
+    if (
+      message.type === "ENTER" ||
+      message.type === "TALK" ||
+      message.type === "QUIT"
+    ) {
       queryClient.invalidateQueries("getChatMessage");
-    // }
+    }
   };
 
   const sendMessage = () => {
@@ -149,6 +151,7 @@ export const ChatRoom = () => {
         JSON.stringify(chatMessage)
       );
       setUserData({ ...userData, message: "" });
+      updateChatMessage(chatMessage);
     }
   };
 
