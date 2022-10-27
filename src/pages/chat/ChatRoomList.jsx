@@ -1,7 +1,5 @@
 import { ChatRoomItem } from "../../components/chat/ChatRoomItem";
 import { StyledChatRoomList } from "./styled";
-// import { useQuery } from "react-query";
-// import { chatAPI } from "../../server/api";
 import { ChatHeader } from "../../components/header/ChatHeader";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -13,20 +11,20 @@ export const ChatRoomList = ({ isSideNav }) => {
 
   const dispatch = useDispatch();
 
-	useEffect(() => {
-		dispatch(getMyChatRoom());
-	}, []);
+  useEffect(() => {
+    dispatch(getMyChatRoom());
+  }, []);
 
-	const myChatList = useSelector((state) => state.chat.chatRoomList);
+  const chatRoomList = useSelector((state) => state.chat.chatRoomList);
 
   return (
     <>
       {isSideNav ? (
         <StyledChatRoomList isSideNav={isSideNav}>
-          {!myChatList ? (
+          {!chatRoomList ? (
             <h2>대화중인 채팅방이 없습니다.</h2>
           ) : (
-            myChatList.map((item, index) => {
+            chatRoomList.map((item, index) => {
               return <ChatRoomItem item={item} key={index} />;
             })
           )}
@@ -34,10 +32,10 @@ export const ChatRoomList = ({ isSideNav }) => {
       ) : (
         <StyledChatRoomList isSideNav={isSideNav}>
           <ChatHeader />
-          {!myChatList ? (
+          {!chatRoomList ? (
             <h2>대화중인 채팅방이 없습니다.</h2>
           ) : (
-            myChatList.map((item, index) => {
+            chatRoomList.map((item, index) => {
               return <ChatRoomItem item={item} key={index} />;
             })
           )}

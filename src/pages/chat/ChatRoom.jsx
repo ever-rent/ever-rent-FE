@@ -12,33 +12,34 @@ import { FaRegWindowClose } from "react-icons/fa";
 import Scrollbars from "react-custom-scrollbars";
 import { useQuery, useQueryClient } from "react-query";
 import Swal from "sweetalert2";
+import { useDispatch, useSelector } from "react-redux";
+import { getProductDetail } from "../../redux/modules/chatSlice";
 
 let stompClient = null;
 
 export const ChatRoom = () => {
   const { productId } = useParams();
   const { roomId } = useParams();
-  const navigate = useNavigate();
   const scrollbarRef = useRef(null);
+  const navigate = useNavigate();
 
   const PK = localStorage.getItem("memberId");
   const myNickname = localStorage.getItem("memberName");
   const token = localStorage.getItem("accessToken").slice(7);
 
-  const { data: productData } = useQuery("getProductDetail", () =>
-    productAPI.getProductDetail(productId)
-  );
+  // const { data: productData } = useQuery("getProductDetail", () =>
+  //   productAPI.getProductDetail(productId)
+  // );
+  // const productDetail = productData?.data.data;
 
-  const productDetail = productData?.data.data;
+  const dispatch = useDispatch();
+  const productDetail = useSelector((state) => state.chat.productDetail);
 
-  const { data: chatData, isLoading } = useQuery("getChatMessage", () =>
-    chatAPI.getChatMessage(roomId)
-  );
+  // const { data: chatData, isLoading } = useQuery("getChatMessage", () =>
+  //   chatAPI.getChatMessage(roomId)
+  // );
 
-  const chatList = useMemo(() => {
-    return chatData?.data;
-  }, [chatData]);
-
+  const [chatList, setChatList] = useState([]);
   const [userData, setUserData] = useState({
     type: "",
     roomId: roomId,
@@ -72,9 +73,10 @@ export const ChatRoom = () => {
   };
 
   const onConnected = async () => {
-    if (productDetail) {
-      stompClient.subscribe(`/sub/chat/room/${roomId}`, updateChatMessage);
-      userJoin(productDetail);
+    const response = await dispatch(getProductDetail(productId)).unwrap();
+    if (response) {
+      stompClient.subscribe(`/sub/chat/room/${roomId}`, onMessageReceived);
+      userJoin(response);
       scrollbarRef.current?.scrollToBottom();
     }
   };
@@ -114,15 +116,28 @@ export const ChatRoom = () => {
     );
   };
 
-  const queryClient = useQueryClient();
+  const onMessageReceived = (payload) => {
+    let payloadData = JSON.parse(payload.body);
 
-  const updateChatMessage = (payload) => {
-    const message = JSON.parse(payload.body);
-
-    if (message.type === "ENTER" || message.type === "TALK" || message.type === "QUIT") {
-      queryClient.invalidateQueries("getChatMessage");
+    if (payloadData.type === "ENTER" || payloadData.type === "TALK") {
+      chatAPI.getChatMessage(roomId).then((res) => {
+        setChatList([...res.data]);
+      });
     }
   };
+
+  // const queryClient = useQueryClient();
+
+  // const updateChatMessage = (payload) => {
+  //   const message = JSON.parse(payload.body);
+  //   if (
+  //     message.type === "ENTER" ||
+  //     message.type === "TALK" ||
+  //     message.type === "QUIT"
+  //   ) {
+  //     queryClient.invalidateQueries("getChatMessage");
+  //   }
+  // };
 
   const sendMessage = () => {
     if (stompClient && userData.message) {
@@ -221,14 +236,18 @@ export const ChatRoom = () => {
   const startEndDays = (start, end) => {
     let startDay = start;
     let endDay = end;
-
     let sYaer = startDay?.getFullYear();
     let sMonth = startDay?.getMonth() + 1;
-    let sDay = startDay?.getDate();
+    let sDay =
+      startDay?.getDate() < 10
+        ? "0" + `${startDay?.getDate()}`
+        : `${startDay?.getDate()}`;
     let eYaer = endDay?.getFullYear();
     let eMonth = endDay?.getMonth() + 1;
-    let eDay = endDay?.getDate();
-
+    let eDay =
+      endDay?.getDate() < 10
+        ? "0" + `${endDay?.getDate()}`
+        : `${endDay?.getDate()}`;
     setStartDateInput(`${sYaer}-${sMonth}-${sDay}`);
     setEndDateInput(`${eYaer}-${eMonth}-${eDay}`);
   };
@@ -259,25 +278,29 @@ export const ChatRoom = () => {
       <div className="head-wrap">
         <ChatHeader isChatRoom={true} quitRoom={quitRoom} />
         <div className="head-container">
-          <div className="head-box">
-            <div
-              className="head-text-box"
-              onClick={() => navigate(`/productDetail/${productDetail.id}`)}
-            >
-              <img
-                src={`${imgFirstString}${productDetail?.imgUrlArray[0]}`}
-                className="head-img"
-                alt="img"
-              />
-            </div>
-            <div className="head-text-box">
-              <div className="head-title">{productDetail?.productName}</div>
-              <div className="head-cost">
-                <FaMoneyBillAlt />
-                {postPrice}원
+          {/* {productDetail && ( */}
+            <div className="head-box">
+              <div
+                className="head-text-box"
+                onClick={() => navigate(`/productDetail/${productDetail.id}`)}
+              >
+                {/* {productDetail?.imgUrlArray.length && (
+                  <img
+                    src={`${imgFirstString}${productDetail?.imgUrlArray[0]}`}
+                    className="head-img"
+                    alt="img"
+                  />
+                )} */}
+              </div>
+              <div className="head-text-box">
+                <div className="head-title">{productDetail?.productName}</div>
+                <div className="head-cost">
+                  <FaMoneyBillAlt />
+                  {postPrice}원
+                </div>
               </div>
             </div>
-          </div>
+          {/* )} */}
           {chatList
             ? productDetail?.memberName !== myNickname && (
                 <button
@@ -313,7 +336,7 @@ export const ChatRoom = () => {
       </div>
 
       <div className="container">
-        {isLoading && <h2>채팅 메시지 불러오는중..</h2>}
+        {/* {isLoading && <h2>채팅 메시지 불러오는중..</h2>} */}
         <Scrollbars autoHide ref={scrollbarRef}>
           {chatList?.map((chat, idx) => {
             return (
