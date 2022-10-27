@@ -98,7 +98,7 @@ const StyledTitle = styled.div`
   text-overflow: ellipsis; // ... 만들기
   white-space: nowrap; // 아래줄로 내려가는 것을 막기위해
   word-break: break-all;
-  width: 150px;
+  width: 140px;
   height: 20px;
   cursor: pointer;
 `;

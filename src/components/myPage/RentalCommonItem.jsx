@@ -128,6 +128,7 @@ export const RentalCommonItem = ({ item, index }) => {
     setRentStatus(dateToTime(new Date(timeStatus)));
   }, [rentEnd, item]);
 
+  useEffect(() => {}, []);
   return (
     <>
       <Desktop>
