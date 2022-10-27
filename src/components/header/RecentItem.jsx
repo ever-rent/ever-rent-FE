@@ -97,8 +97,6 @@ const StyledRecentItemContainer = styled.div`
   border: 1px solid gray;
   position: absolute;
   position: fixed;
-  /* right: 2vw; */
-  /* top: 30%; */
   top: 300px;
   right: calc(50% - 710px);
   transform: translate(-50%, -50%);
@@ -134,6 +132,7 @@ const StyledImgBox = styled.div`
 const StyledImg = styled.img`
   width: 100%;
   height: 100%;
+  object-fit: cover;
   cursor: pointer;
 `;
 

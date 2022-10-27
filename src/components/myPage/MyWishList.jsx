@@ -41,16 +41,7 @@ export const MyWishList = () => {
   );
 };
 
-// const StyledWishBox = styled.div`
-//   display: flex;
-//   flex-direction: column;
-// `;
-
-// const StyledTitle = styled.div``;
-
 const StyledItem = styled.div`
-  /* border: 1px solid red; */
-
   display: flex;
   flex-direction: column;
   padding-top: 10px;
@@ -84,4 +75,5 @@ const StyledMobileTitle = styled.span`
 const StyledMobileList = styled.div`
   width: 100%;
   margin-top: 15px;
+  margin-bottom: 80px;
 `;

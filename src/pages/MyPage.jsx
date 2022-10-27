@@ -109,7 +109,7 @@ const StyledFadeBox = styled.div`
 
 const StyledMobileLikeList = styled.div`
   grid-row: 1/4;
-  box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+  /* box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px; */
   animation: fadein 0.6s;
   @keyframes fadein {
     from {

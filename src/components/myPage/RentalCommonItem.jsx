@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { acceptOrder } from "../../redux/modules/mypageSlice";
 import Swal from "sweetalert2";
 import { Mobile, Desktop } from "../../Hooks/MideaQuery";
-import { imgFirstString, mypageAPI } from "../../server/api";
+import { imgFirstString } from "../../server/api";
 import { dateToTime } from "../../util/timeToToday";
 import { useNavigate } from "react-router-dom";
 
@@ -15,14 +15,12 @@ export const RentalCommonItem = ({ item, index }) => {
     price,
     imgUrlArray,
     productName,
-    content,
     memberName,
     rentStart,
     rentEnd,
     buyStart,
     buyEnd,
   } = item;
-  // console.log(item);
 
   console.log("RentalCommonItem", item);
 
@@ -46,16 +44,6 @@ export const RentalCommonItem = ({ item, index }) => {
         Swal.fire("취소되었습니다!");
       }
     });
-    console.log(typeof id);
-    console.log(typeof String(id));
-
-    // dispatch(acceptOrder(String(id)));
-  };
-  console.log(id);
-
-  const fetch = async () => {
-    const res = await mypageAPI.acceptOrder(String(id));
-    console.log("response", res.data);
   };
 
   const acceptAndReject = (index) => {
@@ -63,18 +51,12 @@ export const RentalCommonItem = ({ item, index }) => {
       return (
         <StyledButtonBox>
           <StyledAcceptbutton onClick={acceptHandler}>수락</StyledAcceptbutton>
-          {/* <StyledRejectdbutton>거절</StyledRejectdbutton> */}
         </StyledButtonBox>
       );
     } else {
       return;
     }
   };
-
-  // const [isPrice, setIsPrice] = useState(0);
-  // setTimeout(() => {
-  //   setIsPrice(price);
-  // }, 800);
 
   const priceBox = (index) => {
     if (index === 0) {
@@ -99,7 +81,7 @@ export const RentalCommonItem = ({ item, index }) => {
             {rentStart} ~ {rentEnd}
           </span>
           <span className="date">
-            <div>남은기간 : {rentStatus}</div>
+            <div>마감까지 : {rentStatus}</div>
           </span>
         </>
       );
@@ -183,7 +165,6 @@ export const RentalCommonItem = ({ item, index }) => {
 };
 
 const StyledItem = styled.div`
-  /* border: 1px solid red; */
   width: 600px;
   display: flex;
   position: relative;
@@ -206,10 +187,8 @@ const StyledItem = styled.div`
     display: flex;
     flex-direction: column;
     .title {
-      /* color: #999; */
       font-size: 17px;
       font-weight: 600;
-      /* margin-bottom: 5px; */
     }
     .date {
       font-size: 15px;
@@ -220,9 +199,7 @@ const StyledItem = styled.div`
       color: #999;
     }
     .price {
-      /* color: #0092f3; */
       font-weight: 600;
-      /* font-size: 12px; */
     }
     .period {
       color: #999;
@@ -236,8 +213,9 @@ const StyledItem = styled.div`
       margin-top: 9px;
     }
     .apply {
-      color: #999;
-      font-size: 13px;
+      color: red;
+      font-weight: 600;
+      font-size: 15px;
       margin-top: 9px;
     }
   }
@@ -263,30 +241,17 @@ const StyledAcceptbutton = styled.button`
   padding: 4px 5px;
   margin-right: 7px;
   cursor: pointer;
-  /* min-width: max-content; */
-`;
-
-const StyledRejectdbutton = styled.button`
-  /* background-color: #47b5ff; */
-  color: gray;
-  border: transparent;
-  border-radius: 3px;
-  padding: 4px 5px;
-  margin-right: 7px;
-  cursor: pointer;
-  /* min-width: max-content; */
 `;
 
 const StyledImg = styled.img`
   cursor: pointer;
+  object-fit: cover;
 `;
 
 const StyledMobileItem = styled.div`
-  /* border: 1px solid red; */
   display: flex;
   position: relative;
   padding: 10px;
-  /* margin-bottom: 7px; */
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   .like {
     position: absolute;
@@ -308,7 +273,7 @@ const StyledMobileItem = styled.div`
       font-weight: 600;
     }
     .date {
-      font-size: 13px;
+      font-size: 15px;
       color: red;
       font-weight: 500;
     }
@@ -316,9 +281,7 @@ const StyledMobileItem = styled.div`
       color: #999;
     }
     .price {
-      /* color: #0092f3; */
       font-weight: 600;
-      /* font-size: 12px; */
     }
     .period {
       color: #999;
@@ -326,6 +289,16 @@ const StyledMobileItem = styled.div`
     }
     .day {
       font-size: 13px;
+    }
+    .apply {
+      color: red;
+      font-weight: 600;
+      font-size: 15px;
+      margin-top: 9px;
+      margin-bottom: 7px;
+    }
+    .resevation {
+      font-size: 15px;
     }
   }
 `;

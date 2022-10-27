@@ -2,16 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { timeToToday } from "../../../util/timeToToday";
-import { useDispatch, useSelector } from "react-redux";
-import { postRent } from "../../../redux/modules/mypageSlice";
-import { postLike } from "../../../redux/modules/mypageSlice";
 import { imgFirstString } from "../../../server/api";
 import { Desktop, Mobile } from "../../../Hooks/MideaQuery";
 
 export const ProductsItem = ({
   id,
-  imgUrl,
-  imgUrlArray,
   productName,
   memberName,
   price,
@@ -22,23 +17,11 @@ export const ProductsItem = ({
   writeAt,
   cateId,
   location,
-  mapLocation,
-  rentEnd,
-  rentStart,
   status,
   heart,
   thumbimgUrl,
 }) => {
-  // console.log(wishNum);
-  // 찜목록용 dispatch
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  // const [isrent, setIsrent] = useState(false);
-
-  const data = useSelector((state) => state.mypage?.like);
-  // console.log("data", id, data);
-  // console.log(id, like);
 
   //상품 status
   const presentStatus = (status) => {
@@ -48,41 +31,6 @@ export const ProductsItem = ({
       return <StyledStatus>렌탈확정</StyledStatus>;
     } else if (status === "EXPIRATION") {
       return <StyledStatus>기한만료</StyledStatus>;
-    }
-  };
-
-  //TODO: 찜하기 기능은 빼고 숫자만 보여주는 것으로 바꿀 예정.
-
-  // 찜하기
-  const [togglelike, setTogglelike] = useState(heart);
-  const [likeCount, setLikeCount] = useState(wishNum);
-  // console.log("heart 처음상태 >>", togglelike);
-
-  const likeHandler = (e) => {
-    e.preventDefault();
-    setTogglelike(!togglelike);
-    setLikeCount(likeCount + 1);
-    dispatch(postLike(id));
-  };
-
-  const canceLikeHandler = (e) => {
-    e.preventDefault();
-    setTogglelike(!togglelike);
-    setLikeCount(likeCount - 1);
-
-    dispatch(postLike(id));
-  };
-
-  // 비회원이 찜하기 클릭할 때
-  const nonMemberLike = (e) => {
-    e.preventDefault();
-    const answer = window.confirm(
-      "찜하기 기능은 로그인 시에만 이용가능합니다.\n로그인 페이지로 이동하시겠습니까?"
-    );
-    if (answer === true) {
-      navigate("/login");
-    } else {
-      return;
     }
   };
 
@@ -98,9 +46,10 @@ export const ProductsItem = ({
     <>
       <Desktop>
         <StyledItemBox
-          style={
-            status === "EXPIRATION" ? { backgroundColor: "#a5a1a3" } : null
-          }
+          onClick={() => {
+            navigate(`/productDetail/${id}`);
+          }}
+          style={status === "EXPIRATION" ? { opacity: 0.5 } : null}
         >
           <StyledImgBox
             onClick={() => {
@@ -138,39 +87,6 @@ export const ProductsItem = ({
                   alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
                 />
                 <span>{wishNum}</span>
-
-                {/* {localStorage.getItem("memberId") ? (
-                  <>
-                    {togglelike ? (
-                      <>
-                        <StyledLike
-                          onClick={canceLikeHandler}
-                          src="https://img.icons8.com/ios-filled/50/47b5ff/like--v1.png"
-                          alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
-                        />
-                        <span>찜 {likeCount}</span>
-                      </>
-                    ) : (
-                      <>
-                        <StyledLike
-                          onClick={likeHandler}
-                          src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
-                          alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
-                        />
-                        <span>찜 {likeCount}</span>
-                      </>
-                    )}
-                  </>
-                ) : (
-                  <>
-                    <StyledLike
-                      onClick={nonMemberLike}
-                      src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
-                      alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
-                    />
-                    <span>찜 {likeCount}</span>
-                  </>
-                )} */}
               </StyledLikeWrap>
               <StyledChatWrap>
                 <StyledChat
@@ -186,9 +102,7 @@ export const ProductsItem = ({
 
       <Mobile>
         <StyledMobileItemBox
-          style={
-            status === "EXPIRATION" ? { backgroundColor: "#a5a1a3" } : null
-          }
+          style={status === "EXPIRATION" ? { opacity: 0.5 } : null}
         >
           <StyledMobileImgBox>
             <StyledImg
@@ -207,13 +121,9 @@ export const ProductsItem = ({
             >
               {productName}
             </StyledMobileTitle>
-            {/* <StyledCateId>{categoriNumber(cateId)}</StyledCateId> */}
             <StyledLocation>{location}</StyledLocation>
             {presentStatus(status)}
             <br />
-            {/* <StyledPeriod>
-              {rentEnd}~{rentStart}
-            </StyledPeriod> */}
             <StyledPayBox>
               <StyledPay>{price}</StyledPay>
               <StyledDay> / 일</StyledDay>
@@ -229,38 +139,6 @@ export const ProductsItem = ({
                   alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
                 />
                 <span>{wishNum}</span>
-                {/* {localStorage.getItem("memberId") ? (
-                  <>
-                    {togglelike ? (
-                      <>
-                        <StyledLike
-                          onClick={canceLikeHandler}
-                          src="https://img.icons8.com/ios-filled/50/47b5ff/like--v1.png"
-                          alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
-                        />
-                        <span>찜 {likeCount}</span>
-                      </>
-                    ) : (
-                      <>
-                        <StyledLike
-                          onClick={likeHandler}
-                          src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
-                          alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
-                        />
-                        <span>찜 {likeCount}</span>
-                      </>
-                    )}
-                  </>
-                ) : (
-                  <>
-                    <StyledLike
-                      onClick={nonMemberLike}
-                      src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgkeHi%2FbtrMozXmz7i%2FE8hhKrvx2SGs80W8YEXFGk%2Fimg.png"
-                      alt="https://icons8.com/icon/87/heart Heart icon by https://icons8.com Icons8"
-                    />
-                    <span>찜 {likeCount}</span>
-                  </>
-                )} */}
               </StyledMobileLikeWrap>
 
               <StyledMobileChatWrap>
@@ -297,7 +175,6 @@ const StyledStatus = styled.span`
 `;
 
 const StyledItemBox = styled.div`
-  /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -306,6 +183,11 @@ const StyledItemBox = styled.div`
   border-radius: 10px;
   background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee6e 100%);
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  :hover {
+    transform: scale(1.04);
+  }
 `;
 
 const StyledMobileItemBox = styled.div`
@@ -320,7 +202,6 @@ const StyledMobileItemBox = styled.div`
 `;
 
 const StyledImgBox = styled.div`
-  /* border: 1px solid red; */
   padding: 2px;
   width: 180px;
   height: 140px;
@@ -328,7 +209,6 @@ const StyledImgBox = styled.div`
 `;
 
 const StyledMobileImgBox = styled.div`
-  /* border: 1px solid red; */
   padding: 2px;
   width: 150px;
   height: 140px;
@@ -336,7 +216,6 @@ const StyledMobileImgBox = styled.div`
 `;
 
 const StyledImg = styled.img`
-  /* box-sizing: border-box; */
   border-radius: 8px;
   width: 100%;
   height: 100%;
@@ -356,7 +235,6 @@ const StyledMobileContentBox = styled.div`
 `;
 
 const StyledTitle = styled.div`
-  /* border: 1px solid red; */
   margin-bottom: 5px;
   font-weight: 600;
   overflow: hidden; // 을 사용해 영역을 감출 것
@@ -369,7 +247,6 @@ const StyledTitle = styled.div`
 `;
 
 const StyledMobileTitle = styled.div`
-  /* border: 1px solid red; */
   margin-bottom: 5px;
   font-weight: 600;
   overflow: hidden; // 을 사용해 영역을 감출 것
@@ -390,16 +267,12 @@ const StyledTimeForToday = styled(StyledCateId)`
 
 const StyledLocation = styled(StyledCateId)`
   color: gray;
-  /* font-weight: 600; */
 `;
-
-const StyledPeriod = styled(StyledLocation)``;
 
 const StyledPayBox = styled.div`
   margin: 5px 0 5px 0;
 `;
 const StyledPay = styled.span`
-  /* border: 1px solid red; */
   font-weight: 600;
 `;
 
@@ -410,11 +283,9 @@ const StyledDay = styled.span`
 const StyledAddress = styled.div`
   font-size: small;
   font-weight: 500;
-  /* padding-top: 10px; */
 `;
 
 const StyledLikeAndChatBox = styled.div`
-  /* border: 1px solid red; */
   width: max-content;
   height: max-content;
   display: flex;
@@ -423,7 +294,6 @@ const StyledLikeAndChatBox = styled.div`
 `;
 
 const StyledMobileLikeAndChatBox = styled.div`
-  /* border: 1px solid red; */
   width: max-content;
   height: max-content;
   display: flex;
@@ -433,16 +303,13 @@ const StyledMobileLikeAndChatBox = styled.div`
 `;
 
 const StyledLikeWrap = styled.span`
-  /* border: 1px solid red; */
   display: flex;
-  /* flex-direction: column; */
   margin: 5px 12px 0 0;
   align-items: center;
   width: max-content;
 `;
 
 const StyledMobileLikeWrap = styled.span`
-  /* border: 1px solid red; */
   display: flex;
   align-items: center;
   width: max-content;
@@ -457,7 +324,6 @@ const StyledLike = styled.img`
 `;
 
 const StyledChatWrap = styled.span`
-  /* border: 1px solid red; */
   display: flex;
   margin: 5px 5px 0 0;
   align-items: center;
@@ -465,10 +331,7 @@ const StyledChatWrap = styled.span`
 `;
 
 const StyledMobileChatWrap = styled.span`
-  /* border: 1px solid red; */
   display: flex;
-  /* flex-direction: column; */
-  /* margin: 5px 5px 0 0; */
   align-items: center;
   width: max-content;
 `;

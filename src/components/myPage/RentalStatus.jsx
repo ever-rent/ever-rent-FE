@@ -134,8 +134,6 @@ export const RentalStatus = () => {
 };
 
 const StyledTab = styled.div`
-  /* min-width: max-content; */
-  /* margin: 0 5vw; */
   padding: 5px;
 `;
 
@@ -178,14 +176,13 @@ const StyledMobileisStatusDetail = styled.div`
   /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
   max-width: max-content;
   height: 45px;
   align-items: center;
   justify-content: space-between;
   margin: auto;
   margin-top: 10px;
-  /* padding: 0 20px 0 80px; */
   border-radius: 5px;
   gap: 0;
   cursor: pointer;
@@ -203,12 +200,6 @@ const StyledTabBar = styled.div`
   align-items: center;
   width: 470px;
   padding-top: 6px;
-  /* margin: auto; */
-`;
-
-const StyledListBox = styled.div`
-  width: 100%;
-  height: 100%;
 `;
 
 const StyledCommonListBox = styled.div`

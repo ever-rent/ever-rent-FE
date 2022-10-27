@@ -6,7 +6,6 @@ import { auth } from "../../../server/core/instance";
 
 export const BestProducts = () => {
   const [products, setProducts] = useState([]);
-  // const page = useRef(1);
 
   const fetch = useCallback(async () => {
     try {
@@ -77,16 +76,6 @@ export const BestProducts = () => {
           <StyledHotItem>Hot Item</StyledHotItem>
           <StyledItemAndButtonContainer>
             <StyeldMoveButtonLeft onClick={back}>
-              {/* <img
-                className="originImg"
-                src="https://img.icons8.com/ios/50/000000/back--v1.png"
-                alt="<"
-              />
-              <img
-                className="hoverImg"
-                src="https://img.icons8.com/ios/50/5923ff/back--v1.png"
-                alt="<"
-              /> */}
               <span className="sign">{"<"}</span>
             </StyeldMoveButtonLeft>
             <StyledContainer>
@@ -97,10 +86,6 @@ export const BestProducts = () => {
               </StyledGridBox>
             </StyledContainer>
             <StyeldMoveButtonRight onClick={forward}>
-              {/* <img
-                src="https://img.icons8.com/ios/50/5923ff/forward--v1.png"
-                alt=">"
-              /> */}
               <span className="sign">{">"}</span>
             </StyeldMoveButtonRight>
           </StyledItemAndButtonContainer>
@@ -115,7 +100,6 @@ export const BestProducts = () => {
 };
 
 const StyledBestProductsContainer = styled.div`
-  /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -136,7 +120,6 @@ const StyledHotItem = styled.span`
 `;
 
 const StyledItemAndButtonContainer = styled.div`
-  /* border: 1px solid blue; */
   display: flex;
   border-radius: 10px;
   display: flex;
@@ -146,7 +129,6 @@ const StyledItemAndButtonContainer = styled.div`
 `;
 
 const StyeldMoveButtonLeft = styled.button`
-  /* border: 1px solid red; */
   border: transparent;
   position: absolute;
   z-index: 3;
@@ -155,6 +137,9 @@ const StyeldMoveButtonLeft = styled.button`
   max-width: max-content;
   background-color: transparent;
   cursor: pointer;
+  .disabled {
+    color: #98d1f7;
+  }
   span {
     color: #47b5ff;
     font-size: 45px;
@@ -168,7 +153,6 @@ const StyeldMoveButtonLeft = styled.button`
 
 const StyeldMoveButtonRight = styled.button`
   border: transparent;
-  /* border: 1px solid red; */
   position: absolute;
   z-index: 2;
   right: 0px;
@@ -189,14 +173,12 @@ const StyeldMoveButtonRight = styled.button`
 `;
 
 const StyledContainer = styled.div`
-  /* border: 1px solid black; */
   width: 712px;
   padding: 15px 0 15px 16px;
   overflow: hidden;
 `;
 
 const StyledGridBox = styled.div`
-  /* border: 1px solid blue; */
   display: grid;
   z-index: 1;
   gap: 32px;

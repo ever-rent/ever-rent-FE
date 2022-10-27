@@ -5,7 +5,6 @@ import { Desktop, Mobile } from "../../../Hooks/MideaQuery";
 
 export const SlideShow = () => {
   const navigate = useNavigate();
-  const colors = ["#0088FE", "#00C49F", "#FFBB28"];
   const eventImg = [
     require("../../../image/eventOne1.png"),
     require("../../../image/eventTwo1.png"),
@@ -149,6 +148,6 @@ const StyledMobileSlide = styled.img`
   display: inline-block;
   height: 150px;
   width: 100%;
-  border-radius: 40px;
+  border-radius: 20px;
   cursor: pointer;
 `;
