@@ -44,14 +44,48 @@ export const EditProduct = () => {
   const [imgView, setImgView] = useState([]);
   const [sendImage, setSendImage] = useState([]);
 
+  // const convertUrlToFile = (url) => {
+  //   // const blob = new Blob([URL.createObjectURL(url)]);
+  //   // const ext = url.split(".").pop();
+  //   // const filename = url.split("/").pop();
+  //   // const metadata = { type: `image/${ext}` };
+  //   // setSendImage(sendImage.concat(new File([blob], `image.${ext}`)));
+  //   // return new File([blob], "image.jpg", metadata)
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(url);
+  //   reader.onloadend = () => {
+  //     // 변환 완료!
+  //     const base64data = reader.result;
+  //     sendfileCompression(base64data);
+  //   }
+  // };
+  // const convertUrlToFile = async (url) => {
+  //   // const blob = new Blob([url])
+  //   // return console.log(blob)
+  //   const data = await axios.get(url)
+  //   return console.log(data)
+  //   // sendfileCompression(file);
+  // };
+
+  // image to blob
   useEffect(() => {
     let urlArray = [];
-    for (let i = 0; i < editData?.imgUrlArray.length; i++) {
-      urlArray.push(`${imgFirstString}${editData?.imgUrlArray[i]}`);
+    let sendArray = [];
+    let data;
+    if (editData?.imgUrlArray[0] !== undefined) {
+      for (let i = 0; i < editData?.imgUrlArray.length; i++) {
+        urlArray.push(`${imgFirstString}${editData?.imgUrlArray[i]}`);
+        // data = convertUrlToFile(`${imgFirstString}${editData?.imgUrlArray[i]}`);
+        sendArray.push(`${editData?.imgUrlArray[i]}`)
+        // actionImgCompress(data)
+        // convertUrlToFile(`${editData?.imgUrlArray[i]}`)
+      }
+      setImgView(urlArray);
+      setSendImage(sendArray);
     }
-    setImgView(urlArray);
-    setSendImage(urlArray);
   }, [editData]);
+  console.log(imgView);
+  console.log(sendImage);
 
   const imageLengthCheck = (e) => {
     if (imgView.length === 10) {
@@ -232,10 +266,12 @@ export const EditProduct = () => {
             "requestDto",
             new Blob([JSON.stringify(sendData)], { type: "application/json" })
           );
-
           for (let i = 0; i < sendImage.length; i++) {
-            console.log(sendImage[i]);
-            formData.append("multipartFiles", sendImage[i]);
+            if(sendImage[i]===String){
+              formData.append("requestDto",sendImage[i])
+            } else{
+              formData.append("multipartFiles", sendImage[i]);
+            }
           }
 
           dispatch(updateProducts([formData, { productId: param.id }]));
@@ -714,7 +750,7 @@ const StyledThumnailMark = styled.div`
   color: rgb(71, 181, 255);
   font-weight: bold;
   font-size: 15px;
-  background-color:white;
+  background-color: white;
 `;
 
 const StyledImageLabel = styled.label`
