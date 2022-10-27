@@ -44,7 +44,7 @@ export const RecentItem = () => {
 
   useEffect(() => {
     pagingFetching();
-    setPageAll(recentItem?.length<1?1:Math.ceil(recentItem?.length / 3));
+    setPageAll(recentItem?.length < 1 ? 1 : Math.ceil(recentItem?.length / 3));
   }, [page, recentItem]);
 
   return (
