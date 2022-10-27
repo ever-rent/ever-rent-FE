@@ -31,13 +31,11 @@ export const ChatRoom = () => {
 
   const productDetail = productData?.data.data;
 
-  const { data: chatData, isLoading } = useQuery("getChatMessage", () =>
-    chatAPI.getChatMessage(roomId)
-  );
+  // const { data: chatData, isLoading } = useQuery("getChatMessage", () =>
+  //   chatAPI.getChatMessage(roomId)
+  // );
 
-  const chatList = useMemo(() => {
-    return chatData?.data;
-  }, [chatData]);
+  const [chatList, setChatList] = useState([]);
 
   const [userData, setUserData] = useState({
     type: "",
@@ -73,7 +71,7 @@ export const ChatRoom = () => {
 
   const onConnected = async () => {
     if (productDetail) {
-      stompClient.subscribe(`/sub/chat/room/${roomId}`, updateChatMessage);
+      stompClient.subscribe(`/sub/chat/room/${roomId}`, onMessageReceived);
       userJoin(productDetail);
       scrollbarRef.current?.scrollToBottom();
     }
@@ -114,15 +112,28 @@ export const ChatRoom = () => {
     );
   };
 
-  const queryClient = useQueryClient();
+  const onMessageReceived = (payload) => {
+    let payloadData = JSON.parse(payload.body);
 
-  const updateChatMessage = (payload) => {
-    const message = JSON.parse(payload.body);
-
-    if (message.type === "ENTER" || message.type === "TALK" || message.type === "QUIT") {
-      queryClient.invalidateQueries("getChatMessage");
+    if (payloadData.type === "ENTER" || payloadData.type === "TALK") {
+      chatAPI.getChatMessage(roomId).then((res) => {
+        setChatList([...res.data]);
+      });
     }
   };
+
+  // const queryClient = useQueryClient();
+
+  // const updateChatMessage = (payload) => {
+  //   const message = JSON.parse(payload.body);
+  //   if (
+  //     message.type === "ENTER" ||
+  //     message.type === "TALK" ||
+  //     message.type === "QUIT"
+  //   ) {
+  //     queryClient.invalidateQueries("getChatMessage");
+  //   }
+  // };
 
   const sendMessage = () => {
     if (stompClient && userData.message) {
@@ -221,14 +232,18 @@ export const ChatRoom = () => {
   const startEndDays = (start, end) => {
     let startDay = start;
     let endDay = end;
-
     let sYaer = startDay?.getFullYear();
     let sMonth = startDay?.getMonth() + 1;
-    let sDay = startDay?.getDate();
+    let sDay =
+      startDay?.getDate() < 10
+        ? "0" + `${startDay?.getDate()}`
+        : `${startDay?.getDate()}`;
     let eYaer = endDay?.getFullYear();
     let eMonth = endDay?.getMonth() + 1;
-    let eDay = endDay?.getDate();
-
+    let eDay =
+      endDay?.getDate() < 10
+        ? "0" + `${endDay?.getDate()}`
+        : `${endDay?.getDate()}`;
     setStartDateInput(`${sYaer}-${sMonth}-${sDay}`);
     setEndDateInput(`${eYaer}-${eMonth}-${eDay}`);
   };
@@ -313,7 +328,7 @@ export const ChatRoom = () => {
       </div>
 
       <div className="container">
-        {isLoading && <h2>채팅 메시지 불러오는중..</h2>}
+        {/* {isLoading && <h2>채팅 메시지 불러오는중..</h2>} */}
         <Scrollbars autoHide ref={scrollbarRef}>
           {chatList?.map((chat, idx) => {
             return (
