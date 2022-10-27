@@ -46,7 +46,6 @@ export const SlideShow = () => {
               <StyledSlide
                 className="slide"
                 key={index}
-                // style={{ backgroundColor }}
                 src={eventImg}
                 onClick={() => navigate(`/event/${index}`)}
               />
@@ -65,7 +64,7 @@ export const SlideShow = () => {
           </StyledSlideShowDots>
         </StyledSlideshow>
       </Desktop>
-
+      {/* ################ 모바일 ################ */}
       <Mobile>
         <StyledMobileSlideshow className="slideshow">
           <StyledSlideShowSlider
@@ -76,7 +75,6 @@ export const SlideShow = () => {
               <StyledMobileSlide
                 className="slide"
                 key={index}
-                // style={{ backgroundColor }}
                 src={eventImg}
                 onClick={() => navigate(`/event/${index}`)}
               />

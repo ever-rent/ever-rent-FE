@@ -51,25 +51,14 @@ export const ProductsItem = ({
           }}
           style={status === "EXPIRATION" ? { opacity: 0.5 } : null}
         >
-          <StyledImgBox
-            onClick={() => {
-              navigate(`/productDetail/${id}`);
-            }}
-          >
+          <StyledImgBox>
             <StyledImg
               src={`${imgFirstString}${thumbimgUrl}`}
               alt="이미지 없음"
             />
           </StyledImgBox>
           <StyledContentBox>
-            <StyledTitle
-              onClick={() => {
-                navigate(`/productDetail/${id}`);
-              }}
-            >
-              {productName}
-            </StyledTitle>
-
+            <StyledTitle>{productName}</StyledTitle>
             <StyledLocation>
               {location ? location : "지역 선택 안함"}
             </StyledLocation>
@@ -88,13 +77,6 @@ export const ProductsItem = ({
                 />
                 <span>{wishNum}</span>
               </StyledLikeWrap>
-              <StyledChatWrap>
-                <StyledChat
-                  src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
-                  alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
-                />
-                <span>채팅</span>
-              </StyledChatWrap>
             </StyledLikeAndChatBox>
           </StyledContentBox>
         </StyledItemBox>
@@ -102,25 +84,19 @@ export const ProductsItem = ({
       {/* ################ 모바일 ################ */}
       <Mobile>
         <StyledMobileItemBox
+          onClick={() => {
+            navigate(`/productDetail/${id}`);
+          }}
           style={status === "EXPIRATION" ? { opacity: 0.5 } : null}
         >
           <StyledMobileImgBox>
             <StyledImg
-              onClick={() => {
-                navigate(`/productDetail/${id}`);
-              }}
               src={`${imgFirstString}${thumbimgUrl}`}
               alt="이미지 없음"
             />
           </StyledMobileImgBox>
           <StyledMobileContentBox>
-            <StyledMobileTitle
-              onClick={() => {
-                navigate(`/productDetail/${id}`);
-              }}
-            >
-              {productName}
-            </StyledMobileTitle>
+            <StyledMobileTitle>{productName}</StyledMobileTitle>
             <StyledLocation>{location}</StyledLocation>
             {presentStatus(status)}
             <br />
@@ -130,7 +106,6 @@ export const ProductsItem = ({
               <br />
               <StyledTimeForToday>{createdAt}</StyledTimeForToday>
             </StyledPayBox>
-
             <StyledAddress>{address}</StyledAddress>
             <StyledMobileLikeAndChatBox>
               <StyledMobileLikeWrap>
@@ -140,14 +115,6 @@ export const ProductsItem = ({
                 />
                 <span>{wishNum}</span>
               </StyledMobileLikeWrap>
-
-              <StyledMobileChatWrap>
-                <StyledChat
-                  src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIk1We%2FbtrMtHmOj3y%2F0raeNVKmtekcYwknla78n0%2Fimg.png"
-                  alt="https://icons8.com/icon/1feCpTBoYAjK/chat Chat icon by https://icons8.com Icons8"
-                />
-                <span>채팅 </span>
-              </StyledMobileChatWrap>
             </StyledMobileLikeAndChatBox>
           </StyledMobileContentBox>
         </StyledMobileItemBox>
@@ -227,6 +194,7 @@ const StyledContentBox = styled.div`
   position: relative;
   height: 130px;
   margin-top: 12px;
+  margin-bottom: 5px;
 `;
 
 const StyledMobileContentBox = styled.div`
@@ -321,23 +289,4 @@ const StyledLike = styled.img`
   height: 20px;
   margin: 5px 5px 5px 0;
   cursor: pointer;
-`;
-
-const StyledChatWrap = styled.span`
-  display: flex;
-  margin: 5px 5px 0 0;
-  align-items: center;
-  width: max-content;
-`;
-
-const StyledMobileChatWrap = styled.span`
-  display: flex;
-  align-items: center;
-  width: max-content;
-`;
-
-const StyledChat = styled.img`
-  width: 20px;
-  height: 20px;
-  margin: 5px 5px 5px 0;
 `;

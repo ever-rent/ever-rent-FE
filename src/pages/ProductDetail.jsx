@@ -29,11 +29,9 @@ export const ProductDetail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const param = useParams();
-  console.log(param.id);
 
   const [data, setData] = useState();
   const fetchDetail = async () => {
-    console.log("패치데이터", param);
     await axios
       .get(`${process.env.REACT_APP_SERVER_URL}/products/${param.id}`)
       .then((response) => {
@@ -46,11 +44,8 @@ export const ProductDetail = () => {
     dispatch(getProductsDetail(param.id));
   }, []);
 
-  console.log(data);
-
   const detailDataSet = [data?.data.data];
   const detailData = detailDataSet?.filter((element) => element)[0];
-  console.log(detailData?.id);
 
   const firstUrl = imgFirstString;
 
@@ -113,11 +108,11 @@ export const ProductDetail = () => {
           icon: "success",
           confirmButtonColor: "rgb(71, 181, 255)",
           confirmButtonText: "확인",
-        }).then((result)=>{
-          if(result.value){
+        }).then((result) => {
+          if (result.value) {
             navigate("/");
           }
-        })
+        });
       }
     });
   };
@@ -309,7 +304,10 @@ export const ProductDetail = () => {
                   <StyledProductPrice>
                     {detailData?.price}(원) / 일
                   </StyledProductPrice>
-                  <StyledRentDate>렌트 가능기간 : {detailData?.rentStart} ~ {detailData?.rentEnd}</StyledRentDate>
+                  <StyledRentDate>
+                    렌트 가능기간 : {detailData?.rentStart} ~{" "}
+                    {detailData?.rentEnd}
+                  </StyledRentDate>
                   <StyledPostDescription>
                     {detailData?.content}
                   </StyledPostDescription>
@@ -461,7 +459,10 @@ export const ProductDetail = () => {
                   <StyledMobileProductPrice>
                     {detailData?.price}(원) / 일
                   </StyledMobileProductPrice>
-                  <StyledRentDate>렌트 가능기간 : {detailData?.rentStart} ~ {detailData?.rentEnd}</StyledRentDate>
+                  <StyledRentDate>
+                    렌트 가능기간 : {detailData?.rentStart} ~{" "}
+                    {detailData?.rentEnd}
+                  </StyledRentDate>
                   <StyledMobilePostDescription>
                     {detailData?.content}
                   </StyledMobilePostDescription>
@@ -693,17 +694,15 @@ const StyledProductPrice = styled.div`
   padding: 5px;
 `;
 const StyledRentDate = styled.div`
-padding: 5px;
-  color:gray;
-  font-size:12px;
-`
+  padding: 5px;
+  color: gray;
+  font-size: 12px;
+`;
 
 const StyledPostDescription = styled.div`
   padding: 5px;
   margin-top: 30px;
 `;
-
-
 
 // for Mobile
 

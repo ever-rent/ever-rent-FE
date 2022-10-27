@@ -10,7 +10,6 @@ export const BestProducts = () => {
   const fetch = useCallback(async () => {
     try {
       const { data } = await auth.get(`/products?page=1`);
-      console.log("data.best", data.best);
       const filteredProducts = data.best.filter(
         (item) => item.status !== "EXPIRATION"
       );
@@ -32,7 +31,6 @@ export const BestProducts = () => {
   const makeArr = (bestProducts) => {
     let arr = [];
     bestProducts?.map((_, idx) => arr.push(idx)); //map 요소(element, index, arr)
-    console.log("arr", arr);
     return arr;
   };
 
@@ -43,8 +41,6 @@ export const BestProducts = () => {
 
   const back = () => {
     const forwardIdx = idxArr[--idx];
-    console.log("back >> forwardIdx", forwardIdx);
-    console.log("back >> idx", idx);
     if (forwardIdx === undefined) {
       idx = 0;
       return;
@@ -58,16 +54,13 @@ export const BestProducts = () => {
       return;
     } else {
       let backIdx = idxArr[++idx];
-      console.log("forward >> idx", idx);
-      console.log("forward >> backIdx", backIdx);
       move(backIdx);
     }
   };
 
   const move = (idx) => {
-    productsRef.current.style.transform = `translateX(${-idx * 182}px)`; // 180(card width)+32(gap)
+    productsRef.current.style.transform = `translateX(${-idx * 182}px)`; // 160(card width)+32(gap)
   };
-  console.log("BestProducts", products);
 
   return (
     <>
@@ -91,10 +84,6 @@ export const BestProducts = () => {
           </StyledItemAndButtonContainer>
         </StyledBestProductsContainer>
       </Desktop>
-
-      <Mobile>
-        <></>
-      </Mobile>
     </>
   );
 };

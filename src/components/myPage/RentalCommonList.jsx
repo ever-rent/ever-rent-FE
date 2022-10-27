@@ -7,10 +7,6 @@ export const RentalCommonList = (props) => {
   const list = props.props;
   const index = props.index;
 
-  console.log("props>>", props);
-  // console.log("props.props>>", props.props);
-  // console.log("index", index);
-
   return (
     <>
       <Desktop>
@@ -20,6 +16,7 @@ export const RentalCommonList = (props) => {
           })}
         </StyledListContainer>
       </Desktop>
+      {/* ################ 모바일 ################ */}
       <Mobile>
         <StyledMobileListContainer>
           {list?.map((item) => {
@@ -32,7 +29,6 @@ export const RentalCommonList = (props) => {
 };
 
 const StyledListContainer = styled.div`
-  /* border: 1px solid red; */
   margin-top: 20px;
   margin-bottom: 80px;
   animation: fadein 0.8s;

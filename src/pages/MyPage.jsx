@@ -10,7 +10,6 @@ import { Footer } from "../components/footer/Footer";
 export const MyPage = () => {
   //찜목록, 렌탈목록 토글.
   const [like, setLike] = useState(false);
-  console.log(like);
 
   return (
     <>

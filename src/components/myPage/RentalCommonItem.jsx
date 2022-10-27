@@ -22,11 +22,8 @@ export const RentalCommonItem = ({ item, index }) => {
     buyEnd,
   } = item;
 
-  console.log("RentalCommonItem", item);
-
   const acceptHandler = (e) => {
     e.preventDefault();
-
     Swal.fire({
       title: "정말로 수락하시겠습니까?",
       text: "수락하시면 돌이킬 수 없습니다",
@@ -59,7 +56,7 @@ export const RentalCommonItem = ({ item, index }) => {
   };
 
   const priceBox = (index) => {
-    if (index === 0) {
+    if (index === 0 || index === 3) {
       return (
         <>
           <span>
@@ -103,7 +100,7 @@ export const RentalCommonItem = ({ item, index }) => {
   const navigate = useNavigate();
 
   const insertImg = (index) => {
-    if (index === 0) {
+    if (index === 0 || index === 3) {
       return (
         <StyledImg
           onClick={() => navigate(`/productDetail/${id}`)}
@@ -125,13 +122,11 @@ export const RentalCommonItem = ({ item, index }) => {
   };
 
   const [rentStatus, setRentStatus] = useState("");
-  console.log("rentStatus", rentStatus);
 
   useEffect(() => {
     let timeStatus = item?.rentEnd;
     setRentStatus(dateToTime(new Date(timeStatus)));
   }, [rentEnd, item]);
-  console.log("rentStatus", rentStatus);
 
   return (
     <>
@@ -147,7 +142,7 @@ export const RentalCommonItem = ({ item, index }) => {
           {acceptAndReject(index)}
         </StyledItem>
       </Desktop>
-
+      {/* ################ 모바일 ################ */}
       <Mobile>
         <StyledMobileItem>
           {insertImg(index)}

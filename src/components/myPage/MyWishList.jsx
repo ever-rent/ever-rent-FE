@@ -8,7 +8,6 @@ import { Desktop, Mobile } from "../../Hooks/MideaQuery";
 export const MyWishList = () => {
   const dispatch = useDispatch();
   const likeList = useSelector((state) => state.mypage.MyWish);
-  console.log("MyWishList >> likeList", likeList);
 
   useEffect(() => {
     dispatch(getWishList());
@@ -26,7 +25,7 @@ export const MyWishList = () => {
           </StyledList>
         </StyledItem>
       </Desktop>
-
+      {/* ################ 모바일 ################ */}
       <Mobile>
         <StyledMobileItem>
           <StyledMobileTitle>나의 찜목록</StyledMobileTitle>

@@ -21,19 +21,12 @@ export const timeToToday = (writeAt) => {
 };
 
 export const dateToTime = (createdAt) => {
-  // console.log("dateToTime >>", createdAt);
-  console.log("dateToTime >>", new Date(createdAt));
-  console.log("dateToTime >>", new Date().getDate());
-
   const milliSeconds = createdAt - new Date();
   const seconds = milliSeconds / 1000;
   const minutes = seconds / 60;
   const hours = minutes / 60;
   const days = hours / 24;
-  const todayEnd = new Date(createdAt).getDate() - new Date().getDate();
-  console.log("dateToTime >> todayEnd", todayEnd);
 
-  if (todayEnd < 1) return `금일 마감`;
   if (hours < 24) return `${Math.floor(hours)}시간 전`;
   if (days >= 1) return `${Math.floor(days)}일 전`;
 };

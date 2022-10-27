@@ -5,22 +5,8 @@ import { imgFirstString } from "../../../server/api";
 import { timeToToday } from "../../../util/timeToToday";
 
 export const BestProductItem = (item) => {
-  // console.log(item.item);
   const navigate = useNavigate();
-  const {
-    cateId,
-    heart,
-    id,
-    thumbimgUrl,
-    location,
-    mapLocation,
-    memberName,
-    price,
-    productName,
-    status,
-    wishNum,
-    writeAt,
-  } = item.item;
+  const { id, thumbimgUrl, location, price, productName, writeAt } = item.item;
 
   //글쓴 시간 표시.
   const [write, setWrite] = useState("");
@@ -46,7 +32,6 @@ export const BestProductItem = (item) => {
           />
         </StyledImgBox>
         <StyledContentBox>
-          {/* <StyledPayBox> */}
           <StyledTitle
             onClick={() => {
               navigate(`/productDetail/${id}`);
@@ -62,7 +47,6 @@ export const BestProductItem = (item) => {
             <StyledDay> / 일</StyledDay>
           </div>
           <StyledTimeForToday> {createdAt}</StyledTimeForToday>
-          {/* </StyledPayBox> */}
         </StyledContentBox>
       </StyledItemBox>
     </>

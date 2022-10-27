@@ -8,10 +8,8 @@ import { current } from "@reduxjs/toolkit";
 export const getMyPageList = createAsyncThunk(
   "GET_MYPAGE_LIST",
   async (_, thunkAPI) => {
-    // console.log("getMyPageList 시작");
     try {
       const { data } = await mypageAPI.getMyPageList();
-      // console.log("getMyPageList 성공", data.data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -23,10 +21,8 @@ export const getMyPageList = createAsyncThunk(
 export const getMyPagePending = createAsyncThunk(
   "GET_MYPAGE_PENDING",
   async (_, thunkAPI) => {
-    // console.log("getMyPagePending 시작");
     try {
       const res = await mypageAPI.getMyPagePending();
-      // console.log("getMyPagePending 성공", res.data);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -38,10 +34,8 @@ export const getMyPagePending = createAsyncThunk(
 export const acceptOrder = createAsyncThunk(
   "ACCEPT_ORDER",
   async (orderId, thunkAPI) => {
-    console.log(orderId);
     try {
       const res = await mypageAPI.acceptOrder(orderId);
-      console.log("response", res.data);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -53,10 +47,8 @@ export const acceptOrder = createAsyncThunk(
 export const getMyPageConfirm = createAsyncThunk(
   "GET_MYPAGE_CONFIRM",
   async (_, thunkAPI) => {
-    // console.log("getMyPageConfirm 시작");
     try {
       const res = await mypageAPI.getMyPageConfirm();
-      // console.log("getMyPageConfirm 성공", res.data);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -68,10 +60,8 @@ export const getMyPageConfirm = createAsyncThunk(
 export const getMyPageExpired = createAsyncThunk(
   "MYPAGE_OVER_DEADLINE",
   async (_, thunkAPI) => {
-    // console.log("products get 시작");
     try {
       const res = await mypageAPI.getMyPageExpired();
-      // console.log("getMyPageExpired 성공", res.data);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -85,10 +75,8 @@ export const getMyPageExpired = createAsyncThunk(
 export const getBorrowList = createAsyncThunk(
   "GET_BORROW_LIST",
   async (_, thunkAPI) => {
-    // console.log("getBorrowList 시작");
     try {
       const { data } = await mypageAPI.getBorrowList();
-      // console.log("getBorrowList 성공", data.data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -100,10 +88,8 @@ export const getBorrowList = createAsyncThunk(
 export const getPastList = createAsyncThunk(
   "GET_PAST_LIST",
   async (_, thunkAPI) => {
-    // console.log("getPastList 시작");
     try {
       const { data } = await mypageAPI.getPastList();
-      // console.log("getPastList 성공", data.data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -115,7 +101,6 @@ export const getPastList = createAsyncThunk(
 export const postRent = createAsyncThunk(
   "POST_RENT",
   async (payload, thunkAPI) => {
-    console.log("postRent 시작>>", typeof productId);
     try {
       const { data } = await mypageAPI.postRent(
         {
@@ -124,7 +109,6 @@ export const postRent = createAsyncThunk(
         },
         payload.productId
       );
-      console.log("postRent 성공>>", data);
       return thunkAPI.fulfillWithValue(data);
     } catch (errer) {
       return thunkAPI.rejectWithValue(errer);
@@ -135,10 +119,8 @@ export const postRent = createAsyncThunk(
 export const postLike = createAsyncThunk(
   "POST_LIKE",
   async (payload, thunkAPI) => {
-    console.log("postLike 시작");
     try {
       const { data } = await mypageAPI.postLike(payload);
-      console.log("data", data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (errer) {
       return thunkAPI.rejectWithValue(errer);
@@ -149,10 +131,8 @@ export const postLike = createAsyncThunk(
 export const getMyInfo = createAsyncThunk(
   "GET_MY_INFO",
   async (_, thunkAPI) => {
-    console.log("getMyInfo 시작");
     try {
       const { data } = await mypageAPI.getMyInfo();
-      console.log("getMyInfo 성공", data.data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -163,10 +143,8 @@ export const getMyInfo = createAsyncThunk(
 export const getWishList = createAsyncThunk(
   "GET_LIKE_LIST",
   async (_, thunkAPI) => {
-    console.log("getWishList 시작");
     try {
       const { data } = await mypageAPI.getWishList();
-      console.log("getWishList 성공", data.data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -190,28 +168,27 @@ export const mypageSlice = createSlice({
   },
   reducers: {},
   extraReducers: {
-    // /* Pending */
-    // [getMyPageList.pending]: (state, action) => {
-    //   state.isLoading = true;
-    // },
-    // [getMyPagePending.pending]: (state, action) => {
-    //   state.isLoading = true;
-    // },
-    // [acceptOrder.pending]: (state, action) => {
-    //   state.isLoading = true;
-    // },
-    // [getMyPageConfirm.pending]: (state, action) => {
-    //   state.isLoading = true;
-    // },
-    // [getMyPageExpired.pending]: (state, action) => {
-    //   state.isLoading = true;
-    // },
+    /* Pending */
+    [getMyPageList.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [getMyPagePending.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [acceptOrder.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [getMyPageConfirm.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [getMyPageExpired.pending]: (state, action) => {
+      state.isLoading = true;
+    },
 
     /* Fulfilled */
 
     //빌려준 물건
     [getMyPageList.fulfilled]: (state, action) => {
-      // console.log(action);
       state.list = action.payload;
     },
     [getMyPagePending.fulfilled]: (state, action) => {
@@ -241,14 +218,9 @@ export const mypageSlice = createSlice({
 
     //TODO: 테스트용 렌트 신청!!
     [postRent.fulfilled]: (state, action) => {
-      // console.log("action", action);
-      // console.log("state", current(state));
       state.reservation.push(action.payload);
-      // state.reservation = state.reservation.concat(action.payload);
     },
     [postLike.fulfilled]: (state, action) => {
-      console.log("action", action);
-      // console.log("state", state);
       state.like = action.payload;
     },
     [getMyInfo.fulfilled]: (state, action) => {
@@ -258,23 +230,23 @@ export const mypageSlice = createSlice({
       state.MyWish = action.payload;
     },
 
-    // /* Rejected */
-    // [getMyPageList.rejected]: (state, action) => {
-    //   state.isLoading = false;
-    //   state.error = action.payload;
-    // },
-    // [getMyPagePending.rejected]: (state, action) => {
-    //   state.isLoading = false;
-    //   state.error = action.payload;
-    // },
-    // [getMyPageConfirm.rejected]: (state, action) => {
-    //   state.isLoading = false;
-    //   state.error = action.payload;
-    // },
-    // [getMyPageExpired.rejected]: (state, action) => {
-    //   state.isLoading = false;
-    //   state.error = action.payload;
-    // },
+    /* Rejected */
+    [getMyPageList.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [getMyPagePending.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [getMyPageConfirm.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [getMyPageExpired.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
   },
 });
 
