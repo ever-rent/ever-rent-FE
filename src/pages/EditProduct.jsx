@@ -714,6 +714,7 @@ const StyledThumnailMark = styled.div`
   color: rgb(71, 181, 255);
   font-weight: bold;
   font-size: 15px;
+  background-color:white;
 `;
 
 const StyledImageLabel = styled.label`
