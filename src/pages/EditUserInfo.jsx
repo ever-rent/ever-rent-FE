@@ -131,7 +131,11 @@ export const EditUserInfo = () => {
             icon: "success",
             confirmButtonColor: "rgb(71, 181, 255)",
             confirmButtonText: "확인",
-          });
+          }).then((result)=>{
+            if(result.value){
+              navigate("/mypage")
+            }
+          })
         }
       });
     }
@@ -302,7 +306,7 @@ export const EditUserInfo = () => {
               </StyledInfoSubWrap>
             </StyledInfoWrap>
             <StyledButtons>
-              <StyledCancelButton>홈으로</StyledCancelButton>
+              <StyledCancelButton onClick={()=>navigate("/")}>홈으로</StyledCancelButton>
               <StyledSubmitButton onClick={editMyInfo}>
                 수정하기
               </StyledSubmitButton>
@@ -469,7 +473,7 @@ export const EditUserInfo = () => {
               </StyledInfoSubWrap>
             </StyledMobileInfoWrap>
             <StyledButtons>
-              <StyledCancelButton>홈으로</StyledCancelButton>
+              <StyledCancelButton onClick={()=>navigate("/")}>홈으로</StyledCancelButton>
               <StyledSubmitButton onClick={editMyInfo}>
                 수정하기
               </StyledSubmitButton>

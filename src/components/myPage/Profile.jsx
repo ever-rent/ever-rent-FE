@@ -12,9 +12,6 @@ export const Profile = ({ like, setLike }) => {
   const dispatch = useDispatch();
 
   const info = useSelector((state) => state.mypage.myinfo);
-  console.log("Profile >> info", info);
-
-  const [likeModal, setlikeModal] = useState(like);
 
   useEffect(() => {
     dispatch(getMyInfo());
@@ -24,8 +21,7 @@ export const Profile = ({ like, setLike }) => {
     setLike(!like);
   };
 
-  console.log("likeListhandler >> like", like);
-
+  //프로필 수정 전 기본 프로필 지정
   const profileImg =
     info?.imgUrl == null
       ? `https://source.boringavatars.com/beam/110/${info?.id}?colors=7965EE,6FE7F1,FFDD4C,46B5FF,2883E0`
@@ -124,7 +120,6 @@ export const Profile = ({ like, setLike }) => {
           </StyledIcon>
         </StyledProfileBox>
       </Desktop>
-
       {/* ################ 모바일 ################ */}
       <Mobile>
         <StyledMobileProfileContainer>
@@ -142,7 +137,6 @@ export const Profile = ({ like, setLike }) => {
           />
           <StyledMobileFlexBox>
             <StyledMobileNickname>{info?.memberName}</StyledMobileNickname>
-
             <StyledMobileEditButton
               onClick={() =>
                 navigate(`/editUserInfo/${info?.id}`, { state: info })
@@ -151,7 +145,6 @@ export const Profile = ({ like, setLike }) => {
               회원정보 수정
             </StyledMobileEditButton>
           </StyledMobileFlexBox>
-
           <div>
             <StyledMobileIcon>
               <StyledMobileEachWrap>
@@ -203,12 +196,10 @@ export const Profile = ({ like, setLike }) => {
 };
 
 const StyledProfileBox = styled.div`
-  /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 10px;
   padding: 15px 0 10px 0;
@@ -226,7 +217,6 @@ const StyledImgFlexBox = styled.div`
 `;
 
 const StyledImgBox = styled.div`
-  /* border: 2px solid green; */
   width: 110px;
   height: 110px;
   border-radius: 70%;
@@ -263,8 +253,6 @@ const StyledNickname = styled.div`
 const StyledProfileEdit = styled.button`
   background-color: #47b5ff;
   color: white;
-  /* position: absolute; */
-  /* top: 47px; */
   border: transparent;
   border-radius: 3px;
   padding: 4px 5px;
@@ -273,9 +261,7 @@ const StyledProfileEdit = styled.button`
 `;
 
 const StyledIcon = styled.div`
-  /* border: 1px solid red; */
   width: 200px;
-  /* height: 230px; */
   display: flex;
   position: relative;
   flex-direction: column;
@@ -285,10 +271,8 @@ const StyledIcon = styled.div`
 `;
 
 const StyledLikeAndChatBox = styled.div`
-  /* border: 1px solid red; */
   width: 100%;
   justify-content: space-evenly;
-  /* width: max-content; */
   height: max-content;
   display: flex;
   position: relative;
@@ -296,10 +280,8 @@ const StyledLikeAndChatBox = styled.div`
 `;
 
 const StyledEachWrap = styled.span`
-  /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
-  /* margin: 5px 12px 0 0; */
   align-items: center;
   width: max-content;
   span {
@@ -312,11 +294,9 @@ const StyledLikeAndChat = styled.img`
   width: 40px;
   height: 40px;
   cursor: pointer;
-  /* margin: 5px 5px 5px 0; */
 `;
 
 const StyledMobileProfileContainer = styled.div`
-  /* border: 1px solid black; */
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -326,7 +306,6 @@ const StyledMobileProfileContainer = styled.div`
 `;
 
 const StyledMobileImgBox = styled.div`
-  /* border: 2px solid green; */
   width: 110px;
   height: 110px;
   border-radius: 70%;
@@ -389,9 +368,7 @@ const StyleMobileLikeAndChat = styled.img`
 `;
 
 const StyledMobileIcon = styled.div`
-  /* border: 1px solid red; */
   width: 200px;
-  /* height: 230px; */
   display: flex;
   position: relative;
   justify-content: space-around;
@@ -400,10 +377,8 @@ const StyledMobileIcon = styled.div`
 `;
 
 const StyledMobileEachWrap = styled.span`
-  /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
-  /* margin: 5px 12px 0 0; */
   align-items: center;
   width: max-content;
   span {

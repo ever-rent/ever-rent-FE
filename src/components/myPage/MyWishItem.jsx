@@ -10,7 +10,6 @@ import { postLike } from "../../redux/modules/mypageSlice";
 export const MyWishItem = ({ item }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  console.log("MyWishItem>>", item);
   const {
     imgUrlArray,
     price,
@@ -92,7 +91,7 @@ export const MyWishItem = ({ item }) => {
           </div>
         </StyledItem>
       </Desktop>
-
+      {/* ################ 모바일 ################ */}
       <Mobile>
         <StyledMobileItem>
           <img
@@ -100,11 +99,9 @@ export const MyWishItem = ({ item }) => {
             src={`${imgFirstString}${imgUrlArray[0]}`}
             alt="img"
           />
-          {/* <img src={imgUrlArray[1]} alt="img" /> */}
           <div className="span-div">
             <span>
               <span className="title">{productName}</span>
-              {/* <span className="writer">작성자 : {memberName}</span> */}
               <br />
               <span className="date">
                 {mapLocation} ∙ {createdAt}
@@ -139,12 +136,10 @@ export const MyWishItem = ({ item }) => {
 };
 
 const StyledItem = styled.div`
-  /* border: 1px solid red; */
   display: flex;
   margin-bottom: 5px;
   width: 100%;
   position: relative;
-  /* padding: 10px; */
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   .like {
     position: absolute;
@@ -193,7 +188,6 @@ const StyledTitle = styled.span`
   cursor: pointer;
 `;
 const StyledPay = styled.span`
-  /* border: 1px solid red; */
   font-weight: 600;
 `;
 
@@ -209,11 +203,6 @@ const StyledLike = styled.img`
   height: 40px;
   cursor: pointer;
 `;
-// const StyledContentBox = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: space-between;
-// `;
 
 const StyledMobileItem = styled.div`
   display: flex;

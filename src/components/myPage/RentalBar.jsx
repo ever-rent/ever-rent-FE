@@ -2,12 +2,10 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { RentalStatus } from "./RentalStatus";
 import { BorrowStatus } from "./BorrowStatus";
-// import { StatusBox } from "./StatusBox";
 import { Desktop, Mobile } from "../../Hooks/MideaQuery";
 
 export const RentalBar = ({ like }) => {
   const [tabIndex, setTabIndex] = useState(0); //처음에 나오는 것이 빌려준 물건.
-  console.log("RentalBar>>", like);
 
   const tabArray = [
     {
@@ -68,17 +66,14 @@ export const RentalBar = ({ like }) => {
 };
 
 const StyledTabArray = styled.div``;
-
 const StyledRentalBarContainer = styled.div``;
 const StyledLendAndBorrow = styled.div`
-  /* border-bottom: 1px solid gray; */
   display: flex;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   height: 50px;
   align-items: center;
   justify-content: space-around;
   margin-bottom: 30px;
-  /* border-radius: 5px; */
 `;
 
 const StyledRentalBar = styled.a`
@@ -121,7 +116,6 @@ const StyledRentalBar = styled.a`
 `;
 
 const StyledRentStatusBox = styled.div`
-  /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -131,11 +125,9 @@ const StyledRentStatusBox = styled.div`
 `;
 
 const StyledMobileRentStatusBox = styled.div`
-  /* border: 1px solid red; */
   display: flex;
   justify-content: center;
   border-radius: 5px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   height: 100%;
   margin-bottom: 100px;
 `;

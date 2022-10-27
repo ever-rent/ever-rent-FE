@@ -4,15 +4,7 @@ import { Desktop, Mobile } from "../../Hooks/MideaQuery";
 import { dateToTime } from "../../util/timeToToday";
 
 export const BorrowCommonItem = ({ item, index }) => {
-  const { imgUrl, productName, buyStart, buyEnd } = item;
-  //TODO: 아직 정해지지 않았지만 일단 빌린물건 목록에만 img가 나오도록 설정.
-  const insertImg = (index) => {
-    if (index === 0) {
-      return <img src={imgUrl} alt="img" />;
-    } else {
-      return;
-    }
-  };
+  const { productName, buyStart, buyEnd } = item;
 
   //남은 기간
   const [rentStatus, setRentStatus] = useState("");
@@ -39,7 +31,7 @@ export const BorrowCommonItem = ({ item, index }) => {
           </StyledContentBox>
         </StyledItem>
       </Desktop>
-
+      {/* ################ 모바일 ################ */}
       <Mobile>
         <StyledMobileItem>
           <div className="span-div">
@@ -60,7 +52,6 @@ export const BorrowCommonItem = ({ item, index }) => {
 };
 
 const StyledItem = styled.div`
-  /* border: 1px solid red; */
   width: 600px;
   display: flex;
   position: relative;
@@ -85,7 +76,6 @@ const StyledItem = styled.div`
     .title {
       font-size: 17px;
       font-weight: 600;
-      /* margin-bottom: 5px; */
     }
     .date {
       margin-top: 5px;
@@ -97,9 +87,7 @@ const StyledItem = styled.div`
       color: #999;
     }
     .price {
-      /* color: #0092f3; */
       font-weight: 600;
-      /* font-size: 12px; */
     }
     .period {
       color: #999;
@@ -127,11 +115,9 @@ const StyledContentBox = styled.div`
 `;
 
 const StyledMobileItem = styled.div`
-  /* border: 1px solid red; */
   display: flex;
   position: relative;
   padding: 10px;
-  /* margin-bottom: 7px; */
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   .like {
     position: absolute;
@@ -164,9 +150,7 @@ const StyledMobileItem = styled.div`
       color: #999;
     }
     .price {
-      /* color: #0092f3; */
       font-weight: 600;
-      /* font-size: 12px; */
     }
     .period {
       color: #999;

@@ -44,10 +44,8 @@ export const Products = () => {
     }
   }, []);
 
-  // console.log(products);
   // ref / scroll 교차 시 데이터 패치
   useEffect(() => {
-    console.log(inView, hasNextPage);
     if (inView && hasNextPage) {
       fetch();
     }
@@ -55,13 +53,6 @@ export const Products = () => {
       setIsLoading(false);
     }, 1000);
   }, [fetch, hasNextPage, inView]);
-
-  console.log(products);
-  const filteredProducts = products.filter(
-    (item) => item.status !== "EXPIRATION"
-  );
-
-  console.log("filteredProducts", filteredProducts);
 
   return (
     <>

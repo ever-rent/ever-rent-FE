@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { getBorrowList } from "../../redux/modules/mypageSlice";
-import { getPastList } from "../../redux/modules/mypageSlice";
 import { BorrowCommonList } from "./BorrowCommonList";
 import { Desktop, Mobile } from "../../Hooks/MideaQuery";
 
@@ -11,9 +10,7 @@ export const BorrowStatus = () => {
   const [tabIndex, setTabIndex] = useState(0);
 
   const borrow = useSelector((state) => state.mypage.borrow);
-  // console.log(borrow);
   const past = useSelector((state) => state.mypage.past);
-  // console.log(past);
 
   useEffect(() => {
     dispatch(getBorrowList());
@@ -35,11 +32,6 @@ export const BorrowStatus = () => {
     setTabIndex(0);
     dispatch(getBorrowList());
   };
-  // const pastHandler = (e) => {
-  //   e.preventDefault();
-  //   setTabIndex(1);
-  //   dispatch(getPastList());
-  // };
 
   const tabArray = [
     {
@@ -53,18 +45,6 @@ export const BorrowStatus = () => {
         </StyledTab>
       ),
     },
-
-    // {
-    //   key: "past",
-    //   tab: (
-    //     <StyledTab
-    //       className={tabIndex === 1 ? "select" : ""}
-    //       onClick={pastHandler}
-    //     >
-    //       과거 렌트 내역
-    //     </StyledTab>
-    //   ),
-    // },
   ];
 
   return (
@@ -93,12 +73,9 @@ export const BorrowStatus = () => {
 };
 
 const StyledTab = styled.div`
-  /* min-width: max-content;
-  margin: 0 5vw; */
   padding: 5px;
 `;
 const StyledisStatusDetail = styled.div`
-  /* border: 1px solid red; */
   color: gray;
   display: flex;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -131,23 +108,19 @@ const StyledisStatusDetail = styled.div`
 `;
 
 const StyledTabBar = styled.div`
-  /* border: 1px solid blue; */
   display: flex;
   justify-content: space-around;
   align-items: center;
   width: 470px;
   padding-top: 6px;
-  /* margin: auto; */
 `;
 
 const StyledCommonListBox = styled.div`
   width: 100%;
   margin-top: 7px;
-  /* border: 1px solid green; */
 `;
 
 const StyledMobileisStatusDetail = styled.div`
-  /* border: 1px solid red; */
   color: gray;
   display: flex;
   flex-direction: column;
@@ -158,7 +131,6 @@ const StyledMobileisStatusDetail = styled.div`
   justify-content: space-between;
   margin: auto;
   margin-top: 10px;
-  /* padding: 0 20px 0 80px; */
   border-radius: 5px;
   gap: 0;
   cursor: pointer;

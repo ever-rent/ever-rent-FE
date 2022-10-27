@@ -21,15 +21,13 @@ export const timeToToday = (writeAt) => {
 };
 
 export const dateToTime = (createdAt) => {
-  console.log("dateToTime >>", createdAt);
-  console.log("dateToTime >>", new Date(createdAt));
-
   const milliSeconds = createdAt - new Date();
   const seconds = milliSeconds / 1000;
   const minutes = seconds / 60;
   const hours = minutes / 60;
   const days = hours / 24;
 
-  if (hours < 24) return `금일 마감`;
+  if (hours < 25) return `금일마감`;
+  // if (hours < 24) return `${Math.floor(hours)}시간 전`;
   if (days >= 1) return `${Math.floor(days)}일 전`;
 };
