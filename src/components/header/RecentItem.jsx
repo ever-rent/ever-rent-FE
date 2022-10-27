@@ -8,7 +8,6 @@ import { imgFirstString } from "../../server/api";
 export const RecentItem = () => {
   const navigate = useNavigate();
   const recentData = useSelector((state) => state.products.recent);
-  console.log(recentData);
 
   const [page, setPage] = useState(1);
   const [recentItem, setRecentItem] = useState([]);
@@ -17,7 +16,6 @@ export const RecentItem = () => {
   useEffect(() => {
     setRecentItem(recentData);
   }, []);
-  console.log(recentItem);
 
   const handlePageChange = (page) => {
     setPage(page);
@@ -48,7 +46,6 @@ export const RecentItem = () => {
     pagingFetching();
     setPageAll(Math.ceil(recentItem?.length / 3));
   }, [page, recentItem]);
-  console.log(pageItem);
 
   return (
     <StyledRecentItemContainer>
@@ -105,8 +102,6 @@ const StyledRecentItemContainer = styled.div`
   border: 1px solid gray;
   position: absolute;
   position: fixed;
-  /* right: 2vw; */
-  /* top: 30%; */
   top: 300px;
   right: calc(50% - 710px);
   transform: translate(-50%, -50%);
@@ -142,6 +137,7 @@ const StyledImgBox = styled.div`
 const StyledImg = styled.img`
   width: 100%;
   height: 100%;
+  object-fit: cover;
   cursor: pointer;
 `;
 

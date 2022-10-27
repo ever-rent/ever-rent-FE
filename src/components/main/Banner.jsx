@@ -10,7 +10,7 @@ export const Banner = () => {
       <Desktop>
         <StyledBanner src={DesktopBanner} alt="이미지 중비중 입니다." />
       </Desktop>
-
+      {/* ################ 모바일 ################ */}
       <Mobile>
         <StyledMobileBanner src={MobileBanner} alt="이미지 중비중 입니다." />
       </Mobile>
@@ -20,7 +20,7 @@ export const Banner = () => {
 
 const StyledBanner = styled.img`
   display: flex;
-  width: 90%;
+  width: 1000px;
   min-width: 768px;
   height: 200px;
   margin: auto;

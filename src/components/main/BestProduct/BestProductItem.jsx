@@ -5,22 +5,8 @@ import { imgFirstString } from "../../../server/api";
 import { timeToToday } from "../../../util/timeToToday";
 
 export const BestProductItem = (item) => {
-  // console.log(item.item);
   const navigate = useNavigate();
-  const {
-    cateId,
-    heart,
-    id,
-    thumbimgUrl,
-    location,
-    mapLocation,
-    memberName,
-    price,
-    productName,
-    status,
-    wishNum,
-    writeAt,
-  } = item.item;
+  const { id, thumbimgUrl, location, price, productName, writeAt } = item.item;
 
   //글쓴 시간 표시.
   const [write, setWrite] = useState("");
@@ -34,18 +20,18 @@ export const BestProductItem = (item) => {
 
   return (
     <>
-      <StyledItemBox>
+      <StyledItemBox
+        onClick={() => {
+          navigate(`/productDetail/${id}`);
+        }}
+      >
         <StyledImgBox>
           <StyledImg
-            onClick={() => {
-              navigate(`/productDetail/${id}`);
-            }}
             src={`${imgFirstString}${thumbimgUrl}`}
             alt="이미지 없음"
           />
         </StyledImgBox>
         <StyledContentBox>
-          {/* <StyledPayBox> */}
           <StyledTitle
             onClick={() => {
               navigate(`/productDetail/${id}`);
@@ -61,7 +47,6 @@ export const BestProductItem = (item) => {
             <StyledDay> / 일</StyledDay>
           </div>
           <StyledTimeForToday> {createdAt}</StyledTimeForToday>
-          {/* </StyledPayBox> */}
         </StyledContentBox>
       </StyledItemBox>
     </>
@@ -69,49 +54,45 @@ export const BestProductItem = (item) => {
 };
 
 const StyledItemBox = styled.div`
-  /* border: 1px solid green; */
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-direction: column;
   height: 230px;
-  /* padding: 10px 10px 0 10px; */
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  :hover {
+    transform: scale(1.04);
+  }
 `;
 
 const StyledImgBox = styled.div`
-  /* border: 1px solid red; */
   display: flex;
   justify-content: center;
   align-items: center;
-  /* padding: 2px; */
   margin-top: 10px;
   width: 130px;
   height: 120px;
-  object-fit: cover;
 `;
 
 const StyledImg = styled.img`
   border-radius: 8px;
   width: 100%;
   height: 100%;
-  /* padding-bottom: 10px; */
+  object-fit: cover;
   cursor: pointer;
 `;
 
 const StyledContentBox = styled.div`
   width: 100%;
-  /* margin: 12px 0; */
   margin: 5px 5px 7px 22px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* position: absolute;
-  bottom: 0; */
 `;
 
 const StyledTitle = styled.div`
-  /* border: 1px solid red; */
   margin-bottom: 5px;
   overflow: hidden;
   text-overflow: ellipsis; // ... 만들기
@@ -125,10 +106,7 @@ const StyledTitle = styled.div`
 const StyledLocation = styled.span`
   color: gray;
   font-size: 13px;
-  /* font-weight: 600; */
 `;
-
-const StyledPayBox = styled.div``;
 
 const StyledPay = styled.span`
   font-weight: 600;

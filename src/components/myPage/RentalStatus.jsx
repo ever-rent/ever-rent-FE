@@ -13,13 +13,9 @@ export const RentalStatus = () => {
   const [tabIndex, setTabIndex] = useState(0);
 
   const list = useSelector((state) => state.mypage.list);
-  // console.log(list);
   const pending = useSelector((state) => state.mypage.pending);
-  // console.log(pending);
   const confirm = useSelector((state) => state.mypage.confirm);
-  // console.log(confirm);
   const deadline = useSelector((state) => state.mypage.deadline);
-  // console.log(deadline);
 
   useEffect(() => {
     dispatch(getMyPageList());
@@ -134,13 +130,10 @@ export const RentalStatus = () => {
 };
 
 const StyledTab = styled.div`
-  /* min-width: max-content; */
-  /* margin: 0 5vw; */
   padding: 5px;
 `;
 
 const StyledisStatusDetail = styled.div`
-  /* border: 1px solid red; */
   display: flex;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   max-width: max-content;
@@ -175,17 +168,16 @@ const StyledList = styled.div`
 `;
 
 const StyledMobileisStatusDetail = styled.div`
-  /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   max-width: max-content;
   height: 45px;
   align-items: center;
   justify-content: space-between;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
   margin: auto;
   margin-top: 10px;
-  /* padding: 0 20px 0 80px; */
   border-radius: 5px;
   gap: 0;
   cursor: pointer;
@@ -197,22 +189,14 @@ const StyledMobileisStatusDetail = styled.div`
 `;
 
 const StyledTabBar = styled.div`
-  /* border: 1px solid blue; */
   display: flex;
   justify-content: space-around;
   align-items: center;
   width: 470px;
   padding-top: 6px;
-  /* margin: auto; */
-`;
-
-const StyledListBox = styled.div`
-  width: 100%;
-  height: 100%;
 `;
 
 const StyledCommonListBox = styled.div`
   width: 100%;
   margin-top: 7px;
-  /* border: 1px solid green; */
 `;
