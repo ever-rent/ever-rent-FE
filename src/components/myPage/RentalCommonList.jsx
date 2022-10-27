@@ -1,27 +1,50 @@
 import React from "react";
 import styled from "styled-components";
+import { Desktop, Mobile } from "../../Hooks/MideaQuery";
 import { RentalCommonItem } from "./RentalCommonItem";
 
 export const RentalCommonList = (props) => {
   const list = props.props;
   const index = props.index;
 
-  console.log("props>>", props);
-  // console.log("props.props>>", props.props);
-  // console.log("index", index);
-
   return (
-    <StyledListContainer>
-      {list?.map((item) => {
-        return <RentalCommonItem item={item} key={item.id} index={index} />;
-      })}
-    </StyledListContainer>
+    <>
+      <Desktop>
+        <StyledListContainer>
+          {list?.map((item) => {
+            return <RentalCommonItem item={item} key={item.id} index={index} />;
+          })}
+        </StyledListContainer>
+      </Desktop>
+      {/* ################ 모바일 ################ */}
+      <Mobile>
+        <StyledMobileListContainer>
+          {list?.map((item) => {
+            return <RentalCommonItem item={item} key={item.id} index={index} />;
+          })}
+        </StyledMobileListContainer>
+      </Mobile>
+    </>
   );
 };
 
 const StyledListContainer = styled.div`
-  /* border: 1px solid red; */
   margin-top: 20px;
+  margin-bottom: 80px;
+  animation: fadein 0.8s;
+  @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+`;
+
+const StyledMobileListContainer = styled.div`
+  margin-top: 20px;
+  margin-bottom: 80px;
   animation: fadein 0.8s;
   @keyframes fadein {
     from {

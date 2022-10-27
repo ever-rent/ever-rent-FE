@@ -5,11 +5,8 @@ import { productAPI } from "../../server/api";
 export const getProducts = createAsyncThunk(
   "GET_PRODUCTS",
   async (_, thunkAPI) => {
-    // console.log("products get 시작");
     try {
       const res = await productAPI.getProducts();
-
-      // console.log("producs get 성공", res.data);
       return thunkAPI.fulfillWithValue(res.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -33,7 +30,6 @@ export const getCategory = createAsyncThunk(
 export const getProductsDetail = createAsyncThunk(
   "GET_PRODUCTS",
   async (payload, thunkAPI) => {
-    console.log("products get 시작", payload);
     try {
       const res = await productAPI.getProductDetail(payload);
       return thunkAPI.fulfillWithValue(res.data);
@@ -59,12 +55,10 @@ export const updateProducts = createAsyncThunk(
   "UPDATAE_PRODUCTS",
   async (payload, thunkAPI) => {
     try {
-      console.log(payload);
       const { data } = await productAPI.updateProduct(
         payload[0],
         payload[1].productId
       );
-      console.log("response", data.data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -116,7 +110,6 @@ export const productSlice = createSlice({
     },
 
     [getProductsDetail.fulfilled]: (state, action) => {
-      console.log(action);
       state.products = action.payload.data;
       const data = state.recent.concat(action.payload.data);
       const uniqueData = [...new Set(data.map(JSON.stringify))].map(JSON.parse);

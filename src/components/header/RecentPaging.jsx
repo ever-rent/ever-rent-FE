@@ -9,7 +9,12 @@ export const RecentPaging = ({
   handlePageChange,
 }) => {
   const pagingArray = Array.from(
-    { length: parseInt(totalItemsCount / itemsCountPerPage) + 1 },
+    {
+      length:
+        Math.ceil(totalItemsCount / itemsCountPerPage) < 1
+          ? 1
+          : Math.ceil(totalItemsCount / itemsCountPerPage),
+    },
     (item, index) => {
       return index;
     }

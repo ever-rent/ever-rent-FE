@@ -31,17 +31,12 @@ export const CategoryDetail = () => {
 
   const categoryHandler = (e) => {
     e.preventDefault();
-    console.log(e.target.value);
     navigate(`/categoryDetail/${e.target.value}`);
   };
 
   useEffect(() => {
     setCategoryId(id);
   }, []);
-
-  const priceHandler = (e) => {
-    e.preventDefault();
-  };
 
   // infi scroll
   const [isLoading, setIsLoading] = useState(false);
@@ -96,7 +91,6 @@ export const CategoryDetail = () => {
 
   // 데이터 패치 처리
   useEffect(() => {
-    console.log(inView, hasNextPage);
     if (inView && hasNextPage) {
       fetch(categoryId);
       setTimeout(() => {
@@ -105,7 +99,6 @@ export const CategoryDetail = () => {
     }
   }, [fetch, hasNextPage, inView, page]);
 
-  console.log(categoryItems);
   return (
     <>
       <Desktop>

@@ -1,14 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { Desktop, Mobile } from "../../../Hooks/MideaQuery";
+import { Desktop, Mobile } from "../../Hooks/MideaQuery";
 
 export const SlideShow = () => {
   const navigate = useNavigate();
-  const colors = ["#0088FE", "#00C49F", "#FFBB28"];
   const eventImg = [
-    require("../../../image/eventOne1.png"),
-    require("../../../image/eventTwo1.png"),
+    require("../../image/eventOne1.png"),
+    require("../../image/eventTwo1.png"),
   ];
 
   const [index, setIndex] = useState(0);
@@ -47,7 +46,6 @@ export const SlideShow = () => {
               <StyledSlide
                 className="slide"
                 key={index}
-                // style={{ backgroundColor }}
                 src={eventImg}
                 onClick={() => navigate(`/event/${index}`)}
               />
@@ -66,7 +64,7 @@ export const SlideShow = () => {
           </StyledSlideShowDots>
         </StyledSlideshow>
       </Desktop>
-
+      {/* ################ 모바일 ################ */}
       <Mobile>
         <StyledMobileSlideshow className="slideshow">
           <StyledSlideShowSlider
@@ -77,7 +75,6 @@ export const SlideShow = () => {
               <StyledMobileSlide
                 className="slide"
                 key={index}
-                // style={{ backgroundColor }}
                 src={eventImg}
                 onClick={() => navigate(`/event/${index}`)}
               />
@@ -149,6 +146,6 @@ const StyledMobileSlide = styled.img`
   display: inline-block;
   height: 150px;
   width: 100%;
-  border-radius: 40px;
+  border-radius: 20px;
   cursor: pointer;
 `;

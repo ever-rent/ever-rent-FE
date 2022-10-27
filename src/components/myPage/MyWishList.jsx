@@ -8,7 +8,6 @@ import { Desktop, Mobile } from "../../Hooks/MideaQuery";
 export const MyWishList = () => {
   const dispatch = useDispatch();
   const likeList = useSelector((state) => state.mypage.MyWish);
-  console.log("MyWishList >> likeList", likeList);
 
   useEffect(() => {
     dispatch(getWishList());
@@ -26,7 +25,7 @@ export const MyWishList = () => {
           </StyledList>
         </StyledItem>
       </Desktop>
-
+      {/* ################ 모바일 ################ */}
       <Mobile>
         <StyledMobileItem>
           <StyledMobileTitle>나의 찜목록</StyledMobileTitle>
@@ -41,16 +40,7 @@ export const MyWishList = () => {
   );
 };
 
-// const StyledWishBox = styled.div`
-//   display: flex;
-//   flex-direction: column;
-// `;
-
-// const StyledTitle = styled.div``;
-
 const StyledItem = styled.div`
-  /* border: 1px solid red; */
-
   display: flex;
   flex-direction: column;
   padding-top: 10px;
@@ -84,4 +74,5 @@ const StyledMobileTitle = styled.span`
 const StyledMobileList = styled.div`
   width: 100%;
   margin-top: 15px;
+  margin-bottom: 80px;
 `;
