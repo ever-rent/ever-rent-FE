@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { Desktop, Mobile } from "../../../Hooks/MideaQuery";
+import { Desktop, Mobile } from "../../Hooks/MideaQuery";
 
 export const SlideShow = () => {
   const navigate = useNavigate();
   const eventImg = [
-    require("../../../image/eventOne1.png"),
-    require("../../../image/eventTwo1.png"),
+    require("../../image/eventOne1.png"),
+    require("../../image/eventTwo1.png"),
   ];
 
   const [index, setIndex] = useState(0);

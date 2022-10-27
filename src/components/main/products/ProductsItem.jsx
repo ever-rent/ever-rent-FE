@@ -99,7 +99,7 @@ export const ProductsItem = ({
           </StyledContentBox>
         </StyledItemBox>
       </Desktop>
-
+      {/* ################ 모바일 ################ */}
       <Mobile>
         <StyledMobileItemBox
           style={status === "EXPIRATION" ? { opacity: 0.5 } : null}
