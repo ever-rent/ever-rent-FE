@@ -44,13 +44,21 @@ export const RecentItem = () => {
 
   useEffect(() => {
     pagingFetching();
-    setPageAll(parseInt(recentData?.length / 3) + 1);
+    setPageAll(Math.ceil(recentItem?.length / 3));
   }, [page, recentItem]);
 
   return (
     <StyledRecentItemContainer>
       <StyledContentBox>
-        <StyledTitle>최근본상품</StyledTitle>
+        <StyledTitle>
+          최근본상품
+          <StyledEggWrap href="https://main.stocks-talk.site/" target="_blank">
+            <StyledEasterEgg
+              src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fq430v%2FbtrPJppwWkD%2Fe9ownmqNNJ7sZvnVPbwa3k%2Fimg.png"
+              alt="이스터에그"
+            />
+          </StyledEggWrap>
+        </StyledTitle>
         <div>---------</div>
         <StyledImgBox>
           {pageItem?.map((item, index) => {
@@ -74,7 +82,7 @@ export const RecentItem = () => {
         <RecentPaging
           activePage={page}
           itemsCountPerPage={3}
-          totalItemsCount={recentData?.length}
+          totalItemsCount={recentItem?.length}
           prevPageText={"<"}
           nextPageText={">"}
           handlePageChange={handlePageChange}
@@ -137,4 +145,28 @@ const StyledPage = styled.span`
   position: absolute;
   bottom: 0;
   font-size: 15px;
+`;
+
+// easter egg
+const StyledEggWrap = styled.a`
+  width: 120px;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+
+  & img {
+    opacity: 0;
+    transition: 0.2s;
+  }
+  &:hover {
+    & img {
+      opacity: 1;
+    }
+  }
+`;
+const StyledEasterEgg = styled.img`
+  width: 120px;
+  position: absolute;
+  right: -10px;
+  top: 0px;
 `;
