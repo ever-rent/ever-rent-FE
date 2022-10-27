@@ -18,9 +18,10 @@ import { getProductsDetail } from "../redux/modules/productSlice";
 import { categoriNumber } from "../util/categoryNumber";
 import { timeToToday } from "../util/timeToToday";
 import { Desktop, Mobile } from "../Hooks/MideaQuery";
-import { chatAPI, imgFirstString } from "../server/api";
+import { imgFirstString } from "../server/api";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { createChatRoom } from "../redux/modules/chatSlice";
 
 // 게시글 상세 페이지 컴포넌트
 export const ProductDetail = () => {
@@ -81,8 +82,8 @@ export const ProductDetail = () => {
         ? setEditabled(true)
         : setEditabled(false);
       fetchProfile(detailData?.memberId);
-      if(detailData?.imgUrl!==undefined){
-        setUserImage(detailData?.imgUrl)
+      if (detailData?.imgUrl !== undefined) {
+        setUserImage(detailData?.imgUrl);
       }
     }
   }, [detailData]);
@@ -125,17 +126,22 @@ export const ProductDetail = () => {
   };
 
   const onCreateChatRoom = async () => {
-    if (localStorage.getItem("accessToken")) {
+    if (localStorage.getItem("memberId")) {
       try {
-        const { data } = await chatAPI.createChatRoom(detailData?.id);
+        const data = await dispatch(createChatRoom(detailData?.id)).unwrap();
         if (data) {
-          return navigate(`/chat/room/${detailData?.id}/${data?.data}`);
+          return navigate(`/chat/room/${detailData?.id}/${data}`);
         }
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        console.log(error);
       }
     } else {
-      alert("로그인이 필요한 서비스입니다.");
+      Swal.fire({
+        title: "로그인이 필요합니다.",
+        icon: "warning",
+        confirmButtonColor: "rgb(71, 181, 255)",
+        confirmButtonText: "확인",
+      });
     }
   };
 
