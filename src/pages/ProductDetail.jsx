@@ -2,27 +2,26 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 
 import { Layout } from "../components/layout/Layout";
-import { deleteProducts } from "../redux/modules/productSlice";
-import { useDispatch } from "react-redux";
-import { getProductsDetail } from "../redux/modules/productSlice";
-import { useNavigate, useParams } from "react-router-dom";
-
-import { categoriNumber } from "../util/categoryNumber";
-import { timeToToday } from "../util/timeToToday";
 import { LocationModal } from "../components/location/LocationModal";
 import { ImageModal } from "../components/imageModal/ImageModal";
-import { chatAPI, imgFirstString } from "../server/api";
-
-import Swal from "sweetalert2";
-import { Desktop, Mobile } from "../Hooks/MideaQuery";
-
 import { UserReport } from "../components/report/UserReport";
 import { PostReport } from "../components/report/PostReport";
-import axios from "axios";
-
 import { WishButton } from "../components/button/WishButton";
 import { UsersBadge } from "../components/detail/UsersBadge";
 import { OtherProfile } from "../components/detail/OtherProfile";
+
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { deleteProducts } from "../redux/modules/productSlice";
+import { getProductsDetail } from "../redux/modules/productSlice";
+
+import { categoriNumber } from "../util/categoryNumber";
+import { timeToToday } from "../util/timeToToday";
+import { Desktop, Mobile } from "../Hooks/MideaQuery";
+import { imgFirstString } from "../server/api";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { createChatRoom } from "../redux/modules/chatSlice";
 
 // 게시글 상세 페이지 컴포넌트
 export const ProductDetail = () => {
@@ -46,7 +45,6 @@ export const ProductDetail = () => {
 
   const detailDataSet = [data?.data.data];
   const detailData = detailDataSet?.filter((element) => element)[0];
-
   const firstUrl = imgFirstString;
 
   // 유저 프로필 없을 시 기본이미지
@@ -84,10 +82,11 @@ export const ProductDetail = () => {
         ? setEditabled(true)
         : setEditabled(false);
       fetchProfile(detailData?.memberId);
+      if (detailData?.imgUrl !== undefined) {
+        setUserImage(detailData?.imgUrl);
+      }
     }
   }, [detailData]);
-
-  console.log(userInfoData);
 
   // 게시글 삭제
   const deletePost = () => {
@@ -127,17 +126,22 @@ export const ProductDetail = () => {
   };
 
   const onCreateChatRoom = async () => {
-    if (localStorage.getItem("accessToken")) {
+    if (localStorage.getItem("memberId")) {
       try {
-        const { data } = await chatAPI.createChatRoom(detailData?.id);
+        const data = await dispatch(createChatRoom(detailData?.id)).unwrap();
         if (data) {
-          return navigate(`/chat/room/${detailData?.id}/${data?.data}`);
+          return navigate(`/chat/room/${detailData?.id}/${data}`);
         }
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        console.log(error);
       }
     } else {
-      alert("로그인이 필요한 서비스입니다.");
+      Swal.fire({
+        title: "로그인이 필요합니다.",
+        icon: "warning",
+        confirmButtonColor: "rgb(71, 181, 255)",
+        confirmButtonText: "확인",
+      });
     }
   };
 
@@ -288,7 +292,8 @@ export const ProductDetail = () => {
                       alt="매너온도"
                     />
                     <StyledMannerSpan>
-                      36.5<StyledMannerHover>매너온도</StyledMannerHover>
+                      {detailData?.rating}
+                      <StyledMannerHover>매너온도</StyledMannerHover>
                     </StyledMannerSpan>
                   </StyledMannerOndoWrap>
                 </StyledUserSubItem>
@@ -442,7 +447,7 @@ export const ProductDetail = () => {
                       src={require("../image/mannerNumber.png")}
                       alt="매너온도"
                     />
-                    <StyledMannerSpan>36.5</StyledMannerSpan>
+                    <StyledMannerSpan>{detailData?.rating}</StyledMannerSpan>
                   </StyledMannerOndoWrap>
                 </StyledUserSubItem>
                 <StyledPostHr />

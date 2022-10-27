@@ -72,7 +72,7 @@ export const Profile = ({ like, setLike }) => {
           <ProfileImg
             showProfile={showProfile}
             closeProfileimgFix={closeProfileimgFix}
-            defaultImg={`https://source.boringavatars.com/beam/110/${info?.id}?colors=7965EE,6FE7F1,FFDD4C,46B5FF,2883E0`}
+            profileImg={profileImg}
           />
           <StyledIcon>
             <StyledLikeAndChatBox>
@@ -124,10 +124,7 @@ export const Profile = ({ like, setLike }) => {
       <Mobile>
         <StyledMobileProfileContainer>
           <StyledMobileImgBox onClick={openProfileimgFix}>
-            <StyledMobileImg
-              src="https://image.ajunews.com/content/image/2019/12/25/20191225170826943516.jpg"
-              alt="이미지 없음"
-            />
+            <StyledMobileImg src={profileImg} alt="이미지 없음" />
           </StyledMobileImgBox>
           <StyledMobileImageEdit
             src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FUjHeg%2FbtrN27EGh2c%2FFUAuCglKKcKdPLOx1zjVK1%2Fimg.png"
@@ -332,7 +329,7 @@ const StyledMobileImageEdit = styled.img`
   position: relative;
   background-color: #f0f0f0;
   border-radius: 20px;
-  left: -60px;
+  left: -50px;
   top: 40px;
   z-index: 5;
 `;

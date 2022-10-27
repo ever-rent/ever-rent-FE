@@ -1,16 +1,13 @@
 import styled from "styled-components";
-import Swal from "sweetalert2";
-
 import { useState, useEffect } from "react";
 import { auth } from "../../server/core/instance";
+import Swal from "sweetalert2";
 
 export const UserReport = ({ targetUserId }) => {
   // 신고창 모달 오픈 여부
   const [showModal, setShowModal] = useState(false);
-
   const [sendReason, setSendReason] = useState("타인에게 불쾌감을 주는 닉네임");
   const [etcDisabled, setEtcDisabled] = useState(true);
-
   const [isLogedIn, setIsLogedIn] = useState(true);
 
   useEffect(() => {

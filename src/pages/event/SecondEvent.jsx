@@ -25,7 +25,7 @@ export const SecondEvent = () => {
           </StyledContainer>
         </Layout>
       </Desktop>
-
+      {/* ################ 모바일 ################ */}
       <Mobile>
         <Layout>
           <StyledMobileContainer>

@@ -2,19 +2,19 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 
 import { Layout } from "../components/layout/Layout";
-import { useDispatch } from "react-redux";
-import { updateProducts } from "../redux/modules/productSlice";
-import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
-
 import { LocationModal } from "../components/location/LocationModal";
 import { RangeCalrendar } from "../components/calrendar/RangeCalrendar";
 import { LocationSearch } from "../components/location/LocationSearch";
-import { imgFirstString } from "../server/api";
 
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { updateProducts } from "../redux/modules/productSlice";
+
+import { imgFirstString } from "../server/api";
+import axios from "axios";
+import { Desktop, Mobile } from "../Hooks/MideaQuery";
 import imageCompression from "browser-image-compression";
 import Swal from "sweetalert2";
-import { Desktop, Mobile } from "../Hooks/MideaQuery";
 
 export const EditProduct = () => {
   const navigate = useNavigate();
@@ -49,7 +49,6 @@ export const EditProduct = () => {
     for (let i = 0; i < editData?.imgUrlArray.length; i++) {
       urlArray.push(`${imgFirstString}${editData?.imgUrlArray[i]}`);
     }
-    // console.log(urlArray);
     setImgView(urlArray);
     setSendImage(urlArray);
   }, [editData]);
@@ -323,6 +322,7 @@ export const EditProduct = () => {
                       (사진 등록 최대 10장)
                     </StyledDeleteImg>
                   </StyledProductImagetWrap>
+                  <StyledThumnailMark>썸네일</StyledThumnailMark>
                 </StyledFormImageInputWrap>
                 <StyledImageSource>
                   imageSource: "https://icons8.com/icon/85123/expand-arrow
@@ -514,6 +514,7 @@ export const EditProduct = () => {
                       (사진 등록 최대 10장)
                     </StyledMobileDeleteImg>
                   </StyledMobileProductImagetWrap>
+                  <StyledThumnailMark>썸네일</StyledThumnailMark>
                 </StyledMobileFormImageInputWrap>
                 <StyledImageSource>
                   imageSource: "https://icons8.com/icon/85123/expand-arrow
@@ -700,6 +701,20 @@ const StyledFormImageInputWrap = styled.div`
   display: flex;
   flex-direction: column;
   height: 200px;
+`;
+
+const StyledThumnailMark = styled.div`
+  position: relative;
+  bottom: 350px;
+  left: 260px;
+  border: 1px solid rgb(71, 181, 255);
+  width: 65px;
+  border-radius: 5px;
+  text-align: center;
+  color: rgb(71, 181, 255);
+  font-weight: bold;
+  font-size: 15px;
+  background-color:white;
 `;
 
 const StyledImageLabel = styled.label`
