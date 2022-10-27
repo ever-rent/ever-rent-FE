@@ -1,15 +1,12 @@
 import styled from "styled-components";
-import Swal from "sweetalert2";
-
 import { useState, useEffect } from "react";
 import { auth } from "../../server/core/instance";
+import Swal from "sweetalert2";
 
 export const PostReport = ({ targetProductId }) => {
   const [showModal, setShowModal] = useState(false);
-
   const [sendReason, setSendReason] = useState("도배/광고성 게시글");
   const [etcDisabled, setEtcDisabled] = useState(true);
-
   const [isLogedIn, setIsLogedIn] = useState(false);
 
   useEffect(() => {
