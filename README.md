@@ -16,7 +16,7 @@
 <br><br>
 
 ## 📢 프로젝트 소개
-개인 렌탈 거래 플랫폼으로 모바일과 데스크톱 환경에 따른 반응형 웹을 지원하는 프로젝트입니다.
+C2C 렌탈 플랫폼으로 모바일과 데스크톱 환경에 따른 반응형 웹을 지원하는 프로젝트입니다.
 - [EVER RENT 접속하기](https://ever-rent.vercel.app/)
 - [팀 노션 링크](https://peach-ferryboat-24d.notion.site/EVER-RENT-4cfbf7de283d418da269c95af4cd2cd7)
 - [프로젝트 PPT](https://www.miricanvas.com/v/11i237l)
