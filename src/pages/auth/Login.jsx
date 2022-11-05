@@ -84,8 +84,7 @@ export const Login = () => {
       >
         로그인
       </button>
-      {/* 구글 로그인 버튼 */}
-      <StyledButton
+      {/* <StyledButton
         onClick={() => {
           window.location.href = `${process.env.REACT_APP_GOOGLE_ACCOUNT}`;
         }}
@@ -96,7 +95,7 @@ export const Login = () => {
           </div>
           <span>Google 계정으로 로그인</span>
         </div>
-      </StyledButton>
+      </StyledButton> */}
       <div className="span-box">
         <span onClick={() => navigate("/forgotPw")}>비밀번호 찾기</span>
         <span onClick={() => navigate("/join")}>회원가입</span>
