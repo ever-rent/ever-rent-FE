@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { memo, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
@@ -17,7 +17,7 @@ import { getProductDetail } from "../../redux/modules/chatSlice";
 
 let stompClient = null;
 
-export const ChatRoom = () => {
+export const ChatRoom = memo(() => {
   const { productId } = useParams();
   const { roomId } = useParams();
   const scrollbarRef = useRef(null);
@@ -397,4 +397,4 @@ export const ChatRoom = () => {
       </div>
     </StyledChatRoom>
   );
-};
+});
