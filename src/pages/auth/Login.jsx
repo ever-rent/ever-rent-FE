@@ -1,10 +1,11 @@
 import React, { useRef } from "react";
-import logo from "../../image/logo.png";
 import { useNavigate } from "react-router-dom";
-import { useMutation } from "react-query";
-import axios from "axios";
 
-import { StyledLogin } from "./styled";
+import axios from "axios";
+import { useMutation } from "react-query";
+
+import styled from "styled-components";
+import logo from "../../image/logo.png";
 import { handleToast } from "../../util/toast";
 // import { FcGoogle } from "react-icons/fc";
 
@@ -91,6 +92,56 @@ export const Login = () => {
     </StyledLogin>
   );
 };
+
+const StyledLogin = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: 100px auto;
+  padding: 20px;
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  img {
+    width: 200px;
+    margin-bottom: 40px;
+  }
+
+  label {
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  input {
+    height: 30px;
+    margin-bottom: 30px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  button {
+    height: 50px;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: large;
+    font-weight: bold;
+    background-color: #5902ff;
+    cursor: pointer;
+  }
+
+  .span-box {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    span {
+      cursor: pointer;
+    }
+  }
+`;
 
 // const StyledGoogleLogin = styled.span`
 //   border: none;

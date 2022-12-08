@@ -1,11 +1,12 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useMutation } from "react-query";
+import styled from "styled-components";
+
 import axios from "axios";
+import { useMutation } from "react-query";
 
 import Swal from "sweetalert2";
 import { handleToast } from "../../util/toast";
-import { StyledJoin } from "./styled";
 import { SelectAddress } from "../../components/selectAddress/SelectAddress";
 
 export const Join = () => {
@@ -206,3 +207,68 @@ export const Join = () => {
     </StyledJoin>
   );
 };
+
+export const StyledJoin = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  margin: 100px auto;
+  padding: 20px;
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .auth-box {
+    display: none;
+    background-color: aliceblue;
+    padding: 10px;
+    margin: 10px 0;
+    div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
+      button {
+        padding: 5px 10px;
+        border-radius: 5px;
+      }
+    }
+  }
+
+  label {
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  input {
+    height: 30px;
+    margin-bottom: 30px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  button {
+    height: 50px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    color: #fff;
+    font-size: large;
+    font-weight: bold;
+    background-color: #5902ff;
+    cursor: pointer;
+  }
+
+  .span-box {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    span:nth-child(2) {
+      font-weight: bold;
+      cursor: pointer;
+    }
+  }
+`;
