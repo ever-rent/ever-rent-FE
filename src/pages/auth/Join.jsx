@@ -2,10 +2,11 @@ import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
 import axios from "axios";
-import { SelectAddress } from "../../components/selectAddress/SelectAddress";
-import { StyledJoin } from "./styled";
+
 import Swal from "sweetalert2";
 import { handleToast } from "../../util/toast";
+import { StyledJoin } from "./styled";
+import { SelectAddress } from "../../components/selectAddress/SelectAddress";
 
 export const Join = () => {
   const [authCode, setAuthCode] = useState("");
