@@ -11,3 +11,10 @@ export const Toast = Swal.mixin({
     toast.addEventListener("mouseleave", Swal.resumeTimer);
   },
 });
+
+export const handleToast = (type, message) => {
+  Toast.fire({
+    icon: type,
+    title: message,
+  });
+};
