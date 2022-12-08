@@ -6,6 +6,12 @@ export const StyledJoin = styled.div`
   width: 400px;
   margin: 100px auto;
   padding: 20px;
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
   .auth-box {
     display: none;
     background-color: aliceblue;
@@ -28,12 +34,14 @@ export const StyledJoin = styled.div`
     margin-bottom: 10px;
     font-weight: bold;
   }
+
   input {
     height: 30px;
     margin-bottom: 30px;
     border: 1px solid #ccc;
     border-radius: 5px;
   }
+
   button {
     height: 50px;
     border: none;
@@ -45,6 +53,7 @@ export const StyledJoin = styled.div`
     background-color: #5902ff;
     cursor: pointer;
   }
+
   .span-box {
     display: flex;
     gap: 10px;
@@ -62,20 +71,29 @@ export const StyledLogin = styled.div`
   width: 300px;
   margin: 100px auto;
   padding: 20px;
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
   img {
     width: 200px;
     margin-bottom: 40px;
   }
+
   label {
     margin-bottom: 10px;
     font-weight: bold;
   }
+
   input {
     height: 30px;
     margin-bottom: 30px;
     border: 1px solid #ccc;
     border-radius: 5px;
   }
+
   button {
     height: 50px;
     border: none;
@@ -86,6 +104,7 @@ export const StyledLogin = styled.div`
     background-color: #5902ff;
     cursor: pointer;
   }
+
   .span-box {
     display: flex;
     justify-content: space-around;

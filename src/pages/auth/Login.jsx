@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
 import axios from "axios";
 import { StyledLogin } from "./styled";
-import { handleToast, Toast } from "../../util/toast";
+import { handleToast } from "../../util/toast";
 // import { FcGoogle } from "react-icons/fc";
 
 export const Login = () => {
