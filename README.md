@@ -32,6 +32,3 @@ C2C 렌탈 플랫폼으로 모바일과 데스크톱 환경에 따른 반응형 
 
 ## ✨ EVER RENT 미리보기
 https://user-images.githubusercontent.com/73919235/199300221-541581f0-f810-4674-b261-8bee4239507a.mp4
-#### 위 미리보기 중 채팅방에서 발생하는 리렌더링 문제는 해당 컴포넌트에 메모이제이션을 적용해 해결했습니다
-<img width="308" alt="스크린샷 2022-11-16 오후 7 00 12" src="https://user-images.githubusercontent.com/73919235/202154379-5c167f4f-9b3d-4fbb-92a0-1be59b1c2826.png">
-
