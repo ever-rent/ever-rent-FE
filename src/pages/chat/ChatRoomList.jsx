@@ -1,9 +1,11 @@
-import { ChatRoomItem } from "../../components/chat/ChatRoomItem";
-import { StyledChatRoomList } from "./styled";
-import { ChatHeader } from "../../components/header/ChatHeader";
-import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import styled from "styled-components";
+
+import { useDispatch, useSelector } from "react-redux";
 import { getMyChatRoom } from "../../redux/modules/chatSlice";
+
+import { ChatRoomItem } from "../../components/chat/ChatRoomItem";
+import { ChatHeader } from "../../components/header/ChatHeader";
 
 export const ChatRoomList = ({ isSideNav }) => {
   // const { data } = useQuery("getChatRoomList", () => chatAPI.getChatRoomList());
@@ -44,3 +46,11 @@ export const ChatRoomList = ({ isSideNav }) => {
     </>
   );
 };
+
+const StyledChatRoomList = styled.div`
+  width: 50%;
+  min-width: 350px;
+  max-width: 650px;
+  margin: 0 auto;
+  padding: ${({ isSideNav }) => (isSideNav ? 0 : "2rem")};
+`;

@@ -1,11 +1,12 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useMutation } from "react-query";
+
 import axios from "axios";
+import { useMutation } from "react-query";
 
 import Swal from "sweetalert2";
 import { handleToast } from "../../util/toast";
-import { StyledJoin } from "./styled";
+import { StyledJoin } from "./Join";
 
 export const ForgotPw = () => {
   const [mailAuth, setMailAuth] = useState(false);
