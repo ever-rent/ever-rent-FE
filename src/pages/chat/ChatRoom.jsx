@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
@@ -7,17 +7,17 @@ import { StyledChatRoom } from "./styled";
 import { chatAPI, imgFirstString, productAPI } from "../../server/api";
 import { RangeCalrendar } from "../../components/calrendar/RangeCalrendar";
 import { FaMoneyBillAlt } from "react-icons/fa";
-import { AiOutlineSend } from "react-icons/ai";
 import { FaRegWindowClose } from "react-icons/fa";
 import Scrollbars from "react-custom-scrollbars";
 import { useQuery, useQueryClient } from "react-query";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductDetail } from "../../redux/modules/chatSlice";
+import { ChatForm } from "../../components/chat/ChatForm";
 
 let stompClient = null;
 
-export const ChatRoom = memo(() => {
+export const ChatRoom = () => {
   const { productId } = useParams();
   const { roomId } = useParams();
   const scrollbarRef = useRef(null);
@@ -59,11 +59,6 @@ export const ChatRoom = memo(() => {
   useEffect(() => {
     scrollbarRef.current?.scrollToBottom();
   }, [chatList]);
-
-  const handleValue = (event) => {
-    const { value } = event.target;
-    setUserData({ ...userData, message: value });
-  };
 
   const registerUser = () => {
     const sockJS = new SockJS(`${process.env.REACT_APP_SERVER_URL}/wss/chat`);
@@ -180,11 +175,6 @@ export const ChatRoom = memo(() => {
     navigate("/");
   };
 
-  const onKeyPress = (event) => {
-    event.preventDefault();
-    sendMessage();
-  };
-
   const detailTime = (createdAt) => {
     const time = new Date(createdAt);
     const hour = time.getHours() + 9;
@@ -279,27 +269,27 @@ export const ChatRoom = memo(() => {
         <ChatHeader isChatRoom={true} quitRoom={quitRoom} />
         <div className="head-container">
           {/* {productDetail && ( */}
-            <div className="head-box">
-              <div
-                className="head-text-box"
-                onClick={() => navigate(`/productDetail/${productDetail.id}`)}
-              >
-                {/* {productDetail?.imgUrlArray.length && (
+          <div className="head-box">
+            <div
+              className="head-text-box"
+              onClick={() => navigate(`/productDetail/${productDetail.id}`)}
+            >
+              {/* {productDetail?.imgUrlArray.length && (
                   <img
                     src={`${imgFirstString}${productDetail?.imgUrlArray[0]}`}
                     className="head-img"
                     alt="img"
                   />
                 )} */}
-              </div>
-              <div className="head-text-box">
-                <div className="head-title">{productDetail?.productName}</div>
-                <div className="head-cost">
-                  <FaMoneyBillAlt />
-                  {postPrice}원
-                </div>
+            </div>
+            <div className="head-text-box">
+              <div className="head-title">{productDetail?.productName}</div>
+              <div className="head-cost">
+                <FaMoneyBillAlt />
+                {postPrice}원
               </div>
             </div>
+          </div>
           {/* )} */}
           {chatList
             ? productDetail?.memberName !== myNickname && (
@@ -383,18 +373,11 @@ export const ChatRoom = memo(() => {
           })}
         </Scrollbars>
       </div>
-      <div className="input-container">
-        <form className="input-box" onSubmit={(event) => onKeyPress(event)}>
-          <input
-            className="input"
-            type="text"
-            placeholder="메시지 보내기"
-            value={userData.message}
-            onChange={(event) => handleValue(event)}
-          />
-          <AiOutlineSend size="2rem" color="gray" cursor="pointer" />
-        </form>
-      </div>
+      <ChatForm
+        userData={userData}
+        setUserData={setUserData}
+        sendMessage={sendMessage}
+      />
     </StyledChatRoom>
   );
-});
+};
